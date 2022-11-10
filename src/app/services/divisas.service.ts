@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Divisa } from '../modules/divisas/models/Divisa.model';
+import { Divisa } from '../models/Divisa.model';
 
 const base_url = environment.base_url
 

@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../../../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from '../../models/User.model';
+import { User } from '../../../../models/User.model';
 
 @Component({
   selector: 'app-modal-users',

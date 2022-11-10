@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/modules/users/models/User.model';
+import { User } from 'src/app/models/User.model';
 import { UsersService } from '../../../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../../../services/login.service';
 import { ModalDivisaComponent } from '../modal-divisa/modal-divisa.component';
 import Swal from 'sweetalert2';
-import { Divisa } from '../../models/Divisa.model';
+import { Divisa } from '../../../../models/Divisa.model';
 import { DivisasService } from '../../../../services/divisas.service';
 
 @Component({

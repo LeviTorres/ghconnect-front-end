@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Ceco } from '../../models/Ceco.model';
-import { Business } from '../../../business/models/Business.model';
+import { Ceco } from '../../../../models/Ceco.model';
+import { Business } from '../../../../models/Business.model';
 import { Validators, FormBuilder } from '@angular/forms';
 import { CecosService } from '../../../../services/cecos.service';
 import { BusinessService } from '../../../../services/business.service';

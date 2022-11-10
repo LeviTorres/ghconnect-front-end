@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Divisa } from '../../models/Divisa.model';
+import { Divisa } from '../../../../models/Divisa.model';
 import { DivisasService } from '../../../../services/divisas.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';

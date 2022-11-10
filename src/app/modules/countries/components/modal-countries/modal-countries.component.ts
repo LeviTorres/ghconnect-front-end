@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Country } from '../../models/Country.model';
+import { Country } from '../../../../models/Country.model';
 import { Validators, FormBuilder } from '@angular/forms';
 import { CountriesService } from '../../../../services/countries.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DivisasService } from '../../../../services/divisas.service';
-import { Divisa } from '../../../divisas/models/Divisa.model';
+import { Divisa } from '../../../../models/Divisa.model';
 
 @Component({
   selector: 'app-modal-countries',

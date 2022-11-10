@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Ceco } from '../modules/cecos/models/Ceco.model';
+import { Ceco } from '../models/Ceco.model';
 import { map } from 'rxjs/operators';
 
 const base_url = environment.base_url

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from 'src/app/modules/users/models/User.model';
+import { User } from 'src/app/models/User.model';
 import { LoginService } from '../../services/login.service';
 
 @Component({

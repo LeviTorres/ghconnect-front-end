@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Business } from '../../models/Business.model';
+import { Business } from '../../../../models/Business.model';
 import { BusinessService } from '../../../../services/business.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';

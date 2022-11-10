@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ceco } from '../../models/Ceco.model';
+import { Ceco } from '../../../../models/Ceco.model';
 import { CecosService } from '../../../../services/cecos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';

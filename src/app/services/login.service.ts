@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap, map, catchError } from 'rxjs/operators'
 import { Observable, of } from 'rxjs';
-import { UserForm } from '../modules/users/interfaces/user-form.interface';
-import { User } from '../modules/users/models/User.model';
+import { User } from '../models/User.model';
 
 const base_url = environment.base_url
 

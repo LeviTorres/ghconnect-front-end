@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Business } from '../../models/Business.model';
-import { Country } from '../../../countries/models/Country.model';
+import { Business } from '../../../../models/Business.model';
+import { Country } from '../../../../models/Country.model';
 import { Validators, FormBuilder } from '@angular/forms';
 import { CountriesService } from '../../../../services/countries.service';
 import { DivisasService } from '../../../../services/divisas.service';

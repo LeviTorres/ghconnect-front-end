@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Country } from '../../models/Country.model';
+import { Country } from '../../../../models/Country.model';
 import { CountriesService } from '../../../../services/countries.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';

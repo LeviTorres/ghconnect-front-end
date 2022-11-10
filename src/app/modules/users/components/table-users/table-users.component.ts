@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../../../services/users.service';
-import { User } from '../../models/User.model';
+import { User } from '../../../../models/User.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalUsersComponent } from '../modal-users/modal-users.component';
