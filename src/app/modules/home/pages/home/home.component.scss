@@ -1,0 +1,26 @@
+h2 {
+  font-size: 1.5rem;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+}
+
+.content-imgs {
+  height: calc(100vh - 114px);
+  display: flex;
+  align-items: center;
+}
+
+.container-img {
+  display: grid;
+  grid-template-columns: 300px 300px;
+  align-items: center;
+}
+
+.item-img {
+  align-self: center;
+  justify-self: center;
+  cursor: pointer;
+}

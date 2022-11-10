@@ -1,0 +1,84 @@
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+::ng-deep.mat-form-field-outline {
+  /*change color of underline*/
+  background-color: #1E2126;
+  border-radius: 5px;
+  border: none;
+}
+
+.recovery {
+  color: #626065;
+  cursor: pointer;
+}
+
+input {
+  padding-bottom: 5px;
+  color: #6c757d;
+}
+
+input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #64748b;
+}
+
+.slides {
+  position: relative;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.slides::after {
+  content: '';
+  position: absolute;
+
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  animation: 6s cycle infinite;
+}
+
+.slide-2 {
+  animation-delay: 2s;
+}
+
+.slide-3 {
+  animation-delay: 4s;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes cycle {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  30% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: .5;
+  }
+}

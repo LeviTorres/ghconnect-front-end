@@ -1,0 +1,32 @@
+<div class="container-avatar">
+  <img class="avatar my-3" [src]="user.getImage" alt="">
+</div>
+<p class="text-center p-0 m-0">{{user.name}} {{user.last_name}}</p>
+<p class="text-center text-capitalize">{{user.role}}</p>
+<hr class="m-0 p-0">
+<button mat-menu-item [routerLink]="['/profile']">
+  <span class="item">Administrar Perfil</span>
+</button>
+<hr class="m-0 p-0">
+<button mat-menu-item [routerLink]="['/users']">
+  <span>Gestion de Usuarios</span>
+</button>
+<hr class="m-0 p-0">
+<button mat-menu-item [routerLink]="['/countries']">
+  <span>Gestion Paises</span>
+</button>
+<button mat-menu-item [routerLink]="['/divisas']">
+  <span>Gestion Divisas</span>
+</button>
+<button mat-menu-item [routerLink]="['/business']">
+  <span>Gestion Empresas</span>
+</button>
+<button mat-menu-item [routerLink]="['/cecos']">
+  <span>Gestion Cecos</span>
+</button>
+<div class="d-flex flex-row-reverse">
+  <button mat-button (click)="logOut()">
+    Cerrar sesion
+    <mat-icon class="icon-close">cancel</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,33 @@
+<mat-toolbar class="color position-sticky">
+  <img class="active" src="../../../assets/icons/GHconnecticon.svg" [routerLink]="['/home']" alt="">
+  <span class="mx-3 title-navbar">{{title}}</span>
+  <div class="d-flex" *ngIf="title === 'Operaciones'">
+    <a class="mx-3" [routerLink]="['/operations']" routerLinkActive="active-link">Dashboard</a>
+    <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Clientes</a>
+    <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Proveedores</a>
+    <a class="mx-3" [routerLink]="['/contracts']" routerLinkActive="active-link">Contratos</a>
+    <div class="dropdown">
+      <a class="mx-3 dropbtn" >Configuración</a>
+      <div class="dropdown-content">
+        <a [routerLink]="['/providers']" routerLinkActive="active-link">Gestion proveedores</a>
+        <a [routerLink]="['/clients']" routerLinkActive="active-link">Gestion clientes</a>
+      </div>
+    </div>
+</div>
+ <span class="example-spacer"></span>
+
+ <span class="mx-5 p-5"></span>
+ <button class="mx-5"  mat-icon-button [matMenuTriggerFor]="menu">
+  <div class="container-2">
+    <div class="container-letter-name">
+      <p class="letter-name"><strong>{{letterNames}}</strong></p>
+    </div>
+    <div class="container-avatar-1">
+      <img class="avatar-color" alt="">
+    </div>
+  </div>
+</button>
+<mat-menu #menu="matMenu">
+  <app-menu-navbar></app-menu-navbar>
+</mat-menu>
+</mat-toolbar>

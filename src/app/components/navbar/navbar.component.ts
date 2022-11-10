@@ -1,0 +1,33 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from 'src/app/modules/users/models/User.model';
+import { LoginService } from '../../services/login.service';
+
+@Component({
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
+})
+export class NavbarComponent implements OnInit {
+
+  public user!: User
+  public letterNames: string = ''
+
+  @Input() title:any;
+
+  constructor(
+    private _loginService: LoginService,
+    private _spinner: NgxSpinnerService
+  ) {
+    this._spinner.show()
+    this.user = _loginService.user
+    this.letterNames = `${this.user.name.charAt(0).toUpperCase()}${this.user.last_name.charAt(0).toUpperCase()}`;
+    this._spinner.hide()
+   }
+
+  ngOnInit(): void {
+
+
+  }
+
+}

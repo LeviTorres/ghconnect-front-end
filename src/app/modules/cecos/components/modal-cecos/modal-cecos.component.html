@@ -1,0 +1,72 @@
+<header class="d-flex align-items-flex-end">
+  <h2 mat-dialog-title class="col-md-10 p-0">
+    Nuevo ceco
+  </h2>
+  <div class="d-flex justify-content-end w-100">
+    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+  </div>
+</header>
+<div>
+  <form (ngSubmit)="registerCeco()" autocomplete="off" [formGroup]="registerForm">
+      <div class="">
+        <label>Nombre largo</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="name_large" placeholder="Ingresa nombre largo "/>
+          <mat-error
+            *ngIf="registerForm.controls['name_large'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Nombre corto</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="name_short" placeholder="Ingresa el nombre corto"/>
+          <mat-error
+            *ngIf="registerForm.controls['name_short'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Clave ceco</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="key_ceco" placeholder="Ingresa la clave ceco"/>
+          <mat-error
+            *ngIf="registerForm.controls['key_ceco'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Empresa</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-select  matInput formControlName="business" placeholder="Selecciona una empresa">
+              <mat-option *ngFor="let item of business" [value]="item">{{item.name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="registerForm.controls['business'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            class="mx-2 btn-primary"
+          >
+          Crear Ceco
+          </button>
+        </div>
+      </mat-dialog-actions>
+  </form>
+</div>

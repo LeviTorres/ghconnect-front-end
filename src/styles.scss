@@ -1,1 +1,123 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --tblr-FCCF06: #fccf06;
+  --tblr-fff: #fff;
+  --tblr-626065: #626065;
+  --tblr-1E2126: #1E2126;
+  --tblr-000: #000;
+  --tblr-blue: #206bc4;
+  --tblr-indigo: #4263eb;
+  --tblr-purple: #ae3ec9;
+  --tblr-pink: #d6336c;
+  --tblr-red: #d63939;
+  --tblr-orange: #f76707;
+  --tblr-yellow: #f59f00;
+  --tblr-green: #2fb344;
+  --tblr-teal: #0ca678;
+  --tblr-cyan: #17a2b8;
+  --tblr-white: #ffffff;
+  --tblr-gray: #475569;
+  --tblr-gray-dark: #1e293b;
+  --tblr-gray-100: #f1f5f9;
+  --tblr-gray-200: #e2e8f0;
+  --tblr-gray-300: #cbd5e1;
+  --tblr-gray-400: #94a3b8;
+  --tblr-gray-500: #64748b;
+  --tblr-gray-600: #475569;
+  --tblr-gray-700: #334155;
+  --tblr-gray-800: #1e293b;
+  --tblr-gray-900: #0f172a;
+  --tblr-primary: #206bc4;
+  --tblr-secondary: #626976;
+  --tblr-success: #2fb344;
+  --tblr-info: #4299e1;
+  --tblr-warning: #f76707;
+  --tblr-danger: #d63939;
+  --tblr-light: #f8fafc;
+  --tblr-dark: #1e293b;
+  --tblr-muted: #626976;
+  --tblr-primary-rgb: 32, 107, 196;
+  --tblr-secondary-rgb: 98, 105, 118;
+  --tblr-success-rgb: 47, 179, 68;
+  --tblr-info-rgb: 66, 153, 225;
+  --tblr-warning-rgb: 247, 103, 7;
+  --tblr-danger-rgb: 214, 57, 57;
+  --tblr-light-rgb: 248, 250, 252;
+  --tblr-dark-rgb: 30, 41, 59;
+  --tblr-muted-rgb: 98, 105, 118;
+  --tblr-white-rgb: 255, 255, 255;
+  --tblr-black-rgb: 0, 0, 0;
+  --tblr-body-color-rgb: 30, 41, 59;
+  --tblr-body-bg-rgb: 248, 250, 252;
+  --tblr-body-font-size: 0.875rem;
+  --tblr-body-font-weight: 400;
+  --tblr-body-line-height: 1.4285714;
+  --tblr-body-color: #1e293b;
+  --tblr-body-bg: #f8fafc;
+  --tblr-card-bg: #ffffff;
+  --tblr-card-bg-rgb: 255, 255, 255;
+  --tblr-border-color: #e6e7e9;
+  --tblr-border-color-rgb: 230, 231, 233;
+  --tblr-border-color-light: #f2f3f4;
+  --tblr-border-color-light-rgb: 242, 243, 244;
+}
+
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+html{
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.content {
+  height: calc(100% - 114px);
+  padding: 20px;
+  background-image: url('assets/icons/fondo.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right top;
+  overflow-y: auto;
+}
+
+.container-login100 {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+}
+
+.wrap-login100 {
+  background: #fff;
+  overflow: hidden;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.btn-primary{
+  background-color: var(--tblr-626065);
+  color: white;
+}
+
+.btn-unique{
+  background-color: var(--tblr-blue);
+  color: white;
+}
+
+.mat-hint-error {
+  color: red;
+}

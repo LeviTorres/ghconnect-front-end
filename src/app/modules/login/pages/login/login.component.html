@@ -1,0 +1,54 @@
+
+ <div class="limiter">
+  <div class="container-login100 col-12">
+      <div class="col">
+        <div class="slides h-100">
+          <div class="slide ">
+            <img src="../../../../assets/slider/slide-01.webp" alt="" class="slide-image">
+          </div>
+          <div class="slide slide-2">
+            <img src="../../../../assets/slider/slide-02.webp" alt="" class="slide-image">
+          </div>
+          <div class="slide slide-3">
+            <img src="../../../../assets/slider/slide-03.webp" alt="" class="slide-image">
+          </div>
+        </div>
+      </div>
+    <div class="wrap-login100 col-5">
+        <div class="container-img mb-3">
+          <img src="../../../../assets/icons/GHconnect.svg" alt="">
+        </div>
+        <div class="text-center pb-5">
+          <h1 class="fs-24 fw-light text-white">¡ Bienvenido de nuevo !</h1>
+        </div>
+        <form class="px-5" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="loginn()">
+          <label class="text-white" for="password">Email</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput type="email" formControlName="email" placeholder="Ingresa tu email"/>
+            <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+              Campo requerido
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['email'].hasError('email')">
+              Correo electronico invalido
+            </mat-error>
+          </mat-form-field>
+            <div class="d-flex justify-content-between">
+              <label class="text-white pl-2" for="password">Contraseña</label>
+              <p class="recovery">¿Has olvidado tu contraseña?</p>
+            </div>
+            <mat-form-field class="w-100" appearance="outline">
+              <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="Ingresa tu contraseña"/>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                Campo requerido
+              </mat-error>
+            </mat-form-field>
+          <div class="text-center w-100 py-4">
+            <button mat-raised-button class="btn-unique w-100 py-2" >Iniciar sesión</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

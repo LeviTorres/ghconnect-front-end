@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-between col-12">
+  <div>
+    <button class="btn-primary" mat-raised-button (click)="openDialogModalDivisa()" >Crear Divisa</button>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-100" appearance="legacy">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-label>Buscar...</mat-label>
+      <input type="text" matInput #txtTerm (keyup)="search(txtTerm.value)">
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="table-responsive mt-4">
+    <table class="table text-nowrap">
+      <thead>
+        <tr>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Abreviatura
+          </th>
+          <th>
+            Simbolo
+          </th>
+          <th class="last">
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let divisa of divisas | paginate: { itemsPerPage: selectedValue, currentPage: page };
+        index as i">
+          <td >
+            <span>{{divisa.name}}</span>
+          </td>
+          <td>
+            <span>{{divisa.abbreviation_divisa}}</span>
+          </td>
+          <td>
+            <span>{{divisa.symbol}}</span>
+          </td>
+          <td class="last" >
+            <i class="fa fa-edit me-4"></i>
+            <i class="fa fa-trash" (click)="delete(divisa)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="col-12 d-flex flex-row-reverse">
+<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    [responsive]="true"></pagination-controls>
+</div>
