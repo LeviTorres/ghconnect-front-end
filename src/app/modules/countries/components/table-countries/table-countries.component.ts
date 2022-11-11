@@ -7,6 +7,9 @@ import { SearchService } from '../../../../services/search.service';
 import { ToastrService } from 'ngx-toastr';
 import { ModalCountriesComponent } from '../modal-countries/modal-countries.component';
 import Swal from 'sweetalert2';
+import { FormControl } from '@angular/forms';
+import { HeadersService } from '../../../../services/headers.service';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-table-countries',
@@ -18,22 +21,84 @@ export class TableCountriesComponent implements OnInit {
   public countries: Country[] = []
   public countriesTemp: Country[] = []
 
+  public headersCountry: any[] = []
+  public header_name: string = 'countries';
+
   public selectedValue: number = 5;
   public page!: number;
+
+  public nameControl: FormControl = new FormControl()
+  public nationalityControl: FormControl = new FormControl()
+  public divisaControl: FormControl = new FormControl()
+  public actionsControl: FormControl = new FormControl()
 
   constructor(
     private _countriesService: CountriesService,
     private _spinner: NgxSpinnerService,
     private _dialog: MatDialog,
     private _searchService: SearchService,
-    private _toastr:ToastrService
+    private _toastr: ToastrService,
+    private _loginService: LoginService,
+    private _headerService: HeadersService
   ) { }
 
   ngOnInit(): void {
     this.getCountries()
+    this.getHeadersCountry()
   }
 
-  openDialogModalCountry(){
+  getHeadersCountry() {
+    this._spinner.show()
+    this._headerService.getHeaders('countries').subscribe((resp: any) => {
+      this.headersCountry = resp
+      this.initValuesHeader()
+      this._spinner.hide()
+    })
+  }
+
+  initValuesHeader() {
+    const headerCountry = this.headersCountry.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
+    if (headerCountry) {
+      this.nameControl.setValue(headerCountry.name)
+      this.nationalityControl.setValue(headerCountry.nationality)
+      this.divisaControl.setValue(headerCountry.divisa)
+      this.actionsControl.setValue(headerCountry.actions)
+    } else {
+      this.nameControl.setValue(true)
+      this.nationalityControl.setValue(true)
+      this.divisaControl.setValue(true)
+      this.actionsControl.setValue(true)
+      const element = {
+        key_header: `${this._loginService.uid}-${this.header_name}`,
+        name: true,
+        nationality: true,
+        divisa: true,
+        actions: true,
+      }
+      this._headerService.createHeaders(element, 'countries').subscribe((item: any) => {
+        this.getHeadersCountry()
+      }, () => {
+        this._toastr.error('Error al cargar los headers')
+      })
+    }
+  }
+
+  updateHeader() {
+    const headerCountry = this.headersCountry.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
+    const element = {
+      name: this.nameControl.value,
+      nationality: this.nationalityControl.value,
+      divisa: this.divisaControl.value,
+      actions: this.actionsControl.value
+    }
+    this._headerService.updateHeaders(element, headerCountry._id, 'countries').subscribe(() => {
+
+    }, () => {
+      this._toastr.error('Error al actualizar los headers')
+    })
+  }
+
+  openDialogModalCountry() {
     let dialogRef = this._dialog.open(ModalCountriesComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -41,30 +106,30 @@ export class TableCountriesComponent implements OnInit {
       autoFocus: false
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getCountries()
+      this.getCountries()
     })
   }
 
-  getCountries(){
+  getCountries() {
     this._spinner.show()
-    this._countriesService.getCountries().subscribe((resp:any) => {
+    this._countriesService.getCountries().subscribe((resp: any) => {
       this.countries = resp
       this.countriesTemp = resp
       this._spinner.hide()
     })
   }
 
-  search(term:string){
-    if(term.length === 0){
+  search(term: string) {
+    if (term.length === 0) {
       return this.countries = this.countriesTemp
     }
-    this._searchService.search('countries',term).subscribe( (resp: any) => {
+    this._searchService.search('countries', term).subscribe((resp: any) => {
       this.countries = resp
     })
     return
   }
 
-  delete(country: Country){
+  delete(country: Country) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${country.name}`,
@@ -72,7 +137,7 @@ export class TableCountriesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Continuar'
     }).then((result) => {
-      if(result.value){
+      if (result.value) {
         this._spinner.show()
         this._countriesService.deleteCountry(country).subscribe(() => {
           this.getCountries()
