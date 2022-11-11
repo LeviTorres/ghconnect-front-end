@@ -59,16 +59,12 @@ export class TableBusinessComponent implements OnInit {
       return this.business = this.businessTemp
     }
     this._searchService.search('business',term).subscribe( (resp: any) => {
-      console.log('resp', resp);
-
       this.business = resp
     })
     return
   }
 
   delete(business: Business){
-    console.log(business);
-
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${business.name}`,

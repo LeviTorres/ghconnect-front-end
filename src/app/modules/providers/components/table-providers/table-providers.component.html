@@ -1,0 +1,98 @@
+<button mat-button routerLink="/providers/add-provider" routerLinkActive="router-link-active" >Nuevo proveedor</button>
+<div class="card table-responsive mt-4 overflow-auto ">
+  <table id="seasontable" class="table text-nowrap">
+    <thead>
+      <tr>
+        <th class="last">
+          <span>
+            <img src="../../../../../assets/icons/traffic.svg" alt="">
+          </span>
+        </th>
+        <th >
+          No. proveedor
+        </th>
+        <th>
+          Nombre proveedor
+        </th>
+        <th>
+          Nit
+        </th>
+        <th>
+          Condiciones de pago
+        </th>
+        <th>
+          Tipo de tercero
+        </th>
+        <th>
+          Tipo de sociedad
+        </th>
+        <th>
+          Tipo de proveedor
+        </th>
+        <th>
+          Telefono
+        </th>
+        <th>
+          Telefono movil
+        </th>
+        <th>
+          Email
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let provider of providers | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      index as i">
+        <td class="container-status">
+          <div matTooltip={{provider.status}} [ngClass]="{
+            'circule-activo': provider.status === 'activo',
+            'circule-inactivo': provider.status === 'inactivo',
+            'circule-suspendido': provider.status === 'suspendido',
+            'circule-password': provider.status === 'habilitado por password'}"></div>
+        </td>
+        <td>
+          <span>{{ provider.key_provider }}</span>
+        </td>
+        <td>
+          <span>{{ provider.name }}</span>
+        </td>
+        <td>
+          <span>{{ provider.nit }}</span>
+        </td>
+        <td>
+          <span>{{ provider.payment_conditions}}</span>
+        </td>
+        <td>
+          <span>{{ provider.third_type}}</span>
+        </td>
+        <td>
+          <span>{{ provider.society_type}}</span>
+        </td>
+        <td>
+          <span>{{ provider.provider_type}}</span>
+        </td>
+        <td>
+          <span>{{ provider.phone_number}}</span>
+        </td>
+        <td>
+          <span>{{ provider.mobile_number}}</span>
+        </td>
+        <td>
+          <span>{{ provider.email}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-12 d-flex flex-row-reverse">
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    [responsive]="true"></pagination-controls>
+  <mat-form-field>
+    <mat-select [(value)]="selectedValue">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="20">20</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="100">100</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

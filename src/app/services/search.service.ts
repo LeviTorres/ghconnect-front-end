@@ -30,16 +30,12 @@ export class SearchService {
   }
 
   private generateUsers(users: any[]): User[]{
-    console.log('users',users);
-
     return users.map(
       user => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id)
     )
   }
 
   private generateDivisas(divisas: any[]): Divisa[]{
-    console.log('users',divisas);
-
     return divisas.map(
       divisa => new Divisa(divisa.name, divisa.abbreviation_name, divisa._id)
     )
@@ -51,10 +47,8 @@ export class SearchService {
                 map((resp:any) => {
                   switch(type){
                     case 'users':
-                      console.log(resp);
                       return this.generateUsers(resp.resultados)
                       case 'divisas':
-                      console.log(resp);
                       return this.generateDivisas(resp.resultados)
                     default:
                       return []

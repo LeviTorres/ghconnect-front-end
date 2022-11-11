@@ -41,8 +41,6 @@ export class ModalCountriesComponent implements OnInit {
   getDivisas(){
     this._spinner.show()
     this._divisaService.getDivisas().subscribe((resp:any) => {
-      console.log(resp);
-
       this.divisas = resp
       this._spinner.hide()
     })
@@ -57,7 +55,6 @@ export class ModalCountriesComponent implements OnInit {
 
       this._countriesService.createCountry(this.registerForm.value)
         .subscribe(( res:any ) => {
-          console.log(res);
           this._spinner.hide()
           this._dialogRef.close()
           this._toastr.success('Pais registrado con Exito')

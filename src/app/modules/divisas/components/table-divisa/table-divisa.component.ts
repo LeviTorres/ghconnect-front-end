@@ -10,6 +10,8 @@ import { ModalDivisaComponent } from '../modal-divisa/modal-divisa.component';
 import Swal from 'sweetalert2';
 import { Divisa } from '../../../../models/Divisa.model';
 import { DivisasService } from '../../../../services/divisas.service';
+import { FormControl } from '@angular/forms';
+import { HeadersService } from '../../../../services/headers.service';
 
 @Component({
   selector: 'app-table-divisa',
@@ -20,20 +22,81 @@ export class TableDivisaComponent implements OnInit {
 
   public divisas: Divisa[] = []
   public divisasTemp: Divisa[] = []
+  public headersDivisa: any[] = []
+  public header_name: string = 'divisas';
 
   public selectedValue: number = 5;
   public page!: number;
+
+  public nameControl: FormControl = new FormControl()
+  public abbreviationControl: FormControl = new FormControl()
+  public symbolControl: FormControl = new FormControl()
+  public actionsControl: FormControl = new FormControl()
 
   constructor(
     private _divisaService: DivisasService,
     private _spinner: NgxSpinnerService,
     private _dialog: MatDialog,
     private _searchService: SearchService,
-    private _toastr:ToastrService
+    private _toastr:ToastrService,
+    private _loginService: LoginService,
+    private _headerService: HeadersService
   ) { }
 
   ngOnInit(): void {
     this.getDivisas()
+    this.getHeadersDivisa()
+  }
+
+  getHeadersDivisa(){
+    this._spinner.show()
+    this._headerService.getHeaders('divisas').subscribe((resp:any) => {
+      this.headersDivisa = resp
+      this.initValuesHeader()
+      this._spinner.hide()
+    })
+  }
+
+  initValuesHeader(){
+    const headerDivisa = this.headersDivisa.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
+    if(headerDivisa){
+      this.nameControl.setValue(headerDivisa.name)
+      this.abbreviationControl.setValue(headerDivisa.abbreviation)
+      this.symbolControl.setValue(headerDivisa.symbol)
+      this.actionsControl.setValue(headerDivisa.actions)
+    }else {
+      this.nameControl.setValue(true)
+      this.abbreviationControl.setValue(true)
+      this.symbolControl.setValue(true)
+      this.actionsControl.setValue(true)
+      const element = {
+        key_header:  `${this._loginService.uid}-${this.header_name}`,
+        name: true,
+        symbol: true,
+        abbreviation: true,
+        actions: true,
+      }
+      this._headerService.createHeaders(element,'divisas').subscribe((item: any)=>{
+        this.getHeadersDivisa()
+      },() => {
+        this._toastr.error('Error al cargar los headers')
+      })
+    }
+  }
+
+  updateHeader(){
+    const headerDivisa = this.headersDivisa.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
+    const element = {
+      name: this.nameControl.value,
+      abbreviation: this.abbreviationControl.value,
+      symbol: this.symbolControl.value,
+      actions: this.actionsControl.value
+    }
+    this._headerService.updateHeaders(element, headerDivisa._id, 'divisas').subscribe(() => {
+
+    },() => {
+      this._toastr.error('Error al actualizar los headers')
+    })
   }
 
   openDialogModalDivisa(){
@@ -62,16 +125,12 @@ export class TableDivisaComponent implements OnInit {
       return this.divisas = this.divisasTemp
     }
     this._searchService.search('divisas',term).subscribe( (resp: any) => {
-      console.log('resp', resp);
-
       this.divisas = resp
     })
     return
   }
 
   delete(divisa:Divisa){
-    console.log(divisa);
-
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${divisa.name}`,
