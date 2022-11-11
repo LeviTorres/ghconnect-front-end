@@ -38,7 +38,11 @@ export class ProvidersService {
   getProviders(){
     return this._http.get(`${base_url}/providers`,this.headers)
               .pipe(
-                map((resp:any) => resp.providers)
+                map((resp:any) => {
+                  console.log(resp.providers);
+
+                  return resp.providers
+                })
               )
   }
 

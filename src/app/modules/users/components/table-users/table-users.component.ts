@@ -20,8 +20,8 @@ export class TableUsersComponent implements OnInit {
 
   public users: User[] = []
   public usersTemp: User[] = []
-  public headersUser: any[] = []
 
+  public headersUser: any[] = []
   public header_name: string = 'users';
 
   public avatarControl: FormControl = new FormControl()

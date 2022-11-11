@@ -4,6 +4,12 @@ interface _user {
   _id: string,
 }
 
+interface _Payment {
+  name_payment: string,
+  key_payment: string,
+  _id: string,
+}
+
 export class Client {
   constructor(
     public key_client: string,
@@ -16,7 +22,7 @@ export class Client {
     public mobile_number: string,
     public email: string,
     public status: string,
-    public payment_conditions: string,
+    public payment_conditions: _Payment,
     public user?: _user,
     public _id?: string
   ){}
