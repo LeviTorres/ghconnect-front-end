@@ -15,48 +15,64 @@
     <table class="table text-nowrap">
       <thead>
         <tr>
-          <th>
-
+          <th *ngIf="avatarControl.value">
           </th>
-          <th>
+          <th *ngIf="nameControl.value">
             Nombre
           </th>
-          <th>
+          <th *ngIf="lastNameControl.value">
             Apellido
           </th>
-          <th>
+          <th *ngIf="roleControl.value">
             Rol
           </th>
-          <th>
+          <th *ngIf="emailControl.value">
             Email
           </th>
-          <th class="last">
+          <th class="last" *ngIf="actionsControl.value">
             Acciones
           </th>
+          <th class="last" style="width: 15px;">
+            <span class="button-menu" [matMenuTriggerFor]="menu">
+              <i class="material-icons" style="color:white ">more_vert</i>
+            </span>
+          </th>
+          <mat-menu #menu="matMenu">
+            <div class="menu-table" >
+              <mat-checkbox class="example-margin" [formControl]="avatarControl" (click)="$event.stopPropagation();">Avatar</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">Nombre</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="lastNameControl" (click)="$event.stopPropagation();">Apellido</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="roleControl" (click)="$event.stopPropagation();">Rol</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="emailControl" (click)="$event.stopPropagation();">Email</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">Acciones</mat-checkbox>
+              <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+            </div>
+          </mat-menu>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of users | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
-          <td class="text-center">
+          <td class="text-center" *ngIf="avatarControl.value">
             <span><img [src]="user.getImage" alt=""></span>
           </td>
-          <td >
+          <td *ngIf="nameControl.value">
             <span>{{user.name}}</span>
           </td>
-          <td>
+          <td *ngIf="lastNameControl.value">
             <span>{{user.last_name}}</span>
           </td>
-          <td >
+          <td *ngIf="roleControl.value">
             <span>{{getRole(user.role!)}}</span>
           </td>
-          <td>
+          <td *ngIf="emailControl.value">
             <span>{{user.email}}</span>
           </td>
-          <td class="last" >
+          <td class="last" *ngIf="actionsControl.value">
             <i class="fa fa-edit me-4"></i>
             <i class="fa fa-trash" (click)="delete(user)"></i>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>

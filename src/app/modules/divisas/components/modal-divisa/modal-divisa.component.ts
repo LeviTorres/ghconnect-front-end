@@ -44,7 +44,6 @@ export class ModalDivisaComponent implements OnInit {
 
       this._divisaService.createDivisa(this.registerForm.value)
         .subscribe(( res:any ) => {
-          console.log(res);
           this._spinner.hide()
           this._dialogRef.close()
           this._toastr.success('Divisa registrado con Exito')

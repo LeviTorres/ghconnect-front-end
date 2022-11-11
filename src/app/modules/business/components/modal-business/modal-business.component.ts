@@ -43,7 +43,6 @@ export class ModalBusinessComponent implements OnInit {
   getCountries(){
     this._spinner.show()
     this._countriesService.getCountries().subscribe((resp:any) => {
-      console.log(resp);
       this.countries = resp
       this._spinner.hide()
     })
@@ -58,7 +57,6 @@ export class ModalBusinessComponent implements OnInit {
 
       this._businessService.createBusiness(this.registerForm.value)
         .subscribe(( res:any ) => {
-          console.log(res);
           this._spinner.hide()
           this._dialogRef.close()
           this._toastr.success('Empresa registrada con Exito')

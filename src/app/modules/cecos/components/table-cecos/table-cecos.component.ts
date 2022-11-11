@@ -59,16 +59,12 @@ export class TableCecosComponent implements OnInit {
       return this.cecos = this.cecosTemp
     }
     this._searchService.search('cecos',term).subscribe( (resp: any) => {
-      console.log('resp', resp);
-
       this.cecos = resp
     })
     return
   }
 
   delete(ceco: Ceco){
-    console.log(ceco);
-
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${ceco.name_short}`,

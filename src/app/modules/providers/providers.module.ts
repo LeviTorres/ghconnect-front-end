@@ -6,11 +6,17 @@ import { ProvidersComponent } from './pages/providers/providers.component';
 import { SharedModule } from '../../shared/shared.module';
 import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
+import { AddProvidersComponent } from './pages/add-providers/add-providers.component';
+import { TableProvidersComponent } from './components/table-providers/table-providers.component';
+import { PageProvidersComponent } from './pages/page-providers/page-providers.component';
 
 
 @NgModule({
   declarations: [
-    ProvidersComponent
+    ProvidersComponent,
+    AddProvidersComponent,
+    TableProvidersComponent,
+    PageProvidersComponent
   ],
   imports: [
     CommonModule,

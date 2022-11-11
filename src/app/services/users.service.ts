@@ -44,8 +44,6 @@ export class UsersService {
   }
 
   deleteUser(user:User){
-    console.log(user);
-
     return this._http.delete(`${base_url}/users/${user._id}`,this.headers)
   }
 

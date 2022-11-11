@@ -15,36 +15,51 @@
     <table class="table text-nowrap">
       <thead>
         <tr>
-          <th>
+          <th *ngIf="nameControl.value">
             Nombre
           </th>
-          <th>
+          <th *ngIf="abbreviationControl.value">
             Abreviatura
           </th>
-          <th>
+          <th *ngIf="symbolControl.value">
             Simbolo
           </th>
-          <th class="last">
+          <th class="last" *ngIf="actionsControl.value">
             Acciones
           </th>
+          <th class="last" style="width: 15px;">
+            <span class="button-menu" [matMenuTriggerFor]="menu">
+              <i class="material-icons" style="color:white ">more_vert</i>
+            </span>
+          </th>
+          <mat-menu #menu="matMenu">
+            <div class="menu-table" >
+              <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">Nombre</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="abbreviationControl" (click)="$event.stopPropagation();">Abreviatura</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="symbolControl" (click)="$event.stopPropagation();">Simbolo</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">Acciones</mat-checkbox>
+              <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+            </div>
+          </mat-menu>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let divisa of divisas | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
-          <td >
+          <td *ngIf="nameControl.value">
             <span>{{divisa.name}}</span>
           </td>
-          <td>
+          <td *ngIf="abbreviationControl.value">
             <span>{{divisa.abbreviation_divisa}}</span>
           </td>
-          <td>
+          <td *ngIf="symbolControl.value">
             <span>{{divisa.symbol}}</span>
           </td>
-          <td class="last" >
+          <td class="last" *ngIf="actionsControl.value">
             <i class="fa fa-edit me-4"></i>
             <i class="fa fa-trash" (click)="delete(divisa)"></i>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>

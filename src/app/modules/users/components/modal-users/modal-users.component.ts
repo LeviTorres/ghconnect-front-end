@@ -21,9 +21,7 @@ export class ModalUsersComponent implements OnInit {
 
   public repeatPassword: string = '';
 
-  public totalUsers:number = 0
   public users: User[] = []
-  public desde: number = 0
 
   public registerForm = this._fb.group({
     name: ['', Validators.required ],
@@ -60,7 +58,6 @@ export class ModalUsersComponent implements OnInit {
 
       this._userService.createUser(this.registerForm.value)
         .subscribe(( res:any ) => {
-          console.log(res);
           this._spinner.hide()
           this._dialogRef.close()
           this._toastr.success('Usuario registrado con Exito')

@@ -59,16 +59,12 @@ export class TableCountriesComponent implements OnInit {
       return this.countries = this.countriesTemp
     }
     this._searchService.search('countries',term).subscribe( (resp: any) => {
-      console.log('resp', resp);
-
       this.countries = resp
     })
     return
   }
 
   delete(country: Country){
-    console.log(country);
-
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${country.name}`,

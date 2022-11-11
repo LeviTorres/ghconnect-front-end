@@ -42,8 +42,6 @@ export class ModalCecosComponent implements OnInit {
   getBusiness(){
     this._spinner.show()
     this._businessService.getBusiness().subscribe((resp:any) => {
-      console.log(resp);
-
       this.business = resp
       this._spinner.hide()
     })
@@ -68,7 +66,6 @@ export class ModalCecosComponent implements OnInit {
 
       this._cecosService.createCeco(element)
         .subscribe(( res:any ) => {
-          console.log(res);
           this._spinner.hide()
           this._dialogRef.close()
           this._toastr.success('Ceco registrado con Exito')

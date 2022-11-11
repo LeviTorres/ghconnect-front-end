@@ -18,6 +18,10 @@ export class LoginService {
     private _http:HttpClient
   ) { }
 
+  get uid():string {
+    return this.user._id || '';
+  }
+
   login(formData: any){
     return this._http.post(`${base_url}/login`, formData)
           .pipe(
