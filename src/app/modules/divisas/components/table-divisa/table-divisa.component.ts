@@ -22,8 +22,9 @@ export class TableDivisaComponent implements OnInit {
 
   public divisas: Divisa[] = []
   public divisasTemp: Divisa[] = []
+
   public headersDivisa: any[] = []
-  public header_name: string = 'divisas';
+  public header_name: string = 'divisas'
 
   public selectedValue: number = 5;
   public page!: number;
