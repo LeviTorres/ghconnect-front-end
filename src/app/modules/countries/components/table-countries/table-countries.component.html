@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between col-12">
   <div>
-    <button class="btn-primary" mat-raised-button (click)="openDialogModalCountry()" >Crear Pais</button>
+    <button class="btn-primary" mat-raised-button (click)="openDialogModalCountry()">Crear Pais</button>
   </div>
   <div class="col-4">
     <mat-form-field class="w-100" appearance="legacy">
@@ -15,42 +15,61 @@
     <table class="table text-nowrap">
       <thead>
         <tr>
-          <th>
+          <th *ngIf="nameControl.value">
             Nombre
           </th>
-          <th>
+          <th *ngIf="nationalityControl.value">
             Nacionalidad
           </th>
-          <th>
+          <th *ngIf="divisaControl.value">
             Divisa
           </th>
-          <th class="last">
+          <th class="last" *ngIf="actionsControl.value">
             Acciones
           </th>
+          <th class="last" style="width: 15px;">
+            <span class="button-menu" [matMenuTriggerFor]="menu">
+              <i class="material-icons" style="color:white ">more_vert</i>
+            </span>
+          </th>
+          <mat-menu #menu="matMenu">
+            <div class="menu-table">
+              <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">
+                Nombre</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="nationalityControl"
+                (click)="$event.stopPropagation();">Nacionalicidad</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="divisaControl" (click)="$event.stopPropagation();">
+                Divisa</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+                Acciones</mat-checkbox>
+              <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+            </div>
+          </mat-menu>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let country of countries | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
-          <td >
+          <td *ngIf="nameControl.value">
             <span>{{country.name}}</span>
           </td>
-          <td>
+          <td *ngIf="nationalityControl.value">
             <span>{{country.nationality}}</span>
           </td>
-          <td>
+          <td *ngIf="divisaControl.value">
             <span>{{country.divisa?.name }}</span>
           </td>
-          <td class="last" >
+          <td class="last" *ngIf="actionsControl.value">
             <i class="fa fa-edit me-4"></i>
             <i class="fa fa-trash" (click)="delete(country)"></i>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 <div class="col-12 d-flex flex-row-reverse">
-<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
     [responsive]="true"></pagination-controls>
 </div>

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between col-12">
   <div>
-    <button class="btn-primary" mat-raised-button (click)="openDialogModalCeco()" >Crear Ceco</button>
+    <button class="btn-primary" mat-raised-button (click)="openDialogModalCeco()">Crear Ceco</button>
   </div>
   <div class="col-4">
     <mat-form-field class="w-100" appearance="legacy">
@@ -15,55 +15,77 @@
     <table class="table text-nowrap">
       <thead>
         <tr>
-          <th>
+          <th *ngIf="nameLargeControl.value">
             Nombre largo
           </th>
-          <th>
+          <th *ngIf="nameShortControl.value">
             Nombre corto
           </th>
-          <th>
+          <th *ngIf="keyCecoControl.value">
             Clave ceco
           </th>
-          <th>
+          <th *ngIf="keyCecoBusinessControl.value">
             Clave larga
           </th>
-          <th>
+          <th *ngIf="businessControl.value">
             Empresa
           </th>
-          <th class="last">
+          <th class="last" *ngIf="actionsControl.value">
             Acciones
           </th>
+          <th class="last" style="width: 15px;">
+            <span class="button-menu" [matMenuTriggerFor]="menu">
+              <i class="material-icons" style="color:white ">more_vert</i>
+            </span>
+          </th>
+          <mat-menu #menu="matMenu">
+            <div class="menu-table">
+              <mat-checkbox class="example-margin" [formControl]="nameLargeControl" (click)="$event.stopPropagation();">
+                Nombre Largo</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="nameShortControl" (click)="$event.stopPropagation();">
+                Nombre Corto</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="keyCecoControl" (click)="$event.stopPropagation();">
+                Clave Ceco</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="keyCecoBusinessControl"
+                (click)="$event.stopPropagation();">Clave Largo</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="businessControl" (click)="$event.stopPropagation();">
+                Empresa</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+                Acciones</mat-checkbox>
+              <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+            </div>
+          </mat-menu>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ceco of cecos | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
-          <td >
+          <td *ngIf="nameLargeControl.value">
             <span>{{ceco.name_large}}</span>
           </td>
-          <td>
+          <td *ngIf="nameShortControl.value">
             <span>{{ceco.name_short}}</span>
           </td>
-          <td>
+          <td *ngIf="keyCecoControl.value">
             <span>{{ceco.key_ceco }}</span>
           </td>
-          <td>
+          <td *ngIf="keyCecoBusinessControl.value">
             <span>{{ceco.key_ceco_business}}</span>
           </td>
-          <td>
+          <td *ngIf="businessControl.value">
             <span>{{ceco.business?.name}}</span>
           </td>
-          <td class="last" >
+          <td class="last" *ngIf="actionsControl.value">
             <i class="fa fa-edit me-4"></i>
             <i class="fa fa-trash" (click)="delete(ceco)"></i>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 <div class="col-12 d-flex flex-row-reverse">
-<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
     [responsive]="true"></pagination-controls>
 </div>
-
