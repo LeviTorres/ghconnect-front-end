@@ -42,25 +42,24 @@ export class TableCecosComponent implements OnInit {
     private _toastr: ToastrService,
     private _loginService: LoginService,
     private _headerService: HeadersService
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     this.getCecos()
     this.getHeadersCecos()
-  }
+   }
+
+  ngOnInit(): void {}
 
   getHeadersCecos() {
     this._spinner.show()
     this._headerService.getHeaders('cecos').subscribe((resp: any) => {
       this.headersCecos = resp
-      // this.initValuesHeader()
+      this.initValuesHeader()
       this._spinner.hide()
     })
   }
 
   initValuesHeader() {
     const headerCeco = this.headersCecos.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
-    console.log('this.headersCecos', this.headersCecos);
     if (headerCeco) {
       this.nameLargeControl.setValue(headerCeco.name_large)
       this.nameShortControl.setValue(headerCeco.name_short)
@@ -77,9 +76,9 @@ export class TableCecosComponent implements OnInit {
       this.actionsControl.setValue(true)
       const element = {
         key_header: `${this._loginService.uid}-${this.header_name}`,
-        name_large: false,
-        name_short: false,
-        key_ceco: false,
+        name_large: true,
+        name_short: true,
+        key_ceco: true,
         key_ceco_business: true,
         business: true,
         actions: true,

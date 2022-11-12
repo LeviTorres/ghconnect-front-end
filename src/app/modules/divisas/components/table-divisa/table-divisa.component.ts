@@ -62,7 +62,7 @@ export class TableDivisaComponent implements OnInit {
     const headerDivisa = this.headersDivisa.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     if(headerDivisa){
       this.nameControl.setValue(headerDivisa.name)
-      this.abbreviationControl.setValue(headerDivisa.abbreviation)
+      this.abbreviationControl.setValue(headerDivisa.abbreviation_divisa)
       this.symbolControl.setValue(headerDivisa.symbol)
       this.actionsControl.setValue(headerDivisa.actions)
     }else {
@@ -74,7 +74,7 @@ export class TableDivisaComponent implements OnInit {
         key_header:  `${this._loginService.uid}-${this.header_name}`,
         name: true,
         symbol: true,
-        abbreviation: true,
+        abbreviation_divisa: true,
         actions: true,
       }
       this._headerService.createHeaders(element,'divisas').subscribe((item: any)=>{
@@ -89,7 +89,7 @@ export class TableDivisaComponent implements OnInit {
     const headerDivisa = this.headersDivisa.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     const element = {
       name: this.nameControl.value,
-      abbreviation: this.abbreviationControl.value,
+      abbreviation_divisa: this.abbreviationControl.value,
       symbol: this.symbolControl.value,
       actions: this.actionsControl.value
     }
