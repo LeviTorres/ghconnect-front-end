@@ -1,15 +1,11 @@
-interface _user {
-  name: string,
-  last_name: string,
-  _id: string,
-}
+import { User } from './User.model';
 
 export class Divisa {
   constructor(
     public name: string,
     public abbreviation_divisa: string,
     public symbol: string,
-    public user?: _user,
+    public user?: User,
     public _id?: string
   ){}
 }

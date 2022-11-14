@@ -1,14 +1,5 @@
-interface _user {
-  name: string,
-  last_name: string,
-  _id: string,
-}
-
-interface _Payment {
-  name_payment: string,
-  key_payment: string,
-  _id: string,
-}
+import { PaymentConditions } from './PaymentConditions.model';
+import { User } from './User.model';
 
 export class Provider {
   constructor(
@@ -22,8 +13,8 @@ export class Provider {
     public mobile_number: string,
     public email: string,
     public status: string,
-    public payment_conditions: _Payment,
-    public user?: _user,
+    public payment_conditions: PaymentConditions,
+    public user?: User,
     public _id?: string
   ){}
 }

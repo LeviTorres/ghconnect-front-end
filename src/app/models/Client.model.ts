@@ -1,15 +1,5 @@
-interface _user {
-  name: string,
-  last_name: string,
-  _id: string,
-}
-
-interface _Payment {
-  name_payment: string,
-  key_payment: string,
-  _id: string,
-}
-
+import { User } from './User.model';
+import { PaymentConditions } from './PaymentConditions.model';
 export class Client {
   constructor(
     public key_client: string,
@@ -22,8 +12,8 @@ export class Client {
     public mobile_number: string,
     public email: string,
     public status: string,
-    public payment_conditions: _Payment,
-    public user?: _user,
+    public payment_conditions: PaymentConditions,
+    public user?: User,
     public _id?: string
   ){}
 }
