@@ -37,11 +37,14 @@ export class InvoiceProvidersService {
   getInvoiceProviders(){
     return this._http.get(`${base_url}/invoice-providers`,this.headers)
               .pipe(
-                map((resp:any) => resp.invoiceProviders)
+                map((resp:any) => {
+                 console.log(resp.invoiceProviders);
+                  return resp.invoiceProviders
+                })
               )
   }
 
-  deleteDivisa(divisa:any){
-    return this._http.delete(`${base_url}/divisas/${divisa._id}`,this.headers)
+  deleteInvoiceProvider(invoiceProvider:any){
+    return this._http.delete(`${base_url}/invoice-providers/${invoiceProvider._id}`,this.headers)
   }
 }

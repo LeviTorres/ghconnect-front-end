@@ -39,8 +39,6 @@ export class ProvidersService {
     return this._http.get(`${base_url}/providers`,this.headers)
               .pipe(
                 map((resp:any) => {
-                  console.log(resp.providers);
-
                   return resp.providers
                 })
               )

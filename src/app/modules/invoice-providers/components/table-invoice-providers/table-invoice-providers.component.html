@@ -1,0 +1,147 @@
+<button class="btn-primary" mat-raised-button routerLink="/invoice-providers/add-invoice-providers">Crear factura</button>
+<div class="table-responsive mt-4 overflow-auto ">
+  <table id="seasontable" class="table text-nowrap">
+    <thead>
+      <tr>
+        <th>
+          Tracking
+        </th>
+        <th class="last">
+          <span>
+            <img src="../../../../../assets/icons/traffic.svg" alt="">
+          </span>
+        </th>
+        <th >
+          Id flujo
+        </th>
+        <th>
+          Remesa
+        </th>
+        <th>
+          Empresa
+        </th>
+        <th>
+          Ceco
+        </th>
+        <th>
+          No. Proveedor
+        </th>
+        <th>
+          Nombre proveedor
+        </th>
+        <th>
+          No. Factura
+        </th>
+        <th>
+          Fecha Carga
+        </th>
+        <th>
+          Fecha Factura
+        </th>
+        <th>
+          Fecha Vencimiento
+        </th>
+        <th>
+          Total factura
+        </th>
+        <th>
+          A pagar
+        </th>
+        <th>
+          Divisa
+        </th>
+        <th>
+          T.C.
+        </th>
+        <th>
+          Total M.N.
+        </th>
+        <th>
+          Descripcion
+        </th>
+        <th>
+          Contrato
+        </th>
+        <th>
+          Bolsa/Chequera
+        </th>
+        <th>
+          Estado de pago
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr *ngFor="let invoice of invoiceProviders | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      index as i">
+      <td class="text-center">
+        <span><i class="material-icons" style="color:black">timeline</i></span>
+      </td>
+      <td class="text-center">
+        <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
+      </td>
+      <td>
+        <span></span>
+      </td>
+      <td>
+        <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
+      </td>
+      <td>
+        <span>{{invoice.ceco.business}}</span>
+      </td>
+      <td>
+        <span>{{invoice.ceco.name_short}}</span>
+      </td>
+      <td>
+        <span>{{invoice.provider.key_provider}}</span>
+      </td>
+      <td>
+        <span>{{invoice.provider.name}}</span>
+      </td>
+      <td>
+        <span>{{invoice.key_invoice}}</span>
+      </td>
+      <td>
+        <span>{{invoice.upload_date | date}}</span>
+      </td>
+      <td>
+        <span>{{invoice.invoice_date | date}}</span>
+      </td>
+      <td>
+        <span>{{invoice.expiration_date | date}}</span>
+      </td>
+      <td>
+       <!-- <span>{{getTotal(invoice) | currency}}</span> -->
+      </td>
+      <td>
+       <!--  <span>{{getTotalPayment(invoice) | currency}}</span> -->
+      </td>
+      <td>
+        <span>{{invoice.divisa.abbreviation_divisa}}</span>
+      </td>
+      <td>
+      <!--  <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span> -->
+      </td>
+      <td>
+      <!-- <span>{{totalMN(invoice) | currency}}</span> -->
+      </td>
+      <td>
+        <span>{{invoice.description}}</span>
+      </td>
+      <td>
+        <span>{{invoice.contract}}</span>
+       </td>
+       <td>
+        <span></span>
+       </td>
+       <td>
+        <span></span>
+       </td>
+      <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-12 d-flex flex-row-reverse">
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    [responsive]="true"></pagination-controls>
+</div>

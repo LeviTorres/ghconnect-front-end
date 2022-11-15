@@ -6,11 +6,17 @@ import { InvoiceProvidersComponent } from './pages/invoice-providers/invoice-pro
 import { SharedModule } from '../../shared/shared.module';
 import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
+import { MainComponent } from './pages/main/main.component';
+import { TableInvoiceProvidersComponent } from './components/table-invoice-providers/table-invoice-providers.component';
+import { AddInvoiceProvidersComponent } from './pages/add-invoice-providers/add-invoice-providers.component';
 
 
 @NgModule({
   declarations: [
-    InvoiceProvidersComponent
+    InvoiceProvidersComponent,
+    MainComponent,
+    TableInvoiceProvidersComponent,
+    AddInvoiceProvidersComponent
   ],
   imports: [
     CommonModule,
