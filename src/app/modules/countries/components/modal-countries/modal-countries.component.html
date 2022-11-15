@@ -31,7 +31,7 @@
         </mat-form-field>
       </div>
       <div class="">
-        <label>Simbolo</label>
+        <label>Divisa</label>
         <mat-form-field class="w-100" appearance="outline">
           <mat-select  matInput formControlName="divisa" placeholder="Selecciona una divisa">
               <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.name}}</mat-option>
