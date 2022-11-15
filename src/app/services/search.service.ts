@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { User } from '../models/User.model';
 import { Divisa } from '../models/Divisa.model';
+import { Country } from '../models/Country.model';
 
 const base_url = environment.base_url
 
@@ -41,6 +42,13 @@ export class SearchService {
     )
   }
 
+ /* private generateCountries(countries: any[]): Country[]{
+    return countries.map(
+      country => new Country(country.name)
+    )
+    return ''
+  }*/
+
   search(type:string, term:string){
       return this._http.get<any[]>(`${base_url}/search/${type}/${term}`,this.headers)
               .pipe(
@@ -48,8 +56,10 @@ export class SearchService {
                   switch(type){
                     case 'users':
                       return this.generateUsers(resp.resultados)
-                      case 'divisas':
+                    case 'divisas':
                       return this.generateDivisas(resp.resultados)
+                    case 'countries':
+                      return
                     default:
                       return []
                   }
