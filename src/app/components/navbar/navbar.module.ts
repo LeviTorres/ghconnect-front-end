@@ -5,6 +5,8 @@ import { NavbarRoutingModule } from './navbar-routing.module';
 import { NavbarComponent } from './navbar.component';
 import { SharedModule } from '../../shared/shared.module';
 import { MenuNavbarModule } from '../menu-navbar/menu-navbar.module';
+import { TaskModule } from '../task/task.module';
+import { ChatModule } from '../chat/chat.module';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { MenuNavbarModule } from '../menu-navbar/menu-navbar.module';
     CommonModule,
     NavbarRoutingModule,
     SharedModule,
-    MenuNavbarModule
+    MenuNavbarModule,
+    TaskModule,
+    ChatModule
   ],
   exports: [
     NavbarComponent
