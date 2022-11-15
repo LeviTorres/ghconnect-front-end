@@ -15,12 +15,21 @@
     </div>
   </div>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="mx-3">
+
+  <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuChat">
     <img src="../../../assets/icons/chat.svg" alt="">
   </button>
-  <button mat-icon-button class="mx-3">
+  <mat-menu #menuChat="matMenu">
+    <app-chat></app-chat>
+  </mat-menu>
+
+  <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuTask">
     <img src="../../../../assets/icons/task.svg" alt="">
   </button>
+  <mat-menu #menuTask="matMenu">
+    <app-task></app-task>
+  </mat-menu>
+
   <span class="mx-5 p-5"></span>
   <button class="mx-5" mat-icon-button [matMenuTriggerFor]="menu">
     <div class="container-2">
