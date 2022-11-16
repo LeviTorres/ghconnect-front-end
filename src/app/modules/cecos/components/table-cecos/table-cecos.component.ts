@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { LoginService } from '../../../../services/login.service';
+import { EditCecosComponent } from '../edit-cecos/edit-cecos.component';
 
 @Component({
   selector: 'app-table-cecos',
@@ -159,5 +160,17 @@ export class TableCecosComponent implements OnInit {
     })
   }
 
+  openDialogEditCeco(ceco:Ceco){
+    let dialogRef = this._dialog.open(EditCecosComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: ceco
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+        this.getCecos()
+    })
+  }
 
 }

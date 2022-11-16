@@ -1,0 +1,56 @@
+<button  class="btn-primary" mat-raised-button [routerLink]="['/exchanges-divisas']">
+  <span>Volver</span>
+</button>
+<div class="table-responsive mt-4">
+  <table class="table text-nowrap">
+    <thead>
+      <tr>
+        <th>
+          Moneda Nacional
+        </th>
+        <th>
+          Moneda Extranjera
+        </th>
+        <th>
+          Tasa de cambio
+        </th>
+        <th>
+          Ultima actualizacion de tasa
+        </th>
+        <th class="last">
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let exchange of exchanges | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      index as i">
+        <td>
+          <span>{{exchange.national_currency.name}} - {{exchange.national_currency.abbreviation_divisa}}</span>
+        </td>
+        <td>
+          <span>{{exchange.foreign_currency.name}} - {{exchange.foreign_currency.abbreviation_divisa}}</span>
+        </td>
+        <td>
+          <span>1</span>
+          <span> {{exchange.foreign_currency.abbreviation_divisa}}</span>
+          <span> = </span>
+          <span>{{ exchange.exchange_rate_amount}}</span>
+          <span> {{exchange.national_currency.abbreviation_divisa}}</span>
+        </td>
+        <td>
+          <span>{{exchange.date_exchange | date}}</span>
+        </td>
+        <td class="last">
+          <i class="fa fa-edit me-3" (click)="openDialogEditExchange(exchange)"></i>
+          <i class="fa fa-trash" (click)="delete(exchange)"></i>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-12 d-flex flex-row-reverse">
+<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+  [responsive]="true"></pagination-controls>
+</div>

@@ -8,13 +8,15 @@ import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
 import { ModalBusinessComponent } from './components/modal-business/modal-business.component';
 import { TableBusinessComponent } from './components/table-business/table-business.component';
+import { EditBusinessComponent } from './components/edit-business/edit-business.component';
 
 
 @NgModule({
   declarations: [
     BusinessComponent,
     ModalBusinessComponent,
-    TableBusinessComponent
+    TableBusinessComponent,
+    EditBusinessComponent
   ],
   imports: [
     CommonModule,

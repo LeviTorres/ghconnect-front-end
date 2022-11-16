@@ -1,0 +1,61 @@
+<header class="d-flex align-items-flex-end">
+  <h2 mat-dialog-title class="col-md-10 p-0">
+    Editar pais
+  </h2>
+  <div class="d-flex justify-content-end w-100">
+    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+  </div>
+</header>
+<div>
+  <form (ngSubmit)="registerCountry()" autocomplete="off" [formGroup]="registerForm">
+      <div class="">
+        <label>Nombre</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="name" placeholder="Ingresa nombre del pais"/>
+          <mat-error
+            *ngIf="registerForm.controls['name'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Nacionalidad</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="nationality" placeholder="Ingresa la nacionalidad"/>
+          <mat-error
+            *ngIf="registerForm.controls['nationality'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Divisa</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-select  matInput formControlName="divisa" placeholder="Selecciona una divisa">
+              <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.name}}</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="registerForm.controls['divisa'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            class="mx-2 btn-primary"
+          >
+          Editar Pais
+          </button>
+        </div>
+      </mat-dialog-actions>
+  </form>
+</div>

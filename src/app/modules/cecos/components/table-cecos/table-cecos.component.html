@@ -76,7 +76,7 @@
             <span>{{ceco.business?.name}}</span>
           </td>
           <td class="last" *ngIf="actionsControl.value">
-            <i class="fa fa-edit me-4"></i>
+            <i class="fa fa-edit me-4" (click)="openDialogEditCeco(ceco)"></i>
             <i class="fa fa-trash" (click)="delete(ceco)"></i>
           </td>
           <td></td>

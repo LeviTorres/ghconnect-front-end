@@ -8,13 +8,15 @@ import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
 import { TableCountriesComponent } from './components/table-countries/table-countries.component';
 import { ModalCountriesComponent } from './components/modal-countries/modal-countries.component';
+import { EditCountriesComponent } from './components/edit-countries/edit-countries.component';
 
 
 @NgModule({
   declarations: [
     CountriesComponent,
     TableCountriesComponent,
-    ModalCountriesComponent
+    ModalCountriesComponent,
+    EditCountriesComponent
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import { Divisa } from '../../../../models/Divisa.model';
 import { DivisasService } from '../../../../services/divisas.service';
 import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
+import { EditDivisasComponent } from '../edit-divisas/edit-divisas.component';
 
 @Component({
   selector: 'app-table-divisa',
@@ -151,4 +152,16 @@ export class TableDivisaComponent implements OnInit {
     })
   }
 
+  openDialogEditDivisa(divisa: Divisa){
+    let dialogRef = this._dialog.open(EditDivisasComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: divisa
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+        this.getDivisas()
+    })
+  }
 }

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { LoginService } from '../../../../services/login.service';
+import { EditBusinessComponent } from '../edit-business/edit-business.component';
 
 @Component({
   selector: 'app-table-business',
@@ -153,5 +154,17 @@ export class TableBusinessComponent implements OnInit {
     })
   }
 
+  openDialogEditBusiness(busines: Business){
+    let dialogRef = this._dialog.open(EditBusinessComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: busines
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+        this.getBusiness()
+    })
+  }
 
 }

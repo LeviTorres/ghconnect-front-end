@@ -1,0 +1,57 @@
+<header class="d-flex align-items-flex-end">
+  <h2 mat-dialog-title class="col-md-10 p-0">
+    Nuevo tipo de cambio
+  </h2>
+  <div class="d-flex justify-content-end w-100">
+    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+  </div>
+</header>
+<div>
+  <form (ngSubmit)="registerExchange()" autocomplete="off" [formGroup]="exchangeForm">
+      <div class="">
+        <label>Tipos de cambios</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input class="text" matInput disabled [value]="exchangeValue"/>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Monto tasa de cambio</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput type="number" formControlName="exchange_rate_amount" placeholder="Ingresa un monto de tasa de cambio"/>
+          <mat-error
+            *ngIf="exchangeForm.controls['exchange_rate_amount'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-column">
+        <label>Fecha Tasa de Cambio</label>
+        <mat-form-field appearance="outline">
+          <input matInput  [matDatepicker]="picker" formControlName="date_exchange" placeholder="Selecciona una fecha tasa de cambio"/>
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="exchangeForm.controls['date_exchange'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            class="mx-2 btn-save"
+          >
+          Crear tipo de cambio
+          </button>
+        </div>
+      </mat-dialog-actions>
+  </form>
+</div>

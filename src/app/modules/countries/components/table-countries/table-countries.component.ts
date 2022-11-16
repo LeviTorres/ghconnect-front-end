@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { LoginService } from '../../../../services/login.service';
+import { EditCountriesComponent } from '../edit-countries/edit-countries.component';
 
 @Component({
   selector: 'app-table-countries',
@@ -127,6 +128,19 @@ export class TableCountriesComponent implements OnInit {
       this.countries = resp
     })
     return
+  }
+
+  openDialogEditCountry(country: Country){
+    let dialogRef = this._dialog.open(EditCountriesComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: country
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+        this.getCountries()
+    })
   }
 
   delete(country: Country) {
