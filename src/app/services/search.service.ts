@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { User } from '../models/User.model';
 import { Divisa } from '../models/Divisa.model';
 import { Country } from '../models/Country.model';
+import { Business } from '../models/Business.model';
+import { Ceco } from '../models/Ceco.model';
 
 const base_url = environment.base_url
 
@@ -22,7 +24,7 @@ export class SearchService {
     return localStorage.getItem('token') || '';
   }
 
-  get headers(){
+  get headers() {
     return {
       headers: {
         'x-token': this.token
@@ -30,40 +32,55 @@ export class SearchService {
     }
   }
 
-  private generateUsers(users: any[]): User[]{
+  private generateUsers(users: any[]): User[] {
     return users.map(
       user => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id)
     )
   }
 
-  private generateDivisas(divisas: any[]): Divisa[]{
+  private generateDivisas(divisas: any[]): Divisa[] {
     return divisas.map(
       divisa => new Divisa(divisa.name, divisa.abbreviation_name, divisa._id)
     )
   }
 
- /* private generateCountries(countries: any[]): Country[]{
+  private generateCountries(countries: any[]): Country[] {
     return countries.map(
-      country => new Country(country.name)
+      country => new Country(country.name, country.nationality)
     )
-    return ''
-  }*/
+  }
 
-  search(type:string, term:string){
-      return this._http.get<any[]>(`${base_url}/search/${type}/${term}`,this.headers)
-              .pipe(
-                map((resp:any) => {
-                  switch(type){
-                    case 'users':
-                      return this.generateUsers(resp.resultados)
-                    case 'divisas':
-                      return this.generateDivisas(resp.resultados)
-                    case 'countries':
-                      return
-                    default:
-                      return []
-                  }
-                })
-              )
+  private generateBusiness(business: any[]): Business[] {
+    return business.map(
+      business => new Business(business.name, business.name_short, business.key_business)
+    )
+  }
+
+  private generateCecos(cecos: any[]): Ceco[] {
+    return cecos.map(
+      cecos => new Ceco(cecos.name_large, cecos.name_short, cecos.key_ceco, cecos.key_ceco_business)
+    )
+  }
+
+  search(type: string, term: string) {
+    return this._http.get<any[]>(`${base_url}/search/${type}/${term}`, this.headers)
+      .pipe(
+        map((resp: any) => {
+          switch (type) {
+            case 'users':
+              return this.generateUsers(resp.resultados)
+            case 'divisas':
+              return this.generateDivisas(resp.resultados)
+            case 'countries':
+              return this.generateCountries(resp.resultados)
+            case 'business':
+              return this.generateBusiness(resp.resultados)
+            case 'cecos':
+              return this.generateCecos(resp.resultados)
+            default:
+              return []
+          }
+        })
+      )
   }
 }
