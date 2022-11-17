@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class HeadersService {
     return localStorage.getItem('token') || '';
   }
 
-  get headers(){
+  get headers() {
     return {
       headers: {
         'x-token': this.token
@@ -25,20 +25,20 @@ export class HeadersService {
     }
   }
 
-  getHeaders(type:string){
-    return this._http.get(`${base_url}/headers/${type}`,this.headers)
-            .pipe(
-              map((resp:any) => {
-                return resp.headers
-              })
-            )
+  getHeaders(type: string) {
+    return this._http.get(`${base_url}/headers/${type}`, this.headers)
+      .pipe(
+        map((resp: any) => {
+          return resp.headers
+        })
+      )
   }
 
-  createHeaders(formData: any, type:string) {
+  createHeaders(formData: any, type: string) {
     return this._http.post(`${base_url}/headers/${type}`, formData, this.headers)
   }
 
-  updateHeaders(formData: any, _id:string, type:string) {
-    return this._http.put(`${base_url}/headers/${type}/${ _id}`, formData, this.headers)
+  updateHeaders(formData: any, _id: string, type: string) {
+    return this._http.put(`${base_url}/headers/${type}/${_id}`, formData, this.headers)
   }
 }

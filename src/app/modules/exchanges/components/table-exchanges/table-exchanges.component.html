@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between col-12">
   <div>
-    <button class="btn-primary" mat-raised-button (click)="openDialogModalExchange()" >Crear Tipo de cambio</button>
+    <button class="btn-primary" mat-raised-button (click)="openDialogModalExchange()">Crear Tipo de cambio</button>
   </div>
   <div class="col-4">
     <mat-form-field class="w-100" appearance="legacy">
@@ -10,58 +10,78 @@
     </mat-form-field>
   </div>
 </div>
-  <div class="table-responsive mt-4">
-    <table class="table text-nowrap">
-      <thead>
-        <tr>
-          <th>
-            Moneda Nacional
-          </th>
-          <th>
-            Moneda Extranjera
-          </th>
-          <th>
-            Tasa de cambio
-          </th>
-          <th>
-            Ultima actualizacion de tasa
-          </th>
-          <th class="last">
-            Acciones
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let exchange of filterExchanges | paginate: { itemsPerPage: selectedValue, currentPage: page };
+<div class="table-responsive mt-4">
+  <table class="table text-nowrap">
+    <thead>
+      <tr>
+        <th *ngIf="nationalCurrencyControl.value">
+          Moneda Nacional
+        </th>
+        <th *ngIf="foreignCurrencyControl.value">
+          Moneda Extranjera
+        </th>
+        <th *ngIf="exchangeRateControl.value">
+          Tasa de cambio
+        </th>
+        <th *ngIf="dateExchangeControl.value">
+          Ultima actualizacion de tasa
+        </th>
+        <th class="last" *ngIf="actionsControl.value">
+          Acciones
+        </th>
+        <th class="last" style="width: 15px;">
+          <span class="button-menu" [matMenuTriggerFor]="menu">
+            <i class="material-icons" style="color:white ">more_vert</i>
+          </span>
+        </th>
+        <mat-menu #menu="matMenu">
+          <div class="menu-table">
+            <mat-checkbox class="example-margin" [formControl]="nationalCurrencyControl"
+              (click)="$event.stopPropagation();">Moneda nacional</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="foreignCurrencyControl"
+              (click)="$event.stopPropagation();">Moneda extranjera</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="exchangeRateControl"
+              (click)="$event.stopPropagation();">Tasa de cambio</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="dateExchangeControl"
+              (click)="$event.stopPropagation();">Ultima actualizacion de la tasa</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+              Acciones</mat-checkbox>
+            <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+          </div>
+        </mat-menu>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let exchange of filterExchanges | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
-          <td>
-            <span>{{exchange.national_currency.name}} - {{exchange.national_currency.abbreviation_divisa}}</span>
-          </td>
-          <td>
-            <span>{{exchange.foreign_currency.name}} - {{exchange.foreign_currency.abbreviation_divisa}}</span>
-          </td>
-          <td>
-            <span>1</span>
-            <span> {{exchange.foreign_currency.abbreviation_divisa}}</span>
-            <span> = </span>
-            <span>{{ exchange.exchange_rate_amount}}</span>
-            <span> {{exchange.national_currency.abbreviation_divisa}}</span>
-          </td>
-          <td>
-            <span>{{exchange.date_exchange | date}}</span>
-          </td>
-          <td class="last">
-            <span class="span-last mr-3" (click)="openDialogNewExchange(exchange)">Nueva Tasa</span>
-            <span class="span-last mx-3" (click)="goToDetailsExchanges(exchange)">Detalles Tasas</span>
-            <i class="fa fa-edit me-3" (click)="openDialogEditExchange(exchange)"></i>
-            <i class="fa fa-trash" (click)="delete(exchange)"></i>
-          </td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <td *ngIf="nationalCurrencyControl.value">
+          <span>{{exchange.national_currency.name}} - {{exchange.national_currency.abbreviation_divisa}}</span>
+        </td>
+        <td *ngIf="foreignCurrencyControl.value">
+          <span>{{exchange.foreign_currency.name}} - {{exchange.foreign_currency.abbreviation_divisa}}</span>
+        </td>
+        <td *ngIf="exchangeRateControl.value">
+          <span>1</span>
+          <span> {{exchange.foreign_currency.abbreviation_divisa}}</span>
+          <span> = </span>
+          <span>{{ exchange.exchange_rate_amount}}</span>
+          <span> {{exchange.national_currency.abbreviation_divisa}}</span>
+        </td>
+        <td *ngIf="dateExchangeControl.value">
+          <span>{{exchange.date_exchange | date}}</span>
+        </td>
+        <td class="last" *ngIf="actionsControl.value">
+          <span class="span-last mr-3" (click)="openDialogNewExchange(exchange)">Nueva Tasa</span>
+          <span class="span-last mx-3" (click)="goToDetailsExchanges(exchange)">Detalles Tasas</span>
+          <i class="fa fa-edit me-3" (click)="openDialogEditExchange(exchange)"></i>
+          <i class="fa fa-trash" (click)="delete(exchange)"></i>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <div class="col-12 d-flex flex-row-reverse">
-<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
     [responsive]="true"></pagination-controls>
 </div>

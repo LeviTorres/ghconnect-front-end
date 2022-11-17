@@ -1,4 +1,4 @@
-<button  class="btn-primary" mat-raised-button [routerLink]="['/exchanges-divisas']">
+<button class="btn-primary" mat-raised-button [routerLink]="['/exchanges-divisas']">
   <span>Volver</span>
 </button>
 <div class="table-responsive mt-4">
@@ -51,6 +51,6 @@
   </table>
 </div>
 <div class="col-12 d-flex flex-row-reverse">
-<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
-  [responsive]="true"></pagination-controls>
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    [responsive]="true"></pagination-controls>
 </div>
