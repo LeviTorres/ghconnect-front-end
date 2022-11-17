@@ -20,11 +20,11 @@ export class AddNewVolumeComponent implements OnInit {
   public cardValue: string = ''
   public descriptionValue: string = ''
   public measureValue: string = ''
+  public unitsPurchasedValue: number = 0
+  public priceProformValue: number = 0
 
   public registerForm = this._fb.group({
     project_volume: [ '', Validators.required ],
-    units_purchased: [ '', Validators.required ],
-    price_proforma: [ '', Validators.required ],
   })
 
   constructor(
@@ -43,6 +43,8 @@ export class AddNewVolumeComponent implements OnInit {
     this.cardValue = this.volumeData.card
     this.descriptionValue = this.volumeData.description
     this.measureValue = this.volumeData.measure
+    this.unitsPurchasedValue = this.volumeData.units_purchased
+    this.priceProformValue = this.volumeData.price_proforma
   }
 
   registerCountry() {
@@ -59,7 +61,9 @@ export class AddNewVolumeComponent implements OnInit {
         departure: this.volumeData.departure,
         card: this.volumeData.card,
         description: this.volumeData.description,
-        measure: this.volumeData.measure
+        measure: this.volumeData.measure,
+        units_purchased: this.volumeData.units_purchased,
+        price_proforma: this.volumeData.price_proforma
       }
       console.log(element);
 

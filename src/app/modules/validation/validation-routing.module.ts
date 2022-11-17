@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ValidationComponent } from './pages/validation/validation.component';
+import { MainComponent } from '../comparatives-chart/pages/main/main.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ValidationComponent
+    component: MainComponent
   }
 ];
 
