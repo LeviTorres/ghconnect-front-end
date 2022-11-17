@@ -71,10 +71,10 @@
       </tr>
     </thead>
     <tbody>
-     <tr *ngFor="let invoice of invoiceProviders | paginate: { itemsPerPage: selectedValue, currentPage: page };
+     <tr *ngFor="let invoice of filterInvoiceProviders | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
       <td class="text-center">
-        <span><i class="material-icons" style="color:black">timeline</i></span>
+        <span (click)="openDialogTracking(invoice)"><i class="material-icons" style="color:black">timeline</i></span>
       </td>
       <td class="text-center">
         <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
@@ -86,10 +86,10 @@
         <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
       </td>
       <td>
-        <span>{{invoice.ceco.business}}</span>
+        <span>{{getBusin(invoice?.ceco?.business)}}</span>
       </td>
       <td>
-        <span>{{invoice.ceco.name_short}}</span>
+        <span>{{invoice?.ceco?.name_short}}</span>
       </td>
       <td>
         <span>{{invoice.provider.key_provider}}</span>
@@ -110,19 +110,19 @@
         <span>{{invoice.expiration_date | date}}</span>
       </td>
       <td>
-       <!-- <span>{{getTotal(invoice) | currency}}</span> -->
+        <span>{{getTotal(invoice) | currency}}</span>
       </td>
       <td>
-       <!--  <span>{{getTotalPayment(invoice) | currency}}</span> -->
+        <span>{{getTotalPayment(invoice) | currency}}</span>
       </td>
       <td>
         <span>{{invoice.divisa.abbreviation_divisa}}</span>
       </td>
       <td>
-      <!--  <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span> -->
+        <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span>
       </td>
       <td>
-      <!-- <span>{{totalMN(invoice) | currency}}</span> -->
+        <span>{{totalMN(invoice) | currency}}</span>
       </td>
       <td>
         <span>{{invoice.description}}</span>
