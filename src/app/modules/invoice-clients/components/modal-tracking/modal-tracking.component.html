@@ -1,0 +1,72 @@
+<header class="d-flex align-items-flex-end">
+  <div class="d-flex justify-content-end w-100">
+    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+  </div>
+</header>
+<div class="table-responsive mt-4">
+  <table class="table text-nowrap">
+    <thead>
+      <tr>
+        <th>
+          Factura
+        </th>
+        <th>
+          Fecha
+        </th>
+        <th>
+          Tipo de movimiento
+        </th>
+        <th>
+          Concepto
+        </th>
+        <th>
+          Total
+        </th>
+        <th>
+          Moneda
+        </th>
+        <th>
+          MN
+        </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let invoice of invoiceClients">
+      <td>
+        <span>{{invoice.key_invoice}}</span>
+      </td>
+      <td>
+        <span>{{invoice.invoice_date | date}}</span>
+      </td>
+      <td>
+      <span>{{invoice.movement_type.name_movement}}</span>
+      </td>
+      <td>
+        <span>{{invoice.description}}</span>
+      </td>
+      <td>
+        <span>{{invoice.invoice_total | currency}}</span>
+      </td>
+      <td>
+      <span>{{invoice.divisa.abbreviation_divisa}}</span>
+      </td>
+      <td>
+       <span>{{getTotal(invoice) != 0 ? (getTotal(invoice) | currency) : 'SIN TIPO DE CAMBIO'}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="text-center">
+        <span>Total:</span>
+      </td>
+      <td>
+        <span>{{getTotalMN() | currency}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

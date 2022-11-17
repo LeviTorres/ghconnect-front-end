@@ -31,6 +31,11 @@ const routes: Routes = [
     canActivate:[ AuthGuard ]
   },
   {
+    path: 'volumes',
+    loadChildren: () => import('./modules/volumes/volumes.module').then(m => m.VolumesModule),
+    canActivate:[ AuthGuard ]
+  },
+  {
     path: 'exchanges-divisas',
     loadChildren: () => import('./modules/exchanges-divisas/exchanges-divisas.module').then(m => m.ExchangesDivisasModule),
     canActivate:[ AuthGuard ]

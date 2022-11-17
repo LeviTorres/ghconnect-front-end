@@ -1,0 +1,87 @@
+<button  class="btn-primary" mat-raised-button [routerLink]="['/volumes']">
+  <span>Volver</span>
+</button>
+<div class="table-responsive mt-4">
+  <table class="table text-nowrap">
+    <thead>
+      <tr>
+        <th>
+          Insumo
+        </th>
+        <th>
+          Frente
+        </th>
+        <th>
+          Partida
+        </th>
+        <th>
+          Tarjeta
+        </th>
+        <th>
+          Descripcion
+        </th>
+        <th>
+          Unidad medida
+        </th>
+        <th>
+          Volumen proyecto
+        </th>
+        <th>
+          Unidades compradas
+        </th>
+        <th>
+          Pendiente por comprar
+        </th>
+        <th>
+          Precio proforma
+        </th>
+        <th class="last" >
+          Acciones
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let volume of volumes | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      index as i">
+        <td>
+          <span>{{volume.insumo}}</span>
+        </td>
+        <td>
+          <span>{{volume.front}}</span>
+        </td>
+        <td>
+          <span>{{volume.departure }}</span>
+        </td>
+        <td>
+          <span>{{volume.card }}</span>
+        </td>
+        <td>
+          <span>{{volume.description }}</span>
+        </td>
+        <td>
+          <span>{{volume.measure }}</span>
+        </td>
+        <td>
+          <span>{{volume.project_volume | currency}}</span>
+        </td>
+        <td>
+          <span>{{volume.units_purchased | currency }}</span>
+        </td>
+        <td>
+          <span></span>
+        </td>
+        <td>
+          <span>{{volume.price_proforma | currency }}</span>
+        </td>
+        <td class="last">
+          <i class="fa fa-trash" (click)="delete(volume)"></i>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-12 d-flex flex-row-reverse">
+<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+  [responsive]="true"></pagination-controls>
+</div>

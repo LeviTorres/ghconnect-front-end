@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import {Volume } from '../models/Volume.model'
 
 const base_url = environment.base_url
 
@@ -26,23 +27,23 @@ export class VolumesService {
     }
   }
 
-  createDivisa(formData: any) {
-    return this._http.post(`${base_url}/divisas`, formData, this.headers)
+  createVolume(formData: any) {
+    return this._http.post(`${base_url}/volumes`, formData, this.headers)
   }
 
-  updateDivisa(formData: any, _id:string) {
-    return this._http.put(`${base_url}/divisas/${ _id}`, formData, this.headers)
+  updateVolume(formData: any, _id:string) {
+    return this._http.put(`${base_url}/volumes/${ _id}`, formData, this.headers)
   }
 
-  getDivisas(){
-    return this._http.get(`${base_url}/divisas`,this.headers)
+  getVolumes(){
+    return this._http.get(`${base_url}/volumes`,this.headers)
               .pipe(
-                map((resp:any) => resp.divisas)
+                map((resp:any) => resp.volumes)
               )
   }
 
-  deleteDivisa(divisa:any){
-    return this._http.delete(`${base_url}/divisas/${divisa._id}`,this.headers)
+  deleteVolume(volume:Volume){
+    return this._http.delete(`${base_url}/volumes/${volume._id}`,this.headers)
   }
 
 }

@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
+import { InvoiceClient } from '../../../../models/InvoiceClients.model';
+import { Divisa } from '../../../../models/Divisa.model';
+import { Business } from '../../../../models/Business.model';
+import { Exchange } from '../../../../models/Exchange.model';
+import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SearchService } from '../../../../services/search.service';
 import { ToastrService } from 'ngx-toastr';
-import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
-import { Divisa } from '../../../../models/Divisa.model';
 import { DivisasService } from '../../../../services/divisas.service';
-import { Business } from '../../../../models/Business.model';
 import { BusinessService } from '../../../../services/business.service';
-import { Exchange } from '../../../../models/Exchange.model';
 import { ExchangesService } from '../../../../services/exchanges.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalTrackingComponent } from '../modal-tracking/modal-tracking.component';
 
 @Component({
-  selector: 'app-table-invoice-providers',
-  templateUrl: './table-invoice-providers.component.html',
-  styleUrls: ['./table-invoice-providers.component.scss']
+  selector: 'app-table-invoice-clients',
+  templateUrl: './table-invoice-clients.component.html',
+  styleUrls: ['./table-invoice-clients.component.scss']
 })
-export class TableInvoiceProvidersComponent implements OnInit {
+export class TableInvoiceClientsComponent implements OnInit {
 
-  public invoiceProviders: InvoiceProviders[] = []
-  public filterInvoiceProviders: InvoiceProviders[] = []
+  public invoiceClients: InvoiceClient[] = []
+  public filterInvoiceClients: InvoiceClient[] = []
   public divisas: Divisa[] = []
   public business: Business[] = []
   public exchanges: Exchange[] = []
@@ -30,7 +30,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
   public page!: number;
 
   constructor(
-    private _invoiceProvidersService: InvoiceProvidersService,
+    private _invoiceClientService: InvoiceClientsService,
     private _spinner: NgxSpinnerService,
     private _searchService: SearchService,
     private _toastr:ToastrService,
@@ -41,22 +41,22 @@ export class TableInvoiceProvidersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getInvoiceProviders()
+    this.getInvoiceClients()
     this.getDivisas()
     this.getBusiness()
     this.getExchanges()
   }
 
-  getInvoiceProviders(){
+  getInvoiceClients(){
     this._spinner.show()
-    this._invoiceProvidersService.getInvoiceProviders().subscribe((resp:any) => {
-      this.invoiceProviders = resp
-      this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.key_movement === '14')
+    this._invoiceClientService.getInvoiceClients().subscribe((resp:any) => {
+      this.invoiceClients = resp
+      this.filterInvoiceClients = this.invoiceClients.filter((item: InvoiceClient) => item.movement_type.key_movement === '14')
       this._spinner.hide()
     })
   }
 
-  openDialogTracking(invoice: InvoiceProviders){
+  openDialogTracking(invoice: InvoiceClient){
     let dialogRef = this._dialog.open(ModalTrackingComponent, {
       width: '1000px',
       maxHeight: '95vh',
@@ -65,7 +65,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
       data: invoice
     });
     dialogRef.beforeClosed().subscribe(() => {
-      this.getInvoiceProviders()
+      this.getInvoiceClients()
     })
   }
 
@@ -100,10 +100,10 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
 
-  getTotal(invoice: InvoiceProviders){
+  getTotal(invoice: InvoiceClient){
     let total:number = 0
-      const array = this.invoiceProviders.filter((item:InvoiceProviders) => item.key_invoice === invoice.key_invoice)
-      array.forEach((invoice:InvoiceProviders) =>{
+      const array = this.invoiceClients.filter((item:InvoiceClient) => item.key_invoice === invoice.key_invoice)
+      array.forEach((invoice:InvoiceClient) =>{
          const divisa = this.divisas.find((item:Divisa) => item._id === invoice.divisa._id)
         if(divisa?.abbreviation_divisa === 'BOB'){
           if(invoice.movement_type.key_movement === '51' && divisa?.abbreviation_divisa === 'BOB'){
@@ -132,10 +132,10 @@ export class TableInvoiceProvidersComponent implements OnInit {
       return total
   }
 
-  getTotalPayment(invoice:InvoiceProviders){
+  getTotalPayment(invoice:InvoiceClient){
     let total: number = 0
-    const array = this.invoiceProviders.filter((item: InvoiceProviders) => item.key_invoice === invoice.key_invoice)
-    array.forEach((invoice: InvoiceProviders) => {
+    const array = this.invoiceClients.filter((item: InvoiceClient) => item.key_invoice === invoice.key_invoice)
+    array.forEach((invoice: InvoiceClient) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
         if (invoice.movement_type.key_movement === '14' && divisa?.abbreviation_divisa === 'BOB') {
@@ -162,7 +162,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     return this.getTotalPayment(invoice) * this.typeChange(invoice);
   }
 
-  public typeChange(invoice: InvoiceProviders) {
+  public typeChange(invoice: InvoiceClient) {
     const divisa = invoice.divisa.abbreviation_divisa
 
     if (divisa === 'BOB') {
@@ -181,4 +181,5 @@ export class TableInvoiceProvidersComponent implements OnInit {
       }
     }
   }
+
 }

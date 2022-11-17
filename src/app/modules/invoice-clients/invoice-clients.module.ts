@@ -6,11 +6,19 @@ import { InvoiceClientsComponent } from './pages/invoice-clients/invoice-clients
 import { SharedModule } from '../../shared/shared.module';
 import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
+import { MainComponent } from './pages/main/main.component';
+import { AddInvoiceClientsComponent } from './pages/add-invoice-clients/add-invoice-clients.component';
+import { TableInvoiceClientsComponent } from './components/table-invoice-clients/table-invoice-clients.component';
+import { ModalTrackingComponent } from './components/modal-tracking/modal-tracking.component';
 
 
 @NgModule({
   declarations: [
-    InvoiceClientsComponent
+    InvoiceClientsComponent,
+    MainComponent,
+    AddInvoiceClientsComponent,
+    TableInvoiceClientsComponent,
+    ModalTrackingComponent
   ],
   imports: [
     CommonModule,
