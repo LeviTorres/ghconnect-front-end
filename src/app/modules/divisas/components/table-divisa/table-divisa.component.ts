@@ -40,7 +40,7 @@ export class TableDivisaComponent implements OnInit {
     private _spinner: NgxSpinnerService,
     private _dialog: MatDialog,
     private _searchService: SearchService,
-    private _toastr:ToastrService,
+    private _toastr: ToastrService,
     private _loginService: LoginService,
     private _headerService: HeadersService
   ) { }
@@ -50,43 +50,43 @@ export class TableDivisaComponent implements OnInit {
     this.getHeadersDivisa()
   }
 
-  getHeadersDivisa(){
+  getHeadersDivisa() {
     this._spinner.show()
-    this._headerService.getHeaders('divisas').subscribe((resp:any) => {
+    this._headerService.getHeaders('divisas').subscribe((resp: any) => {
       this.headersDivisa = resp
       this.initValuesHeader()
       this._spinner.hide()
     })
   }
 
-  initValuesHeader(){
+  initValuesHeader() {
     const headerDivisa = this.headersDivisa.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
-    if(headerDivisa){
+    if (headerDivisa) {
       this.nameControl.setValue(headerDivisa.name)
       this.abbreviationControl.setValue(headerDivisa.abbreviation_divisa)
       this.symbolControl.setValue(headerDivisa.symbol)
       this.actionsControl.setValue(headerDivisa.actions)
-    }else {
+    } else {
       this.nameControl.setValue(true)
       this.abbreviationControl.setValue(true)
       this.symbolControl.setValue(true)
       this.actionsControl.setValue(true)
       const element = {
-        key_header:  `${this._loginService.uid}-${this.header_name}`,
+        key_header: `${this._loginService.uid}-${this.header_name}`,
         name: true,
         symbol: true,
         abbreviation_divisa: true,
         actions: true,
       }
-      this._headerService.createHeaders(element,'divisas').subscribe((item: any)=>{
+      this._headerService.createHeaders(element, 'divisas').subscribe((item: any) => {
         this.getHeadersDivisa()
-      },() => {
+      }, () => {
         this._toastr.error('Error al cargar los headers')
       })
     }
   }
 
-  updateHeader(){
+  updateHeader() {
     const headerDivisa = this.headersDivisa.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     const element = {
       name: this.nameControl.value,
@@ -96,12 +96,12 @@ export class TableDivisaComponent implements OnInit {
     }
     this._headerService.updateHeaders(element, headerDivisa._id, 'divisas').subscribe(() => {
 
-    },() => {
+    }, () => {
       this._toastr.error('Error al actualizar los headers')
     })
   }
 
-  openDialogModalDivisa(){
+  openDialogModalDivisa() {
     let dialogRef = this._dialog.open(ModalDivisaComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -109,30 +109,30 @@ export class TableDivisaComponent implements OnInit {
       autoFocus: false
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getDivisas()
+      this.getDivisas()
     })
   }
 
-  getDivisas(){
+  getDivisas() {
     this._spinner.show()
-    this._divisaService.getDivisas().subscribe((resp:any) => {
+    this._divisaService.getDivisas().subscribe((resp: any) => {
       this.divisas = resp
       this.divisasTemp = resp
       this._spinner.hide()
     })
   }
 
-  search(term:string){
-    if(term.length === 0){
+  search(term: string) {
+    if (term.length === 0) {
       return this.divisas = this.divisasTemp
     }
-    this._searchService.search('divisas',term).subscribe( (resp: any) => {
+    this._searchService.search('divisas', term).subscribe((resp: any) => {
       this.divisas = resp
     })
     return
   }
 
-  delete(divisa:Divisa){
+  delete(divisa: Divisa) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${divisa.name}`,
@@ -140,7 +140,7 @@ export class TableDivisaComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Continuar'
     }).then((result) => {
-      if(result.value){
+      if (result.value) {
         this._spinner.show()
         this._divisaService.deleteDivisa(divisa).subscribe(() => {
           this.getDivisas()
@@ -152,7 +152,7 @@ export class TableDivisaComponent implements OnInit {
     })
   }
 
-  openDialogEditDivisa(divisa: Divisa){
+  openDialogEditDivisa(divisa: Divisa) {
     let dialogRef = this._dialog.open(EditDivisasComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -161,7 +161,7 @@ export class TableDivisaComponent implements OnInit {
       data: divisa
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getDivisas()
+      this.getDivisas()
     })
   }
 }

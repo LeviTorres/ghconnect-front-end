@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Exchange } from '../../../../models/Exchange.model';
 import { ExchangesService } from '../../../../services/exchanges.service';
+import { HeadersService } from '../../../../services/headers.service';
+import { LoginService } from '../../../../services/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -9,6 +11,8 @@ import Swal from 'sweetalert2';
 import { AddNewExchangesComponent } from '../../components/add-new-exchanges/add-new-exchanges.component';
 import { EditExchangesComponent } from '../edit-exchanges/edit-exchanges.component';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-table-exchanges',
@@ -19,24 +23,91 @@ export class TableExchangesComponent implements OnInit {
 
   public exchanges: Exchange[] = []
   public exchangesTemp: Exchange[] = []
-  public filterExchanges: Exchange[] =[]
+  public filterExchanges: Exchange[] = []
 
   public selectedValue: number = 5;
   public page!: number;
+
+  public headersExchange: any[] = []
+  public header_name: string = 'exchanges'
+
+  public nationalCurrencyControl: FormControl = new FormControl()
+  public foreignCurrencyControl: FormControl = new FormControl()
+  public exchangeRateControl: FormControl = new FormControl()
+  public dateExchangeControl: FormControl = new FormControl()
+  public actionsControl: FormControl = new FormControl()
 
   constructor(
     private _exchangeService: ExchangesService,
     private _spinner: NgxSpinnerService,
     private _dialog: MatDialog,
-    private _toastr:ToastrService,
-    private _router: Router
+    private _toastr: ToastrService,
+    private _router: Router,
+    private _loginService: LoginService,
+    private _headerService: HeadersService
   ) { }
 
   ngOnInit(): void {
     this.getExchanges()
+    this.getHeadersExchange()
   }
 
-  openDialogModalExchange(){
+  getHeadersExchange() {
+    this._spinner.show()
+    this._headerService.getHeaders('exchanges').subscribe((resp: any) => {
+      this.headersExchange = resp
+      this.initValuesHeader()
+      this._spinner.hide()
+    })
+  }
+
+  initValuesHeader() {
+    const headerExchange = this.headersExchange.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
+    if (headerExchange) {
+      this.nationalCurrencyControl.setValue(headerExchange.national_currency)
+      this.foreignCurrencyControl.setValue(headerExchange.foreign_currency)
+      this.exchangeRateControl.setValue(headerExchange.exchange_rate_amount)
+      this.dateExchangeControl.setValue(headerExchange.date_exchange)
+      this.actionsControl.setValue(headerExchange.actions)
+    } else {
+      this.nationalCurrencyControl.setValue(true)
+      this.foreignCurrencyControl.setValue(true)
+      this.exchangeRateControl.setValue(true)
+      this.dateExchangeControl.setValue(true)
+      this.actionsControl.setValue(true)
+      const element = {
+        key_header: `${this._loginService.uid}-${this.header_name}`,
+        national_currency: true,
+        foreign_currency: true,
+        exchange_rate_amount: true,
+        date_exchange: true,
+        actions: true,
+      }
+      this._headerService.createHeaders(element, 'exchanges').subscribe((item: any) => {
+        this.getHeadersExchange()
+      }, () => {
+        this._toastr.error('Error al cargar los headers')
+      })
+    }
+  }
+
+  updateHeader() {
+    const headerExchange = this.headersExchange.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
+    const element = {
+      national_currency: this.nationalCurrencyControl.value,
+      foreign_currency: this.foreignCurrencyControl.value,
+      exchange_rate_amount: this.exchangeRateControl.value,
+      date_exchange: this.dateExchangeControl.value,
+      actions: this.actionsControl.value
+    }
+    this._headerService.updateHeaders(element, headerExchange._id, 'exchanges').subscribe(() => {
+
+    }, () => {
+      this._toastr.error('Error al actualizar los headers')
+    })
+  }
+
+  openDialogModalExchange() {
     let dialogRef = this._dialog.open(ModalExchangeComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -44,11 +115,11 @@ export class TableExchangesComponent implements OnInit {
       autoFocus: false
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getExchanges()
+      this.getExchanges()
     })
   }
 
-  openDialogNewExchange(exchange: Exchange){
+  openDialogNewExchange(exchange: Exchange) {
     let dialogRef = this._dialog.open(AddNewExchangesComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -57,20 +128,20 @@ export class TableExchangesComponent implements OnInit {
       data: exchange
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getExchanges()
+      this.getExchanges()
     })
   }
 
-  goToDetailsExchanges(exchage: Exchange){
+  goToDetailsExchanges(exchage: Exchange) {
     this._router.navigate(['/exchanges-divisas/details-exchanges'],
-        {
-          queryParams: {
-            type: exchage.type_exchange,
-          }
-        });
+      {
+        queryParams: {
+          type: exchage.type_exchange,
+        }
+      });
   }
 
-  openDialogEditExchange(exchange: Exchange){
+  openDialogEditExchange(exchange: Exchange) {
     let dialogRef = this._dialog.open(EditExchangesComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -79,13 +150,13 @@ export class TableExchangesComponent implements OnInit {
       data: exchange
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getExchanges()
+      this.getExchanges()
     })
   }
 
-  getExchanges(){
+  getExchanges() {
     this._spinner.show()
-    this._exchangeService.getExchanges().subscribe((resp:any) => {
+    this._exchangeService.getExchanges().subscribe((resp: any) => {
       this.exchanges = resp
       this.exchangesTemp = resp
       const array = this.exchanges.sort((a, b) => b.date_exchange - a.date_exchange);
@@ -95,7 +166,7 @@ export class TableExchangesComponent implements OnInit {
     })
   }
 
-  delete(exchange:Exchange){
+  delete(exchange: Exchange) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar`,
@@ -103,7 +174,7 @@ export class TableExchangesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Continuar'
     }).then((result) => {
-      if(result.value){
+      if (result.value) {
         this._spinner.show()
         this._exchangeService.deleteExchange(exchange).subscribe(() => {
           this.getExchanges()

@@ -1,4 +1,5 @@
-<button class="btn-primary" mat-raised-button routerLink="/invoice-providers/add-invoice-providers">Crear factura</button>
+<button class="btn-primary" mat-raised-button routerLink="/invoice-providers/add-invoice-providers">Crear
+  factura</button>
 <div class="table-responsive mt-4 overflow-auto ">
   <table id="seasontable" class="table text-nowrap">
     <thead>
@@ -11,7 +12,7 @@
             <img src="../../../../../assets/icons/traffic.svg" alt="">
           </span>
         </th>
-        <th >
+        <th>
           Id flujo
         </th>
         <th>
@@ -71,72 +72,72 @@
       </tr>
     </thead>
     <tbody>
-     <tr *ngFor="let invoice of invoiceProviders | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      <tr *ngFor="let invoice of invoiceProviders | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
-      <td class="text-center">
-        <span><i class="material-icons" style="color:black">timeline</i></span>
-      </td>
-      <td class="text-center">
-        <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
-      </td>
-      <td>
-        <span></span>
-      </td>
-      <td>
-        <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
-      </td>
-      <td>
-        <span>{{invoice.ceco.business}}</span>
-      </td>
-      <td>
-        <span>{{invoice.ceco.name_short}}</span>
-      </td>
-      <td>
-        <span>{{invoice.provider.key_provider}}</span>
-      </td>
-      <td>
-        <span>{{invoice.provider.name}}</span>
-      </td>
-      <td>
-        <span>{{invoice.key_invoice}}</span>
-      </td>
-      <td>
-        <span>{{invoice.upload_date | date}}</span>
-      </td>
-      <td>
-        <span>{{invoice.invoice_date | date}}</span>
-      </td>
-      <td>
-        <span>{{invoice.expiration_date | date}}</span>
-      </td>
-      <td>
-       <!-- <span>{{getTotal(invoice) | currency}}</span> -->
-      </td>
-      <td>
-       <!--  <span>{{getTotalPayment(invoice) | currency}}</span> -->
-      </td>
-      <td>
-        <span>{{invoice.divisa.abbreviation_divisa}}</span>
-      </td>
-      <td>
-      <!--  <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span> -->
-      </td>
-      <td>
-      <!-- <span>{{totalMN(invoice) | currency}}</span> -->
-      </td>
-      <td>
-        <span>{{invoice.description}}</span>
-      </td>
-      <td>
-        <span>{{invoice.contract}}</span>
-       </td>
-       <td>
-        <span></span>
-       </td>
-       <td>
-        <span></span>
-       </td>
-      <td></td>
+        <td class="text-center">
+          <span><i class="material-icons" style="color:black">timeline</i></span>
+        </td>
+        <td class="text-center">
+          <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
+        </td>
+        <td>
+          <span></span>
+        </td>
+        <td>
+          <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
+        </td>
+        <td>
+          <span>{{invoice.ceco.business}}</span>
+        </td>
+        <td>
+          <span>{{invoice.ceco.name_short}}</span>
+        </td>
+        <td>
+          <span>{{invoice.provider.key_provider}}</span>
+        </td>
+        <td>
+          <span>{{invoice.provider.name}}</span>
+        </td>
+        <td>
+          <span>{{invoice.key_invoice}}</span>
+        </td>
+        <td>
+          <span>{{invoice.upload_date | date}}</span>
+        </td>
+        <td>
+          <span>{{invoice.invoice_date | date}}</span>
+        </td>
+        <td>
+          <span>{{invoice.expiration_date | date}}</span>
+        </td>
+        <td>
+          <!-- <span>{{getTotal(invoice) | currency}}</span> -->
+        </td>
+        <td>
+          <!--  <span>{{getTotalPayment(invoice) | currency}}</span> -->
+        </td>
+        <td>
+          <span>{{invoice.divisa.abbreviation_divisa}}</span>
+        </td>
+        <td>
+          <!--  <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span> -->
+        </td>
+        <td>
+          <!-- <span>{{totalMN(invoice) | currency}}</span> -->
+        </td>
+        <td>
+          <span>{{invoice.description}}</span>
+        </td>
+        <td>
+          <span>{{invoice.contract}}</span>
+        </td>
+        <td>
+          <span></span>
+        </td>
+        <td>
+          <span></span>
+        </td>
+        <td></td>
       </tr>
     </tbody>
   </table>
