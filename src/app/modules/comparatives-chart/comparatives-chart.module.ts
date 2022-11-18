@@ -8,13 +8,15 @@ import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
 import { MainComponent } from './pages/main/main.component';
 import { AddComparativesChartComponent } from './pages/add-comparatives-chart/add-comparatives-chart.component';
+import { TableComparativesChartComponent } from './components/table-comparatives-chart/table-comparatives-chart.component';
 
 
 @NgModule({
   declarations: [
     ComparativesChartComponent,
     MainComponent,
-    AddComparativesChartComponent
+    AddComparativesChartComponent,
+    TableComparativesChartComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { AddComparativesChartComponent } from './pages/add-comparatives-chart/ad
   exports: [
     ComparativesChartComponent,
     MainComponent,
-    AddComparativesChartComponent
+    AddComparativesChartComponent,
+    TableComparativesChartComponent
   ]
 })
 export class ComparativesChartModule { }
