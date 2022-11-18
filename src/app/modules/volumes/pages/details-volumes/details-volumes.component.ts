@@ -20,6 +20,8 @@ export class DetailsVolumesComponent implements OnInit {
   public volumes: Volume[] = []
   public filterVolumes: Volume[] = []
 
+  public insumo: string = ''
+
   constructor(
     private _dialog:MatDialog,
     private _volumeService: VolumesService,
@@ -32,6 +34,7 @@ export class DetailsVolumesComponent implements OnInit {
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe((params:any) => {
       this.getVolumes(params.insumo)
+      this.insumo = params.insumo
     })
   }
 
@@ -41,6 +44,20 @@ export class DetailsVolumesComponent implements OnInit {
       this.volumes = volumes.filter((volume: Volume) => volume.insumo === insumo)
       this._spinner.hide()
     })
+  }
+
+  getTotal(){
+    const initialPlusValue = 0
+    const initialMinusValue = 0
+    const arraPlus = this.volumes.filter((volume:Volume) => volume.insumo === this.insumo && volume.type === 'plus')
+    const arrayMinus = this.volumes.filter((volume:Volume) => volume.insumo === this.insumo && volume.type === 'minus')
+    const sumPlusArray = arraPlus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialPlusValue)
+    const minusPlusArray = arrayMinus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialMinusValue)
+    return sumPlusArray - minusPlusArray
+  }
+
+  getPendingBuy(volumeTable: Volume){
+    return this.getTotal() - volumeTable.units_purchased
   }
 
   delete(volume:Volume){

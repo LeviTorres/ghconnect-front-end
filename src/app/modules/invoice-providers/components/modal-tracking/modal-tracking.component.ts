@@ -4,6 +4,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
 import { Exchange } from '../../../../models/Exchange.model';
 import { ExchangesService } from '../../../../services/exchanges.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modal-tracking',
@@ -18,23 +21,31 @@ export class ModalTrackingComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public invoiceData: InvoiceProviders,
     private _invoiceService: InvoiceProvidersService,
-    private _exchangeService: ExchangesService
+    private _exchangeService: ExchangesService,
+    private _spinner: NgxSpinnerService,
+    private _toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
+    this._spinner.show()
     this.getInvoiceProviders()
     this.getExchanges()
+    this._spinner.hide()
   }
 
   getInvoiceProviders(){
+    this._spinner.show()
     this._invoiceService.getInvoiceProviders().subscribe((resp:InvoiceProviders[]) => {
       this.invoiceProviders = resp.filter((invoice:InvoiceProviders) => invoice.key_invoice === this.invoiceData.key_invoice)
+      this._spinner.hide()
     })
   }
 
   getExchanges(){
+    this._spinner.show()
     this._exchangeService.getExchanges().subscribe((resp:Exchange[]) => {
       this.exchanges = resp
+      this._spinner.hide()
     })
   }
 
@@ -87,5 +98,25 @@ export class ModalTrackingComponent implements OnInit {
         }
       });
       return total
+  }
+
+  delete(invoice:InvoiceProviders) {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._invoiceService.deleteInvoiceProvider(invoice).subscribe(() => {
+          this.getInvoiceProviders()
+          this._spinner.hide()
+          this._toastr.success(`Factura ${invoice.key_invoice} eliminada con exito`)
+        })
+
+      }
+    })
   }
 }

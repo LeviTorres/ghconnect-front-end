@@ -38,7 +38,6 @@ export class InvoiceProvidersService {
     return this._http.get(`${base_url}/invoice-providers`,this.headers)
               .pipe(
                 map((resp:any) => {
-                 console.log(resp.invoiceProviders);
                   return resp.invoiceProviders
                 })
               )

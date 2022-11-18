@@ -11,6 +11,7 @@ import { TableVolumesComponent } from './components/table-volumes/table-volumes.
 import { DetailsVolumesComponent } from './pages/details-volumes/details-volumes.component';
 import { MainComponent } from './pages/main/main.component';
 import { AddNewVolumeComponent } from './components/add-new-volume/add-new-volume.component';
+import { EditVolumeComponent } from './components/edit-volume/edit-volume.component';
 
 
 
@@ -21,7 +22,8 @@ import { AddNewVolumeComponent } from './components/add-new-volume/add-new-volum
     TableVolumesComponent,
     DetailsVolumesComponent,
     MainComponent,
-    AddNewVolumeComponent
+    AddNewVolumeComponent,
+    EditVolumeComponent
   ],
   imports: [
     CommonModule,

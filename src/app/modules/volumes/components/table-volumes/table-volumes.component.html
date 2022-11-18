@@ -44,6 +44,12 @@
         <th>
           Precio proforma
         </th>
+        <th>
+          Fecha de creacion
+        </th>
+        <th>
+          Usuario
+        </th>
         <th class="last" >
           Acciones
         </th>
@@ -71,23 +77,30 @@
           <span>{{volume.measure }}</span>
         </td>
         <td>
-          <span>{{volume.project_volume | currency}}</span>
+          <span>{{getProjectValue(volume) }}</span>
         </td>
         <td>
-          <span>{{volume.units_purchased | currency }}</span>
+          <span>{{volume.units_purchased }}</span>
         </td>
         <td>
-          <span></span>
+          <span>{{ getPendingBuy(volume) }}</span>
         </td>
         <td>
           <span>{{volume.price_proforma | currency }}</span>
         </td>
+        <td>
+          <span>{{volume.createdAt | date}}</span>
+        </td>
+        <td>
+          <span>{{volume.user?.name}} {{volume.user?.last_name}}</span>
+        </td>
         <td class="last">
           <span class="span-last mx-3" (click)="goToDetailsVolumes(volume)">Detalles volumen</span>
-          <i class="fa fa-plus mx-3" (click)="openDialogAddNewVolume(volume)"></i>
+          <i class="fa fa-plus mx-3" (click)="openDialogAddNewVolumePlus(volume)"></i>
+          <i class="fa fa-minus mx-3" (click)="openDialogAddNewVolumeMinus(volume)"></i>
+          <i class="fa fa-edit mx-3" (click)="openDialogEditVolume(volume)"></i>
           <i class="fa fa-trash mx-3" (click)="delete(volume)"></i>
         </td>
-        <td></td>
       </tr>
     </tbody>
   </table>

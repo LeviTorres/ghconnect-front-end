@@ -69,6 +69,7 @@
         <th>
           Estado de pago
         </th>
+        <th class="last">Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -87,7 +88,7 @@
           <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
         </td>
         <td>
-          <span>{{getBusin(invoice?.ceco?.business)}}</span>
+          <span>{{invoice?.ceco?.business?.name_short}}</span>
         </td>
         <td>
           <span>{{invoice?.ceco?.name_short}}</span>
@@ -134,10 +135,10 @@
         <td>
           <span></span>
         </td>
-        <td>
-          <span></span>
-        </td>
         <td></td>
+        <td class="last">
+          <i class="fa fa-trash" (click)="delete(invoice)"></i>
+        </td>
       </tr>
     </tbody>
   </table>

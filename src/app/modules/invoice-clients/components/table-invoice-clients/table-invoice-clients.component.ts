@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { InvoiceClient } from '../../../../models/InvoiceClients.model';
 import { Divisa } from '../../../../models/Divisa.model';
-import { Business } from '../../../../models/Business.model';
 import { Exchange } from '../../../../models/Exchange.model';
 import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SearchService } from '../../../../services/search.service';
 import { ToastrService } from 'ngx-toastr';
 import { DivisasService } from '../../../../services/divisas.service';
-import { BusinessService } from '../../../../services/business.service';
 import { ExchangesService } from '../../../../services/exchanges.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalTrackingComponent } from '../modal-tracking/modal-tracking.component';
@@ -23,7 +21,6 @@ export class TableInvoiceClientsComponent implements OnInit {
   public invoiceClients: InvoiceClient[] = []
   public filterInvoiceClients: InvoiceClient[] = []
   public divisas: Divisa[] = []
-  public business: Business[] = []
   public exchanges: Exchange[] = []
 
   public selectedValue: number = 5;
@@ -35,7 +32,6 @@ export class TableInvoiceClientsComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr:ToastrService,
     private _divisaService: DivisasService,
-    private _businessService: BusinessService,
     private _exchangeService: ExchangesService,
     private _dialog: MatDialog
   ) { }
@@ -43,7 +39,6 @@ export class TableInvoiceClientsComponent implements OnInit {
   ngOnInit(): void {
     this.getInvoiceClients()
     this.getDivisas()
-    this.getBusiness()
     this.getExchanges()
   }
 
@@ -77,14 +72,6 @@ export class TableInvoiceClientsComponent implements OnInit {
     })
   }
 
-  getBusiness(){
-    this._spinner.show()
-    this._businessService.getBusiness().subscribe((resp:any) => {
-      this.business = resp
-      this._spinner.hide()
-    })
-  }
-
   getExchanges(){
     this._spinner.show()
     this._exchangeService.getExchanges().subscribe((resp:any) => {
@@ -92,13 +79,6 @@ export class TableInvoiceClientsComponent implements OnInit {
       this._spinner.hide()
     })
   }
-
-
-  getBusin(id: any){
-    const findBusiness = this.business.find((business:Business) => business._id === id)
-    return findBusiness?.name_short
-  }
-
 
   getTotal(invoice: InvoiceClient){
     let total:number = 0

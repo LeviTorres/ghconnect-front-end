@@ -63,7 +63,8 @@ export class AddNewVolumeComponent implements OnInit {
         description: this.volumeData.description,
         measure: this.volumeData.measure,
         units_purchased: this.volumeData.units_purchased,
-        price_proforma: this.volumeData.price_proforma
+        price_proforma: this.volumeData.price_proforma,
+        type: this.volumeData.type
       }
       console.log(element);
 
