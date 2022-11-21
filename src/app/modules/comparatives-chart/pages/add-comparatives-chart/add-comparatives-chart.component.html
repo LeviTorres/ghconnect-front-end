@@ -1,0 +1,194 @@
+<div>
+  <form (ngSubmit)="registerComparativeChart()" autocomplete="off" [formGroup]="comparativeForm">
+      <div class="d-flex col-12">
+        <div class="col-4 pe-2">
+          <label>ID control</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput formControlName="control_id" placeholder="Ingresa un ID control">
+            <mat-error
+            *ngIf="comparativeForm.controls['control_id'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4 pe-2">
+          <label>Tipo Contrato</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-select formControlName="type_contract" placeholder="Selecciona una unidad de negocio">
+              <mat-option *ngFor="let item of contracts" [value]="item._id">{{ item.name }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="comparativeForm.controls['type_contract'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <label>Fecha de creacion</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput  [matDatepicker]="picker" formControlName="creation_date" placeholder="Selecciona una fecha"/>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="comparativeForm.controls['creation_date'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-12 d-flex">
+        <div class="col-6 pe-2">
+          <label>Comitente</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-select formControlName="business" placeholder="Selecciona una unidad de negocio">
+              <mat-option *ngFor="let item of business" [value]="item._id">{{ item.name }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="comparativeForm.controls['business'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <label>Unidad de negocio</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-select formControlName="business_unit" placeholder="Selecciona una unidad de negocio">
+              <mat-option *ngFor="let item of cecos" [value]="item._id">{{ item.name_large }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="comparativeForm.controls['business_unit'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex col-12">
+        <div class="col-4 pe-2">
+          <label>Fecha de inicio</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput  [matDatepicker]="picker1" formControlName="start_date" placeholder="Selecciona una fecha"/>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error
+              *ngIf="comparativeForm.controls['start_date'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4 pe-2">
+          <label>Fecha de finalizacion</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput  [matDatepicker]="picker2" formControlName="final_date" placeholder="Selecciona una fecha"/>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error
+              *ngIf="comparativeForm.controls['final_date'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <label>Objetivo del proyecto</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <textarea matInput formControlName="goal_contract" placeholder="Indica el objetivo del contrato"></textarea>
+            <mat-error
+              *ngIf="comparativeForm.controls['goal_contract'].hasError('required')"
+            >
+            Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-inline-flex flex-wrap row col-12">
+        <div *ngFor="let item of providers" class="col-4 my-2">
+          <div class="card">
+            <mat-radio-button [value]="item.id">{{item.id}}</mat-radio-button>
+            <div class="d-flex col-12">
+                <div class="mb-1 col-6">
+                  <p class="m-0 p-0">Proveedor</p>
+                  <h3 class="m-0 p-0"><strong>{{item.name_provider}}</strong></h3>
+            </div>
+                <div class="col-6 mb-1">
+                  <p class="m-0 p-0">Contacto</p>
+                  <h3 class="m-0 p-0"><strong>{{item.contact}}</strong></h3>
+                </div>
+            </div>
+            <div class="d-flex col-12">
+                <div class="col-6 mb-1">
+                  <p class="m-0 p-0">Numero telefonico</p>
+                  <h3 class="m-0 p-0"><strong>{{item.phone_number}}</strong></h3>
+                </div>
+                <div class="col-6 mb-1">
+                  <p class="m-0 p-0">Correo electronico</p>
+                  <h3 class="m-0 p-0"><strong>{{item.email}}</strong></h3>
+                </div>
+            </div>
+            <hr class="my-2 p-0">
+            <div class="d-flex col-12">
+                <div class="mb-1 col-6">
+                  <p class="m-0 p-0">PVR</p>
+                  <h3 class="m-0 p-0"><strong>Bs {{item.pvr}}</strong></h3>
+                </div>
+                <div class="mb-1 col-6">
+                   <p class="m-0 p-0">Importe</p>
+                  <h3 class="m-0 p-0"><strong>Bs {{item.import}}</strong></h3>
+                </div>
+            </div>
+            <div class="d-flex col-12">
+              <div class="mb-1 col-6"></div>
+                <div class="mb-1 col-6">
+                  <p class="m-0 p-0">Total</p>
+                  <h3 class="m-0 p-0"><strong>Bs {{item.total}}</strong></h3>
+                </div>
+            </div>
+            <hr class="my-2 p-0">
+              <div class="d-flex col-12">
+                <div class="mb-1 col-6">
+                  <p class="m-0 p-0">Forma de pago</p>
+                  <h3 class="m-0 p-0"><strong>{{item.payment_method}}</strong></h3>
+                </div>
+                <div class="mb-1 col-6">
+                  <p class="m-0 p-0">Anticipo</p>
+                  <h3 class="m-0 p-0"><strong>{{item.advance}}</strong></h3>
+                </div>
+              </div>
+              <div class="d-flex col-12">
+                <div class="col-6 mb-1">
+                  <p class="m-0 p-0">Medios auxiliares no incluidos</p>
+                  <h3 class="m-0 p-0"><strong>{{item.auxiliary_means}}</strong></h3>
+                </div>
+                <div class="mb-1 col-6">
+                  <p class="m-0 p-0">Observaciones</p>
+                  <h3 class="m-0 p-0"><strong>{{item.observations}}</strong></h3>
+                </div>
+              </div>
+          </div>
+        </div>
+      <div class="card-plus col-4 m-1" (click)="addProvider()">
+        <p>+</p>
+      </div>
+    </div>
+
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+         <button
+            mat-raised-button
+            class="mx-2 btn-save"
+          >
+          Crear cuadro comparativo
+          </button>
+        </div>
+      </mat-dialog-actions>
+  </form>
+</div>

@@ -1,21 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Volume } from '../../../../models/Volume.model';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Country } from '../../../../models/Country.model';
-import { Divisa } from '../../../../models/Divisa.model';
-import { CountriesService } from '../../../../services/countries.service';
-import { DivisasService } from '../../../../services/divisas.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VolumesService } from '../../../../services/volumes.service';
-import { Volume } from '../../../../models/Volume.model';
 
 @Component({
-  selector: 'app-add-volumes',
-  templateUrl: './add-volumes.component.html',
-  styleUrls: ['./add-volumes.component.scss']
+  selector: 'app-edit-volume',
+  templateUrl: './edit-volume.component.html',
+  styleUrls: ['./edit-volume.component.scss']
 })
-export class AddVolumesComponent implements OnInit {
+export class EditVolumeComponent implements OnInit {
 
   public volumes: Volume[] = []
 
@@ -37,7 +33,7 @@ export class AddVolumesComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _toastr:ToastrService,
-    private _dialogRef: MatDialogRef<AddVolumesComponent>,
+    private _dialogRef: MatDialogRef<EditVolumeComponent>,
     private _spinner: NgxSpinnerService,
     private _volumeService: VolumesService
   ) { }

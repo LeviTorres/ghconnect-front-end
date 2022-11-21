@@ -138,6 +138,9 @@
             <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
           </div>
         </mat-menu>
+
+        <th class="last">Acciones</th>
+
       </tr>
     </thead>
     <tbody>
@@ -157,6 +160,10 @@
         </td>
         <td *ngIf="nameBusinessControl.value">
           <span>{{getBusin(invoice?.ceco?.business)}}</span>
+
+        <td>
+          <span>{{invoice?.ceco?.business?.name_short}}</span>
+
         </td>
         <td *ngIf="cecoControl.value">
           <span>{{invoice?.ceco?.name_short}}</span>

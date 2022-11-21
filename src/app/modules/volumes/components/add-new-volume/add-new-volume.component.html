@@ -56,28 +56,6 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="">
-        <label>Unidades compradas</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="units_purchased" placeholder="Ingresa las unidades compradas"/>
-          <mat-error
-            *ngIf="registerForm.controls['units_purchased'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Precio proforma</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="price_proforma" placeholder="Ingresa el precio proforma"/>
-          <mat-error
-            *ngIf="registerForm.controls['price_proforma'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
       <mat-dialog-actions align="end" class="mat">
         <div></div>
         <div>

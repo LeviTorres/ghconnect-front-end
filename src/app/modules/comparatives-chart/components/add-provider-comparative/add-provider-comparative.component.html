@@ -1,0 +1,168 @@
+<header class="d-flex align-items-flex-end">
+  <h2 mat-dialog-title class="col-md-10 p-0">
+    Registro proveedor
+  </h2>
+  <div class="d-flex justify-content-end w-100">
+    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+  </div>
+</header>
+<div>
+  <form (ngSubmit)="registerProviderComparativeChart()" autocomplete="off" [formGroup]="providerForm">
+    <div class="col-12 d-flex">
+      <div class="col-6 pe-2">
+        <label>Proveedor</label>
+        <mat-form-field class="w-100 m-0 p-0" appearance="outline">
+
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <label>Nombre de contacto</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="contact" placeholder="Ingresa nombre del contacto"/>
+          <mat-error
+            *ngIf="providerForm.controls['contact'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 pe-2">
+        <label>Numero telefono</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="phone_number" placeholder="Ingresa numero telefonico"/>
+          <mat-error
+            *ngIf="providerForm.controls['phone_number'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <label>Correo electronico</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="email" placeholder="Ingresa correo electronico"/>
+          <mat-error
+            *ngIf="providerForm.controls['email'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 pe-2">
+        <label>PVR</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="pvr" placeholder="PVR"/>
+          <mat-error
+            *ngIf="providerForm.controls['pvr'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <label>Importe</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="import" placeholder="Ingresa un importe"/>
+          <mat-error
+            *ngIf="providerForm.controls['import'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 pe-2">
+        <label>Total</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="total" placeholder="Ingresa un total"/>
+          <mat-error
+            *ngIf="providerForm.controls['total'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <label>Forma de pago</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="payment_method" placeholder="Ingresa un importe"/>
+          <mat-error
+            *ngIf="providerForm.controls['payment_method'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 pe-2">
+        <label>Anticipo</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="advance" placeholder="PVR"/>
+          <mat-error
+            *ngIf="providerForm.controls['advance'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <label>Disponibilidad</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-select formControlName="disponibility" placeholder="Selecciona la disponibilidad">
+            <mat-option value="Inmediata">Inmediata</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="providerForm.controls['disponibility'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-6 pe-2">
+        <label>Medios auxiliares no incluidos</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="auxiliary_means" placeholder="PVR"/>
+          <mat-error
+            *ngIf="providerForm.controls['auxiliary_means'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <label>Observaciones</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <textarea matInput formControlName="observations" placeholder="Ingresa un importe"></textarea>
+          <mat-error
+            *ngIf="providerForm.controls['observations'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            class="mx-2 btn-save"
+          >
+          Registrar proveedor
+          </button>
+        </div>
+      </mat-dialog-actions>
+  </form>
+</div>
+

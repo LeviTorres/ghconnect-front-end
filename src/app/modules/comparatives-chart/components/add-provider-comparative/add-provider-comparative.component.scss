@@ -1,0 +1,56 @@
+mat-hint {
+  color: red;
+}
+
+.container-img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+input {
+  padding-bottom: 5px;
+}
+
+
+
+img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 3px;
+}
+
+.custom-file {
+  margin: 0 auto;
+  cursor: pointer;
+  background-color: var(--tblr-626065);
+  border-radius: 5px;
+  display: flex;
+  color: white;
+  padding: 6px 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-save {
+  background-color: var(--tblr-626065);
+  color: white;
+}
+
+.btn-cancel {
+  color: var(--tblr-626065);
+}
+
+span {
+  cursor: pointer;
+}
+
+
+::ng-deep.mat-form-field-outline {
+  /*change color of underline*/
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+}

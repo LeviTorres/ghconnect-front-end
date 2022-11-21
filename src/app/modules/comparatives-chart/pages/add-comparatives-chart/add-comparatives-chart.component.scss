@@ -1,0 +1,31 @@
+::ng-deep.mat-form-field-outline {
+  /*change color of underline*/
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+}
+button {
+  background-color: var(--tblr-626065);
+  color: white;
+}
+
+.card {
+
+  padding: 20px;
+
+}
+
+
+.card-plus{
+  height: 200px;
+  background-color: lightgray;
+  cursor: pointer;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  p {
+    font-size: 60px;
+    color: var(--tblr-626065);
+   }
+}

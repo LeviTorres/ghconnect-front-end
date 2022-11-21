@@ -8,13 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
 import { Divisa } from '../../../../models/Divisa.model';
 import { DivisasService } from '../../../../services/divisas.service';
-import { Business } from '../../../../models/Business.model';
-import { BusinessService } from '../../../../services/business.service';
 import { Exchange } from '../../../../models/Exchange.model';
 import { ExchangesService } from '../../../../services/exchanges.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { ModalTrackingComponent } from '../modal-tracking/modal-tracking.component';
+import Swal from 'sweetalert2';
+import { Business } from 'src/app/models/Business.model';
+import { BusinessService } from 'src/app/services/business.service';
 
 @Component({
   selector: 'app-table-invoice-providers',
@@ -26,8 +27,8 @@ export class TableInvoiceProvidersComponent implements OnInit {
   public invoiceProviders: InvoiceProviders[] = []
   public filterInvoiceProviders: InvoiceProviders[] = []
   public divisas: Divisa[] = []
-  public business: Business[] = []
   public exchanges: Exchange[] = []
+  public business: Business[] = []
 
   public selectedValue: number = 5;
   public page!: number;
@@ -65,19 +66,20 @@ export class TableInvoiceProvidersComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _divisaService: DivisasService,
-    private _businessService: BusinessService,
     private _exchangeService: ExchangesService,
     private _dialog: MatDialog,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _businessService: BusinessService
   ) { }
 
   ngOnInit(): void {
+    this._spinner.show()
     this.getInvoiceProviders()
     this.getDivisas()
-    this.getBusiness()
     this.getExchanges()
     this.getHeadersInvoiceProvider()
+    this._spinner.hide()
   }
 
   getHeadersInvoiceProvider() {
@@ -211,7 +213,10 @@ export class TableInvoiceProvidersComponent implements OnInit {
     this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((resp: any) => {
       this.invoiceProviders = resp
+      console.log(this.invoiceProviders);
+
       this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.key_movement === '14')
+
       this._spinner.hide()
     })
   }
@@ -340,5 +345,25 @@ export class TableInvoiceProvidersComponent implements OnInit {
         return Number(0);
       }
     }
+  }
+
+  delete(invoice: InvoiceProviders) {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._invoiceProvidersService.deleteInvoiceProvider(invoice).subscribe(() => {
+          this.getInvoiceProviders()
+          this._spinner.hide()
+          this._toastr.success(`Factura ${invoice.key_invoice} eliminada con exito`)
+        })
+
+      }
+    })
   }
 }

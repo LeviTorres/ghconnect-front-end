@@ -12,6 +12,7 @@ import { MovementType } from 'src/app/models/MovementType.model';
 import { Provider } from '../../../../models/Provider.model';
 import { Ceco } from '../../../../models/Ceco.model';
 import { ToastrService } from 'ngx-toastr';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-add-invoice-providers',
@@ -24,6 +25,11 @@ export class AddInvoiceProvidersComponent implements OnInit {
   public movements: MovementType[] = []
   public providers: Provider[] = []
   public cecos: Ceco[] = []
+
+  public filteredOptions: any[] = [];
+  public filteredOptionsCeco: any[] = [];
+
+  public showOption: boolean = false;
 
   public invoiceForm = this._fb.group({
     ceco: ['', Validators.required ],
@@ -55,6 +61,39 @@ export class AddInvoiceProvidersComponent implements OnInit {
     this.getMovements()
     this.getDivisas()
     this.getProviders()
+    this.invoiceForm.controls['provider'].valueChanges.subscribe((inputValue: any) => {
+      this.filterData(inputValue)
+    })
+    this.invoiceForm.controls['ceco'].valueChanges.subscribe((inputValue: any) => {
+      this.filterDataCeco(inputValue)
+    })
+  }
+
+  public displayFn(provider: any): string {
+    return provider && `${provider.name}` ? `${provider.name}` : '';
+  }
+
+  public displayFnCeco(ceco: any): string {
+    return ceco && `${ceco.name_short}` ? `${ceco.name_short}` : '';
+  }
+
+  public filterData(value: string){
+    this.filteredOptions = this.providers.filter(item =>  {
+      this.displayFn(item)
+      return  item.name.toLowerCase().indexOf(value) > -1 || item.key_provider.toLowerCase().indexOf(value) > -1
+    })
+  }
+
+  public filterDataCeco(value: string){
+    this.filteredOptionsCeco = this.cecos.filter(item =>  {
+      this.displayFnCeco(item)
+      return  item.name_short.toLowerCase().indexOf(value) > -1 ||
+              item.key_ceco_business.toLowerCase().indexOf(value) > -1
+    })
+  }
+
+  public opcionSeleccionada($event:MatAutocompleteSelectedEvent){
+    this.showOption = true;
   }
 
   getMovements(){
@@ -91,15 +130,42 @@ export class AddInvoiceProvidersComponent implements OnInit {
 
   registerInvoice(){
 
-      this._spinner.show()
-    if(this.invoiceForm.invalid){
+  this._spinner.show()
+   if(this.invoiceForm.invalid){
       this._spinner.hide()
       return
-    }
+   }
+   let provider:any;
+   const providerSelect: any = this.invoiceForm.controls['provider'].value
+   if(providerSelect._id){
+    provider = providerSelect;
+   }else {
+    const findProvider = this.providers.find((provider:Provider) => provider.key_provider.trim().toLowerCase() === this.invoiceForm.controls['provider'].value?.trim().toLowerCase() || provider.name.toLowerCase().trim() === this.invoiceForm.controls['provider'].value?.trim().toLowerCase())
+    provider = findProvider
+   }
+   if(!provider){
+      this._spinner.hide()
+      this._toastr.error('No se ha seleccionado un proveedor correctamente')
+      return
+   }
+
+   let ceco:any;
+   const cecoSelect: any = this.invoiceForm.controls['ceco'].value
+   if(cecoSelect._id){
+    ceco = cecoSelect;
+   }else {
+    const findCeco = this.cecos.find((ceco:Ceco) => ceco.key_ceco_business.trim().toLowerCase() === this.invoiceForm.controls['ceco'].value?.trim().toLowerCase() || ceco.name_short.toLowerCase().trim() === this.invoiceForm.controls['ceco'].value?.trim().toLowerCase())
+    ceco = findCeco
+   }
+   if(!ceco){
+      this._spinner.hide()
+      this._toastr.error('No se ha seleccionado un ceco correctamente')
+      return
+   }
 
     const element = {
-      ceco: this.invoiceForm.controls['ceco'].value,
-      provider: this.invoiceForm.controls['provider'].value,
+      ceco: ceco._id,
+      provider: provider._id,
       key_invoice: this.invoiceForm.controls['key_invoice'].value,
       upload_date: new Date(this.invoiceForm.controls['upload_date'].value!).getTime(),
       invoice_date: new Date(this.invoiceForm.controls['invoice_date'].value!).getTime(),

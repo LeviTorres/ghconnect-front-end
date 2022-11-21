@@ -6,6 +6,7 @@ import { ValidationComponent } from './pages/validation/validation.component';
 import { SharedModule } from '../../shared/shared.module';
 import { NavbarModule } from '../../components/navbar/navbar.module';
 import { FooterModule } from '../../components/footer/footer.module';
+import { ComparativesChartModule } from '../comparatives-chart/comparatives-chart.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FooterModule } from '../../components/footer/footer.module';
     ValidationRoutingModule,
     SharedModule,
     NavbarModule,
-    FooterModule
+    FooterModule,
+    ComparativesChartModule
   ]
 })
 export class ValidationModule { }

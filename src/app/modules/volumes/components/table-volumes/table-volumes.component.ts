@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AddNewVolumeComponent } from '../add-new-volume/add-new-volume.component';
+import { EditVolumeComponent } from '../edit-volume/edit-volume.component';
 
 @Component({
   selector: 'app-table-volumes',
@@ -19,7 +20,7 @@ export class TableVolumesComponent implements OnInit {
   public volumes: Volume[]=[]
   public filterVolumes: Volume[] = []
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 10;
   public page!: number;
 
   constructor(
@@ -38,6 +39,8 @@ export class TableVolumesComponent implements OnInit {
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
       this.volumes = volumes
+      console.log(volumes);
+
       const array = this.volumes.sort((a, b) => new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime());
       let hash: any = {};
       this.filterVolumes = array.filter((o: Volume) => hash[o.insumo] ? false : hash[o.insumo] = true);
@@ -57,8 +60,54 @@ export class TableVolumesComponent implements OnInit {
     })
   }
 
-  openDialogAddNewVolume(volume: Volume){
+  openDialogAddNewVolumePlus(volume: Volume){
     let dialogRef = this._dialog.open(AddNewVolumeComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        ...volume,
+        type: 'plus'
+      }
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getVolumes()
+    })
+  }
+
+  openDialogAddNewVolumeMinus(volume: Volume){
+    let dialogRef = this._dialog.open(AddNewVolumeComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        ...volume,
+        type: 'minus'
+      }
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getVolumes()
+    })
+  }
+
+  getProjectValue(volumeTable: Volume) {
+    const initialPlusValue = 0
+    const initialMinusValue = 0
+    const arraPlus = this.volumes.filter((volume:Volume) => volume.insumo === volumeTable.insumo && volume.type === 'plus')
+    const arrayMinus = this.volumes.filter((volume:Volume) => volume.insumo === volumeTable.insumo && volume.type === 'minus')
+    const sumPlusArray = arraPlus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialPlusValue)
+    const minusPlusArray = arrayMinus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialMinusValue)
+    return sumPlusArray - minusPlusArray
+  }
+
+  getPendingBuy(volumeTable: Volume){
+    return this.getProjectValue(volumeTable) - volumeTable.units_purchased
+  }
+
+  openDialogEditVolume(volume:Volume){
+    let dialogRef = this._dialog.open(EditVolumeComponent, {
       width: '550px',
       maxHeight: '95vh',
       disableClose: true,
@@ -70,7 +119,7 @@ export class TableVolumesComponent implements OnInit {
     })
   }
 
-  delete(volume:Volume){
+  async delete(volume:Volume){
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar`,
