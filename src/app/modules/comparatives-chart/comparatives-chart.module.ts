@@ -9,6 +9,7 @@ import { FooterModule } from '../../components/footer/footer.module';
 import { MainComponent } from './pages/main/main.component';
 import { AddComparativesChartComponent } from './pages/add-comparatives-chart/add-comparatives-chart.component';
 import { TableComparativesChartComponent } from './components/table-comparatives-chart/table-comparatives-chart.component';
+import { AddProviderComparativeComponent } from './components/add-provider-comparative/add-provider-comparative.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { TableComparativesChartComponent } from './components/table-comparatives
     ComparativesChartComponent,
     MainComponent,
     AddComparativesChartComponent,
-    TableComparativesChartComponent
+    TableComparativesChartComponent,
+    AddProviderComparativeComponent
   ],
   imports: [
     CommonModule,

@@ -22,7 +22,7 @@
       <div class="col-5">
         <label>No. Factura</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput type="number" formControlName="key_invoice" placeholder="Indica # de factura"/>
+          <input matInput formControlName="key_invoice" placeholder="Indica # de factura"/>
           <mat-error
             *ngIf="invoiceForm.controls['key_invoice'].hasError('required')"
           >
@@ -35,9 +35,20 @@
       <div class="col-7 pe-2">
         <label>Proveedor</label>
         <mat-form-field class="w-100" appearance="outline">
-          <mat-select matInput formControlName="provider" placeholder="Selecciona el tipo de movimiento">
-            <mat-option *ngFor="let item of providers" [value]="item._id">{{item.key_provider}} - {{item.name}}</mat-option>
-          </mat-select>
+          <input
+            type="text"
+            class="w-100"
+            matInput
+            formControlName="provider"
+            [matAutocomplete]="search"
+            placeholder="Ingresa un proveedor"
+          />
+          <mat-autocomplete autoActiveFirstOption #search="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions" [value]="option">{{option.key_provider}} - {{ option.name}}</mat-option>
+            <mat-option value="" *ngIf="filteredOptions.length <= 0 && this.invoiceForm.controls['provider'].value">
+              No se encontró nada con el término {{invoiceForm.controls['provider'].value}}
+            </mat-option>
+          </mat-autocomplete>
           <mat-error
             *ngIf="invoiceForm.controls['provider'].hasError('required')"
           >
@@ -94,9 +105,20 @@
       <div class="col-7 pe-2">
         <label>Ceco</label>
         <mat-form-field class="w-100" appearance="outline">
-          <mat-select matInput formControlName="ceco" placeholder="Selecciona un ceco">
-            <mat-option *ngFor="let item of cecos" [value]="item._id"> {{item.key_ceco}} - {{item.name_short}}</mat-option>
-          </mat-select>
+          <input
+            type="text"
+            class="w-100"
+            matInput
+            formControlName="ceco"
+            [matAutocomplete]="searchCeco"
+            placeholder="Ingresa un ceco"
+          />
+          <mat-autocomplete autoActiveFirstOption #searchCeco="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFnCeco">
+            <mat-option *ngFor="let option of filteredOptionsCeco" [value]="option">{{option.key_ceco_business}} - {{ option.name_short}}</mat-option>
+            <mat-option value="" *ngIf="filteredOptionsCeco.length <= 0 && this.invoiceForm.controls['ceco'].value">
+              No se encontró nada con el término {{invoiceForm.controls['ceco'].value}}
+            </mat-option>
+          </mat-autocomplete>
           <mat-error
             *ngIf="invoiceForm.controls['ceco'].hasError('required')"
           >
