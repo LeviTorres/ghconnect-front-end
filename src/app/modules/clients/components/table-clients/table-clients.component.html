@@ -1,84 +1,125 @@
-<button mat-button routerLink="/clients/add-client" routerLinkActive="router-link-active" >Nuevo cliente</button>
+<button mat-button routerLink="/clients/add-client" routerLinkActive="router-link-active">Nuevo cliente</button>
 <div class="table-responsive mt-4 overflow-auto ">
   <table id="seasontable" class="table text-nowrap">
     <thead>
       <tr>
-        <th class="last">
+        <th class="last" *ngIf="statusControl.value">
           <span>
             <img src="../../../../../assets/icons/traffic.svg" alt="">
           </span>
         </th>
-        <th >
+        <th *ngIf="keyClientControl.value">
           No. cliente
         </th>
-        <th>
+        <th *ngIf="nameControl.value">
           Nombre cliente
         </th>
-        <th>
+        <th *ngIf="nitControl.value">
           Nit
         </th>
-        <th>
+        <th *ngIf="paymentConditionsControl.value">
           Condiciones de pago
         </th>
-        <th>
+        <th *ngIf="thirdTypeControl.value">
           Tipo de tercero
         </th>
-        <th>
+        <th *ngIf="societyTypeControl.value">
           Tipo de sociedad
         </th>
-        <th>
+        <th *ngIf="providerTypeControl.value">
           Tipo de proveedor
         </th>
-        <th>
+        <th *ngIf="phoneNumberControl.value">
           Telefono
         </th>
-        <th>
+        <th *ngIf="mobileNumberControl.value">
           Telefono movil
         </th>
-        <th>
+        <th *ngIf="emailControl.value">
           Email
         </th>
+        <th class="last" *ngIf="actionsControl.value">
+          Acciones
+        </th>
+        <th class="last" style="width: 15px;">
+          <span class="button-menu" [matMenuTriggerFor]="menu">
+            <i class="material-icons" style="color:white ">more_vert</i>
+          </span>
+        </th>
+        <mat-menu #menu="matMenu">
+          <div class="menu-table">
+            <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
+              Status</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="keyClientControl" (click)="$event.stopPropagation();">
+              No. cliente</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">Nombre
+              cliente</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="nitControl" (click)="$event.stopPropagation();">Nit
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="paymentConditionsControl"
+              (click)="$event.stopPropagation();">Condiciones de pago</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="thirdTypeControl" (click)="$event.stopPropagation();">
+              Tipo de tercero</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="societyTypeControl" (click)="$event.stopPropagation();">
+              Tipo de sociedad</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="providerTypeControl"
+              (click)="$event.stopPropagation();">Tipo de proveedor</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="phoneNumberControl" (click)="$event.stopPropagation();">
+              Telefono</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="mobileNumberControl"
+              (click)="$event.stopPropagation();">Telefono movil</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="emailControl" (click)="$event.stopPropagation();">Email
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+              Acciones</mat-checkbox>
+            <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+          </div>
+        </mat-menu>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let client of clients | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
-        <td class="container-status">
+        <td class="container-status" *ngIf="statusControl.value">
           <div matTooltip={{client.status}} [ngClass]="{
             'circule-activo': client.status === 'activo',
             'circule-inactivo': client.status === 'inactivo',
             'circule-suspendido': client.status === 'suspendido',
             'circule-password': client.status === 'habilitado por password'}"></div>
         </td>
-        <td>
+        <td *ngIf="keyClientControl.value">
           <span>{{ client.key_client }}</span>
         </td>
-        <td>
+        <td *ngIf="nameControl.value">
           <span>{{ client.name }}</span>
         </td>
-        <td>
+        <td *ngIf="nitControl.value">
           <span>{{ client.nit }}</span>
         </td>
-        <td>
+        <td *ngIf="paymentConditionsControl.value">
           <span>{{ client.payment_conditions.name_payment }}</span>
         </td>
-        <td>
+        <td *ngIf="thirdTypeControl.value">
           <span>{{ client.third_type}}</span>
         </td>
-        <td>
+        <td *ngIf="societyTypeControl.value">
           <span>{{ client.society_type}}</span>
         </td>
-        <td>
+        <td *ngIf="providerTypeControl.value">
           <span>{{ client.provider_type}}</span>
         </td>
-        <td>
+        <td *ngIf="phoneNumberControl.value">
           <span>{{ client.phone_number}}</span>
         </td>
-        <td>
+        <td *ngIf="mobileNumberControl.value">
           <span>{{ client.mobile_number}}</span>
         </td>
-        <td>
+        <td *ngIf="emailControl.value">
           <span>{{ client.email}}</span>
+        </td>
+        <td class="last" *ngIf="actionsControl.value">
+          <!-- <i class="fa fa-edit me-4" (click)="openDialogEditClient(client))"></i>
+          <i class="fa fa-trash" (click)="delete(client)"></i> -->
         </td>
       </tr>
     </tbody>

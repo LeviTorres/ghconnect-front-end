@@ -4,138 +4,211 @@
   <table id="seasontable" class="table text-nowrap">
     <thead>
       <tr>
-        <th>
+        <th *ngIf="trackingControl.value">
           Tracking
         </th>
-        <th class="last">
+        <th class="last" *ngIf="statusControl.value">
           <span>
             <img src="../../../../../assets/icons/traffic.svg" alt="">
           </span>
         </th>
-        <th>
+        <th *ngIf="flowIdControl.value">
           Id flujo
         </th>
-        <th>
+        <th *ngIf="remesaControl.value">
           Remesa
         </th>
-        <th>
+        <th *ngIf="nameBusinessControl.value">
           Empresa
         </th>
-        <th>
+        <th *ngIf="cecoControl.value">
           Ceco
         </th>
-        <th>
+        <th *ngIf="keyProviderControl.value">
           No. Proveedor
         </th>
-        <th>
+        <th *ngIf="providerControl.value">
           Nombre proveedor
         </th>
-        <th>
+        <th *ngIf="keyInvoiceControl.value">
           No. Factura
         </th>
-        <th>
+        <th *ngIf="uploadDateControl.value">
           Fecha Carga
         </th>
-        <th>
+        <th *ngIf="invoiceDateControl.value">
           Fecha Factura
         </th>
-        <th>
+        <th *ngIf="expirationDateControl.value">
           Fecha Vencimiento
         </th>
-        <th>
+        <th *ngIf="invoiceTotalControl.value">
           Total factura
         </th>
-        <th>
+        <th *ngIf="invoiceTotalPaymentControl.value">
           A pagar
         </th>
-        <th>
+        <th *ngIf="divisaControl.value">
           Divisa
         </th>
-        <th>
+        <th *ngIf="tcControl.value">
           T.C.
         </th>
-        <th>
+        <th *ngIf="totalMNControl.value">
           Total M.N.
         </th>
-        <th>
+        <th *ngIf="descriptionControl.value">
           Descripcion
         </th>
-        <th>
+        <th *ngIf="contractControl.value">
           Contrato
         </th>
-        <th>
+        <th *ngIf="checkbookControl.value">
           Bolsa/Chequera
         </th>
-        <th>
+        <th *ngIf="payStatusControl.value">
           Estado de pago
         </th>
+        <th class="last" *ngIf="actionsControl.value">
+          Acciones
+        </th>
+        <th class="last" style="width: 15px;">
+          <span class="button-menu" [matMenuTriggerFor]="menu">
+            <i class="material-icons" style="color:white ">more_vert</i>
+          </span>
+        </th>
+        <mat-menu #menu="matMenu">
+          <div class="menu-table">
+            <mat-checkbox class="example-margin" [formControl]="trackingControl" (click)="$event.stopPropagation();">
+              Tracking</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
+              Status</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="flowIdControl" (click)="$event.stopPropagation();">
+              Id flujo</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="remesaControl" (click)="$event.stopPropagation();">
+              Remesa</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="nameBusinessControl"
+              (click)="$event.stopPropagation();">
+              Empresa</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="cecoControl" (click)="$event.stopPropagation();">Ceco
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="keyProviderControl" (click)="$event.stopPropagation();">
+              No.
+              Proveedor
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="providerControl" (click)="$event.stopPropagation();">
+              Nombre proveedor
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="keyInvoiceControl" (click)="$event.stopPropagation();">
+              No. Factura</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="uploadDateControl" (click)="$event.stopPropagation();">
+              Fecha carga</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="invoiceDateControl" (click)="$event.stopPropagation();">
+              Fecha factura</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="expirationDateControl"
+              (click)="$event.stopPropagation();">Fecha vencimiento</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="invoiceTotalControl"
+              (click)="$event.stopPropagation();">
+              Total factura</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="invoiceTotalPaymentControl"
+              (click)="$event.stopPropagation();">
+              A pagar</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="divisaControl" (click)="$event.stopPropagation();">
+              Divisa</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="descriptionControl" (click)="$event.stopPropagation();">
+              Descripcion
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="contractControl" (click)="$event.stopPropagation();">
+              Contrato
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="tcControl" (click)="$event.stopPropagation();">
+              T.C
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="totalMNControl" (click)="$event.stopPropagation();">
+              Total M.N
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="checkbookControl" (click)="$event.stopPropagation();">
+              Bolsa/Chequera
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="payStatusControl" (click)="$event.stopPropagation();">
+              Estado de pago
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+              Acciones</mat-checkbox>
+            <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+          </div>
+        </mat-menu>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let invoice of filterInvoiceProviders | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
-        <td class="text-center">
+        <td class="text-center" *ngIf="trackingControl.value">
           <span (click)="openDialogTracking(invoice)"><i class="material-icons" style="color:black">timeline</i></span>
         </td>
-        <td class="text-center">
+        <td class="text-center" *ngIf="statusControl.value">
           <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
         </td>
-        <td>
+        <td *ngIf="flowIdControl.value">
           <span></span>
         </td>
-        <td>
+        <td *ngIf="remesaControl.value">
           <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
         </td>
-        <td>
+        <td *ngIf="nameBusinessControl.value">
           <span>{{getBusin(invoice?.ceco?.business)}}</span>
         </td>
-        <td>
+        <td *ngIf="cecoControl.value">
           <span>{{invoice?.ceco?.name_short}}</span>
         </td>
-        <td>
+        <td *ngIf="keyProviderControl.value">
           <span>{{invoice.provider.key_provider}}</span>
         </td>
-        <td>
+        <td *ngIf="providerControl.value">
           <span>{{invoice.provider.name}}</span>
         </td>
-        <td>
+        <td *ngIf="keyInvoiceControl.value">
           <span>{{invoice.key_invoice}}</span>
         </td>
-        <td>
+        <td *ngIf="uploadDateControl.value">
           <span>{{invoice.upload_date | date}}</span>
         </td>
-        <td>
+        <td *ngIf="invoiceDateControl.value">
           <span>{{invoice.invoice_date | date}}</span>
         </td>
-        <td>
+        <td *ngIf="expirationDateControl.value">
           <span>{{invoice.expiration_date | date}}</span>
         </td>
-        <td>
+        <td *ngIf="invoiceTotalControl.value">
           <span>{{getTotal(invoice) | currency}}</span>
         </td>
-        <td>
+        <td *ngIf="invoiceTotalPaymentControl.value">
           <span>{{getTotalPayment(invoice) | currency}}</span>
         </td>
-        <td>
+        <td *ngIf="divisaControl.value">
           <span>{{invoice.divisa.abbreviation_divisa}}</span>
         </td>
-        <td>
+        <td *ngIf="tcControl.value">
           <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span>
         </td>
-        <td>
+        <td *ngIf="totalMNControl.value">
           <span>{{totalMN(invoice) | currency}}</span>
         </td>
-        <td>
+        <td *ngIf="descriptionControl.value">
           <span>{{invoice.description}}</span>
         </td>
-        <td>
+        <td *ngIf="contractControl.value">
           <span>{{invoice.contract}}</span>
         </td>
-        <td>
+        <td *ngIf="checkbookControl.value">
           <span></span>
         </td>
-        <td>
+        <td *ngIf="payStatusControl.value">
           <span></span>
+        </td>
+        <td class="last" *ngIf="actionsControl.value">
+          <!-- <i class="fa fa-edit me-4" (click)="openDialogEditProvider(invoiceProvider))"></i>
+          <i class="fa fa-trash" (click)="delete(invoiceProvider)"></i> -->
         </td>
         <td></td>
       </tr>

@@ -23,5 +23,5 @@ export class InvoiceProviders {
     public flow_id?: string,
     public remesa?: string,
     public _id?: string
-  ){}
+  ) { }
 }

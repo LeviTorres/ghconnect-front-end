@@ -7,7 +7,7 @@ import { HeadersService } from '../../../../services/headers.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from '../../../../services/search.service';
 import { ToastrService } from 'ngx-toastr';
-import { Form, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-table-providers',
