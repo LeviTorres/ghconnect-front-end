@@ -74,7 +74,7 @@
           <span>{{volume.units_purchased }}</span>
         </td>
         <td>
-          <span>{{ getPendingBuy(volume) }}</span>
+          <span>{{ getPendingBuy(i) }}</span>
         </td>
         <td>
           <span>{{volume.price_proforma | currency }}</span>
@@ -88,20 +88,6 @@
         <td class="last">
           <i class="fa fa-trash" (click)="delete(volume)"></i>
         </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Total:</td>
-        <td>{{ getTotal() }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
       </tr>
     </tbody>
   </table>

@@ -87,11 +87,9 @@
               Id flujo</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="remesaControl" (click)="$event.stopPropagation();">
               Remesa</mat-checkbox>
-            <mat-checkbox class="example-margin" [formControl]="nameBusinessControl"
-              (click)="$event.stopPropagation();">
+            <mat-checkbox class="example-margin" [formControl]="nameBusinessControl" (click)="$event.stopPropagation();">
               Empresa</mat-checkbox>
-            <mat-checkbox class="example-margin" [formControl]="cecoControl" (click)="$event.stopPropagation();">Ceco
-            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="cecoControl" (click)="$event.stopPropagation();">Ceco</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="keyProviderControl" (click)="$event.stopPropagation();">
               No.
               Proveedor
@@ -139,8 +137,6 @@
           </div>
         </mat-menu>
 
-        <th class="last">Acciones</th>
-
       </tr>
     </thead>
     <tbody>
@@ -158,15 +154,11 @@
         <td *ngIf="remesaControl.value">
           <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
         </td>
-        <td *ngIf="nameBusinessControl.value">
-          <span>{{getBusin(invoice?.ceco?.business)}}</span>
-
-        <td>
+        <td *ngIf="cecoControl.value">
           <span>{{invoice?.ceco?.business?.name_short}}</span>
-
         </td>
         <td *ngIf="cecoControl.value">
-          <span>{{invoice?.ceco?.name_short}}</span>
+          <span>{{invoice?.ceco?.key_ceco_business}}</span>
         </td>
         <td *ngIf="keyProviderControl.value">
           <span>{{invoice.provider.key_provider}}</span>
@@ -214,8 +206,7 @@
           <span></span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
-          <!-- <i class="fa fa-edit me-4" (click)="openDialogEditProvider(invoiceProvider))"></i>
-          <i class="fa fa-trash" (click)="delete(invoiceProvider)"></i> -->
+          <i class="fa fa-trash" (click)="delete(invoice)"></i>
         </td>
         <td></td>
       </tr>

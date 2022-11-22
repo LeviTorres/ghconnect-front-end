@@ -42,22 +42,50 @@ export class DetailsVolumesComponent implements OnInit {
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
       this.volumes = volumes.filter((volume: Volume) => volume.insumo === insumo)
+      //console.log(this.volumes);
+
       this._spinner.hide()
     })
   }
 
-  getTotal(){
-    const initialPlusValue = 0
-    const initialMinusValue = 0
-    const arraPlus = this.volumes.filter((volume:Volume) => volume.insumo === this.insumo && volume.type === 'plus')
-    const arrayMinus = this.volumes.filter((volume:Volume) => volume.insumo === this.insumo && volume.type === 'minus')
-    const sumPlusArray = arraPlus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialPlusValue)
-    const minusPlusArray = arrayMinus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialMinusValue)
-    return sumPlusArray - minusPlusArray
+  getProjectVolume(indexTable:number){
+    let total: number = 0
+    let suma: number = 0
+    let resta: number = 0
+    this.volumes.forEach(function(element, index, array) {
+      if(index <= indexTable){
+        if(element.type === 'plus'){
+          suma += element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }else {
+          suma -= element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }
+      }
+    })
+    return total
   }
 
-  getPendingBuy(volumeTable: Volume){
-    return this.getTotal() - volumeTable.units_purchased
+  getPendingBuy(indexTable : number){
+    let total: number = 0
+    let suma: number = 0
+    let resta: number = 0
+    this.volumes.forEach(function(element, index, array) {
+      if(index <= indexTable){
+        if(element.type === 'plus'){
+          suma += element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }else {
+          suma -= element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }
+      }
+    })
+    return total
   }
 
   delete(volume:Volume){

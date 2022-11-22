@@ -213,10 +213,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((resp: any) => {
       this.invoiceProviders = resp
-      console.log(this.invoiceProviders);
-
       this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.key_movement === '14')
-
       this._spinner.hide()
     })
   }
@@ -347,7 +344,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     }
   }
 
-  delete(invoice: InvoiceProviders) {
+  async delete(invoice: InvoiceProviders) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
