@@ -17,7 +17,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-table-exchanges',
   templateUrl: './table-exchanges.component.html',
-  styleUrls: ['./table-exchanges.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableExchangesComponent implements OnInit {
 

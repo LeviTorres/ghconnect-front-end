@@ -15,7 +15,7 @@ import { EditBusinessComponent } from '../edit-business/edit-business.component'
 @Component({
   selector: 'app-table-business',
   templateUrl: './table-business.component.html',
-  styleUrls: ['./table-business.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableBusinessComponent implements OnInit {
 
@@ -154,7 +154,7 @@ export class TableBusinessComponent implements OnInit {
     })
   }
 
-  openDialogEditBusiness(busines: Business){
+  openDialogEditBusiness(busines: Business) {
     let dialogRef = this._dialog.open(EditBusinessComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -163,7 +163,7 @@ export class TableBusinessComponent implements OnInit {
       data: busines
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getBusiness()
+      this.getBusiness()
     })
   }
 

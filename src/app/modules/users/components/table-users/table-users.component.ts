@@ -40,7 +40,7 @@ export class TableUsersComponent implements OnInit {
     private _spinner: NgxSpinnerService,
     private _dialog: MatDialog,
     private _searchService: SearchService,
-    private _toastr:ToastrService,
+    private _toastr: ToastrService,
     private _loginService: LoginService
   ) {
     this.getUsers()
@@ -51,7 +51,7 @@ export class TableUsersComponent implements OnInit {
 
   }
 
-  openDialogModalUser(){
+  openDialogModalUser() {
     let dialogRef = this._dialog.open(ModalUsersComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -59,20 +59,20 @@ export class TableUsersComponent implements OnInit {
       autoFocus: false
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getUsers()
+      this.getUsers()
     })
   }
 
-  initValuesHeader(){
+  initValuesHeader() {
     const headerUser = this.headersUser.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
-    if(headerUser){
+    if (headerUser) {
       this.avatarControl.setValue(headerUser.avatar)
       this.nameControl.setValue(headerUser.name)
       this.lastNameControl.setValue(headerUser.last_name)
       this.emailControl.setValue(headerUser.email)
       this.roleControl.setValue(headerUser.role)
       this.actionsControl.setValue(headerUser.actions)
-    }else {
+    } else {
       this.avatarControl.setValue(true)
       this.nameControl.setValue(true)
       this.lastNameControl.setValue(true)
@@ -80,7 +80,7 @@ export class TableUsersComponent implements OnInit {
       this.roleControl.setValue(true)
       this.actionsControl.setValue(true)
       const element = {
-        key_header:  `${this._loginService.uid}-${this.header_name}`,
+        key_header: `${this._loginService.uid}-${this.header_name}`,
         avatar: true,
         name: true,
         last_name: true,
@@ -88,15 +88,15 @@ export class TableUsersComponent implements OnInit {
         email: true,
         actions: true,
       }
-      this._headerService.createHeaders(element,'users').subscribe((item: any)=>{
+      this._headerService.createHeaders(element, 'users').subscribe((item: any) => {
         this.getHeadersUser()
-      },() => {
+      }, () => {
         this._toastr.error('Error al cargar los headers')
       })
     }
   }
 
-  updateHeader(){
+  updateHeader() {
     const headerUser = this.headersUser.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     const element = {
       avatar: this.avatarControl.value,
@@ -108,49 +108,49 @@ export class TableUsersComponent implements OnInit {
     }
     this._headerService.updateHeaders(element, headerUser._id, 'users').subscribe(() => {
 
-    },() => {
+    }, () => {
       this._toastr.error('Error al actualizar los headers')
     })
   }
 
-  getUsers(){
+  getUsers() {
     this._spinner.show()
-    this._userService.getUsers().subscribe((resp:any) => {
+    this._userService.getUsers().subscribe((resp: any) => {
       this.users = resp.users
       this.usersTemp = resp.users
       this._spinner.hide()
     })
   }
 
-  getHeadersUser(){
+  getHeadersUser() {
     this._spinner.show()
-    this._headerService.getHeaders('users').subscribe((resp:any) => {
+    this._headerService.getHeaders('users').subscribe((resp: any) => {
       this.headersUser = resp
       this.initValuesHeader()
       this._spinner.hide()
     })
   }
 
-  getRole(role:string){
-    if(role === 'ADMIN_ROLE'){
+  getRole(role: string) {
+    if (role === 'ADMIN_ROLE') {
       return 'Administrador'
     }
     return
   }
 
-  search(term:string){
-    if(term.length === 0){
+  search(term: string) {
+    if (term.length === 0) {
       return this.users = this.usersTemp
     }
-    this._searchService.search('users',term).subscribe( (resp: any) => {
+    this._searchService.search('users', term).subscribe((resp: any) => {
       this.users = resp
     })
     return
   }
 
-  delete(user:User){
+  delete(user: User) {
 
-    if(user._id === this._loginService.user._id){
+    if (user._id === this._loginService.user._id) {
       return this._toastr.error('No puede eliminar el usuario')
     }
 
@@ -161,7 +161,7 @@ export class TableUsersComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Continuar'
     }).then((result) => {
-      if(result.value){
+      if (result.value) {
         this._spinner.show()
         this._userService.deleteUser(user).subscribe(() => {
           this.getUsers()

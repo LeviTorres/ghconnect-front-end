@@ -21,7 +21,7 @@ import { Business } from 'src/app/models/Business.model';
 @Component({
   selector: 'app-table-invoice-clients',
   templateUrl: './table-invoice-clients.component.html',
-  styleUrls: ['./table-invoice-clients.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableInvoiceClientsComponent implements OnInit {
 

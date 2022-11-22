@@ -15,7 +15,7 @@ import { EditCountriesComponent } from '../edit-countries/edit-countries.compone
 @Component({
   selector: 'app-table-countries',
   templateUrl: './table-countries.component.html',
-  styleUrls: ['./table-countries.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableCountriesComponent implements OnInit {
 
@@ -130,7 +130,7 @@ export class TableCountriesComponent implements OnInit {
     return
   }
 
-  openDialogEditCountry(country: Country){
+  openDialogEditCountry(country: Country) {
     let dialogRef = this._dialog.open(EditCountriesComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -139,7 +139,7 @@ export class TableCountriesComponent implements OnInit {
       data: country
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getCountries()
+      this.getCountries()
     })
   }
 

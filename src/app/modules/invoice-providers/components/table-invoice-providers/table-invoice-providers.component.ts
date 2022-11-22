@@ -20,7 +20,7 @@ import { BusinessService } from 'src/app/services/business.service';
 @Component({
   selector: 'app-table-invoice-providers',
   templateUrl: './table-invoice-providers.component.html',
-  styleUrls: ['./table-invoice-providers.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableInvoiceProvidersComponent implements OnInit {
 

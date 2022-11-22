@@ -15,7 +15,7 @@ import { EditCecosComponent } from '../edit-cecos/edit-cecos.component';
 @Component({
   selector: 'app-table-cecos',
   templateUrl: './table-cecos.component.html',
-  styleUrls: ['./table-cecos.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableCecosComponent implements OnInit {
 
@@ -46,9 +46,9 @@ export class TableCecosComponent implements OnInit {
   ) {
     this.getCecos()
     this.getHeadersCecos()
-   }
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   getHeadersCecos() {
     this._spinner.show()
@@ -160,7 +160,7 @@ export class TableCecosComponent implements OnInit {
     })
   }
 
-  openDialogEditCeco(ceco:Ceco){
+  openDialogEditCeco(ceco: Ceco) {
     let dialogRef = this._dialog.open(EditCecosComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -169,7 +169,7 @@ export class TableCecosComponent implements OnInit {
       data: ceco
     });
     dialogRef.beforeClosed().subscribe(() => {
-        this.getCecos()
+      this.getCecos()
     })
   }
 

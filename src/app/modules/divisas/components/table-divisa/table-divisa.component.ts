@@ -17,7 +17,7 @@ import { EditDivisasComponent } from '../edit-divisas/edit-divisas.component';
 @Component({
   selector: 'app-table-divisa',
   templateUrl: './table-divisa.component.html',
-  styleUrls: ['./table-divisa.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableDivisaComponent implements OnInit {
 
