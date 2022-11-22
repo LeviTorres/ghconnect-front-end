@@ -144,7 +144,6 @@ export class TableDivisaComponent implements OnInit {
     this._spinner.show()
     this._exchangeService.getExchanges().subscribe((resp: Exchange[]) => {
       this.exchanges = resp
-      console.log('this.exchanges',this.exchanges);
       this._spinner.hide()
     })
   }

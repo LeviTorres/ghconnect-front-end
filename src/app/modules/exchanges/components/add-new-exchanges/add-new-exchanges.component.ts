@@ -39,7 +39,6 @@ export class AddNewExchangesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.exchangeData);
     this.getExchanges()
     this.exchangeValue = `${this.exchangeData.national_currency.abbreviation_divisa} - ${this.exchangeData.foreign_currency.abbreviation_divisa}`
   }

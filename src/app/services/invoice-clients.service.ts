@@ -40,7 +40,6 @@ export class InvoiceClientsService {
     return this._http.get(`${base_url}/invoice-clients`,this.headers)
               .pipe(
                 map((resp:any) => {
-                 console.log(resp.invoiceClients);
                   return resp.invoiceClients
                 })
               )

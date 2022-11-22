@@ -42,8 +42,6 @@ export class DetailsVolumesComponent implements OnInit {
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
       this.volumes = volumes.filter((volume: Volume) => volume.insumo === insumo)
-      //console.log(this.volumes);
-
       this._spinner.hide()
     })
   }
