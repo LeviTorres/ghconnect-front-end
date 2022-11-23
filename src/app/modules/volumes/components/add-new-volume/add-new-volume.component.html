@@ -46,9 +46,10 @@
         </mat-form-field>
       </div>
       <div class="">
-        <label>Volumen proyecto</label>
+        <label *ngIf="volumeData.type === 'plus'">Adicionar</label>
+        <label *ngIf="volumeData.type === 'minus'">Deducir</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="project_volume" placeholder="Ingresa el volumen del proyecto"/>
+          <input type="number" matInput formControlName="project_volume" placeholder="Ingresa la cantidad"/>
           <mat-error
             *ngIf="registerForm.controls['project_volume'].hasError('required')"
           >

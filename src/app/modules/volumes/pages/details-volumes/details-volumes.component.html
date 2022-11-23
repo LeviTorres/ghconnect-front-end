@@ -1,30 +1,58 @@
 <button  class="btn-primary" mat-raised-button [routerLink]="['/volumes']">
   <span>Volver</span>
 </button>
+<div class="pt-4" >
+  <h2>Detalle volumen</h2>
+</div>
+<div *ngIf="volumeData">
+  <div class="row">
+    <div class="col-3">
+      <strong>Insumo</strong>
+      <h3>{{volumeData.insumo}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Frente</strong>
+      <h3>{{volumeData.front}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Tarjeta</strong>
+      <h3>{{volumeData.card}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Partida</strong>
+      <h3>{{volumeData.departure}}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <strong>Volumen proyecto</strong>
+      <h3>{{volumeData.project_volume}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Descripcion</strong>
+      <h3>{{volumeData.description}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Unidad de medida</strong>
+      <h3>{{volumeData.measure}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Precio porfoma</strong>
+      <h3>{{volumeData.price_proforma | currency}}</h3>
+    </div>
+  </div>
+</div>
 <div class="table-responsive mt-4">
   <table class="table text-nowrap">
     <thead>
       <tr>
         <th>
-          Insumo
+          Fecha de creacion
         </th>
-        <th>
-          Frente
-        </th>
-        <th>
-          Partida
-        </th>
-        <th>
-          Tarjeta
-        </th>
-        <th>
-          Descripcion
-        </th>
-        <th>
-          Unidad medida
-        </th>
-        <th>
-          Volumen proyecto
+        <th class="text-center">
+          <p class="m-0">Compradas</p>
+          <p class="m-0">Aditivas</p>
+          <p class="m-0">Deductivas</p>
         </th>
         <th>
           Unidades compradas
@@ -33,10 +61,7 @@
           Pendiente por comprar
         </th>
         <th>
-          Precio proforma
-        </th>
-        <th>
-          Fecha de creacion
+          PVR
         </th>
         <th>
           Usuario
@@ -47,40 +72,24 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let volume of volumes | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      <tr *ngFor="let volume of volumesTable | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
         <td>
-          <span>{{volume.insumo}}</span>
+          <span>{{volume.createdAt | date: 'dd/MMM/yyyy'}}</span>
         </td>
         <td>
-          <span>{{volume.front}}</span>
-        </td>
-        <td>
-          <span>{{volume.departure }}</span>
-        </td>
-        <td>
-          <span>{{volume.card }}</span>
-        </td>
-        <td>
-          <span>{{volume.description }}</span>
-        </td>
-        <td>
-          <span>{{volume.measure }}</span>
-        </td>
-        <td>
-          <span>{{volume.type === 'plus' ? '+' : '-'}} {{volume.project_volume }}</span>
+          <span [ngClass]="{'color-type-plus': volume.type === 'plus'}" *ngIf="volume.type === 'plus'"> + {{ volume.project_volume}}</span>
+          <span [ngClass]="{'color-type-minus': volume.type === 'minus'}"  *ngIf="volume.type === 'minus'"> - {{volume.project_volume}}</span>
+          <span [ngClass]="{'color-type-buys': volume.type === 'buys'}"  *ngIf="volume.type === 'buys'"> - {{volume.project_volume}}</span>
         </td>
         <td>
           <span>{{volume.units_purchased }}</span>
         </td>
         <td>
-          <span>{{ getPendingBuy(volume) }}</span>
+          <span>{{ getPendingBuy(i) }}</span>
         </td>
         <td>
-          <span>{{volume.price_proforma | currency }}</span>
-        </td>
-        <td>
-          <span>{{volume.createdAt | date}}</span>
+          <span>0</span>
         </td>
         <td>
           <span>{{volume.user?.name}} {{volume.user?.last_name}}</span>
@@ -88,20 +97,6 @@
         <td class="last">
           <i class="fa fa-trash" (click)="delete(volume)"></i>
         </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Total:</td>
-        <td>{{ getTotal() }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
       </tr>
     </tbody>
   </table>

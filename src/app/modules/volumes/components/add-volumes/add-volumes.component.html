@@ -87,18 +87,6 @@
         </mat-form-field>
       </div>
       <div class="">
-        <label>Unidades compradas</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="units_purchased" placeholder="Ingresa las unidades compradas"/>
-          <mat-error
-            *ngIf="registerForm.controls['units_purchased'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-          <mat-hint class="mat-hint-error" *ngIf="validation"> Unidades compradas no puede ser mayor que el Volumen del proyecto</mat-hint>
-        </mat-form-field>
-      </div>
-      <div class="">
         <label>Precio proforma</label>
         <mat-form-field class="w-100" appearance="outline">
           <input type="number" matInput formControlName="price_proforma" placeholder="Ingresa el precio proforma"/>

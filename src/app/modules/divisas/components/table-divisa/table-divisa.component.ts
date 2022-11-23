@@ -13,6 +13,10 @@ import { DivisasService } from '../../../../services/divisas.service';
 import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { EditDivisasComponent } from '../edit-divisas/edit-divisas.component';
+import { Country } from '../../../../models/Country.model';
+import { CountriesService } from '../../../../services/countries.service';
+import { Exchange } from '../../../../models/Exchange.model';
+import { ExchangesService } from '../../../../services/exchanges.service';
 
 @Component({
   selector: 'app-table-divisa',
@@ -23,11 +27,13 @@ export class TableDivisaComponent implements OnInit {
 
   public divisas: Divisa[] = []
   public divisasTemp: Divisa[] = []
+  public countries: Country[] = []
+  public exchanges: Exchange[]=[]
 
   public headersDivisa: any[] = []
   public header_name: string = 'divisas'
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 10;
   public page!: number;
 
   public nameControl: FormControl = new FormControl()
@@ -42,11 +48,15 @@ export class TableDivisaComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _countryService:CountriesService,
+    private _exchangeService:ExchangesService
   ) { }
 
   ngOnInit(): void {
     this.getDivisas()
+    this.getCountries()
+    this.getExchanges()
     this.getHeadersDivisa()
   }
 
@@ -115,9 +125,25 @@ export class TableDivisaComponent implements OnInit {
 
   getDivisas() {
     this._spinner.show()
-    this._divisaService.getDivisas().subscribe((resp: any) => {
+    this._divisaService.getDivisas().subscribe((resp: Divisa[]) => {
       this.divisas = resp
       this.divisasTemp = resp
+      this._spinner.hide()
+    })
+  }
+
+  getCountries() {
+    this._spinner.show()
+    this._countryService.getCountries().subscribe((resp: Country[]) => {
+      this.countries = resp
+      this._spinner.hide()
+    })
+  }
+
+  getExchanges() {
+    this._spinner.show()
+    this._exchangeService.getExchanges().subscribe((resp: Exchange[]) => {
+      this.exchanges = resp
       this._spinner.hide()
     })
   }
@@ -132,20 +158,30 @@ export class TableDivisaComponent implements OnInit {
     return
   }
 
-  delete(divisa: Divisa) {
+  async delete(divisaTable: Divisa) {
+    const findDivisaCountry = this.countries.find((country:Country) => country.divisa?._id === divisaTable._id)
+    const findDivisaExchange = this.exchanges.find((exchange:Exchange) => exchange.national_currency._id === divisaTable._id || exchange.foreign_currency._id === divisaTable._id)
+    if(findDivisaCountry){
+      this._toastr.warning('No puede eliminarse porque un pais contiene esta divisa')
+      return
+    }
+    if(findDivisaExchange){
+      this._toastr.warning('No se puede eliminar porque un tipo de cambio contiene esta divisa')
+      return
+    }
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
-      text: `Esta a punto de eliminar a ${divisa.name}`,
+      text: `Esta a punto de eliminar a ${divisaTable.name}`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Continuar'
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
-        this._divisaService.deleteDivisa(divisa).subscribe(() => {
+        this._divisaService.deleteDivisa(divisaTable).subscribe(() => {
           this.getDivisas()
           this._spinner.hide()
-          this._toastr.success(`Divisa ${divisa.name} eliminado con exito`)
+          this._toastr.success(`Divisa ${divisaTable.name} eliminado con exito`)
         })
 
       }

@@ -39,7 +39,6 @@ export class TableVolumesComponent implements OnInit {
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
       this.volumes = volumes
-      console.log(volumes);
 
       const array = this.volumes.sort((a, b) => new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime());
       let hash: any = {};

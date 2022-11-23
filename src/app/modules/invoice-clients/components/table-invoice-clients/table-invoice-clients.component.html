@@ -170,13 +170,13 @@
           <span>{{invoice.key_invoice}}</span>
         </td>
         <td *ngIf="uploadDateControl.value">
-          <span>{{invoice.upload_date | date}}</span>
+          <span>{{invoice.upload_date | date: 'dd/MMM/yyyy'}}</span>
         </td>
         <td *ngIf="invoiceDateControl.value">
-          <span>{{invoice.invoice_date | date}}</span>
+          <span>{{invoice.invoice_date | date: 'dd/MMM/yyyy'}}</span>
         </td>
         <td *ngIf="expirationDateControl.value">
-          <span>{{invoice.expiration_date | date}}</span>
+          <span>{{invoice.expiration_date | date: 'dd/MMM/yyyy'}}</span>
         </td>
         <td *ngIf="invoiceTotalControl.value">
           <span>{{getTotal(invoice) | currency}}</span>

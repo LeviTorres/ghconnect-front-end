@@ -14,10 +14,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DetailsVolumesComponent implements OnInit {
 
+  public volumeData!: Volume;
   public selectedValue: number = 5;
   public page!: number;
 
   public volumes: Volume[] = []
+  public volumesTable: Volume[]=[]
   public filterVolumes: Volume[] = []
 
   public insumo: string = ''
@@ -41,23 +43,36 @@ export class DetailsVolumesComponent implements OnInit {
   getVolumes( insumo:string){
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
+      this.volumesTable = volumes.filter((volume: Volume) => volume.insumo === insumo && volume.type !== 'initial')
       this.volumes = volumes.filter((volume: Volume) => volume.insumo === insumo)
+      this.volumeData = this.volumes[0]
       this._spinner.hide()
     })
   }
 
-  getTotal(){
-    const initialPlusValue = 0
-    const initialMinusValue = 0
-    const arraPlus = this.volumes.filter((volume:Volume) => volume.insumo === this.insumo && volume.type === 'plus')
-    const arrayMinus = this.volumes.filter((volume:Volume) => volume.insumo === this.insumo && volume.type === 'minus')
-    const sumPlusArray = arraPlus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialPlusValue)
-    const minusPlusArray = arrayMinus.reduce((previousValue,currentValue) => previousValue + currentValue.project_volume, initialMinusValue)
-    return sumPlusArray - minusPlusArray
-  }
-
-  getPendingBuy(volumeTable: Volume){
-    return this.getTotal() - volumeTable.units_purchased
+  getPendingBuy(indexTable : number){
+    let newIndex = indexTable +1
+    let total: number = 0
+    let suma: number = 0
+    let resta: number = 0
+    this.volumes.forEach(function(element, index, array) {
+      if(index <= newIndex){
+        if(element.type === 'plus'){
+          suma += element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }else if(element.type === 'minus'){
+          suma -= element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }else if(element.type === 'initial'){
+          suma += element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }
+      }
+    })
+    return total
   }
 
   delete(volume:Volume){

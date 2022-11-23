@@ -11,6 +11,8 @@ import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { LoginService } from '../../../../services/login.service';
 import { EditCountriesComponent } from '../edit-countries/edit-countries.component';
+import { Business } from '../../../../models/Business.model';
+import { BusinessService } from '../../../../services/business.service';
 
 @Component({
   selector: 'app-table-countries',
@@ -21,6 +23,7 @@ export class TableCountriesComponent implements OnInit {
 
   public countries: Country[] = []
   public countriesTemp: Country[] = []
+  public business:Business[] = []
 
   public headersCountry: any[] = []
   public header_name: string = 'countries';
@@ -40,11 +43,13 @@ export class TableCountriesComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _businessService:BusinessService
   ) { }
 
   ngOnInit(): void {
     this.getCountries()
+    this.getBusiness()
     this.getHeadersCountry()
   }
 
@@ -113,9 +118,17 @@ export class TableCountriesComponent implements OnInit {
 
   getCountries() {
     this._spinner.show()
-    this._countriesService.getCountries().subscribe((resp: any) => {
+    this._countriesService.getCountries().subscribe((resp: Country[]) => {
       this.countries = resp
       this.countriesTemp = resp
+      this._spinner.hide()
+    })
+  }
+
+  getBusiness() {
+    this._spinner.show()
+    this._businessService.getBusiness().subscribe((resp: Business[]) => {
+      this.business = resp
       this._spinner.hide()
     })
   }
@@ -143,7 +156,14 @@ export class TableCountriesComponent implements OnInit {
     })
   }
 
-  delete(country: Country) {
+  async delete(country: Country) {
+    const findCountryBusiness = this.business.find((business:Business) => business.country?._id === country._id)
+
+    if(findCountryBusiness){
+      this._toastr.warning('No se puede eliminar porque contiene una empresa relacionada')
+      return
+    }
+
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${country.name}`,

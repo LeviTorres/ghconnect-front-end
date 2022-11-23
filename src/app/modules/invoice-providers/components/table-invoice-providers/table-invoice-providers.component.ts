@@ -92,6 +92,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   initValuesHeader() {
+    this._spinner.show()
     const headerInvoiceProvider = this.headersInvoiceProvider.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     if (headerInvoiceProvider) {
       this.trackingControl.setValue(headerInvoiceProvider.tracking)
@@ -117,6 +118,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
       this.checkbookControl.setValue(headerInvoiceProvider.checkbook)
       this.payStatusControl.setValue(headerInvoiceProvider.pay_status)
       this.actionsControl.setValue(headerInvoiceProvider.actions)
+      this._spinner.hide()
     } else {
       this.trackingControl.setValue(true)
       this.statusControl.setValue(true)
@@ -167,9 +169,12 @@ export class TableInvoiceProvidersComponent implements OnInit {
         pay_status: true,
         actions: true,
       }
+
       this._headerService.createHeaders(element, this.header_name).subscribe((item: any) => {
         this.getHeadersInvoiceProvider()
+        this._spinner.hide()
       }, () => {
+        this._spinner.hide()
         this._toastr.error('Error al cargar los headers')
       })
     }
@@ -203,7 +208,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
       actions: this.actionsControl.value
     }
     this._headerService.updateHeaders(element, headerInvoiceProvider._id, this.header_name).subscribe(() => {
-
     }, () => {
       this._toastr.error('Error al actualizar los headers')
     })
@@ -213,10 +217,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((resp: any) => {
       this.invoiceProviders = resp
-      console.log(this.invoiceProviders);
-
-      this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.key_movement === '14')
-
+      this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.type === 'CARGO')
       this._spinner.hide()
     })
   }
@@ -347,7 +348,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     }
   }
 
-  delete(invoice: InvoiceProviders) {
+  async delete(invoice: InvoiceProviders) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,

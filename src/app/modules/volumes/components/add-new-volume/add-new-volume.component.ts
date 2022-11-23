@@ -66,7 +66,6 @@ export class AddNewVolumeComponent implements OnInit {
         price_proforma: this.volumeData.price_proforma,
         type: this.volumeData.type
       }
-      console.log(element);
 
       this._volumeService.createVolume(element)
         .subscribe(( res:any ) => {

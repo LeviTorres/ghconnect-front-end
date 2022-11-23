@@ -11,6 +11,8 @@ import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { LoginService } from '../../../../services/login.service';
 import { EditBusinessComponent } from '../edit-business/edit-business.component';
+import { Ceco } from '../../../../models/Ceco.model';
+import { CecosService } from '../../../../services/cecos.service';
 
 @Component({
   selector: 'app-table-business',
@@ -21,6 +23,7 @@ export class TableBusinessComponent implements OnInit {
 
   public business: Business[] = []
   public businessTemp: Business[] = []
+  public cecos: Ceco[]=[]
 
   public headersBusiness: any[] = []
   public header_name: string = 'business';
@@ -41,11 +44,13 @@ export class TableBusinessComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _cecoService:CecosService
   ) { }
 
   ngOnInit(): void {
     this.getBusiness()
+    this.getCecos()
     this.getHeadersBusiness()
   }
 
@@ -117,9 +122,17 @@ export class TableBusinessComponent implements OnInit {
 
   getBusiness() {
     this._spinner.show()
-    this._businessService.getBusiness().subscribe((resp: any) => {
+    this._businessService.getBusiness().subscribe((resp: Business[]) => {
       this.business = resp
       this.businessTemp = resp
+      this._spinner.hide()
+    })
+  }
+
+  getCecos() {
+    this._spinner.show()
+    this._cecoService.getCecos().subscribe((resp: Ceco[]) => {
+      this.cecos = resp
       this._spinner.hide()
     })
   }
@@ -134,7 +147,15 @@ export class TableBusinessComponent implements OnInit {
     return
   }
 
-  delete(business: Business) {
+  async delete(business: Business) {
+
+    const findBusinessCeco = this.cecos.find((ceco:Ceco) => ceco.business?._id === business._id)
+
+    if(findBusinessCeco){
+      this._toastr.warning('No se puede eliminar porque contiene un Ceco relacionado')
+      return
+    }
+
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${business.name}`,
