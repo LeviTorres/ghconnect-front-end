@@ -43,16 +43,16 @@
               <mat-checkbox class="example-margin" [formControl]="nameLargeControl" (click)="$event.stopPropagation();">
                 Nombre Largo</mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="nameShortControl" (click)="$event.stopPropagation();">
-                Nombre Corto</mat-checkbox>
+                Nombre Corto </mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="keyCecoControl" (click)="$event.stopPropagation();">
-                Clave Ceco</mat-checkbox>
+                Clave Ceco </mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="keyCecoBusinessControl"
                 (click)="$event.stopPropagation();">Clave Largo</mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="businessControl" (click)="$event.stopPropagation();">
                 Empresa</mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
                 Acciones</mat-checkbox>
-              <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+              <button mat-raised-button class="btn-update" (click)="updateHeader()"> Guardar </button>
             </div>
           </mat-menu>
         </tr>
@@ -76,7 +76,7 @@
             <span>{{ceco.business?.name}}</span>
           </td>
           <td class="last" *ngIf="actionsControl.value">
-            <i class="fa fa-edit me-4" (click)="openDialogEditCeco(ceco)"></i>
+            <i class="fa fa-edit me-4" (click)=" openDialogEditCeco(ceco) "></i>
             <i class="fa fa-trash" (click)="delete(ceco)"></i>
           </td>
           <td></td>
