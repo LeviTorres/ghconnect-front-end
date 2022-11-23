@@ -31,7 +31,7 @@ export class TableUsersComponent implements OnInit {
   public emailControl: FormControl = new FormControl()
   public actionsControl: FormControl = new FormControl()
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   constructor(

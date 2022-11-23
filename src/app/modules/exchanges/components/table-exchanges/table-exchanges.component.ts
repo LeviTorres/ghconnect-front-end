@@ -25,7 +25,7 @@ export class TableExchangesComponent implements OnInit {
   public exchangesTemp: Exchange[] = []
   public filterExchanges: Exchange[] = []
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   public headersExchange: any[] = []

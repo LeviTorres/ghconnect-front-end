@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class DetailsVolumesComponent implements OnInit {
 
   public volumeData!: Volume;
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   public volumes: Volume[] = []
@@ -75,7 +75,7 @@ export class DetailsVolumesComponent implements OnInit {
     return total
   }
 
-  delete(volume:Volume){
+  async delete(volume:Volume){
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar`,

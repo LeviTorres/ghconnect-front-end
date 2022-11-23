@@ -34,7 +34,7 @@ export class TableBusinessComponent implements OnInit {
   public countryControl: FormControl = new FormControl()
   public actionsControl: FormControl = new FormControl()
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   constructor(

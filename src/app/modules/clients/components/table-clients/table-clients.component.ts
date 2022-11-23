@@ -19,7 +19,7 @@ export class TableClientsComponent implements OnInit {
   public clients: Client[] = []
   public clientsTemp: Client[] = []
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   public headersClient: any[] = []

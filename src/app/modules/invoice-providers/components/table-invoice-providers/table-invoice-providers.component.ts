@@ -30,7 +30,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
   public exchanges: Exchange[] = []
   public business: Business[] = []
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   public headersInvoiceProvider: any[] = []

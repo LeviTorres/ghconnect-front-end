@@ -66,4 +66,12 @@
 <div class="col-12 d-flex flex-row-reverse">
 <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
     [responsive]="true"></pagination-controls>
+    <mat-form-field>
+      <mat-select [(value)]="selectedValue">
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="20">20</mat-option>
+        <mat-option [value]="50">50</mat-option>
+        <mat-option [value]="100">100</mat-option>
+      </mat-select>
+    </mat-form-field>
 </div>

@@ -33,7 +33,7 @@ export class TableDivisaComponent implements OnInit {
   public headersDivisa: any[] = []
   public header_name: string = 'divisas'
 
-  public selectedValue: number = 10;
+  public selectedValue: number = 100;
   public page!: number;
 
   public nameControl: FormControl = new FormControl()

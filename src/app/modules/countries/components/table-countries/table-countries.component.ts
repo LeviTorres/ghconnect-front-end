@@ -28,7 +28,7 @@ export class TableCountriesComponent implements OnInit {
   public headersCountry: any[] = []
   public header_name: string = 'countries';
 
-  public selectedValue: number = 5;
+  public selectedValue: number = 100;
   public page!: number;
 
   public nameControl: FormControl = new FormControl()

@@ -20,7 +20,7 @@ export class TableVolumesComponent implements OnInit {
   public volumes: Volume[]=[]
   public filterVolumes: Volume[] = []
 
-  public selectedValue: number = 10;
+  public selectedValue: number = 100;
   public page!: number;
 
   constructor(
