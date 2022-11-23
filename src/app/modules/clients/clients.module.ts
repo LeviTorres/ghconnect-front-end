@@ -9,6 +9,7 @@ import { FooterModule } from '../../components/footer/footer.module';
 import { PageClientsComponent } from './pages/page-clients/page-clients.component';
 import { TableClientsComponent } from './components/table-clients/table-clients.component';
 import { AddClientsComponent } from './pages/add-clients/add-clients.component';
+import { EditClientComponent } from './pages/edit-client/edit-client.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AddClientsComponent } from './pages/add-clients/add-clients.component';
     ClientsComponent,
     PageClientsComponent,
     TableClientsComponent,
-    AddClientsComponent
+    AddClientsComponent,
+    EditClientComponent
   ],
   imports: [
     CommonModule,

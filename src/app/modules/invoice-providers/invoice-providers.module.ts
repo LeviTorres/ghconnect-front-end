@@ -10,6 +10,7 @@ import { MainComponent } from './pages/main/main.component';
 import { TableInvoiceProvidersComponent } from './components/table-invoice-providers/table-invoice-providers.component';
 import { AddInvoiceProvidersComponent } from './pages/add-invoice-providers/add-invoice-providers.component';
 import { ModalTrackingComponent } from './components/modal-tracking/modal-tracking.component';
+import { EditInvoiceProviderComponent } from './pages/edit-invoice-provider/edit-invoice-provider.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ModalTrackingComponent } from './components/modal-tracking/modal-tracki
     MainComponent,
     TableInvoiceProvidersComponent,
     AddInvoiceProvidersComponent,
-    ModalTrackingComponent
+    ModalTrackingComponent,
+    EditInvoiceProviderComponent
   ],
   imports: [
     CommonModule,

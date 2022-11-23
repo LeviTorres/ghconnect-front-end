@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProvidersComponent } from './pages/providers/providers.component';
 import { AddProvidersComponent } from './pages/add-providers/add-providers.component';
 import { PageProvidersComponent } from './pages/page-providers/page-providers.component';
+import { EditProviderComponent } from './pages/edit-provider/edit-provider.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,8 @@ const routes: Routes = [
     component: ProvidersComponent,
     children: [
       { path: '', component: PageProvidersComponent },
-      { path: 'add-provider', component: AddProvidersComponent }
+      { path: 'add-provider', component: AddProvidersComponent },
+      { path: 'edit-provider', component: EditProviderComponent}
     ]
   }
 ];

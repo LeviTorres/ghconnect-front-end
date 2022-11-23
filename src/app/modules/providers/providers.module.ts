@@ -9,6 +9,7 @@ import { FooterModule } from '../../components/footer/footer.module';
 import { AddProvidersComponent } from './pages/add-providers/add-providers.component';
 import { TableProvidersComponent } from './components/table-providers/table-providers.component';
 import { PageProvidersComponent } from './pages/page-providers/page-providers.component';
+import { EditProviderComponent } from './pages/edit-provider/edit-provider.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { PageProvidersComponent } from './pages/page-providers/page-providers.co
     ProvidersComponent,
     AddProvidersComponent,
     TableProvidersComponent,
-    PageProvidersComponent
+    PageProvidersComponent,
+    EditProviderComponent
   ],
   imports: [
     CommonModule,
