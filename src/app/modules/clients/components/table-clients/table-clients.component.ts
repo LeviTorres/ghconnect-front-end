@@ -7,6 +7,7 @@ import { LoginService } from '../../../../services/login.service';
 import { HeadersService } from '../../../../services/headers.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -144,5 +145,24 @@ export class TableClientsComponent implements OnInit {
     })
   }
 
+  async delete(client: Client) {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar el cliente ${client.name}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._clientsService.deleteClient(client).subscribe(() => {
+          this.getClients()
+          this._spinner.hide()
+          this._toastr.success(`Cliente ${client.name} eliminado con exito`)
+        })
+
+      }
+    })
+  }
 
 }
