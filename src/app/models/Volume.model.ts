@@ -11,7 +11,7 @@ export class Volume {
     public project_volume: number,
     public units_purchased: number,
     public price_proforma: number,
-    public type: string,
+    public type: 'initial' | 'plus' | 'minus',
     public pending_to_buy?: number,
     public createdAt?: string,
     public updatedAt?: string,

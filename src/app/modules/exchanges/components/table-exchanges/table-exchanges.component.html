@@ -68,7 +68,7 @@
           <span> {{exchange.national_currency.abbreviation_divisa}}</span>
         </td>
         <td *ngIf="dateExchangeControl.value">
-          <span>{{exchange.date_exchange | date}}</span>
+          <span>{{exchange.date_exchange | date: 'dd/MMM/yyyy' }}</span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
           <span class="span-last mr-3" (click)="openDialogNewExchange(exchange)">Nueva Tasa</span>

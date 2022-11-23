@@ -14,6 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DetailsVolumesComponent implements OnInit {
 
+  public volumeData!: Volume;
   public selectedValue: number = 5;
   public page!: number;
 
@@ -42,6 +43,7 @@ export class DetailsVolumesComponent implements OnInit {
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
       this.volumes = volumes.filter((volume: Volume) => volume.insumo === insumo)
+      this.volumeData = this.volumes[0]
       this._spinner.hide()
     })
   }
@@ -76,8 +78,12 @@ export class DetailsVolumesComponent implements OnInit {
           suma += element.project_volume
           resta += element.units_purchased
           total = suma - resta
-        }else {
+        }else if(element.type === 'minus'){
           suma -= element.project_volume
+          resta += element.units_purchased
+          total = suma - resta
+        }else if(element.type === 'initial'){
+          suma += element.project_volume
           resta += element.units_purchased
           total = suma - resta
         }

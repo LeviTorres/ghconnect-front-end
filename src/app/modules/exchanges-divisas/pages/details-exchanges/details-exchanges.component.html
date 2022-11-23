@@ -39,7 +39,7 @@
           <span> {{exchange.national_currency.abbreviation_divisa}}</span>
         </td>
         <td>
-          <span>{{exchange.date_exchange | date}}</span>
+          <span>{{exchange.date_exchange | date: 'dd/MMM/yyyy'}}</span>
         </td>
         <td class="last">
           <i class="fa fa-edit me-3" (click)="openDialogEditExchange(exchange)"></i>
