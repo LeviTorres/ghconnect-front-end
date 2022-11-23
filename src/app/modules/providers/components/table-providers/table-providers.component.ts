@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from '../../../../services/search.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table-providers',
@@ -141,6 +142,26 @@ export class TableProvidersComponent implements OnInit {
       this.providers = resp
       this.providersTemp = resp
       this._spinner.hide()
+    })
+  }
+
+  async delete(provider: Provider) {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar el provider ${provider.name}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._providersService.deleteProvider(provider).subscribe(() => {
+          this.getProviders()
+          this._spinner.hide()
+          this._toastr.success(`Proveedor ${provider.name} eliminado con exito`)
+        })
+
+      }
     })
   }
 }

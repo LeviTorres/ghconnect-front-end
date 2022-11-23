@@ -15,12 +15,12 @@
       <h3>{{volumeData.front}}</h3>
     </div>
     <div class="col-3">
-      <strong>Tarjeta</strong>
-      <h3>{{volumeData.card}}</h3>
-    </div>
-    <div class="col-3">
       <strong>Partida</strong>
       <h3>{{volumeData.departure}}</h3>
+    </div>
+    <div class="col-3">
+      <strong>Tarjeta</strong>
+      <h3>{{volumeData.card}}</h3>
     </div>
   </div>
   <div class="row">
@@ -75,7 +75,7 @@
       <tr *ngFor="let volume of volumesTable | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
         <td>
-          <span>{{volume.createdAt | date: 'dd/MMM/yyyy'}}</span>
+          <span>{{volume.createdAt | date: 'dd/MM/yyyy'}}</span>
         </td>
         <td>
           <span [ngClass]="{'color-type-plus': volume.type === 'plus'}" *ngIf="volume.type === 'plus'"> + {{ volume.project_volume}}</span>
