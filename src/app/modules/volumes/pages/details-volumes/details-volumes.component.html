@@ -55,9 +55,6 @@
           <p class="m-0">Deductivas</p>
         </th>
         <th>
-          Unidades compradas
-        </th>
-        <th>
           Pendiente por comprar
         </th>
         <th>
@@ -81,9 +78,6 @@
           <span [ngClass]="{'color-type-plus': volume.type === 'plus'}" *ngIf="volume.type === 'plus'"> + {{ volume.project_volume}}</span>
           <span [ngClass]="{'color-type-minus': volume.type === 'minus'}"  *ngIf="volume.type === 'minus'"> - {{volume.project_volume}}</span>
           <span [ngClass]="{'color-type-buys': volume.type === 'buys'}"  *ngIf="volume.type === 'buys'"> - {{volume.project_volume}}</span>
-        </td>
-        <td>
-          <span>{{volume.units_purchased }}</span>
         </td>
         <td>
           <span>{{ getPendingBuy(i) }}</span>
