@@ -44,7 +44,7 @@
         <th>
           Precio proforma
         </th>
-        <th class="last" >
+        <th class="last">
           Acciones
         </th>
       </tr>
@@ -89,11 +89,12 @@
           <i class="fa fa-edit mx-3" (click)="openDialogEditVolume(volume)"></i>
           <i class="fa fa-trash mx-3" (click)="delete(volume)"></i>
         </td>
+        <td></td>
       </tr>
     </tbody>
   </table>
 </div>
 <div class="col-12 d-flex flex-row-reverse">
-<pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
-  [responsive]="true"></pagination-controls>
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    [responsive]="true"></pagination-controls>
 </div>
