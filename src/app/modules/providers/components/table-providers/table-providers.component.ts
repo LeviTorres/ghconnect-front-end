@@ -9,6 +9,7 @@ import { SearchService } from '../../../../services/search.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-providers',
@@ -45,7 +46,8 @@ export class TableProvidersComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
@@ -143,6 +145,15 @@ export class TableProvidersComponent implements OnInit {
       this.providersTemp = resp
       this._spinner.hide()
     })
+  }
+
+  goToEditProvider(provider: Provider){
+    this._router.navigate(['/providers/edit-provider'],
+    {
+      queryParams: {
+        provider: provider._id,
+      }
+    });
   }
 
   async delete(provider: Provider) {
