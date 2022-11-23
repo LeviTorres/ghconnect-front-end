@@ -66,8 +66,8 @@ export class TableExchangesComponent implements OnInit {
     if (headerExchange) {
       this.nationalCurrencyControl.setValue(headerExchange.national_currency)
       this.foreignCurrencyControl.setValue(headerExchange.foreign_currency)
-      this.exchangeRateControl.setValue(headerExchange.exchange_rate_amount)
-      this.dateExchangeControl.setValue(headerExchange.date_exchange)
+      this.exchangeRateControl.setValue(headerExchange.exchange_rate)
+      this.dateExchangeControl.setValue(headerExchange.rate_update)
       this.actionsControl.setValue(headerExchange.actions)
     } else {
       this.nationalCurrencyControl.setValue(true)
@@ -79,8 +79,8 @@ export class TableExchangesComponent implements OnInit {
         key_header: `${this._loginService.uid}-${this.header_name}`,
         national_currency: true,
         foreign_currency: true,
-        exchange_rate_amount: true,
-        date_exchange: true,
+        rate_update: true,
+        exchange_rate: true,
         actions: true,
       }
       this._headerService.createHeaders(element, 'exchanges').subscribe((item: any) => {
@@ -96,8 +96,8 @@ export class TableExchangesComponent implements OnInit {
     const element = {
       national_currency: this.nationalCurrencyControl.value,
       foreign_currency: this.foreignCurrencyControl.value,
-      exchange_rate_amount: this.exchangeRateControl.value,
-      date_exchange: this.dateExchangeControl.value,
+      rate_update: this.exchangeRateControl.value,
+      exchange_rate: this.dateExchangeControl.value,
       actions: this.actionsControl.value
     }
     this._headerService.updateHeaders(element, headerExchange._id, 'exchanges').subscribe(() => {
