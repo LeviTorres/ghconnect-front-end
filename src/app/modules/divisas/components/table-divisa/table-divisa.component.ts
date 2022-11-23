@@ -21,7 +21,7 @@ import { ExchangesService } from '../../../../services/exchanges.service';
 @Component({
   selector: 'app-table-divisa',
   templateUrl: './table-divisa.component.html',
-  styleUrls: ['./table-divisa.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableDivisaComponent implements OnInit {
 

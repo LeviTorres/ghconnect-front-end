@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-table-providers',
   templateUrl: './table-providers.component.html',
-  styleUrls: ['./table-providers.component.scss']
+  styleUrls: ['../../../../../styles.scss']
 })
 export class TableProvidersComponent implements OnInit {
 

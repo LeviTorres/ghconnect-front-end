@@ -87,9 +87,11 @@
               Id flujo</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="remesaControl" (click)="$event.stopPropagation();">
               Remesa</mat-checkbox>
-            <mat-checkbox class="example-margin" [formControl]="nameBusinessControl" (click)="$event.stopPropagation();">
+            <mat-checkbox class="example-margin" [formControl]="nameBusinessControl"
+              (click)="$event.stopPropagation();">
               Empresa</mat-checkbox>
-            <mat-checkbox class="example-margin" [formControl]="cecoControl" (click)="$event.stopPropagation();">Ceco</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="cecoControl" (click)="$event.stopPropagation();">Ceco
+            </mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="keyProviderControl" (click)="$event.stopPropagation();">
               No.
               Proveedor
@@ -136,7 +138,6 @@
             <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
           </div>
         </mat-menu>
-
       </tr>
     </thead>
     <tbody>
@@ -208,7 +209,6 @@
         <td class="last" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(invoice)"></i>
         </td>
-        <td></td>
       </tr>
     </tbody>
   </table>
