@@ -18,6 +18,10 @@
       <strong>Tarjeta</strong>
       <h3>{{volumeData.card}}</h3>
     </div>
+    <div class="col-3">
+      <strong>Partida</strong>
+      <h3>{{volumeData.departure}}</h3>
+    </div>
   </div>
   <div class="row">
     <div class="col-3">
@@ -32,6 +36,10 @@
       <strong>Unidad de medida</strong>
       <h3>{{volumeData.measure}}</h3>
     </div>
+    <div class="col-3">
+      <strong>Precio porfoma</strong>
+      <h3>{{volumeData.price_proforma | currency}}</h3>
+    </div>
   </div>
 </div>
 <div class="table-responsive mt-4">
@@ -41,11 +49,10 @@
         <th>
           Fecha de creacion
         </th>
-        <th>
-          Tipo volumen
-        </th>
-        <th>
-          ADD/DED
+        <th class="text-center">
+          <p class="m-0">Compradas</p>
+          <p class="m-0">Aditivas</p>
+          <p class="m-0">Deductivas</p>
         </th>
         <th>
           Unidades compradas
@@ -54,7 +61,7 @@
           Pendiente por comprar
         </th>
         <th>
-          Precio proforma
+          PVR
         </th>
         <th>
           Usuario
@@ -65,20 +72,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let volume of volumes | paginate: { itemsPerPage: selectedValue, currentPage: page };
+      <tr *ngFor="let volume of volumesTable | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
         <td>
           <span>{{volume.createdAt | date: 'dd/MMM/yyyy'}}</span>
         </td>
         <td>
-          <span *ngIf="volume.type === 'initial'">Inicial</span>
-          <span *ngIf="volume.type === 'plus'">Aumento</span>
-          <span *ngIf="volume.type === 'minus'">Restar</span>
-        </td>
-        <td>
-          <span *ngIf="volume.type === 'initial'">{{volume.project_volume}}</span>
-          <span *ngIf="volume.type === 'plus'"> + {{ volume.project_volume}}</span>
-          <span *ngIf="volume.type === 'minus'"> - {{volume.project_volume}}</span>
+          <span [ngClass]="{'color-type-plus': volume.type === 'plus'}" *ngIf="volume.type === 'plus'"> + {{ volume.project_volume}}</span>
+          <span [ngClass]="{'color-type-minus': volume.type === 'minus'}"  *ngIf="volume.type === 'minus'"> - {{volume.project_volume}}</span>
+          <span [ngClass]="{'color-type-buys': volume.type === 'buys'}"  *ngIf="volume.type === 'buys'"> - {{volume.project_volume}}</span>
         </td>
         <td>
           <span>{{volume.units_purchased }}</span>
@@ -87,7 +89,7 @@
           <span>{{ getPendingBuy(i) }}</span>
         </td>
         <td>
-          <span>{{volume.price_proforma | currency }}</span>
+          <span>0</span>
         </td>
         <td>
           <span>{{volume.user?.name}} {{volume.user?.last_name}}</span>

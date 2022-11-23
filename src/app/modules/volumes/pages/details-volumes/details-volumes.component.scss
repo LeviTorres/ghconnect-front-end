@@ -2,6 +2,21 @@ th {
   background-color: var(--tblr-626065);
   color: white;
   border-right: 1px solid;
+  vertical-align: middle;
+}
+
+.color-type-plus{
+  color: green;
+  font-weight: 500;
+}
+.color-type-minus{
+  color: red;
+  font-weight: 500;
+}
+
+.color-type-buys{
+  color: orange;
+  font-weight: 500;
 }
 
 .table {

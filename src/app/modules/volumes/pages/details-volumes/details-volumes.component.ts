@@ -19,6 +19,7 @@ export class DetailsVolumesComponent implements OnInit {
   public page!: number;
 
   public volumes: Volume[] = []
+  public volumesTable: Volume[]=[]
   public filterVolumes: Volume[] = []
 
   public insumo: string = ''
@@ -42,38 +43,20 @@ export class DetailsVolumesComponent implements OnInit {
   getVolumes( insumo:string){
     this._spinner.show()
     this._volumeService.getVolumes().subscribe((volumes: Volume[]) => {
+      this.volumesTable = volumes.filter((volume: Volume) => volume.insumo === insumo && volume.type !== 'initial')
       this.volumes = volumes.filter((volume: Volume) => volume.insumo === insumo)
       this.volumeData = this.volumes[0]
       this._spinner.hide()
     })
   }
 
-  getProjectVolume(indexTable:number){
-    let total: number = 0
-    let suma: number = 0
-    let resta: number = 0
-    this.volumes.forEach(function(element, index, array) {
-      if(index <= indexTable){
-        if(element.type === 'plus'){
-          suma += element.project_volume
-          resta += element.units_purchased
-          total = suma - resta
-        }else {
-          suma -= element.project_volume
-          resta += element.units_purchased
-          total = suma - resta
-        }
-      }
-    })
-    return total
-  }
-
   getPendingBuy(indexTable : number){
+    let newIndex = indexTable +1
     let total: number = 0
     let suma: number = 0
     let resta: number = 0
     this.volumes.forEach(function(element, index, array) {
-      if(index <= indexTable){
+      if(index <= newIndex){
         if(element.type === 'plus'){
           suma += element.project_volume
           resta += element.units_purchased
