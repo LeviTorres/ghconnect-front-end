@@ -88,10 +88,10 @@
             'circule-suspendido': client.status === 'suspendido',
             'circule-password': client.status === 'habilitado por password'}"></div>
         </td>
-        <td *ngIf="keyClientControl.value">
+        <td *ngIf="keyClientControl.value ">
           <span>{{ client.key_client }}</span>
         </td>
-        <td *ngIf="nameControl.value">
+        <td *ngIf="nameControl.value ">
           <span>{{ client.name }}</span>
         </td>
         <td *ngIf="nitControl.value">

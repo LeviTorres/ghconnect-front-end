@@ -23,7 +23,7 @@ export class TableCountriesComponent implements OnInit {
 
   public countries: Country[] = []
   public countriesTemp: Country[] = []
-  public business:Business[] = []
+  public business: Business[] = []
 
   public headersCountry: any[] = []
   public header_name: string = 'countries';
@@ -44,7 +44,7 @@ export class TableCountriesComponent implements OnInit {
     private _toastr: ToastrService,
     private _loginService: LoginService,
     private _headerService: HeadersService,
-    private _businessService:BusinessService
+    private _businessService: BusinessService
   ) { }
 
   ngOnInit(): void {
@@ -157,9 +157,9 @@ export class TableCountriesComponent implements OnInit {
   }
 
   async delete(country: Country) {
-    const findCountryBusiness = this.business.find((business:Business) => business.country?._id === country._id)
+    const findCountryBusiness = this.business.find((business: Business) => business.country?._id === country._id)
 
-    if(findCountryBusiness){
+    if (findCountryBusiness) {
       this._toastr.warning('No se puede eliminar porque contiene una empresa relacionada')
       return
     }
