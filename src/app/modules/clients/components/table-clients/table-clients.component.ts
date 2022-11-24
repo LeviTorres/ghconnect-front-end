@@ -142,8 +142,6 @@ export class TableClientsComponent implements OnInit {
     this._spinner.show()
     this._clientsService.getClients().subscribe((resp: any) => {
       this.clients = resp
-      console.log(this.clients);
-
       this.clientsTemp = resp
       this._spinner.hide()
     })
