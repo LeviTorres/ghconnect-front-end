@@ -51,7 +51,7 @@
         <label>Fecha carga</label>
         <mat-form-field class="w-100" appearance="outline">
           <input matInput  [matDatepicker]="picker1" formControlName="upload_date" placeholder="Selecciona una fecha"/>
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
           <mat-error
@@ -65,7 +65,7 @@
         <label>Fecha factura</label>
         <mat-form-field class="w-100" appearance="outline">
           <input matInput  [matDatepicker]="picker" formControlName="invoice_date" placeholder="Selecciona una fecha"/>
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error
@@ -79,7 +79,7 @@
         <label>Fecha vencimiento</label>
         <mat-form-field class="w-100" appearance="outline">
           <input matInput  [matDatepicker]="picker2" formControlName="expiration_date" placeholder="Selecciona una fecha"/>
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
           <mat-error

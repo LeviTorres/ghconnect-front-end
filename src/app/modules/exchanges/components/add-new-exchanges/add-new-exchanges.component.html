@@ -29,7 +29,7 @@
         <label>Fecha Tasa de Cambio</label>
         <mat-form-field appearance="outline">
           <input matInput  [matDatepicker]="picker" formControlName="date_exchange" placeholder="Selecciona una fecha tasa de cambio"/>
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error

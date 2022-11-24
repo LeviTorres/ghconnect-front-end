@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import localeEs from '@angular/common/locales/es'
 import { registerLocaleData } from '@angular/common';
 import { DatecustomPipe } from './pipes/datecustom.pipe';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 registerLocaleData(localeEs, 'es')
 
 @NgModule({
@@ -26,7 +27,9 @@ registerLocaleData(localeEs, 'es')
     HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-GB' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
