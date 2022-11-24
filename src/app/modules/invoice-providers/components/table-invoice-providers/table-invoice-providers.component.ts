@@ -16,6 +16,7 @@ import { ModalTrackingComponent } from '../modal-tracking/modal-tracking.compone
 import Swal from 'sweetalert2';
 import { Business } from 'src/app/models/Business.model';
 import { BusinessService } from 'src/app/services/business.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-invoice-providers',
@@ -70,7 +71,8 @@ export class TableInvoiceProvidersComponent implements OnInit {
     private _dialog: MatDialog,
     private _loginService: LoginService,
     private _headerService: HeadersService,
-    private _businessService: BusinessService
+    private _businessService: BusinessService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
@@ -268,17 +270,17 @@ export class TableInvoiceProvidersComponent implements OnInit {
 
   getTotal(invoice: InvoiceProviders) {
     let total: number = 0
-    const array = this.invoiceProviders.filter((item: InvoiceProviders) => item.key_invoice === invoice.key_invoice)
+    const array = this.invoiceProviders.filter((item: InvoiceProviders) => item.key_invoice === invoice.key_invoice && item.provider._id === invoice.provider._id)
     array.forEach((invoice: InvoiceProviders) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '51' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement === '51') {
           total += 0
         }
-        if ((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
-        if (invoice.movement_type.key_movement != '14' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
         }
       } else {
@@ -300,20 +302,20 @@ export class TableInvoiceProvidersComponent implements OnInit {
 
   getTotalPayment(invoice: InvoiceProviders) {
     let total: number = 0
-    const array = this.invoiceProviders.filter((item: InvoiceProviders) => item.key_invoice === invoice.key_invoice)
+    const array = this.invoiceProviders.filter((item: InvoiceProviders) => item.key_invoice === invoice.key_invoice && item.provider._id === invoice.provider._id)
     array.forEach((invoice: InvoiceProviders) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '14' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
-        if (invoice.movement_type.key_movement != '14' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15' ) {
           total -= Number(invoice.invoice_total)
         }
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
         if (divisa && exchange) {
-          if (invoice.movement_type.key_movement === '14') {
+          if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           } else {
             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
@@ -366,5 +368,14 @@ export class TableInvoiceProvidersComponent implements OnInit {
 
       }
     })
+  }
+
+  goToEditInvoiceProvider(invoice: InvoiceProviders){
+    this._router.navigate(['/invoice-providers/edit-invoice-provider'],
+    {
+      queryParams: {
+        invoice: invoice._id,
+      }
+    });
   }
 }

@@ -36,7 +36,7 @@ export class ModalTrackingComponent implements OnInit {
   getInvoiceProviders(){
     this._spinner.show()
     this._invoiceService.getInvoiceProviders().subscribe((resp:InvoiceProviders[]) => {
-      this.invoiceProviders = resp.filter((invoice:InvoiceProviders) => invoice.key_invoice === this.invoiceData.key_invoice)
+      this.invoiceProviders = resp.filter((invoice:InvoiceProviders) => invoice.key_invoice === this.invoiceData.key_invoice && invoice.provider._id === this.invoiceData.provider._id)
       this._spinner.hide()
     })
   }
@@ -80,10 +80,10 @@ export class ModalTrackingComponent implements OnInit {
       this.invoiceProviders.forEach((invoice:InvoiceProviders) =>{
         const divisa = invoice.divisa
         if(divisa?.abbreviation_divisa === 'BOB'){
-          if((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') && divisa?.abbreviation_divisa === 'BOB'){
+          if((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15')){
               total += Number(invoice.invoice_total)
           }
-          if(invoice.movement_type.key_movement != '14' && divisa?.abbreviation_divisa === 'BOB'){
+          if(invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15' ){
             total -= Number(invoice.invoice_total)
           }
         }else{
@@ -100,7 +100,7 @@ export class ModalTrackingComponent implements OnInit {
       return total
   }
 
-  delete(invoice:InvoiceProviders) {
+  async delete(invoice:InvoiceProviders) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
