@@ -8,6 +8,7 @@ import { HeadersService } from '../../../../services/headers.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class TableClientsComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _router:Router
   ) { }
 
   ngOnInit(): void {
@@ -140,9 +142,20 @@ export class TableClientsComponent implements OnInit {
     this._spinner.show()
     this._clientsService.getClients().subscribe((resp: any) => {
       this.clients = resp
+      console.log(this.clients);
+
       this.clientsTemp = resp
       this._spinner.hide()
     })
+  }
+
+  goToEditClient(client: Client){
+    this._router.navigate(['/clients/edit-client'],
+    {
+      queryParams: {
+        client: client._id,
+      }
+    });
   }
 
   async delete(client: Client) {

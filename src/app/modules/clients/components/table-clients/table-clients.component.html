@@ -1,4 +1,4 @@
-<button class="btn-primary" mat-button routerLink="/clients/add-client" routerLinkActive="router-link-active">Nuevo
+<button class="btn-primary" mat-button mat-button-raised routerLink="/clients/add-client" routerLinkActive="router-link-active">Nuevo
   cliente</button>
 <div class="table-responsive mt-4 overflow-auto ">
   <table id="seasontable" class="table text-nowrap">
@@ -119,7 +119,7 @@
           <span>{{ client.email}}</span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
-          <!-- <i class="fa fa-edit me-4" (click)="openDialogEditClient(client))"></i>-->
+          <i class="fa fa-edit me-4" (click)="goToEditClient(client)"></i>
           <i class="fa fa-trash" (click)="delete(client)"></i>
         </td>
         <td></td>
