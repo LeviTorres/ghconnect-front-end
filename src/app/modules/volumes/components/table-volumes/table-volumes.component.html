@@ -14,75 +14,107 @@
   <table class="table text-nowrap">
     <thead>
       <tr>
-        <th>
+        <th *ngIf="insumoControl.value">
           Insumo
         </th>
-        <th>
+        <th *ngIf="frontControl.value">
           Frente
         </th>
-        <th>
+        <th *ngIf="departureControl.value">
           Partida
         </th>
-        <th>
+        <th *ngIf="cardControl.value">
           Tarjeta
         </th>
-        <th>
+        <th *ngIf="descriptionControl.value">
           Descripcion
         </th>
-        <th>
+        <th *ngIf="measureControl.value">
           Unidad medida
         </th>
-        <th>
+        <th *ngIf="projectVolumeControl.value">
           Volumen proyecto
         </th>
-        <th>
+        <th *ngIf="unitsPurchasedControl.value">
           Unidades compradas
         </th>
-        <th>
+        <th *ngIf="pendingBuyControl.value">
           Pendiente por comprar
         </th>
-        <th>
+        <th *ngIf="priceProformaControl.value">
           Precio proforma
         </th>
-        <th class="last">
+        <th class="last" *ngIf="actionsControl.value">
           Acciones
         </th>
+        <th class="last" style="width: 15px;">
+          <span class="button-menu" [matMenuTriggerFor]="menu">
+            <i class="material-icons" style="color:white ">more_vert</i>
+          </span>
+        </th>
+        <mat-menu #menu="matMenu">
+          <div class="menu-table">
+            <mat-checkbox class="example-margin" [formControl]="insumoControl" (click)="$event.stopPropagation();">
+              Insumo</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="frontControl" (click)="$event.stopPropagation();">Frente
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="departureControl" (click)="$event.stopPropagation();">
+              Partida</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="cardControl" (click)="$event.stopPropagation();">Tarjeta
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="descriptionControl" (click)="$event.stopPropagation();">
+              Descripcion</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="measureControl" (click)="$event.stopPropagation();">
+              Unidad medida</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="projectVolumeControl"
+              (click)="$event.stopPropagation();">Volumen proyecto</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="unitsPurchasedControl"
+              (click)="$event.stopPropagation();">Unidades compradas</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="pendingBuyControl" (click)="$event.stopPropagation();">
+              Pendiente por comprar</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="priceProformaControl"
+              (click)="$event.stopPropagation();">Precio proforma</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+              Acciones</mat-checkbox>
+            <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+          </div>
+        </mat-menu>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let volume of filterVolumes | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i">
-        <td>
+        <td *ngIf="insumoControl.value">
           <span>{{volume.insumo}}</span>
         </td>
-        <td>
+        <td *ngIf="frontControl.value">
           <span>{{volume.front}}</span>
         </td>
-        <td>
+        <td *ngIf="departureControl.value">
           <span>{{volume.departure }}</span>
         </td>
-        <td>
+        <td *ngIf="cardControl.value">
           <span>{{volume.card }}</span>
         </td>
-        <td>
+        <td *ngIf="descriptionControl.value">
           <span>{{volume.description }}</span>
         </td>
-        <td>
+        <td *ngIf="measureControl.value">
           <span>{{volume.measure }}</span>
         </td>
-        <td>
+        <td *ngIf="projectVolumeControl.value">
           <span>{{getProjectValue(volume) }}</span>
         </td>
-        <td>
+        <td *ngIf="unitsPurchasedControl.value">
           <span>{{volume.units_purchased }}</span>
         </td>
-        <td>
+        <td *ngIf="pendingBuyControl.value">
           <span>{{ getPendingBuy(volume) }}</span>
         </td>
-        <td>
+        <td *ngIf="priceProformaControl.value">
           <span>{{volume.price_proforma | currency }}</span>
         </td>
-        <td class="last">
+        <td class="last" *ngIf="actionsControl.value">
           <span class="span-last mx-3" (click)="goToDetailsVolumes(volume)">Detalles volumen</span>
           <i class="fa fa-plus mx-3" (click)="openDialogAddNewVolumePlus(volume)"></i>
           <i class="fa fa-minus mx-3" (click)="openDialogAddNewVolumeMinus(volume)"></i>
