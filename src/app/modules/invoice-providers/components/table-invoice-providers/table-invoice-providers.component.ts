@@ -31,6 +31,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
   public divisas: Divisa[] = []
   public exchanges: Exchange[] = []
   public business: Business[] = []
+  public newArray:any = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -382,8 +383,17 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   createExcel(){
+    for (let index = 0; index < this.filterInvoiceProviders.length; index++) {
+      this.newArray.push({
+        ...this.filterInvoiceProviders[index],
+        total: this.getTotal(this.filterInvoiceProviders[index]),
+        total_payment: this.getTotalPayment(this.filterInvoiceProviders[index]),
+        type_change: this.typeChange(this.filterInvoiceProviders[index]),
+        total_mn: this.totalMN(this.filterInvoiceProviders[index])
+      })
+    }
     const element = {
-      data: this.filterInvoiceProviders,
+      data: this.newArray,
       headers: [
         'EMPRESA',
         'CECO',
@@ -394,9 +404,13 @@ export class TableInvoiceProvidersComponent implements OnInit {
         'FECHA FACTURA',
         'FECHA VENCIMIENTO',
         'TOTAL FACTURA',
+        'A PAGAR',
+        'DIVISA',
+        'T.C.',
+        'TOTAL M.N.',
+        'DESCRIPCION'
       ]
     }
     this._excelService.downloadExcel(element,'FacturasProveedores', 'invoiceProviders')
-
   }
 }
