@@ -382,30 +382,21 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   createExcel(){
-    console.log('hooa');
-
     const element = {
       data: this.filterInvoiceProviders,
       headers: [
-        'ID FLUJO',
-        'REMESA',
         'EMPRESA',
         'CECO',
-        'NO, PROVEEDOR',
+        'NO. PROVEEDOR',
         'NOMBRE PROVEEDOR',
-        'NO FACTURA'
+        'NO FACTURA',
+        'FECHA CARGA',
+        'FECHA FACTURA',
+        'FECHA VENCIMIENTO',
+        'TOTAL FACTURA',
       ]
     }
-    this._excelService.downloadExcel(element,'FacturasProveedores')
-   /* this._excelService.createExcel(element)
-    .subscribe(( res:any ) => {
-      //this._router.navigateByUrl('/invoice-providers')
-     // this._spinner.hide()
-      this._toastr.success('excel')
-    }, (err:any) =>{
-      //this._spinner.hide()
-      console.warn(err.error.msg)
-      this._toastr.error(`${err.error.msg}`)
-    })*/
+    this._excelService.downloadExcel(element,'FacturasProveedores', 'invoiceProviders')
+
   }
 }

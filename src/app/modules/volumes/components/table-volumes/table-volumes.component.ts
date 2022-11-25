@@ -195,11 +195,12 @@ export class TableVolumesComponent implements OnInit {
   getProjectValue(volumeTable: Volume) {
     const initialPlusValue = 0
     const initialMinusValue = 0
+    const arraInitial = this.volumes.find((volume: Volume) => volume.insumo === volumeTable.insumo && volume.type === 'initial')
     const arraPlus = this.volumes.filter((volume: Volume) => volume.insumo === volumeTable.insumo && volume.type === 'plus')
     const arrayMinus = this.volumes.filter((volume: Volume) => volume.insumo === volumeTable.insumo && volume.type === 'minus')
     const sumPlusArray = arraPlus.reduce((previousValue, currentValue) => previousValue + currentValue.project_volume, initialPlusValue)
     const minusPlusArray = arrayMinus.reduce((previousValue, currentValue) => previousValue + currentValue.project_volume, initialMinusValue)
-    return sumPlusArray - minusPlusArray
+    return arraInitial?.project_volume! + sumPlusArray - minusPlusArray
   }
 
   getPendingBuy(volumeTable: Volume) {

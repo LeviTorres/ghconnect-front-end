@@ -29,25 +29,32 @@ export class ExcelService {
     }
   }
 
-  downloadExcel(dataExcel:any, name:string): void{
+  downloadExcel(dataExcel:any, name:string, type: string): void{
     this._workbook = new Workbook()
     this._workbook.creator='Digi'
-    this._createTable(dataExcel, name)
+    this._createTable(dataExcel, name, type)
     this._workbook.xlsx.writeBuffer().then((data) =>{
       const blob = new Blob([data])
       fs.saveAs(blob,`${name}.xlsx`)
     })
   }
 
-  private _createTable(data:any, name: string){
+  private _createTable(info:any, name: string, type:string){
     const sheet = this._workbook.addWorksheet(name)
-    const headerRow = sheet.getRow(1)
-    console.log('data',data.headers);
-    for (let index = 0; index < data.headers.length; index++) {
+    const header = info.headers
+    sheet.addRow(header)
+    const subheader = []
+    console.log(info.data);
 
-      headerRow.values = [data.headers[0]]
+    for(let index = 0; index < info.data.length; index++) {
+      subheader[1] = info.data[index].ceco.business.name_short
+      subheader[2] = info.data[index].ceco.key_ceco_business
+      subheader[3] = info.data[index].provider.key_provider
+      subheader[4] = info.data[index].provider.name
+      subheader[5] = info.data[index].key_invoice
+      subheader[6] = new Date(info.data[index].upload_date)
+      sheet.addRow(subheader)
     }
-
   }
 
   createExcel(formData: any) {
