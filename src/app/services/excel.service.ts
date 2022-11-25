@@ -44,7 +44,8 @@ export class ExcelService {
     const headerRow = sheet.getRow(1)
     console.log('data',data.headers);
     for (let index = 0; index < data.headers.length; index++) {
-      headerRow.values = [data.headers[index]]
+
+      headerRow.values = [data.headers[0]]
     }
 
   }
