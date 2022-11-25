@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 import { Business } from 'src/app/models/Business.model';
 import { BusinessService } from 'src/app/services/business.service';
 import { Router } from '@angular/router';
+import { ExcelService } from '../../../../services/excel.service';
 
 @Component({
   selector: 'app-table-invoice-providers',
@@ -72,7 +73,8 @@ export class TableInvoiceProvidersComponent implements OnInit {
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _businessService: BusinessService,
-    private _router: Router
+    private _router: Router,
+    private _excelService: ExcelService
   ) { }
 
   ngOnInit(): void {
@@ -377,5 +379,33 @@ export class TableInvoiceProvidersComponent implements OnInit {
         invoice: invoice._id,
       }
     });
+  }
+
+  createExcel(){
+    console.log('hooa');
+
+    const element = {
+      data: this.filterInvoiceProviders,
+      headers: [
+        'ID FLUJO',
+        'REMESA',
+        'EMPRESA',
+        'CECO',
+        'NO, PROVEEDOR',
+        'NOMBRE PROVEEDOR',
+        'NO FACTURA'
+      ]
+    }
+    this._excelService.downloadExcel(element,'FacturasProveedores')
+   /* this._excelService.createExcel(element)
+    .subscribe(( res:any ) => {
+      //this._router.navigateByUrl('/invoice-providers')
+     // this._spinner.hide()
+      this._toastr.success('excel')
+    }, (err:any) =>{
+      //this._spinner.hide()
+      console.warn(err.error.msg)
+      this._toastr.error(`${err.error.msg}`)
+    })*/
   }
 }
