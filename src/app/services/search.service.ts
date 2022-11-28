@@ -7,6 +7,7 @@ import { Divisa } from '../models/Divisa.model';
 import { Country } from '../models/Country.model';
 import { Business } from '../models/Business.model';
 import { Ceco } from '../models/Ceco.model';
+import { InvoiceProviders } from '../models/InvoiceProviders.model';
 
 const base_url = environment.base_url
 
@@ -62,6 +63,27 @@ export class SearchService {
     )
   }
 
+  private generateInvoiceProviders(invoiceProviders: any[]): InvoiceProviders[] {
+    return invoiceProviders.map(
+      (invoiceProviders: InvoiceProviders) => new InvoiceProviders(invoiceProviders.ceco,
+        invoiceProviders.provider,
+        invoiceProviders.key_invoice,
+        invoiceProviders.upload_date,
+        invoiceProviders.invoice_date,
+        invoiceProviders.expiration_date,
+        invoiceProviders.invoice_total,
+        invoiceProviders.divisa,
+        invoiceProviders.description,
+        invoiceProviders.movement_type,
+        invoiceProviders.user,
+        invoiceProviders.contract,
+        invoiceProviders.status,
+        invoiceProviders.flow_id,
+        invoiceProviders.remesa,
+        invoiceProviders._id
+      )
+    )
+  }
   search(type: string, term: string) {
     return this._http.get<any[]>(`${base_url}/search/${type}/${term}`, this.headers)
       .pipe(
@@ -77,6 +99,8 @@ export class SearchService {
               return this.generateBusiness(resp.resultados)
             case 'cecos':
               return this.generateCecos(resp.resultados)
+            case 'invoiceProviders':
+              return this.generateInvoiceProviders(resp.resultados)
             default:
               return []
           }

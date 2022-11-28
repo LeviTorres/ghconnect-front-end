@@ -26,6 +26,10 @@ import { ExcelService } from '../../../../services/excel.service';
 })
 export class TableInvoiceProvidersComponent implements OnInit {
 
+  public invoiceProvidersTemp: InvoiceProviders[] = []
+
+  public invoices: InvoiceProviders[] = [];
+
   public invoiceProviders: InvoiceProviders[] = []
   public filterInvoiceProviders: InvoiceProviders[] = []
   public divisas: Divisa[] = []
@@ -221,6 +225,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((resp: any) => {
       this.invoiceProviders = resp
+      this.invoices = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.type === 'CARGO')
       this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.type === 'CARGO')
       this._spinner.hide()
     })
@@ -311,7 +316,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
         if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
-        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15' ) {
+        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
         }
       } else {
@@ -372,16 +377,27 @@ export class TableInvoiceProvidersComponent implements OnInit {
     })
   }
 
-  goToEditInvoiceProvider(invoice: InvoiceProviders){
+  goToEditInvoiceProvider(invoice: InvoiceProviders) {
     this._router.navigate(['/invoice-providers/edit-invoice-provider'],
-    {
-      queryParams: {
-        invoice: invoice._id,
-      }
-    });
+      {
+        queryParams: {
+          invoice: invoice._id,
+        }
+      });
   }
 
-  createExcel(){
+  search(term: string) {
+    if (term.length === 0) {
+      return this.filterInvoiceProviders = this.invoices
+    }
+    this._searchService.search('invoiceProviders', term).subscribe((resp: any) => {
+      console.log(this.invoiceProviders);
+      this.filterInvoiceProviders = resp
+    })
+    return
+  }
+
+  createExcel() {
     const element = {
       data: this.filterInvoiceProviders,
       headers: [
@@ -396,7 +412,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
         'TOTAL FACTURA',
       ]
     }
-    this._excelService.downloadExcel(element,'FacturasProveedores', 'invoiceProviders')
+    this._excelService.downloadExcel(element, 'FacturasProveedores', 'invoiceProviders')
 
   }
 }
