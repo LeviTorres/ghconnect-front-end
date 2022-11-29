@@ -1,0 +1,120 @@
+<h1><strong>Nueva solicitud de viaje</strong></h1>
+<form (ngSubmit)="registerTravel()" autocomplete="off" [formGroup]="travelForm">
+  <div class="row d-flex align-items-center">
+    <div class="col-6">
+      <h2><strong>Datos del pasajero</strong></h2>
+    </div>
+    <div class="col-6">
+      <div class="col-8">
+        <label>Fecha de creacion</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput  [matDatepicker]="picker1" formControlName="travel_date" placeholder="Selecciona una fecha"/>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <label>Codigo de empleado</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="Escribe el codigo de empleado"/>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <label>Solicitante</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="Escribe el nombre de quien solicita"/>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <label>Empresa</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="Seleccionar la empresa"/>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <label>Centro de costos</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="¿Donde se realizara el cargo?"/>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row d-flex align-items-center">
+    <div class="col-6">
+      <h2><strong>Datos del viaje</strong></h2>
+    </div>
+    <div class="col-3">
+      <div>
+        <label>Fecha ida</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput  [matDatepicker]="picker3" placeholder="Selecciona una fecha"/>
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-3">
+      <div>
+        <label>Fecha regreso</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput  [matDatepicker]="picker2" placeholder="Selecciona una fecha"/>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <label>Ciudad de origen</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="Escribe la ciudad de origen"/>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <label>Ciudad de destino</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="Escribe la ciudad de destino"/>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <label>Motivo del viaje</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input matInput placeholder="Describe el motivo del viaje a realizar"/>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <h1 class="my-3"><strong>Requerimientos adicionales</strong></h1>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <span>¿Se requiere de hospedaje?</span>
+      <mat-slide-toggle class="mx-5"></mat-slide-toggle>
+    </div>
+    <div class="col-5">
+      <span>¿Se requiere renta de vehiculo?</span>
+      <mat-slide-toggle class="mx-5"></mat-slide-toggle>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col-6">
+      <mat-form-field class="w-100" appearance="outline">
+        <textarea matInput placeholder="Observaciones adicionales"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="col-6 h-100">
+      <label>Inserta los documentos de identidad necesarios para el viaje (frente y reverso)</label>
+      <div class="card ">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button class="btn-primary mx-3" mat-raised-button>Guardar contrato</button>
+    <button class="btn-primary mx-3" mat-raised-button>Enviar contrato</button>
+  </div>
+</form>

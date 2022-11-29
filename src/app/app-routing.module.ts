@@ -101,6 +101,11 @@ const routes: Routes = [
     canActivate:[ AuthGuard ]
   },
   {
+    path: 'approvals',
+    loadChildren: () => import('./modules/approvals/approvals.module').then(m => m.ApprovalsModule),
+    canActivate:[ AuthGuard ]
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
     canActivate:[ AuthGuard ]
