@@ -35,10 +35,8 @@ export class UsersService {
     return this._http.get(`${base_url}/users`,this.headers)
             .pipe(
               map((resp:any) => {
-                const users = resp.users.map((user:any) => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id))
-                return {
-                  users: users
-                }
+                //const users = resp.users.map((user:any) => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id))
+                return resp.users
               })
             )
   }

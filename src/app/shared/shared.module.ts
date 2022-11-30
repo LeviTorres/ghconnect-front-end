@@ -22,6 +22,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   exports: [
@@ -47,7 +48,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatCheckboxModule,
     MatRadioModule,
     RouterModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatSlideToggleModule
   ]
 })
 export class SharedModule { }
