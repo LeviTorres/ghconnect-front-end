@@ -35,7 +35,7 @@ export class EditInvoiceProviderComponent implements OnInit {
   public showOption: boolean = false;
 
   public invoiceForm = this._fb.group({
-    ceco: ['', Validators.required ],
+    ceco: ['', Validators.required],
     provider: ['', Validators.required],
     key_invoice: ['', Validators.required],
     upload_date: ['', Validators.required],
@@ -48,7 +48,7 @@ export class EditInvoiceProviderComponent implements OnInit {
   })
 
   constructor(
-    private _router:Router,
+    private _router: Router,
     private _invoiceProvidersService: InvoiceProvidersService,
     private _spinner: NgxSpinnerService,
     private _providersService: ProvidersService,
@@ -66,7 +66,7 @@ export class EditInvoiceProviderComponent implements OnInit {
     this.getMovements()
     this.getDivisas()
     this.getProviders()
-    this._activatedRoute.queryParams.subscribe((params:any) => {
+    this._activatedRoute.queryParams.subscribe((params: any) => {
       this.getInvoiceProviders(params.invoice)
     })
     this.invoiceForm.controls['provider'].valueChanges.subscribe((inputValue: any) => {
@@ -85,43 +85,43 @@ export class EditInvoiceProviderComponent implements OnInit {
     return ceco && `${ceco.name_short}` ? `${ceco.name_short}` : '';
   }
 
-  public filterData(value: string){
-    this.filteredOptions = this.providers.filter(item =>  {
+  public filterData(value: string) {
+    this.filteredOptions = this.providers.filter(item => {
       this.displayFn(item)
-      return  item.name.toLowerCase().indexOf(value) > -1 || item.key_provider.toLowerCase().indexOf(value) > -1
+      return item.name.toLowerCase().indexOf(value) > -1 || item.key_provider.toLowerCase().indexOf(value) > -1
     })
   }
 
-  public filterDataCeco(value: string){
-    this.filteredOptionsCeco = this.cecos.filter(item =>  {
+  public filterDataCeco(value: string) {
+    this.filteredOptionsCeco = this.cecos.filter(item => {
       this.displayFnCeco(item)
-      return  item.name_short.toLowerCase().indexOf(value) > -1 ||
-              item.key_ceco_business.toLowerCase().indexOf(value) > -1
+      return item.name_short.toLowerCase().indexOf(value) > -1 ||
+        item.key_ceco_business.toLowerCase().indexOf(value) > -1
     })
   }
 
-  public opcionSeleccionada($event:MatAutocompleteSelectedEvent){
+  public opcionSeleccionada($event: MatAutocompleteSelectedEvent) {
     this.showOption = true;
   }
 
-  getInvoiceProviders(id: any){
+  getInvoiceProviders(id: any) {
     this._spinner.show()
-    this._invoiceProvidersService.getInvoiceProviders().subscribe((invoices:InvoiceProviders[]) => {
-        this.invoiceProviders = invoices.find((invoice: InvoiceProviders) => invoice._id === id)
-        this.initValueForm()
-        this._spinner.hide()
+    this._invoiceProvidersService.getInvoiceProviders().subscribe((invoices: InvoiceProviders[]) => {
+      this.invoiceProviders = invoices.find((invoice: InvoiceProviders) => invoice._id === id)
+      this.initValueForm()
+      this._spinner.hide()
     })
   }
 
-  initValueForm(){
+  initValueForm() {
     this._spinner.show()
     this.invoiceForm.patchValue({
       ceco: this.invoiceProviders.ceco,
       provider: this.invoiceProviders.provider,
       key_invoice: this.invoiceProviders.key_invoice,
-      upload_date: formatDate(this.invoiceProviders.upload_date,'yyyy-MM-dd', 'en'),
-      invoice_date: formatDate(this.invoiceProviders.invoice_date,'yyyy-MM-dd', 'en'),
-      expiration_date: formatDate(this.invoiceProviders.expiration_date,'yyyy-MM-dd', 'en'),
+      upload_date: formatDate(this.invoiceProviders.upload_date, 'yyyy-MM-dd', 'en'),
+      invoice_date: formatDate(this.invoiceProviders.invoice_date, 'yyyy-MM-dd', 'en'),
+      expiration_date: formatDate(this.invoiceProviders.expiration_date, 'yyyy-MM-dd', 'en'),
       invoice_total: this.invoiceProviders.invoice_total,
       divisa: this.invoiceProviders.divisa._id,
       description: this.invoiceProviders.description,
@@ -129,15 +129,15 @@ export class EditInvoiceProviderComponent implements OnInit {
     })
   }
 
-  getMovements(){
+  getMovements() {
     this._spinner.show()
-    this._movementsService.getMovementsType().subscribe((item:any) => {
+    this._movementsService.getMovementsType().subscribe((item: any) => {
       this.movements = item
       this._spinner.hide()
     })
   }
 
-  getCecos(){
+  getCecos() {
     this._spinner.show()
     this._cecosService.getCecos().subscribe((item: any) => {
       this.cecos = item
@@ -147,54 +147,54 @@ export class EditInvoiceProviderComponent implements OnInit {
 
   getDivisas() {
     this._spinner.show()
-    this._divisasService.getDivisas().subscribe((item:any) => {
+    this._divisasService.getDivisas().subscribe((item: any) => {
       this.divisas = item
       this._spinner.hide()
     })
   }
 
-  getProviders(){
+  getProviders() {
     this._spinner.show()
-    this._providersService.getProviders().subscribe((item:any)  => {
+    this._providersService.getProviders().subscribe((item: any) => {
       this.providers = item
       this._spinner.hide()
     })
   }
 
-  registerInvoice(){
+  registerInvoice() {
 
-  this._spinner.show()
-   if(this.invoiceForm.invalid){
+    this._spinner.show()
+    if (this.invoiceForm.invalid) {
       this._spinner.hide()
       return
-   }
-   let provider:any;
-   const providerSelect: any = this.invoiceForm.controls['provider'].value
-   if(providerSelect._id){
-    provider = providerSelect;
-   }else {
-    const findProvider = this.providers.find((provider:Provider) => provider.key_provider.trim().toLowerCase() === this.invoiceForm.controls['provider'].value?.trim().toLowerCase() || provider.name.toLowerCase().trim() === this.invoiceForm.controls['provider'].value?.trim().toLowerCase())
-    provider = findProvider
-   }
-   if(!provider){
+    }
+    let provider: any;
+    const providerSelect: any = this.invoiceForm.controls['provider'].value
+    if (providerSelect._id) {
+      provider = providerSelect;
+    } else {
+      const findProvider = this.providers.find((provider: Provider) => provider.key_provider.trim().toLowerCase() === this.invoiceForm.controls['provider'].value?.trim().toLowerCase() || provider.name.toLowerCase().trim() === this.invoiceForm.controls['provider'].value?.trim().toLowerCase())
+      provider = findProvider
+    }
+    if (!provider) {
       this._spinner.hide()
       this._toastr.error('No se ha seleccionado un proveedor correctamente')
       return
-   }
+    }
 
-   let ceco:any;
-   const cecoSelect: any = this.invoiceForm.controls['ceco'].value
-   if(cecoSelect._id){
-    ceco = cecoSelect;
-   }else {
-    const findCeco = this.cecos.find((ceco:Ceco) => ceco.key_ceco_business.trim().toLowerCase() === this.invoiceForm.controls['ceco'].value?.trim().toLowerCase() || ceco.name_short.toLowerCase().trim() === this.invoiceForm.controls['ceco'].value?.trim().toLowerCase())
-    ceco = findCeco
-   }
-   if(!ceco){
+    let ceco: any;
+    const cecoSelect: any = this.invoiceForm.controls['ceco'].value
+    if (cecoSelect._id) {
+      ceco = cecoSelect;
+    } else {
+      const findCeco = this.cecos.find((ceco: Ceco) => ceco.key_ceco_business.trim().toLowerCase() === this.invoiceForm.controls['ceco'].value?.trim().toLowerCase() || ceco.name_short.toLowerCase().trim() === this.invoiceForm.controls['ceco'].value?.trim().toLowerCase())
+      ceco = findCeco
+    }
+    if (!ceco) {
       this._spinner.hide()
       this._toastr.error('No se ha seleccionado un ceco correctamente')
       return
-   }
+    }
 
     const element = {
       ceco: ceco._id,
@@ -210,17 +210,15 @@ export class EditInvoiceProviderComponent implements OnInit {
     }
 
     this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id)
-    .subscribe(( res:any ) => {
-      this._router.navigateByUrl('/invoice-providers')
-      this._spinner.hide()
-      this._toastr.success('Factura actualizada con Exito')
-    }, (err:any) =>{
-      this._spinner.hide()
-      console.warn(err.error.msg)
-      this._toastr.error(`${err.error.msg}`)
-    })
-
-
+      .subscribe((res: any) => {
+        this._router.navigateByUrl('/invoice-providers')
+        this._spinner.hide()
+        this._toastr.success('Factura actualizada con Exito')
+      }, (err: any) => {
+        this._spinner.hide()
+        console.warn(err.error.msg)
+        this._toastr.error(`${err.error.msg}`)
+      })
   }
 
 }

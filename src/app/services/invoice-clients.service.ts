@@ -20,7 +20,7 @@ export class InvoiceClientsService {
     return localStorage.getItem('token') || '';
   }
 
-  get headers(){
+  get headers() {
     return {
       headers: {
         'x-token': this.token
@@ -32,20 +32,20 @@ export class InvoiceClientsService {
     return this._http.post(`${base_url}/invoice-clients`, formData, this.headers)
   }
 
-  updateInvoiceClient(formData: any, _id:string) {
-    return this._http.put(`${base_url}/invoice-clients/${ _id}`, formData, this.headers)
+  updateInvoiceClient(formData: any, _id: string) {
+    return this._http.put(`${base_url}/invoice-clients/${_id}`, formData, this.headers)
   }
 
-  getInvoiceClients(){
-    return this._http.get(`${base_url}/invoice-clients`,this.headers)
-              .pipe(
-                map((resp:any) => {
-                  return resp.invoiceClients
-                })
-              )
+  getInvoiceClients() {
+    return this._http.get(`${base_url}/invoice-clients`, this.headers)
+      .pipe(
+        map((resp: any) => {
+          return resp.invoiceClients
+        })
+      )
   }
 
-  deleteInvoiceClient(invoiceClient:InvoiceClient){
-    return this._http.delete(`${base_url}/invoice-clients/${invoiceClient._id}`,this.headers)
+  deleteInvoiceClient(invoiceClient: InvoiceClient) {
+    return this._http.delete(`${base_url}/invoice-clients/${invoiceClient._id}`, this.headers)
   }
 }

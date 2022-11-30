@@ -28,45 +28,51 @@
         <th>
           MN
         </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let invoice of invoiceClients">
-      <td>
-        <span>{{invoice.key_invoice}}</span>
-      </td>
-      <td>
-        <span>{{invoice.invoice_date | date: 'dd/MM/yyyy' }}</span>
-      </td>
-      <td>
-      <span>{{invoice.movement_type.name_movement}}</span>
-      </td>
-      <td>
-        <span>{{invoice.description}}</span>
-      </td>
-      <td>
-        <span>{{invoice.invoice_total | currency}}</span>
-      </td>
-      <td>
-      <span>{{invoice.divisa.abbreviation_divisa}}</span>
-      </td>
-      <td>
-       <span>{{getTotal(invoice) != 0 ? (getTotal(invoice) | currency) : 'SIN TIPO DE CAMBIO'}}</span>
-      </td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td class="text-center">
-        <span>Total:</span>
-      </td>
-      <td>
-        <span>{{getTotalMN() | currency}}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let invoice of invoiceClients">
+        <td>
+          <span>{{invoice.key_invoice}}</span>
+        </td>
+        <td>
+          <span>{{invoice.invoice_date | date: 'dd/MM/yyyy' }}</span>
+        </td>
+        <td>
+          <span>{{invoice.movement_type.key_movement}}</span>
+        </td>
+        <td>
+          <span>{{invoice.description}}</span>
+        </td>
+        <td>
+          <span>{{invoice.invoice_total | currency}}</span>
+        </td>
+        <td>
+          <span>{{invoice.divisa.abbreviation_divisa}}</span>
+        </td>
+        <td>
+          <span>{{getTotal(invoice) != 0 ? (getTotal(invoice) | currency) : 'SIN TIPO DE CAMBIO'}}</span>
+        </td>
+        <td class="last">
+          <i class="fa fa-trash" (click)="delete(invoice)"></i>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="text-center">
+          <span>Total:</span>
+        </td>
+        <td>
+          <span>{{getTotalMN() | currency}}</span>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
