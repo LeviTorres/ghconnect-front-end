@@ -100,19 +100,63 @@
     </div>
   </div>
   <div class="row my-4">
-    <div class="col-6">
+    <div class="col-6 mt-3">
       <mat-form-field class="w-100" appearance="outline">
         <textarea matInput placeholder="Observaciones adicionales"></textarea>
       </mat-form-field>
     </div>
-    <div class="col-6 h-100">
+    <div class="col-6">
       <label>Inserta los documentos de identidad necesarios para el viaje (frente y reverso)</label>
-      <div class="card ">
-
+      <div class="card">
+        <div class="text-center">
+          <img class="my-3" style="width: 60px; height: 60px;" src="../../../../../assets/icons/Upload.svg" alt="">
+        </div>
       </div>
     </div>
   </div>
-
+  <div class="row">
+    <h1 class="my-3"><strong>Autorizadores</strong></h1>
+  </div>
+  <div class="row mb-5">
+    <div class="col-6">
+      <div class="table-responsive">
+        <table class="table text-nowrap">
+          <thead>
+            <tr>
+              <th class="last"> Autorizador</th>
+              <th class="last">Requerido</th>
+              <th class="last">Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let authorizer of authorizers;index as i">
+              <td *ngIf="authorizer.name">{{authorizer.name}}</td>
+              <td *ngIf="!authorizer.name">
+                <mat-form-field class="w-100" appearance="outline">
+                  <input matInput [formControl]="userControl" [matAutocomplete]="search" placeholder="Escribe un autorizador"/>
+                  <mat-autocomplete autoActiveFirstOption #search="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredOptions" [value]="option">{{ option.name}}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </td>
+              <td class="text-center"><mat-checkbox class="mb-4" [formControl]="requiredControl"></mat-checkbox></td>
+              <td>
+                <p class="mb-3">Por enviar</p>
+              </td>
+              <td></td>
+            </tr>
+            <td style="color: var(--tblr-blue); cursor: pointer;" class="text-center py-2" (click)="addAuthorizer()">Anadir autorizador</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-6">
+      <div style="height: 100px;" class="card p-3">
+        <span><strong>Actividad reciente</strong></span>
+      </div>
+    </div>
+  </div>
   <div class="text-center">
     <button class="btn-primary mx-3" mat-raised-button>Guardar contrato</button>
     <button class="btn-primary mx-3" mat-raised-button>Enviar contrato</button>

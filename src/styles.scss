@@ -4,7 +4,7 @@
   --tblr-626065: #626065;
   --tblr-1E2126: #1E2126;
   --tblr-000: #000;
-  --tblr-blue: #206bc4;
+  --tblr-blue: #2196F3;
   --tblr-indigo: #4263eb;
   --tblr-purple: #ae3ec9;
   --tblr-pink: #d6336c;
@@ -243,7 +243,7 @@ i {
   border-radius: 5px;
 }
 
-::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background-color: var(--tblr-626065) !important;
 }
 // img{
@@ -252,3 +252,22 @@ i {
 // }
 
 // finish table
+
+
+.mat-form-field-outline {
+  /*change color of underline*/
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+//Component slideToggle
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--tblr-626065) !important;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--tblr-626065) !important;
+}
+
+
+

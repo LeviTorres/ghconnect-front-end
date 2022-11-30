@@ -10,9 +10,9 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', component: ApprovalsComponent },
-      { path: 'menu-approvals', component: MenuApprovalsComponent },
-      { path: 'add-travel-request', component: AddTravelRequestComponent}
+      { path: '', component: MenuApprovalsComponent },
+      { path: 'approvals-travel', component: ApprovalsComponent },
+      { path: 'approvals-travel/add-travel-request', component: AddTravelRequestComponent }
     ]
   }
 ];

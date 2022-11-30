@@ -15,6 +15,6 @@ export class TableApprovalsComponent implements OnInit {
   ngOnInit(): void {
   }
   goToMenuApprovals(){
-    this._router.navigateByUrl('/approvals/menu-approvals')
+    this._router.navigateByUrl('/approvals/approvals-travel/add-travel-request')
   }
 }
