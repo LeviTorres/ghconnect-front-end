@@ -1,0 +1,74 @@
+.container-provider {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.btn-save {
+  background-color: var(--tblr-626065);
+  color: white;
+}
+
+.btn-line-out{
+  background-color: var(--tblr-626065);
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  font-weight: 500;
+}
+
+.btn-line-side{
+  background-color: var(--tblr-626065);
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-weight: 500;
+}
+
+th {
+  background-color: var(--tblr-626065);
+  color: white;
+  border-right: 1px solid;
+}
+
+.last {
+  text-align: center;
+  vertical-align: sub;
+
+  a {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+i {
+  cursor: pointer;
+}
+
+.fa-trash {
+  font-size: 12px;
+  color: #cc2727;
+}
+
+.fa-trash:hover {
+  opacity: 0.5;
+}
+
+.fa-edit {
+  font-size: 12px;
+  color: var(--tblr-blue);
+}
+
+.fa-edit:hover {
+  opacity: 0.5;
+}
+
+::ng-deep.mat-form-field-outline {
+  /*change color of underline*/
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+}

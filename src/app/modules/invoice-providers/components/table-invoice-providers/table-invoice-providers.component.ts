@@ -387,6 +387,17 @@ export class TableInvoiceProvidersComponent implements OnInit {
       });
   }
 
+  search(term: string) {
+    if (term.length === 0) {
+      return this.filterInvoiceProviders = this.invoices
+    }
+    this._searchService.search('invoiceProviders', term).subscribe((resp: any) => {
+      console.log(this.invoiceProviders);
+      this.filterInvoiceProviders = resp
+    })
+    return
+  }
+
   createExcel() {
     for (let index = 0; index < this.filterInvoiceProviders.length; index++) {
       this.newArray.push({

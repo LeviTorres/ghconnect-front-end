@@ -8,6 +8,7 @@ import { Country } from '../models/Country.model';
 import { Business } from '../models/Business.model';
 import { Ceco } from '../models/Ceco.model';
 import { InvoiceProviders } from '../models/InvoiceProviders.model';
+import { InvoiceClient } from '../models/InvoiceClients.model';
 
 const base_url = environment.base_url
 
@@ -84,6 +85,28 @@ export class SearchService {
       )
     )
   }
+
+  private generateInvoiceClients(invoiceClients: any[]): InvoiceClient[] {
+    return invoiceClients.map(
+      (invoiceClients: InvoiceClient) => new InvoiceClient(invoiceClients.ceco,
+        invoiceClients.client,
+        invoiceClients.key_invoice,
+        invoiceClients.upload_date,
+        invoiceClients.invoice_date,
+        invoiceClients.expiration_date,
+        invoiceClients.invoice_total,
+        invoiceClients.divisa,
+        invoiceClients.description,
+        invoiceClients.movement_type,
+        invoiceClients.user,
+        invoiceClients.contract,
+        invoiceClients.status,
+        invoiceClients.flow_id,
+        invoiceClients.remesa,
+        invoiceClients._id
+      )
+    )
+  }
   search(type: string, term: string) {
     return this._http.get<any[]>(`${base_url}/search/${type}/${term}`, this.headers)
       .pipe(
@@ -101,6 +124,8 @@ export class SearchService {
               return this.generateCecos(resp.resultados)
             case 'invoiceProviders':
               return this.generateInvoiceProviders(resp.resultados)
+            case 'invoiceClients':
+              return this.generateInvoiceClients(resp.resultados)
             default:
               return []
           }
