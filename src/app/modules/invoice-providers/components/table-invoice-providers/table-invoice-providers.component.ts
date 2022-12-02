@@ -269,12 +269,9 @@ export class TableInvoiceProvidersComponent implements OnInit {
     })
   }
 
+  search(value: string){
 
-  getBusin(id: any) {
-    const findBusiness = this.business.find((business: Business) => business._id === id)
-    return findBusiness?.name_short
   }
-
 
   getTotal(invoice: InvoiceProviders) {
     let total: number = 0
