@@ -1,4 +1,17 @@
-<button class="btn-primary" mat-raised-button routerLink="/invoice-clients/add-invoice-clients">Crear factura</button>
+<div class="d-flex justify-content-between col-12">
+  <div>
+    <button class="btn-primary" mat-raised-button routerLink="/invoice-clients/add-invoice-clients">Crear
+      factura</button>
+    <button class="btn-primary mx-3" mat-raised-button (click)="createExcel()">Exportar Excel</button>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-100" appearance="legacy">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-label>Buscar...</mat-label>
+      <input type="text" matInput #txtTerm (keyup)="search(txtTerm.value)">
+    </mat-form-field>
+  </div>
+</div>
 <div class="table-responsive mt-4 overflow-auto ">
   <table id="seasontable" class="table text-nowrap">
     <thead>

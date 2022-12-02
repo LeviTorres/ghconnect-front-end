@@ -208,6 +208,7 @@ export class EditInvoiceProviderComponent implements OnInit {
       description: this.invoiceForm.controls['description'].value,
       movement_type: this.invoiceForm.controls['movement_type'].value,
     }
+    console.log(element);
 
     this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id)
       .subscribe((res: any) => {

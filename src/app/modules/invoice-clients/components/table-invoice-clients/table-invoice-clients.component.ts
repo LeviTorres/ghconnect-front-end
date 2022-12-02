@@ -17,7 +17,7 @@ import { BusinessService } from '../../../../services/business.service';
 import { Business } from 'src/app/models/Business.model';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { ExcelService } from '../../../../services/excel.service';
 
 @Component({
   selector: 'app-table-invoice-clients',
@@ -37,6 +37,7 @@ export class TableInvoiceClientsComponent implements OnInit {
   public business: any
   public selectedValue: number = 100;
   public page!: number;
+  public newArray: any = []
 
   public headersInvoiceClient: any[] = []
   public header_name: string = 'invoiceClients'
@@ -76,7 +77,8 @@ export class TableInvoiceClientsComponent implements OnInit {
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _businessService: BusinessService,
-    private _router: Router
+    private _router: Router,
+    private _excelService: ExcelService
   ) { }
 
   ngOnInit(): void {
@@ -274,17 +276,17 @@ export class TableInvoiceClientsComponent implements OnInit {
 
   getTotal(invoice: InvoiceClient) {
     let total: number = 0
-    const array = this.invoiceClients.filter((item: InvoiceClient) => item.key_invoice === invoice.key_invoice)
+    const array = this.invoiceClients.filter((item: InvoiceClient) => item.key_invoice === invoice.key_invoice && item.client._id === invoice.client._id)
     array.forEach((invoice: InvoiceClient) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '51' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement === '51') {
           total += 0
         }
-        if ((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
-        if (invoice.movement_type.key_movement != '14' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
         }
       } else {
@@ -304,23 +306,22 @@ export class TableInvoiceClientsComponent implements OnInit {
     return total
   }
 
-  // r
   getTotalPayment(invoice: InvoiceClient) {
     let total: number = 0
-    const array = this.invoiceClients.filter((item: InvoiceClient) => item.key_invoice === invoice.key_invoice)
+    const array = this.invoiceClients.filter((item: InvoiceClient) => item.key_invoice === invoice.key_invoice && item.client._id === invoice.client._id)
     array.forEach((invoice: InvoiceClient) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '14' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
-        if (invoice.movement_type.key_movement != '14' && divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
         }
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
         if (divisa && exchange) {
-          if (invoice.movement_type.key_movement === '14') {
+          if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           } else {
             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
@@ -382,6 +383,49 @@ export class TableInvoiceClientsComponent implements OnInit {
 
       }
     })
+  }
+
+  search(term: string) {
+    if (term.length === 0) {
+      return this.filterInvoiceClients = this.invoices
+    }
+    this._searchService.search('invoiceClients', term).subscribe((resp: any) => {
+      console.log(this.invoiceClients);
+      this.filterInvoiceClients = resp
+    })
+    return
+  }
+
+  createExcel() {
+    for (let index = 0; index < this.filterInvoiceClients.length; index++) {
+      this.newArray.push({
+        ...this.filterInvoiceClients[index],
+        total: this.getTotal(this.filterInvoiceClients[index]),
+        total_payment: this.getTotalPayment(this.filterInvoiceClients[index]),
+        type_change: this.typeChange(this.filterInvoiceClients[index]),
+        total_mn: this.totalMN(this.filterInvoiceClients[index])
+      })
+    }
+    const element = {
+      data: this.newArray,
+      headers: [
+        'EMPRESA',
+        'CECO',
+        'NO. CLIENTE',
+        'NOMBRE CLIENTE',
+        'NO FACTURA',
+        'FECHA CARGA',
+        'FECHA FACTURA',
+        'FECHA VENCIMIENTO',
+        'TOTAL FACTURA',
+        'A PAGAR',
+        'DIVISA',
+        'T.C.',
+        'TOTAL M.N.',
+        'DESCRIPCION'
+      ]
+    }
+    this._excelService.downloadExcel(element, 'FacturasClientes', 'invoiceClients')
   }
 
 }

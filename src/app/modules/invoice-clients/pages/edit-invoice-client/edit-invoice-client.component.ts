@@ -168,7 +168,6 @@ export class EditInvoiceClientComponent implements OnInit {
       this._spinner.hide()
       return
     }
-
     let client: any;
     const clientSelect: any = this.invoiceForm.controls['client'].value
     if (clientSelect._id) {
@@ -179,7 +178,7 @@ export class EditInvoiceClientComponent implements OnInit {
     }
     if (!client) {
       this._spinner.hide()
-      this._toastr.error('No se ha seleccionado un cliente correctamente')
+      this._toastr.error('No se ha seleccionado un proveedor correctamente')
       return
     }
 
