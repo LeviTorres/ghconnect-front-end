@@ -155,10 +155,10 @@
           <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
         </td>
         <td *ngIf="nameBusinessControl.value">
-          <span>{{getBusin(invoice?.ceco?.business)}}</span>
+          <span>{{invoice?.ceco?.business?.name_short}}</span>
         </td>
         <td *ngIf="cecoControl.value">
-          <span>{{invoice?.ceco?.name_short}}</span>
+          <span>{{invoice?.ceco?.key_ceco_business}}</span>
         </td>
         <td *ngIf="keyClientControl.value">
           <span>{{invoice.client.key_client}}</span>
@@ -206,8 +206,8 @@
           <span></span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
-          <!-- <i class="fa fa-edit me-4" (click)="openDialogEditClient(invoiceClient))"></i>
-        <i class="fa fa-trash" (click)="delete(invoiceClient)"></i> -->
+          <i class="fa fa-edit me-4" (click)="goToEditInvoiceClient(invoice)"></i>
+          <i class="fa fa-trash" (click)="delete(invoice)"></i>
         </td>
         <td></td>
       </tr>
@@ -217,12 +217,12 @@
 <div class="col-12 d-flex flex-row-reverse">
   <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
     [responsive]="true"></pagination-controls>
-    <mat-form-field>
-      <mat-select [(value)]="selectedValue">
-        <mat-option [value]="10">10</mat-option>
-        <mat-option [value]="20">20</mat-option>
-        <mat-option [value]="50">50</mat-option>
-        <mat-option [value]="100">100</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-select [(value)]="selectedValue">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="20">20</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="100">100</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>

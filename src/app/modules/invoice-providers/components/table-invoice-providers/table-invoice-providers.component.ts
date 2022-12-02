@@ -26,12 +26,16 @@ import { ExcelService } from '../../../../services/excel.service';
 })
 export class TableInvoiceProvidersComponent implements OnInit {
 
+  public invoiceProvidersTemp: InvoiceProviders[] = []
+
+  public invoices: InvoiceProviders[] = [];
+
   public invoiceProviders: InvoiceProviders[] = []
   public filterInvoiceProviders: InvoiceProviders[] = []
   public divisas: Divisa[] = []
   public exchanges: Exchange[] = []
   public business: Business[] = []
-  public newArray:any = []
+  public newArray: any = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -222,6 +226,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((resp: any) => {
       this.invoiceProviders = resp
+      this.invoices = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.type === 'CARGO')
       this.filterInvoiceProviders = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.type === 'CARGO')
       this._spinner.hide()
     })
@@ -312,7 +317,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
         if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
-        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15' ) {
+        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
         }
       } else {
@@ -373,16 +378,16 @@ export class TableInvoiceProvidersComponent implements OnInit {
     })
   }
 
-  goToEditInvoiceProvider(invoice: InvoiceProviders){
+  goToEditInvoiceProvider(invoice: InvoiceProviders) {
     this._router.navigate(['/invoice-providers/edit-invoice-provider'],
-    {
-      queryParams: {
-        invoice: invoice._id,
-      }
-    });
+      {
+        queryParams: {
+          invoice: invoice._id,
+        }
+      });
   }
 
-  createExcel(){
+  createExcel() {
     for (let index = 0; index < this.filterInvoiceProviders.length; index++) {
       this.newArray.push({
         ...this.filterInvoiceProviders[index],
@@ -411,6 +416,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
         'DESCRIPCION'
       ]
     }
-    this._excelService.downloadExcel(element,'FacturasProveedores', 'invoiceProviders')
+    this._excelService.downloadExcel(element, 'FacturasProveedores', 'invoiceProviders')
   }
 }

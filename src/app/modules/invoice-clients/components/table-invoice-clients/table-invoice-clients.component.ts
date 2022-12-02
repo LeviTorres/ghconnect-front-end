@@ -15,7 +15,8 @@ import { FormControl } from '@angular/forms';
 import { ModalTrackingComponent } from '../modal-tracking/modal-tracking.component';
 import { BusinessService } from '../../../../services/business.service';
 import { Business } from 'src/app/models/Business.model';
-
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,6 +25,10 @@ import { Business } from 'src/app/models/Business.model';
   styleUrls: ['../../../../../styles.scss']
 })
 export class TableInvoiceClientsComponent implements OnInit {
+
+  public invoiceClientsTemp: InvoiceClient[] = []
+
+  public invoices: InvoiceClient[] = [];
 
   public invoiceClients: InvoiceClient[] = []
   public filterInvoiceClients: InvoiceClient[] = []
@@ -53,6 +58,7 @@ export class TableInvoiceClientsComponent implements OnInit {
   public divisaControl: FormControl = new FormControl()
   public descriptionControl: FormControl = new FormControl()
   public contractControl: FormControl = new FormControl()
+  public movementTypeControl: FormControl = new FormControl()
   public tcControl: FormControl = new FormControl()
   public totalMNControl: FormControl = new FormControl()
   public checkbookControl: FormControl = new FormControl()
@@ -69,19 +75,22 @@ export class TableInvoiceClientsComponent implements OnInit {
     private _dialog: MatDialog,
     private _loginService: LoginService,
     private _headerService: HeadersService,
-    private _businessService: BusinessService
+    private _businessService: BusinessService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
+    this._spinner.show()
     this.getInvoiceClients()
     this.getDivisas()
     this.getExchanges()
     this.getHeadersInvoiceClient()
+    this._spinner.hide()
   }
 
   getHeadersInvoiceClient() {
     this._spinner.show()
-    this._headerService.getHeaders("invoiceClients").subscribe((resp: any) => {
+    this._headerService.getHeaders(this.header_name).subscribe((resp: any) => {
       this.headersInvoiceClient = resp
       this.initValuesHeader()
       this._spinner.hide()
@@ -89,6 +98,7 @@ export class TableInvoiceClientsComponent implements OnInit {
   }
 
   initValuesHeader() {
+    this._spinner.show()
     const headerInvoiceClient = this.headersInvoiceClient.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     if (headerInvoiceClient) {
       this.trackingControl.setValue(headerInvoiceClient.tracking)
@@ -108,6 +118,7 @@ export class TableInvoiceClientsComponent implements OnInit {
       this.divisaControl.setValue(headerInvoiceClient.divisa)
       this.descriptionControl.setValue(headerInvoiceClient.description)
       this.contractControl.setValue(headerInvoiceClient.contract)
+      this.movementTypeControl.setValue(headerInvoiceClient.movement_type)
       this.tcControl.setValue(headerInvoiceClient.tc)
       this.totalMNControl.setValue(headerInvoiceClient.totalMN)
       this.checkbookControl.setValue(headerInvoiceClient.checkbook)
@@ -131,6 +142,7 @@ export class TableInvoiceClientsComponent implements OnInit {
       this.divisaControl.setValue(true)
       this.descriptionControl.setValue(true)
       this.contractControl.setValue(true)
+      this.movementTypeControl.setValue(true)
       this.tcControl.setValue(true)
       this.totalMNControl.setValue(true)
       this.checkbookControl.setValue(true)
@@ -155,15 +167,18 @@ export class TableInvoiceClientsComponent implements OnInit {
         divisa: true,
         description: true,
         contract: true,
+        movement_type: true,
         tc: true,
         totalMN: true,
         checkboock: true,
         pay_status: true,
         actions: true,
       }
-      this._headerService.createHeaders(element, "invoiceClients").subscribe((item: any) => {
+      this._headerService.createHeaders(element, this.header_name).subscribe((item: any) => {
         this.getHeadersInvoiceClient()
+        this._spinner.hide()
       }, () => {
+        this._spinner.hide()
         this._toastr.error('Error al cargar los headers')
       })
     }
@@ -189,13 +204,14 @@ export class TableInvoiceClientsComponent implements OnInit {
       divisa: this.divisaControl.value,
       description: this.descriptionControl.value,
       contract: this.contractControl.value,
+      movement_type: this.movementTypeControl.value,
       tc: this.tcControl.value,
       totalMN: this.totalMNControl.value,
       checkbook: this.checkbookControl.value,
       pay_status: this.payStatusControl.value,
       actions: this.actionsControl.value
     }
-    this._headerService.updateHeaders(element, headerInvoiceClient._id, "invoiceClients").subscribe(() => {
+    this._headerService.updateHeaders(element, headerInvoiceClient._id, this.header_name).subscribe(() => {
 
     }, () => {
       this._toastr.error('Error al actualizar los headers')
@@ -206,7 +222,8 @@ export class TableInvoiceClientsComponent implements OnInit {
     this._spinner.show()
     this._invoiceClientService.getInvoiceClients().subscribe((resp: any) => {
       this.invoiceClients = resp
-      this.filterInvoiceClients = this.invoiceClients.filter((item: InvoiceClient) => item.movement_type.key_movement === '14')
+      this.invoices = this.invoiceClients.filter((item: InvoiceClient) => item.movement_type.type === 'CARGO')
+      this.filterInvoiceClients = this.invoiceClients.filter((item: InvoiceClient) => item.movement_type.type === 'CARGO')
       this._spinner.hide()
     })
   }
@@ -287,6 +304,7 @@ export class TableInvoiceClientsComponent implements OnInit {
     return total
   }
 
+  // r
   getTotalPayment(invoice: InvoiceClient) {
     let total: number = 0
     const array = this.invoiceClients.filter((item: InvoiceClient) => item.key_invoice === invoice.key_invoice)
@@ -335,6 +353,35 @@ export class TableInvoiceClientsComponent implements OnInit {
         return Number(0);
       }
     }
+  }
+
+  goToEditInvoiceClient(invoice: InvoiceClient) {
+    this._router.navigate(['/invoice-clients/edit-invoice-client'],
+      {
+        queryParams: {
+          invoice: invoice._id,
+        }
+      });
+  }
+
+  async delete(invoice: InvoiceClient) {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._invoiceClientService.deleteInvoiceClient(invoice).subscribe(() => {
+          this.getInvoiceClients()
+          this._spinner.hide()
+          this._toastr.success(`Factura ${invoice.key_invoice} eliminada con exito`)
+        })
+
+      }
+    })
   }
 
 }
