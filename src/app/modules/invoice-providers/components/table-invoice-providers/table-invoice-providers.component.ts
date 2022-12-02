@@ -269,10 +269,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
     })
   }
 
-  search(value: string){
-
-  }
-
   getTotal(invoice: InvoiceProviders) {
     let total: number = 0
     const array = this.invoiceProviders.filter((item: InvoiceProviders) => item.key_invoice === invoice.key_invoice && item.provider._id === invoice.provider._id)
