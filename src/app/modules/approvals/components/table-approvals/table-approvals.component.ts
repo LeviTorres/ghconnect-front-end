@@ -10,7 +10,11 @@ import { TravelRequest } from '../../../../models/TravelRequest.model';
 })
 export class TableApprovalsComponent implements OnInit {
 
-  public travel_draft: TravelRequest[] = []
+  public travel_toSend: TravelRequest[] = []
+  public travel_Send: TravelRequest[] = []
+  public travel_passed: TravelRequest[] = []
+  public travel_refused: TravelRequest[] = []
+  public travel_cancelled: TravelRequest[] = []
 
   constructor(
     private _router:Router,
@@ -22,9 +26,12 @@ export class TableApprovalsComponent implements OnInit {
   }
 
   getTravelRequest(){
-    this._travelService.getTravelRequest().subscribe((data: any) => {
-      this.travel_draft = data.filter((travels:TravelRequest) => travels.status === 'draft')
-      console.log(data);
+    this._travelService.getTravelRequest().subscribe((data: any[]) => {
+      this.travel_toSend = data.filter((travels:TravelRequest) => travels.status === 'TOSEND')
+      this.travel_Send = data.filter((travels:TravelRequest) => travels.status === 'SEND')
+      this.travel_passed = data.filter((travels:TravelRequest) => travels.status === 'PASSED')
+      this.travel_refused = data.filter((travels:TravelRequest) => travels.status === 'REFUSED')
+      this.travel_cancelled = data.filter((travels:TravelRequest) => travels.status === 'CANCELLED')
     })
   }
 

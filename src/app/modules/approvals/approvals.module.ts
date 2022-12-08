@@ -10,6 +10,8 @@ import { TableApprovalsComponent } from './components/table-approvals/table-appr
 import { MenuApprovalsComponent } from './pages/menu-approvals/menu-approvals.component';
 import { MainComponent } from './pages/main/main.component';
 import { AddTravelRequestComponent } from './pages/add-travel-request/add-travel-request.component';
+import { EditTravelRequestComponent } from './pages/edit-travel-request/edit-travel-request.component';
+import { ApprovalsRequestComponent } from './pages/approvals-request/approvals-request.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { AddTravelRequestComponent } from './pages/add-travel-request/add-travel
     TableApprovalsComponent,
     MenuApprovalsComponent,
     MainComponent,
-    AddTravelRequestComponent
+    AddTravelRequestComponent,
+    EditTravelRequestComponent,
+    ApprovalsRequestComponent
   ],
   imports: [
     CommonModule,

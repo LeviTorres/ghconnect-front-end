@@ -5,8 +5,14 @@ interface Authorizers{
   user: string
   required: boolean
   message?: string
+  status: '' | 'CANCELLED' | 'ACCEPTED'
 }
 
+interface History {
+  user: string
+  date: number
+  action: string
+}
 export class TravelRequest {
   constructor(
     public key_employee: string,
@@ -18,10 +24,11 @@ export class TravelRequest {
     public origin_city: string,
     public destination_city: string,
     public reason_trip: string,
+    public history: History,
     public lodging: boolean,
     public vehicle: boolean,
     public authorizers: any,
-    public status: string,
+    public status: 'TOSEND' | 'SEND' | 'PASSED' | 'REFUSED' | 'CANCELLED',
     public observations?: string,
     public createdAt?: string,
     public updatedAt?: string,

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../../../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../../../../models/User.model';
+import { transition } from '@angular/animations';
 
 @Component({
   selector: 'app-modal-users',
@@ -16,6 +17,8 @@ export class ModalUsersComponent implements OnInit {
   public samePassword: boolean = true;
 
   public sameName: boolean = false;
+
+  public sameEmail:boolean = false
 
   public password: string = '';
 
@@ -36,10 +39,16 @@ export class ModalUsersComponent implements OnInit {
     private _userService: UsersService,
     private _toastr:ToastrService,
     private _dialogRef: MatDialogRef<ModalUsersComponent>,
-    private _spinner: NgxSpinnerService
+    private _spinner: NgxSpinnerService,
+     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    this.initValuesForm()
+    this.registerForm.controls['email'].valueChanges.subscribe((inputEmail:any) => {
+      this.validateEmail(inputEmail)
+    })
     this.registerForm.controls['password2'].valueChanges.subscribe((inputPassword2) => {
       this.repeatPassword = inputPassword2!.trim();
       this.comparePassword();
@@ -50,9 +59,16 @@ export class ModalUsersComponent implements OnInit {
     })
   }
 
+  initValuesForm(){
+    this.registerForm.patchValue({
+      email: this.data
+    })
+  }
+
   registerUser() {
       this._spinner.show()
-      if(this.registerForm.invalid || !this.samePassword){
+      if(this.registerForm.invalid || !this.samePassword || !this.sameEmail){
+        this._spinner.hide()
         return
       }
 
@@ -63,7 +79,12 @@ export class ModalUsersComponent implements OnInit {
           this._toastr.success('Usuario registrado con Exito')
         }, (err:any) =>{
           console.warn(err.error.msg)
+          this._spinner.hide()
           this._toastr.error(`${err.error.msg}`)
+        })
+
+        this._dialogRef.close({
+          ...this.registerForm.value
         })
   }
 
@@ -72,6 +93,18 @@ export class ModalUsersComponent implements OnInit {
       this.samePassword = true;
     }else {
       this.samePassword = false;
+    }
+  }
+
+  validateEmail(value: string){
+    const validateEmail = this.users.some((user:User) => {
+      return value.toLowerCase().trim() === user.email.toLowerCase().trim()
+    })
+
+    if (validateEmail) {
+      this.sameEmail = false;
+    } else {
+      this.sameEmail = true;
     }
   }
 

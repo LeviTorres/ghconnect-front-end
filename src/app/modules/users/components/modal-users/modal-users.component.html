@@ -44,6 +44,9 @@
           >
             Correo electronico invalido
           </mat-error>
+          <mat-hint class="mat-hint-error" *ngIf="!sameEmail &&
+                            ( this.registerForm.controls['email'].touched )"
+          >Correo electronico repetido</mat-hint>
         </mat-form-field>
       </div>
       <div class="">

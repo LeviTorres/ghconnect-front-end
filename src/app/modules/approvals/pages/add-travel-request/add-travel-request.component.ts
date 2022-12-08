@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
 import { BusinessService } from '../../../../services/business.service';
 import { Business } from '../../../../models/Business.model';
 import { User } from '../../../../models/User.model';
@@ -9,26 +14,30 @@ import { TravelRequestService } from '../../../../services/travel-request.servic
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { empty } from 'rxjs';
+import { EmailsService } from '../../../../services/emails.service';
+import { TravelRequest } from '../../../../models/TravelRequest.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalUsersComponent } from '../../../users/components/modal-users/modal-users.component';
 
 @Component({
   selector: 'app-add-travel-request',
   templateUrl: './add-travel-request.component.html',
-  styleUrls: ['./add-travel-request.component.scss']
+  styleUrls: ['./add-travel-request.component.scss'],
 })
 export class AddTravelRequestComponent implements OnInit {
+  public id_user!: any
+  public business: Business[] = [];
+  public authorizers: any[] = [];
+  public date: any
 
-  public business: Business[]=[]
-  public authorizers: any[] = []
+  public dynamicArray: Array<any> = [];
+  public newDynamic: any = {};
+  public indice: number = 0;
+  public validate_user: boolean = true
 
-  public dynamicArray: Array<any> = []
-  public newDynamic: any = {}
-  public indice: number = 0
-
-  public addUser: boolean = false
-
+  public addUser: boolean = false;
   public users: User[] = []
-
-  public showOption: boolean = false;
   public filteredOptions: any[] = [];
 
   public travelForm: FormGroup = new FormGroup({
@@ -45,96 +54,251 @@ export class AddTravelRequestComponent implements OnInit {
     lodging: new FormControl(false),
     vehicle: new FormControl(false),
     observations: new FormControl(),
-  })
+  });
 
   public userForm: FormGroup = new FormGroup({
     user: new FormControl('', Validators.required),
     required: new FormControl(false),
-    message: new FormControl('')
-  })
+    message: new FormControl(''),
+  });
 
   constructor(
-    private _businessService:BusinessService,
-    private _userService:UsersService,
-    private _travelService:TravelRequestService,
+    private _businessService: BusinessService,
+    private _userService: UsersService,
+    private _travelService: TravelRequestService,
     private _router: Router,
-    private _toastr:ToastrService,
-    private _spinner: NgxSpinnerService
-  ) { }
+    private _toastr: ToastrService,
+    private _spinner: NgxSpinnerService,
+    private _emailService: EmailsService,
+    private _dialog: MatDialog
+  ) {
+    this.id_user = JSON.parse(atob(this._userService.token.split('.')[1])).uid;
+
+  }
 
   ngOnInit(): void {
-    const date = new Date()
-    this.travelForm.controls['travel_date'].setValue(date)
+    this.date = new Date();
+    this.travelForm.controls['travel_date'].setValue(this.date);
     this.travelForm.controls['travel_date'].disable();
-    this.getBusiness()
-    this.getUsers()
+    this.getBusiness();
+    this.getUsers();
 
-  }
-
-  displayFn(provider: any): string {
-    return provider && `${provider.name}` ? `${provider.name} ${provider.last_name}` : '';
-  }
-
-  filterData(value: string){
-    console.log(value);
-   /* this.filteredOptions = this.users.filter(item =>  {
-      this.displayFn(item)
-      return  item.name.toLowerCase().indexOf(value) > -1 || item.last_name.toLowerCase().indexOf(value) > -1
-    })*/
-  }
-
-  opcionSeleccionada($event:MatAutocompleteSelectedEvent){
-    this.showOption = true;
-  }
-
-  getBusiness(){
-    this._businessService.getBusiness().subscribe((business:Business[]) => {
-      this.business = business
+    //Autocompletado autorizadores
+    this.userForm.controls['user'].valueChanges.subscribe((inputValue: any) => {
+      this.validateUser()
+      this.filterData(inputValue)
     })
+
   }
 
-  getUsers(){
-    this._userService.getUsers().subscribe((users:any) => {
-      this.filteredOptions = users
-    })
+  getBusiness() {
+    this._businessService.getBusiness().subscribe((business: Business[]) => {
+      this.business = business;
+    });
   }
 
-  addRow(){
-    this.addUser = true
+  getUsers() {
+    this._userService.getUsers().subscribe((users: any) => {
+      this.users = users;
+    });
   }
-  registerUser(){
-    this.authorizers.push({
-      ...this.userForm.value
-    })
+
+  delete(i: any) {
+    this.authorizers.splice(i, 1);
+  }
+
+  returnTable() {
+    this.addUser = false;
     this.userForm.reset()
-    this.addUser = false
   }
 
-  registerTravel(){
-    this._spinner.show()
-    console.log(this.authorizers);
+  addRow() {
+    this.addUser = true;
+  }
 
+  registerUser() {
+    if(this.userForm.invalid ){
+      return
+    }
+    let user:any
+    const userSelect = this.userForm.controls['user'].value
+    if (userSelect._id) {
+      user = userSelect;
+      this.validate_user = true
+    } else {
+      const findUser = this.users.find(
+        (user: User) =>
+          user.email.trim().toLowerCase() ===
+            this.userForm.controls['user'].value?.trim().toLowerCase()
+      );
+      if(findUser){
+        this.validate_user = true
+        user = findUser;
+      }else {
+        this.validate_user = false
+      }
+    }
+    if(!this.validate_user){
+      this._toastr.warning('Usuario no existe', 'Seleccione un usuario existente')
+      return
+    }
+
+    const repeatUser = this.authorizers.find((data: any) => data.user === user.email)
+    if(repeatUser){
+      this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
+      return
+    }
+    this.authorizers.push({
+      ...this.userForm.value,
+      user: user.email
+    });
+    this.userForm.reset()
+    this.addUser = false;
+  }
+
+  async registerTravel() {
+    this._spinner.show();
+    if(this.authorizers.length <= 0){
+      this._spinner.hide()
+      this._toastr.warning('Selecciona al menos un autorizador')
+      return
+    }
+    const history_data = {
+      action: 'Solicitud de viaje creada',
+      date: new Date().getTime(),
+      user: this.id_user,
+    };
+    const element: TravelRequest = {
+      ...this.travelForm.value,
+      authorizers: this.authorizers,
+      departure_date: new Date(
+        this.travelForm.controls['departure_date'].value
+      ).getTime(),
+      return_date: new Date(
+        this.travelForm.controls['return_date'].value
+      ).getTime(),
+      history: history_data,
+    };
+
+    await this._travelService.createTravelRequest(element).subscribe(
+      (res: any) => {
+        this._router.navigateByUrl('/approvals/approvals-travel');
+        this._spinner.hide();
+        this._toastr.success('Solicitud de viaje creada con Exito');
+      },
+      (err: any) => {
+        this._spinner.hide();
+        console.warn(err.error.msg);
+        this._toastr.error(`${err.error.msg}`);
+      }
+    );
+  }
+
+  async sendRequest() {
+    this._spinner.show();
     const element = {
       ...this.travelForm.value,
       authorizers: this.authorizers,
-      departure_date: new Date(this.travelForm.controls['departure_date'].value).getTime(),
-      return_date: new Date(this.travelForm.controls['return_date'].value).getTime()
-    }
-
-    console.log(element);
-
-
-    this._travelService.createTravelRequest(element)
-    .subscribe(( res:any ) => {
-      this._router.navigateByUrl('/approvals/approvals-travel')
-      this._spinner.hide()
-      this._toastr.success('Solicitud de viaje creada con Exito')
-    }, (err:any) =>{
-      this._spinner.hide()
-      console.warn(err.error.msg)
-      this._toastr.error(`${err.error.msg}`)
-    })
-
+      departure_date: new Date(
+        this.travelForm.controls['departure_date'].value
+      ).getTime(),
+      return_date: new Date(
+        this.travelForm.controls['return_date'].value
+      ).getTime(),
+      status: 'SEND',
+    };
+    await this._travelService.createTravelRequest(element).subscribe(
+      (res: any) => {
+        this._router.navigateByUrl('/approvals/approvals-travel');
+        this._spinner.hide();
+        this._toastr.success('Solicitud de viaje enviada con Exito');
+        for (let index = 0; index < this.authorizers.length; index++) {
+          const element = {
+            to: this.authorizers[index].user,
+            id_request: res.travel,
+          };
+          this._emailService.sendEmail(element).subscribe((resp: any) => {});
+        }
+      },
+      (err: any) => {
+        this._spinner.hide();
+        console.warn(err.error.msg);
+        this._toastr.error(`${err.error.msg}`);
+      }
+    );
   }
 
+  //Autocompletado autorizadores
+  displayFn(user: User): string {
+    return user && `${user.email}`
+      ? `${user.email}`
+      : '';
+  }
+
+  filterData(value: string) {
+    this.filteredOptions = this.users.filter((item:any) => {
+      this.displayFn(item);
+      return (
+        item.email.toLowerCase().indexOf(value) > -1
+      );
+    });
+  }
+
+  validateUser(){
+    let user: any;
+    const userSelect: any = this.userForm.controls['user'].value;
+    if (userSelect._id) {
+      user = userSelect;
+      this.validate_user = true
+    } else {
+      const findUser = this.users.find(
+        (user: User) =>
+          user.email.trim().toLowerCase() ===
+            this.userForm.controls['user'].value?.trim().toLowerCase()
+      );
+      if(findUser){
+        this.validate_user = true
+        user = findUser;
+      }else {
+        this.validate_user = false
+      }
+    }
+  }
+
+  getUser(){
+      const findUser = this.users.find((user: User) => user._id === this.id_user )
+      return {
+        name: findUser!.name,
+        last_name: findUser!.last_name
+      }
+  }
+
+  createUser(value:string){
+    this.userForm.reset()
+    let dialogRef = this._dialog.open(ModalUsersComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: value
+    });
+    dialogRef.beforeClosed().subscribe((data: any) => {
+      console.log('data',data);
+
+      const user: User = {
+        email: data.email,
+        last_name: data.last_name,
+        name: data.name,
+        getImage: ''
+      }
+      console.log(user);
+      this.users.push(user)
+      console.log(this.users);
+
+      //this.filteredOptions.push(user)
+      //console.log(this.filteredOptions);
+      //this.displayFn(user)
+      this.userForm.controls['user'].setValue(data.email)
+    })
+  }
 }

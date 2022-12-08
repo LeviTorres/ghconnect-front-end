@@ -116,8 +116,8 @@ export class TableUsersComponent implements OnInit {
   getUsers() {
     this._spinner.show()
     this._userService.getUsers().subscribe((resp: any) => {
-      this.users = resp.users
-      this.usersTemp = resp.users
+      this.users = resp
+      this.usersTemp = resp
       this._spinner.hide()
     })
   }
