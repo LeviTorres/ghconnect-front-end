@@ -425,6 +425,8 @@ export class TableInvoiceClientsComponent implements OnInit {
         'DESCRIPCION'
       ]
     }
+    console.log(element);
+
     this._excelService.downloadExcel(element, 'FacturasClientes', 'invoiceClients')
   }
 

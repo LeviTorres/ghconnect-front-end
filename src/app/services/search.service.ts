@@ -9,6 +9,8 @@ import { Business } from '../models/Business.model';
 import { Ceco } from '../models/Ceco.model';
 import { InvoiceProviders } from '../models/InvoiceProviders.model';
 import { InvoiceClient } from '../models/InvoiceClients.model';
+import { Provider } from '../models/Provider.model';
+import { Client } from '../models/Client.model';
 
 const base_url = environment.base_url
 
@@ -107,6 +109,50 @@ export class SearchService {
       )
     )
   }
+
+  private generateProviders(providers: any[]): Provider[] {
+    console.log(providers);
+
+    return providers.map(
+      (providers: Provider) => new Provider(
+        providers.key_provider,
+        providers.name,
+        providers.nit,
+        providers.third_type,
+        providers.society_type,
+        providers.provider_type,
+        providers.phone_number,
+        providers.mobile_number,
+        providers.email,
+        providers.status,
+        providers.payment_conditions,
+        providers.user,
+        providers._id,
+      )
+    )
+  }
+
+  private generateClients(clients: any[]): Client[] {
+    return clients.map(
+      (clients: Client) => new Client(
+        clients.key_client,
+        clients.name,
+        clients.nit,
+        clients.third_type,
+        clients.society_type,
+        clients.provider_type,
+        clients.phone_number,
+        clients.mobile_number,
+        clients.email,
+        clients.status,
+        clients.payment_conditions,
+        clients.user,
+        clients._id,
+      )
+    )
+  }
+
+
   search(type: string, term: string) {
     return this._http.get<any[]>(`${base_url}/search/${type}/${term}`, this.headers)
       .pipe(
@@ -126,6 +172,10 @@ export class SearchService {
               return this.generateInvoiceProviders(resp.resultados)
             case 'invoiceClients':
               return this.generateInvoiceClients(resp.resultados)
+            case 'providers':
+              return this.generateProviders(resp.resultados)
+            case 'clients':
+              return this.generateClients(resp.resultados)
             default:
               return []
           }

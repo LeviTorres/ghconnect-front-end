@@ -9,7 +9,8 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { ExcelService } from '../../../../services/excel.service';
+import { PaymentConditions } from '../../../../models/PaymentConditions.model';
 
 @Component({
   selector: 'app-table-clients',
@@ -23,6 +24,9 @@ export class TableClientsComponent implements OnInit {
 
   public selectedValue: number = 100;
   public page!: number;
+
+  public newArray: any = []
+  public filterClients: Client[] = []
 
   public headersClient: any[] = []
   public header_name: string = 'clients'
@@ -47,7 +51,8 @@ export class TableClientsComponent implements OnInit {
     private _toastr: ToastrService,
     private _loginService: LoginService,
     private _headerService: HeadersService,
-    private _router:Router
+    private _excelService: ExcelService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
@@ -147,13 +152,13 @@ export class TableClientsComponent implements OnInit {
     })
   }
 
-  goToEditClient(client: Client){
+  goToEditClient(client: Client) {
     this._router.navigate(['/clients/edit-client'],
-    {
-      queryParams: {
-        client: client._id,
-      }
-    });
+      {
+        queryParams: {
+          client: client._id,
+        }
+      });
   }
 
   async delete(client: Client) {
@@ -174,6 +179,44 @@ export class TableClientsComponent implements OnInit {
 
       }
     })
+  }
+
+  search(term: string) {
+    if (term.length === 0) {
+      return this.clientsTemp = this.clients
+    }
+    this._searchService.search('clients', term).subscribe((resp: any) => {
+      this.clientsTemp = resp
+    })
+    return
+  }
+
+  createExcel() {
+    console.log(this.clientsTemp);
+
+    for (let index = 0; index < this.clientsTemp.length; index++) {
+      this.newArray.push({
+        ...this.clientsTemp[index],
+        payment_conditions: this.clientsTemp[index].payment_conditions.name_payment
+      })
+    }
+    const element = {
+      data: this.newArray,
+      headers: [
+        'STATUS',
+        'No. CLIENTE',
+        'NOMBRE CLIENTE',
+        'NIT',
+        'CONDICIONES DE PAGO',
+        'TIPO DE TERCERO',
+        'TIPO DE SOCIEDAD',
+        'TIPO DE PROVEEDOR',
+        'TELEFONO',
+        'TELEFONO MOVIL',
+        'EMAIL'
+      ]
+    }
+    this._excelService.downloadExcel(element, 'Clientes', 'clients')
   }
 
 }
