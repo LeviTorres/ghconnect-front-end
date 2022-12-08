@@ -158,11 +158,6 @@ export class AddTravelRequestComponent implements OnInit {
 
   async registerTravel() {
     this._spinner.show();
-    if(this.authorizers.length <= 0){
-      this._spinner.hide()
-      this._toastr.warning('Selecciona al menos un autorizador')
-      return
-    }
     const history_data = {
       action: 'Solicitud de viaje creada',
       date: new Date().getTime(),
@@ -196,6 +191,36 @@ export class AddTravelRequestComponent implements OnInit {
 
   async sendRequest() {
     this._spinner.show();
+    console.log(this.authorizers);
+
+    const validateAuthorizer = this.authorizers.find((authorizer: any) => authorizer.required === true)
+    console.log(validateAuthorizer);
+
+    if(!validateAuthorizer){
+      this._spinner.hide()
+      this._toastr.warning('Selecciona al menos un autorizador requerido')
+      return
+    }
+
+    if(this.authorizers.length <= 0){
+      this._spinner.hide()
+      this._toastr.warning('Selecciona al menos un autorizador')
+      return
+    }
+
+    const history_data = [
+      {
+        action: 'Solicitud de viaje creada',
+        date: new Date().getTime(),
+        user: this.id_user,
+      },
+      {
+        action: 'Cambio de Estado Por enviar -> Enviado',
+        date: new Date().getTime(),
+        user: this.id_user,
+      }
+    ];
+
     const element = {
       ...this.travelForm.value,
       authorizers: this.authorizers,
@@ -206,6 +231,7 @@ export class AddTravelRequestComponent implements OnInit {
         this.travelForm.controls['return_date'].value
       ).getTime(),
       status: 'SEND',
+      history: history_data
     };
     await this._travelService.createTravelRequest(element).subscribe(
       (res: any) => {
@@ -297,8 +323,9 @@ export class AddTravelRequestComponent implements OnInit {
 
       //this.filteredOptions.push(user)
       //console.log(this.filteredOptions);
-      //this.displayFn(user)
+
       this.userForm.controls['user'].setValue(data.email)
+      //this.displayFn(user)
     })
   }
 }

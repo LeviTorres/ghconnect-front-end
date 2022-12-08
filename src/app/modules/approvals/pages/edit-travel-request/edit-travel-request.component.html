@@ -8,8 +8,16 @@
       <div class="col-8">
         <label>Fecha de creacion</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput  [matDatepicker]="picker1" formControlName="travel_date" placeholder="Selecciona una fecha"/>
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            formControlName="travel_date"
+            placeholder="Selecciona una fecha"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
       </div>
@@ -19,27 +27,45 @@
     <div class="col-3">
       <label>Codigo de empleado</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput formControlName="key_employee" placeholder="Escribe el codigo de empleado"/>
+        <input
+          matInput
+          formControlName="key_employee"
+          placeholder="Escribe el codigo de empleado"
+        />
       </mat-form-field>
     </div>
     <div class="col-3">
       <label>Solicitante</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput formControlName="name_applicant" placeholder="Escribe el nombre de quien solicita"/>
+        <input
+          matInput
+          formControlName="name_applicant"
+          placeholder="Escribe el nombre de quien solicita"
+        />
       </mat-form-field>
     </div>
     <div class="col-3">
       <label>Empresa</label>
       <mat-form-field class="w-100" appearance="outline">
-        <mat-select matInput formControlName="business" placeholder="Selecciona una empresa">
-          <mat-option *ngFor="let item of business" [value]="item._id">{{item.name_short}}</mat-option>
+        <mat-select
+          matInput
+          formControlName="business"
+          placeholder="Selecciona una empresa"
+        >
+          <mat-option *ngFor="let item of business" [value]="item._id">{{
+            item.name_short
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col-3">
       <label>Centro de costos</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput formControlName="cost_center" placeholder="¿Donde se realizara el cargo?"/>
+        <input
+          matInput
+          formControlName="cost_center"
+          placeholder="¿Donde se realizara el cargo?"
+        />
       </mat-form-field>
     </div>
   </div>
@@ -51,8 +77,16 @@
       <div>
         <label>Fecha ida</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput  formControlName="departure_date" [matDatepicker]="picker3" placeholder="Selecciona una fecha"/>
-          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <input
+            matInput
+            formControlName="departure_date"
+            [matDatepicker]="picker3"
+            placeholder="Selecciona una fecha"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker3"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
       </div>
@@ -61,8 +95,16 @@
       <div>
         <label>Fecha regreso</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput formControlName="return_date" [matDatepicker]="picker2" placeholder="Selecciona una fecha"/>
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <input
+            matInput
+            formControlName="return_date"
+            [matDatepicker]="picker2"
+            placeholder="Selecciona una fecha"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
       </div>
@@ -72,19 +114,31 @@
     <div class="col-3">
       <label>Ciudad de origen</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput formControlName="origin_city" placeholder="Escribe la ciudad de origen"/>
+        <input
+          matInput
+          formControlName="origin_city"
+          placeholder="Escribe la ciudad de origen"
+        />
       </mat-form-field>
     </div>
     <div class="col-3">
       <label>Ciudad de destino</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput formControlName="destination_city" placeholder="Escribe la ciudad de destino"/>
+        <input
+          matInput
+          formControlName="destination_city"
+          placeholder="Escribe la ciudad de destino"
+        />
       </mat-form-field>
     </div>
     <div class="col-6">
       <label>Motivo del viaje</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input matInput formControlName="reason_trip" placeholder="Describe el motivo del viaje a realizar"/>
+        <input
+          matInput
+          formControlName="reason_trip"
+          placeholder="Describe el motivo del viaje a realizar"
+        />
       </mat-form-field>
     </div>
   </div>
@@ -94,24 +148,42 @@
   <div class="row">
     <div class="col-5">
       <span>¿Se requiere de hospedaje?</span>
-      <mat-slide-toggle formControlName="lodging" class="mx-5"></mat-slide-toggle>
+      <mat-slide-toggle
+        formControlName="lodging"
+        class="mx-5"
+      ></mat-slide-toggle>
     </div>
     <div class="col-5">
       <span>¿Se requiere renta de vehiculo?</span>
-      <mat-slide-toggle formControlName="vehicle" class="mx-5"></mat-slide-toggle>
+      <mat-slide-toggle
+        formControlName="vehicle"
+        class="mx-5"
+      ></mat-slide-toggle>
     </div>
   </div>
   <div class="row my-4">
     <div class="col-6 mt-3">
       <mat-form-field class="w-100" appearance="outline">
-        <textarea matInput formControlName="observations" placeholder="Observaciones adicionales"></textarea>
+        <textarea
+          matInput
+          formControlName="observations"
+          placeholder="Observaciones adicionales"
+        ></textarea>
       </mat-form-field>
     </div>
     <div class="col-6">
-      <label>Inserta los documentos de identidad necesarios para el viaje (frente y reverso)</label>
+      <label
+        >Inserta los documentos de identidad necesarios para el viaje (frente y
+        reverso)</label
+      >
       <div class="card">
         <div class="text-center">
-          <img class="my-3" style="width: 60px; height: 60px;" src="../../../../../assets/icons/Upload.svg" alt="">
+          <img
+            class="my-3"
+            style="width: 60px; height: 60px"
+            src="../../../../../assets/icons/Upload.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -125,7 +197,7 @@
         <table class="table text-nowrap">
           <thead>
             <tr>
-              <th class="last"> Autorizador</th>
+              <th class="last">Autorizador</th>
               <th class="last">Requerido</th>
               <th class="last">Status</th>
               <th class="last">Acciones</th>
@@ -133,11 +205,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let authorizer of authorizers;index as i">
+            <tr *ngFor="let authorizer of authorizers; index as i">
               <td>
-                <span>{{authorizer.user}}</span>
+                <span>{{ authorizer.user }}</span>
               </td>
-              <td class="text-center"><mat-checkbox class="mb-4" disabled [checked]="authorizer.required"></mat-checkbox></td>
+              <td class="text-center">
+                <mat-checkbox
+                  class="mb-4"
+                  disabled
+                  [checked]="authorizer.required"
+                ></mat-checkbox>
+              </td>
               <td>
                 <p class="mb-3">Por enviar</p>
               </td>
@@ -147,20 +225,64 @@
               </td>
               <td></td>
             </tr>
-            <td style="color: var(--tblr-blue); cursor: pointer;" class="text-center py-2" (click)="addRow()">Anadir autorizador</td>
+            <td
+              style="color: var(--tblr-blue); cursor: pointer"
+              class="text-center py-2"
+              (click)="addRow()"
+            >
+              Anadir autorizador
+            </td>
           </tbody>
         </table>
       </div>
       <div *ngIf="addUser" class="card p-4">
-        <form (ngSubmit)="registerUser()" autocomplete="off" [formGroup]="userForm">
+        <form
+          (ngSubmit)="registerUser()"
+          autocomplete="off"
+          [formGroup]="userForm"
+        >
           <div class="row">
             <div class="col-8">
-              <label>Escribe el nombre o correo electronico del autorizador</label>
+              <label
+                >Escribe el nombre o correo electronico del autorizador</label
+              >
               <mat-form-field class="w-100" appearance="outline">
-                <mat-select matInput formControlName="user" placeholder="Selecciona el tipo de movimiento">
-                  <mat-option *ngFor="let item of filteredOptions" [value]="item.email">{{item.email}}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="userForm.controls['user'].hasError('required')">
+                <input
+                  type="text"
+                  class="w-100"
+                  matInput
+                  formControlName="user"
+                  [matAutocomplete]="search"
+                  placeholder="Ingresa un usuario"
+                />
+                <mat-autocomplete
+                  autoActiveFirstOption
+                  #search="matAutocomplete"
+                  [displayWith]="displayFn"
+                >
+                  <mat-option value="" *ngIf="!userForm.controls['user'].value">
+                    Escribe algo...
+                  </mat-option>
+                  <mat-option
+                    value="{{ userForm.controls['user'].value }}"
+                    (click)="createUser(userForm.controls['user'].value)"
+                    *ngIf="userForm.controls['user'].value && !validate_user"
+                  >
+                    Crear usuario {{ userForm.controls["user"].value }}
+                  </mat-option>
+                  <div *ngIf="userForm.controls['user'].value">
+                    <mat-option
+                      *ngFor="let option of filteredOptions"
+                      [value]="option"
+                    >
+                      {{ option.email }} ({{ option.name }}
+                      {{ option.last_name }})</mat-option
+                    >
+                  </div>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="userForm.controls['user'].hasError('required')"
+                >
                   Campo requerido
                 </mat-error>
               </mat-form-field>
@@ -177,12 +299,18 @@
             <div class="col-12">
               <label>Escribele un mensaje al autorizador</label>
               <mat-form-field class="w-100" appearance="outline">
-                <textarea matInput formControlName="message" placeholder="Describe tu solicitud"></textarea>
+                <textarea
+                  matInput
+                  formControlName="message"
+                  placeholder="Describe tu solicitud"
+                ></textarea>
               </mat-form-field>
             </div>
           </div>
           <div class="row d-flex justify-content-center">
-              <button class="btn-primary btn" mat-raised-button>Anadir autorizador</button>
+            <button class="btn-primary btn" mat-raised-button>
+              Anadir autorizador
+            </button>
           </div>
         </form>
       </div>
@@ -190,14 +318,30 @@
     <div class="col-6">
       <div class="card p-3">
         <span class="mb-2"><strong>Actividad reciente</strong></span>
-        <div>
-            <p *ngFor="let item of activities">{{item.date | date: 'dd/MM/yyyy h:mm a' }} - {{getUser(item.user).name}} {{getUser(item.user).last_name}} - {{item.action}}</p>
+        <div *ngIf="this.users.length > 0">
+          <p *ngFor="let item of activities">
+            {{ item.date | date: "dd/MM/yyyy h:mm a" }} -
+            {{ getUser(item.user)!.name }} {{ getUser(item.user)!.last_name }} -
+            {{ item.action }}
+          </p>
         </div>
       </div>
     </div>
   </div>
-  <div class="text-center">
-    <button class="btn-primary mx-3" (click)="registerTravel()" mat-raised-button>Guardar solicitud</button>
-    <button class="btn-primary mx-3" (click)="sendRequest()" mat-raised-button>Enviar solicitud</button>
+  <div class="text-center" *ngIf="travelRequest">
+    <button
+      class="btn-primary mx-3"
+      (click)="registerTravel()"
+      mat-raised-button
+      *ngIf="travelRequest.status === 'TOSEND'"
+    >
+      Guardar solicitud
+    </button>
+    <button *ngIf="travelRequest.status === 'TOSEND'" class="btn-primary mx-3" (click)="sendRequest()" mat-raised-button>
+      Enviar solicitud
+    </button>
+    <button *ngIf="travelRequest.status !== 'TOSEND'" class="btn-primary mx-3" (click)="updatedToSend()" mat-raised-button>
+      Cambiar solicitud Por enviar
+    </button>
   </div>
 </form>

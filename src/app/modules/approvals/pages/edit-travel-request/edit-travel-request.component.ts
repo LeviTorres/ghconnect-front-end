@@ -10,6 +10,8 @@ import { UsersService } from '../../../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmailsService } from '../../../../services/emails.service';
+import { ModalUsersComponent } from '../../../users/components/modal-users/modal-users.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-travel-request',
@@ -25,7 +27,7 @@ export class EditTravelRequestComponent implements OnInit {
   public business: Business[]=[]
   public authorizers: any[] = []
   public activities: any
-
+  public validate_user: boolean = true
   public dynamicArray: Array<any> = []
   public newDynamic: any = {}
   public indice: number = 0
@@ -67,7 +69,8 @@ export class EditTravelRequestComponent implements OnInit {
     private _router: Router,
     private _toastr:ToastrService,
     private _spinner: NgxSpinnerService,
-    private _emailService: EmailsService
+    private _emailService: EmailsService,
+    private _dialog: MatDialog
   ) {
     this.id_user = JSON.parse(atob(this._userService.token.split('.')[1])).uid
   }
@@ -79,7 +82,11 @@ export class EditTravelRequestComponent implements OnInit {
     this.travelForm.controls['travel_date'].disable();
     this.getBusiness()
     this.getUsers()
-
+    //Autocompletado autorizadores
+    this.userForm.controls['user'].valueChanges.subscribe((inputValue: any) => {
+      this.validateUser()
+      this.filterData(inputValue)
+    })
   }
 
   getBusiness(){
@@ -90,7 +97,7 @@ export class EditTravelRequestComponent implements OnInit {
 
   getUsers(){
     this._userService.getUsers().subscribe((users:any) => {
-      this.filteredOptions = users
+      this.users = users
     })
   }
 
@@ -107,11 +114,45 @@ export class EditTravelRequestComponent implements OnInit {
   }
 
   registerUser(){
+    if(this.userForm.invalid ){
+      return
+    }
+    let user:any
+    const userSelect = this.userForm.controls['user'].value
+    if (userSelect._id) {
+      user = userSelect;
+      this.validate_user = true
+    } else {
+      const findUser = this.users.find(
+        (user: User) =>
+          user.email.trim().toLowerCase() ===
+            this.userForm.controls['user'].value?.trim().toLowerCase()
+      );
+      if(findUser){
+        this.validate_user = true
+        user = findUser;
+      }else {
+        this.validate_user = false
+      }
+    }
+    if(!this.validate_user){
+      this._toastr.warning('Usuario no existe', 'Seleccione un usuario existente')
+      return
+    }
+
+
+
+    const repeatUser = this.authorizers.find((data: any) => data.user === user.email)
+    if(repeatUser){
+      this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
+      return
+    }
     this.authorizers.push({
-      ...this.userForm.value
-    })
+      ...this.userForm.value,
+      user: user.email
+    });
     this.userForm.reset()
-    this.addUser = false
+    this.addUser = false;
   }
 
   getTravelRequest(id:string){
@@ -149,7 +190,6 @@ export class EditTravelRequestComponent implements OnInit {
       date: new Date().getTime(),
       user: this.id_user
     })
-    console.log(this.activities);
     const element = {
       ...this.travelForm.value,
       authorizers: this.authorizers,
@@ -173,12 +213,26 @@ export class EditTravelRequestComponent implements OnInit {
 
   async sendRequest(){
     this._spinner.show()
-    this.activities.push({
-      action: 'Actualizacion de solicitud de viaje',
-      date: new Date().getTime(),
-      user: this.id_user
-    })
-    console.log(this.activities);
+    const validateAuthorizer = this.authorizers.find((authorizer: any) => authorizer.required === true)
+    if(!validateAuthorizer){
+      this._spinner.hide()
+      this._toastr.warning('Selecciona al menos un autorizador requerido')
+      return
+    }
+
+    if(this.authorizers.length <= 0){
+      this._spinner.hide()
+      this._toastr.warning('Selecciona al menos un autorizador')
+      return
+    }
+
+    this.activities.push(
+      {
+        action: 'Cambio de Estado Por enviar -> Enviado',
+        date: new Date().getTime(),
+        user: this.id_user,
+      }
+    )
 
     const element = {
       ...this.travelForm.value,
@@ -210,13 +264,122 @@ export class EditTravelRequestComponent implements OnInit {
     })
   }
 
+  async updatedToSend(){
+    this._spinner.show()
+    this.activities.push(
+      {
+        action: `Cambio de Estado ${this.getStatus(this.travelRequest.status)} -> Por enviar`,
+        date: new Date().getTime(),
+        user: this.id_user,
+      }
+    )
 
-  getUser(id: string){
-    const findUser = this.filteredOptions.find((user: User) => user._id === id )
+    const element = {
+      ...this.travelForm.value,
+      authorizers: this.authorizers,
+      departure_date: new Date(this.travelForm.controls['departure_date'].value).getTime(),
+      return_date: new Date(this.travelForm.controls['return_date'].value).getTime(),
+      history: this.activities,
+      status: 'TOSEND'
+    }
+
+    await this._travelRequestService.updateTravelRequest(element,this.travelRequest._id!)
+    .subscribe(( res:any ) => {
+      this._router.navigateByUrl('/approvals/approvals-travel')
+      this._spinner.hide()
+      this._toastr.success('Solicitud de viaje actualizada con Exito')
+    }, (err:any) =>{
+      this._spinner.hide()
+      console.warn(err.error.msg)
+      this._toastr.error(`${err.error.msg}`)
+    })
+  }
+
+  getUser(user_data: string){
+    const findUser = this.users.find((user: User) => user._id === user_data )
     return {
-      name: findUser.name,
-      last_name: findUser.last_name
+      name: findUser!.name,
+      last_name: findUser!.last_name
     }
   }
 
+  displayFn(user: User): string {
+    return user && `${user.email}`
+      ? `${user.email}`
+      : '';
+  }
+
+  filterData(value: string) {
+    this.filteredOptions = this.users.filter((item:any) => {
+      this.displayFn(item);
+      return (
+        item.email.toLowerCase().indexOf(value) > -1
+      );
+    });
+  }
+
+  validateUser(){
+    let user: any;
+    const userSelect: any = this.userForm.controls['user'].value;
+    if (userSelect._id) {
+      user = userSelect;
+      this.validate_user = true
+    } else {
+      const findUser = this.users.find(
+        (user: User) =>
+          user.email.trim().toLowerCase() ===
+            this.userForm.controls['user'].value?.trim().toLowerCase()
+      );
+      if(findUser){
+        this.validate_user = true
+        user = findUser;
+      }else {
+        this.validate_user = false
+      }
+    }
+  }
+
+  createUser(value:string){
+    this.userForm.reset()
+    let dialogRef = this._dialog.open(ModalUsersComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: value
+    });
+    dialogRef.beforeClosed().subscribe((data: any) => {
+      console.log('data',data);
+
+      const user: User = {
+        email: data.email,
+        last_name: data.last_name,
+        name: data.name,
+        getImage: ''
+      }
+      console.log(user);
+      this.users.push(user)
+      console.log(this.users);
+
+      //this.filteredOptions.push(user)
+      //console.log(this.filteredOptions);
+
+      this.userForm.controls['user'].setValue(data.email)
+      //this.displayFn(user)
+    })
+  }
+
+
+  getStatus(status: string){
+    if(status === 'SEND'){
+      return 'Enviado'
+    }else if(status === 'PASSED'){
+      return 'Aprobado'
+    }else if(status === 'REFUSED'){
+      return 'Rechazado'
+    }else if(status === 'CANCELLED'){
+      return 'Cancelado'
+    }
+    return
+  }
 }
