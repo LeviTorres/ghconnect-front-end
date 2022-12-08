@@ -295,7 +295,7 @@ export class AddTravelRequestComponent implements OnInit {
       this.users.push(user)
       console.log(this.users);
 
-     // this.filteredOptions.push(user)
+      //this.filteredOptions.push(user)
       //console.log(this.filteredOptions);
       //this.displayFn(user)
       this.userForm.controls['user'].setValue(data.email)
