@@ -107,6 +107,56 @@ export class ExcelService {
         }
         break;
 
+      case 'providers':
+        sheet.columns = [
+          { width: 10 }, { width: 15 }, { width: 25 }, { width: 10 }, { width: 25 },
+          { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 },
+          { width: 10 }
+        ]
+        console.log(info.data);
+        const subheaderProvider = []
+        for (let index = 0; index < info.data.length; index++) {
+          subheaderProvider[1] = info.data[index].status
+          subheaderProvider[2] = info.data[index].key_provider
+          subheaderProvider[3] = info.data[index].name
+          subheaderProvider[4] = info.data[index].nit
+          subheaderProvider[5] = info.data[index].payment_conditions
+          subheaderProvider[6] = info.data[index].third_type
+          subheaderProvider[7] = info.data[index].society_type
+          subheaderProvider[8] = info.data[index].provider_type
+          subheaderProvider[9] = info.data[index].phone_number
+          subheaderProvider[10] = info.data[index].mobile_number
+          subheaderProvider[11] = info.data[index].email
+          sheet.addRow(subheaderProvider)
+        }
+        break;
+
+      case 'clients':
+        sheet.columns = [
+          { width: 10 }, { width: 15 }, { width: 20 }, { width: 10 }, { width: 25 },
+          { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 },
+          { width: 10 }
+        ]
+        console.log(info.data);
+
+        const subheaderClient = []
+        for (let index = 0; index < info.data.length; index++) {
+          subheaderClient[1] = info.data[index].status
+          subheaderClient[2] = info.data[index].key_client
+          subheaderClient[3] = info.data[index].name
+          subheaderClient[4] = info.data[index].nit
+          subheaderClient[5] = info.data[index].payment_conditions
+          subheaderClient[6] = info.data[index].third_type
+          subheaderClient[7] = info.data[index].society_type
+          subheaderClient[8] = info.data[index].provider_type
+          subheaderClient[9] = info.data[index].phone_number
+          subheaderClient[10] = info.data[index].mobile_number
+          subheaderClient[11] = info.data[index].email
+          sheet.addRow(subheaderClient)
+        }
+        break;
+
+
       default:
         break;
     }

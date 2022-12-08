@@ -6,6 +6,7 @@ import { LoginService } from '../../../../services/login.service';
 import { HeadersService } from '../../../../services/headers.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from '../../../../services/search.service';
+import { ExcelService } from '../../../../services/excel.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -20,6 +21,9 @@ export class TableProvidersComponent implements OnInit {
 
   public providers: Provider[] = []
   public providersTemp: Provider[] = []
+
+  public newArray: any = []
+  public filterProviders: Provider[] = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -47,6 +51,7 @@ export class TableProvidersComponent implements OnInit {
     private _toastr: ToastrService,
     private _loginService: LoginService,
     private _headerService: HeadersService,
+    private _excelService: ExcelService,
     private _router: Router
   ) { }
 
@@ -147,13 +152,13 @@ export class TableProvidersComponent implements OnInit {
     })
   }
 
-  goToEditProvider(provider: Provider){
+  goToEditProvider(provider: Provider) {
     this._router.navigate(['/providers/edit-provider'],
-    {
-      queryParams: {
-        provider: provider._id,
-      }
-    });
+      {
+        queryParams: {
+          provider: provider._id,
+        }
+      });
   }
 
   async delete(provider: Provider) {
@@ -174,5 +179,43 @@ export class TableProvidersComponent implements OnInit {
 
       }
     })
+  }
+
+  search(term: string) {
+    if (term.length === 0) {
+      return this.providersTemp = this.providers
+    }
+    this._searchService.search('providers', term).subscribe((resp: any) => {
+      this.providersTemp = resp
+    })
+    return
+  }
+
+  createExcel() {
+    console.log(this.providersTemp);
+
+    for (let index = 0; index < this.providersTemp.length; index++) {
+      this.newArray.push({
+        ...this.providersTemp[index],
+        payment_conditions: this.providersTemp[index].payment_conditions.name_payment
+      })
+    }
+    const element = {
+      data: this.newArray,
+      headers: [
+        'STATUS',
+        'No. PROVEEDOR',
+        'NOMBRE PROVEEDOR',
+        'NIT',
+        'CONDICIONES DE PAGO',
+        'TIPO DE TERCERO',
+        'TIPO DE SOCIEDAD',
+        'TIPO DE PROVEEDOR',
+        'TELEFONO',
+        'TELEFONO MOVIL',
+        'EMAIL'
+      ]
+    }
+    this._excelService.downloadExcel(element, 'Proveedores', 'providers')
   }
 }

@@ -23,7 +23,7 @@ export class TableBusinessComponent implements OnInit {
 
   public business: Business[] = []
   public businessTemp: Business[] = []
-  public cecos: Ceco[]=[]
+  public cecos: Ceco[] = []
 
   public headersBusiness: any[] = []
   public header_name: string = 'business';
@@ -45,7 +45,7 @@ export class TableBusinessComponent implements OnInit {
     private _toastr: ToastrService,
     private _loginService: LoginService,
     private _headerService: HeadersService,
-    private _cecoService:CecosService
+    private _cecoService: CecosService
   ) { }
 
   ngOnInit(): void {
@@ -144,14 +144,15 @@ export class TableBusinessComponent implements OnInit {
     this._searchService.search('business', term).subscribe((resp: any) => {
       this.business = resp
     })
+
     return
   }
 
   async delete(business: Business) {
 
-    const findBusinessCeco = this.cecos.find((ceco:Ceco) => ceco.business?._id === business._id)
+    const findBusinessCeco = this.cecos.find((ceco: Ceco) => ceco.business?._id === business._id)
 
-    if(findBusinessCeco){
+    if (findBusinessCeco) {
       this._toastr.warning('No se puede eliminar porque contiene un Ceco relacionado')
       return
     }
