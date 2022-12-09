@@ -27,6 +27,8 @@ export class TableApprovalsComponent implements OnInit {
 
   getTravelRequest(){
     this._travelService.getTravelRequest().subscribe((data: any[]) => {
+      console.log(data);
+
       this.travel_toSend = data.filter((travels:TravelRequest) => travels.status === 'TOSEND')
       this.travel_Send = data.filter((travels:TravelRequest) => travels.status === 'SEND')
       this.travel_passed = data.filter((travels:TravelRequest) => travels.status === 'PASSED')

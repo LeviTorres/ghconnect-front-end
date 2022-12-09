@@ -108,7 +108,7 @@ export class ApprovalsRequestComponent implements OnInit {
     this._tokenService.deleteToken(this.data).subscribe(() => {
 
     })
-    this._router.navigateByUrl('/home')
+    this._router.navigateByUrl('/approvals/approvals-travel')
     this._spinner.hide()
   }
 
