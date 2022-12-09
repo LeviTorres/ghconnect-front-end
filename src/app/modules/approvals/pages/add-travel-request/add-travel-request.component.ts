@@ -117,10 +117,10 @@ export class AddTravelRequestComponent implements OnInit {
   }
 
   registerUser() {
-    if(this.userForm.invalid ){
+    if (this.userForm.invalid) {
       return
     }
-    let user:any
+    let user: any
     const userSelect = this.userForm.controls['user'].value
     if (userSelect._id) {
       user = userSelect;
@@ -129,22 +129,22 @@ export class AddTravelRequestComponent implements OnInit {
       const findUser = this.users.find(
         (user: User) =>
           user.email.trim().toLowerCase() ===
-            this.userForm.controls['user'].value?.trim().toLowerCase()
+          this.userForm.controls['user'].value?.trim().toLowerCase()
       );
-      if(findUser){
+      if (findUser) {
         this.validate_user = true
         user = findUser;
-      }else {
+      } else {
         this.validate_user = false
       }
     }
-    if(!this.validate_user){
+    if (!this.validate_user) {
       this._toastr.warning('Usuario no existe', 'Seleccione un usuario existente')
       return
     }
 
     const repeatUser = this.authorizers.find((data: any) => data.user === user.email)
-    if(repeatUser){
+    if (repeatUser) {
       this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
       return
     }
@@ -243,7 +243,7 @@ export class AddTravelRequestComponent implements OnInit {
             to: this.authorizers[index].user,
             id_request: res.travel,
           };
-          this._emailService.sendEmail(element).subscribe((resp: any) => {});
+          this._emailService.sendEmail(element).subscribe((resp: any) => { });
         }
       },
       (err: any) => {
@@ -262,7 +262,7 @@ export class AddTravelRequestComponent implements OnInit {
   }
 
   filterData(value: string) {
-    this.filteredOptions = this.users.filter((item:any) => {
+    this.filteredOptions = this.users.filter((item: any) => {
       this.displayFn(item);
       return (
         item.email.toLowerCase().indexOf(value) > -1
@@ -270,7 +270,7 @@ export class AddTravelRequestComponent implements OnInit {
     });
   }
 
-  validateUser(){
+  validateUser() {
     let user: any;
     const userSelect: any = this.userForm.controls['user'].value;
     if (userSelect._id) {
@@ -280,26 +280,26 @@ export class AddTravelRequestComponent implements OnInit {
       const findUser = this.users.find(
         (user: User) =>
           user.email.trim().toLowerCase() ===
-            this.userForm.controls['user'].value?.trim().toLowerCase()
+          this.userForm.controls['user'].value?.trim().toLowerCase()
       );
-      if(findUser){
+      if (findUser) {
         this.validate_user = true
         user = findUser;
-      }else {
+      } else {
         this.validate_user = false
       }
     }
   }
 
-  getUser(){
-      const findUser = this.users.find((user: User) => user._id === this.id_user )
-      return {
-        name: findUser!.name,
-        last_name: findUser!.last_name
-      }
+  getUser() {
+    const findUser = this.users.find((user: User) => user._id === this.id_user)
+    return {
+      name: findUser!.name,
+      last_name: findUser!.last_name
+    }
   }
 
-  createUser(value:string){
+  createUser(value: string) {
     this.userForm.reset()
     let dialogRef = this._dialog.open(ModalUsersComponent, {
       width: '550px',
@@ -309,7 +309,7 @@ export class AddTravelRequestComponent implements OnInit {
       data: value
     });
     dialogRef.beforeClosed().subscribe((data: any) => {
-      console.log('data',data);
+      console.log('data', data);
 
       const user: User = {
         email: data.email,
