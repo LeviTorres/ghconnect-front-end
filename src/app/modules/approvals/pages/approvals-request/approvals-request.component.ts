@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TravelRequestService } from '../../../../services/travel-request.service';
 import { UsersService } from '../../../../services/users.service';
 import { User } from '../../../../models/User.model';
 import { TravelRequest } from '../../../../models/TravelRequest.model';
+import { TokensService } from '../../../../services/tokens.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-approvals-request',
@@ -17,20 +19,28 @@ export class ApprovalsRequestComponent implements OnInit {
   public activities: any
 
   public token: string = ''
+  public data: any
 
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _travelRequestService: TravelRequestService,
-    private _userService: UsersService
+    private _userService: UsersService,
+    private _tokenService: TokensService,
+    private _router: Router,
+    private _spinner: NgxSpinnerService
   ) {
+    this._spinner.show()
     this._activatedRoute.params.subscribe((params:any) => {
       this.token = params.token
-      const info = JSON.parse(atob(params.token.split('.')[1]))
-      console.log(info);
-
-      this.id_user = info.uid
-      this.getUser(info.uid)
-      this.getTravelRequest(info.request)
+      this._tokenService.getTokens().subscribe((tokens:any[]) => {
+        console.log(tokens);
+        const tokensDB =tokens.find((token: any) => token.key_token === this.token)
+        this.data = tokensDB
+        if(!tokensDB){
+          this._router.navigateByUrl('/home')
+        }
+        this._spinner.hide()
+      })
     })
   }
 
@@ -56,9 +66,6 @@ export class ApprovalsRequestComponent implements OnInit {
 
    const findUser = this.travelRequest.authorizers.findIndex((user:any) => user.user === this.user.email)
     this.travelRequest.authorizers[findUser].status = 'ACCEPTED'
-    //console.log(this.travelRequest.authorizers[findUser].required);
-    console.log('this.id_user',this.id_user);
-
        this.activities.push(
          {
            action: `Aprobo solicitud`,
@@ -76,7 +83,8 @@ export class ApprovalsRequestComponent implements OnInit {
       console.log('res',res);
       const updated = res.travelRequestUpdated.authorizers
       console.log('updated.length',updated.length);
-      const findAllAccepted = updated.filter((travel:any) => travel.status === 'ACCEPTED')
+      const findAllAccepted = updated.filter((travel:any) => travel.status === 'ACCEPTED' && travel.required === true)
+
       console.log('findAllAccepted',findAllAccepted);
       if(findAllAccepted.length === updated.length) {
         const element = {
@@ -95,7 +103,12 @@ export class ApprovalsRequestComponent implements OnInit {
   }
 
   updatedRequestDecline(){
-
+    console.log(this.data);
+    this._spinner.show()
+    this._tokenService.deleteToken(this.data).subscribe(() => {
+      this._router.navigateByUrl('/home')
+      this._spinner.hide()
+    })
   }
 
   getStatus(status: string){
