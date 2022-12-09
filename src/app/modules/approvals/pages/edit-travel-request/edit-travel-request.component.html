@@ -230,7 +230,7 @@
               class="text-center py-2"
               (click)="addRow()"
             >
-              Anadir autorizador
+              Añadir autorizador
             </td>
           </tbody>
         </table>
@@ -309,7 +309,7 @@
           </div>
           <div class="row d-flex justify-content-center">
             <button class="btn-primary btn" mat-raised-button>
-              Anadir autorizador
+              Añadir autorizador
             </button>
           </div>
         </form>
@@ -340,7 +340,7 @@
     <button *ngIf="travelRequest.status === 'TOSEND'" class="btn-primary mx-3" (click)="sendRequest()" mat-raised-button>
       Enviar solicitud
     </button>
-    <button *ngIf="travelRequest.status !== 'TOSEND'" class="btn-primary mx-3" (click)="updatedToSend()" mat-raised-button>
+    <button *ngIf="travelRequest.status !== 'TOSEND' && travelRequest.status !== 'SEND'" class="btn-primary mx-3" (click)="updatedToSend()" mat-raised-button>
       Cambiar solicitud Por enviar
     </button>
   </div>
