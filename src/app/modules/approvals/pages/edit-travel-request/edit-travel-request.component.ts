@@ -22,7 +22,7 @@ export class EditTravelRequestComponent implements OnInit {
   public travelRequest!: TravelRequest
   public id_user: string = ''
 
-  public business: Business[]=[]
+  public business: Business[] = []
   public authorizers: any[] = []
   public activities: any
 
@@ -62,10 +62,10 @@ export class EditTravelRequestComponent implements OnInit {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _travelRequestService: TravelRequestService,
-    private _businessService:BusinessService,
-    private _userService:UsersService,
+    private _businessService: BusinessService,
+    private _userService: UsersService,
     private _router: Router,
-    private _toastr:ToastrService,
+    private _toastr: ToastrService,
     private _spinner: NgxSpinnerService,
     private _emailService: EmailsService
   ) {
@@ -73,7 +73,7 @@ export class EditTravelRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._activatedRoute.params.subscribe((id:any) => {
+    this._activatedRoute.params.subscribe((id: any) => {
       this.getTravelRequest(id.id)
     })
     this.travelForm.controls['travel_date'].disable();
@@ -82,31 +82,31 @@ export class EditTravelRequestComponent implements OnInit {
 
   }
 
-  getBusiness(){
-    this._businessService.getBusiness().subscribe((business:Business[]) => {
+  getBusiness() {
+    this._businessService.getBusiness().subscribe((business: Business[]) => {
       this.business = business
     })
   }
 
-  getUsers(){
-    this._userService.getUsers().subscribe((users:any) => {
+  getUsers() {
+    this._userService.getUsers().subscribe((users: any) => {
       this.filteredOptions = users
     })
   }
 
-  delete(i: any){
-    this.authorizers.splice(i,1)
+  delete(i: any) {
+    this.authorizers.splice(i, 1)
   }
 
-  returnTable(){
+  returnTable() {
     this.addUser = false
   }
 
-  addRow(){
+  addRow() {
     this.addUser = true
   }
 
-  registerUser(){
+  registerUser() {
     this.authorizers.push({
       ...this.userForm.value
     })
@@ -114,14 +114,14 @@ export class EditTravelRequestComponent implements OnInit {
     this.addUser = false
   }
 
-  getTravelRequest(id:string){
+  getTravelRequest(id: string) {
     this._travelRequestService.getTravelRequest().subscribe((travelsRequest: any) => {
-      this.travelRequest = travelsRequest.find((travelRequest:TravelRequest) => travelRequest._id === id)
+      this.travelRequest = travelsRequest.find((travelRequest: TravelRequest) => travelRequest._id === id)
       this.initValuesForm()
     })
   }
 
-  initValuesForm(){
+  initValuesForm() {
     this.travelForm.patchValue({
       key_employee: this.travelRequest.key_employee,
       name_applicant: this.travelRequest.name_applicant,
@@ -142,7 +142,7 @@ export class EditTravelRequestComponent implements OnInit {
     this.activities = this.travelRequest.history
   }
 
-  async registerTravel(){
+  async registerTravel() {
     this._spinner.show()
     this.activities.push({
       action: 'Actualizacion de solicitud de viaje',
@@ -158,20 +158,20 @@ export class EditTravelRequestComponent implements OnInit {
       history: this.activities
     }
 
-    await this._travelRequestService.updateTravelRequest(element,this.travelRequest._id!)
-    .subscribe(( res:any ) => {
-      this._router.navigateByUrl('/approvals/approvals-travel')
-      this._spinner.hide()
-      this._toastr.success('Solicitud de viaje actualizada con Exito')
-    }, (err:any) =>{
-      this._spinner.hide()
-      console.warn(err.error.msg)
-      this._toastr.error(`${err.error.msg}`)
-    })
+    await this._travelRequestService.updateTravelRequest(element, this.travelRequest._id!)
+      .subscribe((res: any) => {
+        this._router.navigateByUrl('/approvals/approvals-travel')
+        this._spinner.hide()
+        this._toastr.success('Solicitud de viaje actualizada con Exito')
+      }, (err: any) => {
+        this._spinner.hide()
+        console.warn(err.error.msg)
+        this._toastr.error(`${err.error.msg}`)
+      })
 
   }
 
-  async sendRequest(){
+  async sendRequest() {
     this._spinner.show()
     this.activities.push({
       action: 'Actualizacion de solicitud de viaje',
@@ -185,34 +185,34 @@ export class EditTravelRequestComponent implements OnInit {
       authorizers: this.authorizers,
       departure_date: new Date(this.travelForm.controls['departure_date'].value).getTime(),
       return_date: new Date(this.travelForm.controls['return_date'].value).getTime(),
-      status:'SEND',
+      status: 'SEND',
       history: this.activities
     }
     await this._travelRequestService.updateTravelRequest(element, this.travelRequest._id!)
-    .subscribe(( res:any ) => {
-      console.log('res',res);
+      .subscribe((res: any) => {
+        console.log('res', res);
 
-      this._router.navigateByUrl('/approvals/approvals-travel')
-      this._spinner.hide()
-      this._toastr.success('Solicitud de viaje enviada con Exito')
-      for (let index = 0; index < this.authorizers.length; index++) {
-        const element = {
-          to: this.authorizers[index].user,
-          id_request: res.travelRequestUpdated
+        this._router.navigateByUrl('/approvals/approvals-travel')
+        this._spinner.hide()
+        this._toastr.success('Solicitud de viaje enviada con Exito')
+        for (let index = 0; index < this.authorizers.length; index++) {
+          const element = {
+            to: this.authorizers[index].user,
+            id_request: res.travelRequestUpdated
+          }
+          this._emailService.sendEmail(element).subscribe(() => {
+          })
         }
-        this._emailService.sendEmail(element).subscribe(()=>{
-        })
-      }
-    }, (err:any) =>{
-      this._spinner.hide()
-      console.warn(err.error.msg)
-      this._toastr.error(`${err.error.msg}`)
-    })
+      }, (err: any) => {
+        this._spinner.hide()
+        console.warn(err.error.msg)
+        this._toastr.error(`${err.error.msg}`)
+      })
   }
 
 
-  getUser(id: string){
-    const findUser = this.filteredOptions.find((user: User) => user._id === id )
+  getUser(id: string) {
+    const findUser = this.filteredOptions.find((user: User) => user._id === id)
     return {
       name: findUser.name,
       last_name: findUser.last_name
