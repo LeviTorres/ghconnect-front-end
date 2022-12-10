@@ -148,9 +148,11 @@ export class AddTravelRequestComponent implements OnInit {
       this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
       return
     }
+    console.log('user',user);
+
     this.authorizers.push({
       ...this.userForm.value,
-      user: user.email
+      user: user._id
     });
     this.userForm.reset()
     this.addUser = false;
@@ -158,11 +160,13 @@ export class AddTravelRequestComponent implements OnInit {
 
   async registerTravel() {
     this._spinner.show();
+
     const history_data = {
       action: 'Solicitud de viaje creada',
       date: new Date().getTime(),
       user: this.id_user,
     };
+
     const element: TravelRequest = {
       ...this.travelForm.value,
       authorizers: this.authorizers,
@@ -221,7 +225,7 @@ export class AddTravelRequestComponent implements OnInit {
       }
     ];
 
-    const element = {
+    const element: TravelRequest = {
       ...this.travelForm.value,
       authorizers: this.authorizers,
       departure_date: new Date(
@@ -241,7 +245,7 @@ export class AddTravelRequestComponent implements OnInit {
         for (let index = 0; index < this.authorizers.length; index++) {
           const element = {
             to: this.authorizers[index].user,
-            id_request: res.travel,
+            request: res.travel,
           };
           this._emailService.sendEmail(element).subscribe((resp: any) => { });
         }
@@ -327,5 +331,11 @@ export class AddTravelRequestComponent implements OnInit {
       this.userForm.controls['user'].setValue(data.email)
       //this.displayFn(user)
     })
+  }
+
+
+  getEmailAuthorizer(id: string){
+    const findAuthorizer = this.users.find((user: User) => user._id === id)
+    return findAuthorizer?.email
   }
 }

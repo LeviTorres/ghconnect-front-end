@@ -250,7 +250,7 @@
           <tbody>
             <tr *ngFor="let authorizer of authorizers; index as i">
               <td>
-                <span>{{ authorizer.user }}</span>
+                <span>{{ getEmailAuthorizer(authorizer.user) }}</span>
               </td>
               <td class="text-center">
                 <mat-checkbox

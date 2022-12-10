@@ -2,14 +2,14 @@ import { User } from './User.model';
 import { Business } from './Business.model';
 
 interface Authorizers{
-  user: string
+  user: User
   required: boolean
   message?: string
   status: '' | 'CANCELLED' | 'ACCEPTED'
 }
 
 interface History {
-  user: string
+  user: User
   date: number
   action: string
 }
@@ -24,10 +24,10 @@ export class TravelRequest {
     public origin_city: string,
     public destination_city: string,
     public reason_trip: string,
-    public history: History,
+    public history: History[],
     public lodging: boolean,
     public vehicle: boolean,
-    public authorizers: any,
+    public authorizers: Authorizers[] ,
     public status: 'TOSEND' | 'SEND' | 'PASSED' | 'REFUSED' | 'CANCELLED',
     public observations?: string,
     public createdAt?: string,

@@ -107,6 +107,7 @@ export class EditTravelRequestComponent implements OnInit {
 
   returnTable() {
     this.addUser = false
+    this.userForm.reset()
   }
 
   addRow() {
@@ -139,17 +140,19 @@ export class EditTravelRequestComponent implements OnInit {
       this._toastr.warning('Usuario no existe', 'Seleccione un usuario existente')
       return
     }
+    console.log('user',user);
+    console.log('this.authorizers', this.authorizers);
 
+    const repeatUser = this.authorizers.find((data: any) => data.user === user._id)
+    console.log('repeatUser',repeatUser);
 
-
-    const repeatUser = this.authorizers.find((data: any) => data.user === user.email)
     if (repeatUser) {
       this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
       return
     }
     this.authorizers.push({
       ...this.userForm.value,
-      user: user.email
+      user: user._id
     });
     this.userForm.reset()
     this.addUser = false;
@@ -179,7 +182,13 @@ export class EditTravelRequestComponent implements OnInit {
       observations: this.travelRequest.observations,
 
     })
-    this.authorizers = this.travelRequest.authorizers
+
+    for (let index = 0; index < this.travelRequest.authorizers.length; index++) {
+      this.authorizers.push({
+        user: this.travelRequest.authorizers[index].user._id
+      })
+    }
+
     this.activities = this.travelRequest.history
   }
 
@@ -249,12 +258,17 @@ export class EditTravelRequestComponent implements OnInit {
         this._router.navigateByUrl('/approvals/approvals-travel')
         this._spinner.hide()
         this._toastr.success('Solicitud de viaje enviada con Exito')
+        console.log('this.authorizers',this.authorizers);
+
         for (let index = 0; index < this.authorizers.length; index++) {
           const element = {
             to: this.authorizers[index].user,
-            id_request: res.travelRequestUpdated
+            request: res.travelRequestUpdated,
           }
+          console.log('element',element);
+
           this._emailService.sendEmail(element).subscribe(() => {
+
           })
         }
       }, (err: any) => {
@@ -295,11 +309,12 @@ export class EditTravelRequestComponent implements OnInit {
       })
   }
 
-  getUser(user_data: string) {
-    const findUser = this.users.find((user: User) => user._id === user_data)
+  getUser(user_data?: any) {
+
+    const findUser = this.users.find((user: User) => user._id === user_data._id)
     return {
-      name: findUser!.name,
-      last_name: findUser!.last_name
+      name: findUser?.name,
+      last_name: findUser?.last_name
     }
   }
 
@@ -381,5 +396,10 @@ export class EditTravelRequestComponent implements OnInit {
       return 'Cancelado'
     }
     return
+  }
+
+  getEmailAuthorizer(id: string){
+    const findAuthorizer = this.users.find((user: User) => user._id === id)
+    return findAuthorizer?.email
   }
 }
