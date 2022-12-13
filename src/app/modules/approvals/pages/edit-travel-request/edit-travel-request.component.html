@@ -200,7 +200,7 @@
               <th class="last">Autorizador</th>
               <th class="last">Requerido</th>
               <th class="last">Status</th>
-              <th class="last">Acciones</th>
+              <th class="last" *ngIf="travelRequest && travelRequest.status === 'TOSEND'">Acciones</th>
               <th></th>
             </tr>
           </thead>
@@ -219,7 +219,7 @@
               <td>
                 <p class="mb-3">Por enviar</p>
               </td>
-              <td>
+              <td *ngIf="travelRequest && travelRequest.status === 'TOSEND'">
                 <!--<i class="fa fa-edit me-4" (click)="openDialogEditDivisa(divisa)"></i>-->
                 <i class="fa fa-trash" (click)="delete(i)"></i>
               </td>
@@ -229,6 +229,7 @@
               style="color: var(--tblr-blue); cursor: pointer"
               class="text-center py-2"
               (click)="addRow()"
+              *ngIf="travelRequest && travelRequest.status === 'TOSEND'"
             >
               Añadir autorizador
             </td>
