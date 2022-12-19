@@ -1,3 +1,28 @@
 .card {
   cursor: pointer;
+  border: none;
+}
+
+.img-container {
+  width: 150px;
+  height: 75px;
+  position: relative; 
+}
+
+.img-container h2 {
+  margin: auto;  
+  color: #000;
+  text-align: center;  
+  background: #fff;
+  transition: opacity .4s linear;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.img-container:hover h2 {
+  opacity: .95;  
 }
