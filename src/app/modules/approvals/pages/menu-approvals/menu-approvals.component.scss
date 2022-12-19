@@ -4,15 +4,15 @@
 }
 
 .img-container {
-  width: 150px;
-  height: 75px;
-  position: relative; 
+ // width: 150px;
+  //height: 75px;
+  position: relative;
 }
 
 .img-container h2 {
-  margin: auto;  
+  margin: auto;
   color: #000;
-  text-align: center;  
+  text-align: center;
   background: #fff;
   transition: opacity .4s linear;
   position: absolute;
@@ -24,5 +24,5 @@
 }
 
 .img-container:hover h2 {
-  opacity: .95;  
+  opacity: .95;
 }
