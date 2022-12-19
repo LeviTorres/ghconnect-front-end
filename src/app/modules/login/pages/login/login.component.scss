@@ -1,14 +1,12 @@
+:host ::ng-deep.mat-form-field-outline {
+  background-color: #1E2126;
+  border-radius: 5px;
+  border: none;
+}
 
 img {
   display: block;
   margin: 0 auto;
-}
-
-::ng-deep.mat-form-field-outline {
-  /*change color of underline*/
-  background-color: #1E2126;
-  border-radius: 5px;
-  border: none;
 }
 
 .recovery {
@@ -82,3 +80,5 @@ input::placeholder {
     opacity: .5;
   }
 }
+
+
