@@ -319,7 +319,7 @@
     <div class="col-6">
       <div class="card p-3">
         <span class="mb-2"><strong>Actividad reciente</strong></span>
-        <div *ngIf="this.users.length > 0">
+        <div *ngIf="this.users.length > 0" style="max-height: 200px; overflow-y: auto;">
           <p *ngFor="let item of activities">
             {{ item.date | date : "dd/MM/yyyy h:mm a" }} -
             {{ getUser(item.user)!.name }} {{ getUser(item.user)!.last_name }} -
