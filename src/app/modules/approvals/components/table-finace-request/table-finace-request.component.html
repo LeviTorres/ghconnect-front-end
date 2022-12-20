@@ -1,0 +1,135 @@
+<div>
+    <button class="btn-primary" mat-raised-button (click)="goToMenuApprovals()">Nueva solicitud</button>
+  </div>
+  <div class="row mt-3 d-flex justify-content-center">
+    <div class="col-2">
+      <h2>Por enviar</h2>
+      <div class="card my-3" *ngFor="let item of finace_toSend">
+        <div class="bg-dark text-white py-3 px-2 d-flex justify-content-between card-title">
+          <div>
+            <span class="">Solicitud de viaje</span>
+          </div>
+          <div>
+            <img src="../../../../../assets/icons/Settings.svg" [routerLink]="['/approvals/approvals-travel',item._id]" alt="">
+          </div>
+        </div>
+        <div class="px-2 py-4 bg-light">
+          <div>
+            <span>Solicita: </span>
+            <span><strong>{{item.name_applicant}}</strong></span>
+          </div>
+          <div class="">
+            <span>Ruta: </span>
+            <span><strong>{{item.origin_city}} - {{item.destination_city}}</strong></span>
+          </div>
+        </div>
+        <div class="bg-secondary text-white text-center card-status">
+          <span>Por enviar</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <h2>Enviado</h2>
+      <div class="card my-3" *ngFor="let item of finace_Send">
+        <div class="bg-dark text-white py-3 px-2 d-flex justify-content-between card-title">
+          <div>
+            <span class="">Solicitud de viaje</span>
+          </div>
+          <div>
+            <img src="../../../../../assets/icons/Settings.svg" [routerLink]="['/approvals/approvals-travel',item._id]" alt="">
+          </div>
+        </div>
+        <div class="px-2 py-4 bg-light">
+          <div>
+            <span>Solicita: </span>
+            <span><strong>{{item.name_applicant}}</strong></span>
+          </div>
+          <div class="">
+            <span>Ruta: </span>
+            <span><strong>{{item.origin_city}} - {{item.destination_city}}</strong></span>
+          </div>
+        </div>
+        <div class="bg-primary text-white text-center card-status">
+          <span>Enviado</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <h2>Aprobado</h2>
+      <div class="card my-3" *ngFor="let item of finace_passed">
+        <div class="bg-dark text-white py-3 px-2 d-flex justify-content-between card-title">
+          <div>
+            <span class="">Solicitud de viaje</span>
+          </div>
+          <div>
+            <img src="../../../../../assets/icons/Settings.svg" [routerLink]="['/approvals/approvals-travel',item._id]">
+          </div>
+        </div>
+        <div class="px-2 py-4 bg-light">
+          <div>
+            <span>Solicita: </span>
+            <span><strong>{{item.name_applicant}}</strong></span>
+          </div>
+          <div class="">
+            <span>Ruta: </span>
+            <span><strong>{{item.origin_city}} - {{item.destination_city}}</strong></span>
+          </div>
+        </div>
+        <div class="bg-success text-white text-center card-status">
+          <span>Aprobado</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <h2>Rechazado</h2>
+      <div class="card my-3" *ngFor="let item of finace_refused">
+        <div class="bg-dark text-white py-3 px-2 d-flex justify-content-between card-title">
+          <div>
+            <span class="">Solicitud de viaje</span>
+          </div>
+          <div>
+            <img src="../../../../../assets/icons/Settings.svg" [routerLink]="['/approvals/approvals-travel',item._id]">
+          </div>
+        </div>
+        <div class="px-2 py-4 bg-light">
+          <div>
+            <span>Solicita: </span>
+            <span><strong>{{item.name_applicant}}</strong></span>
+          </div>
+          <div class="">
+            <span>Ruta: </span>
+            <span><strong>{{item.origin_city}} - {{item.destination_city}}</strong></span>
+          </div>
+        </div>
+        <div class="bg-warning text-white text-center card-status">
+          <span>Rechazado</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <h2>Cancelado</h2>
+      <div class="card my-3" *ngFor="let item of finace_cancelled">
+        <div class="bg-dark text-white py-3 px-2 d-flex justify-content-between card-title">
+          <div>
+            <span class="">Solicitud de viaje</span>
+          </div>
+          <div>
+            <img src="../../../../../assets/icons/Settings.svg" [routerLink]="['/approvals/approvals-travel',item._id]">
+          </div>
+        </div>
+        <div class="px-2 py-4 bg-light">
+          <div>
+            <span>Solicita: </span>
+            <span><strong>{{item.name_applicant}}</strong></span>
+          </div>
+          <div class="">
+            <span>Ruta: </span>
+            <span><strong>{{item.origin_city}} - {{item.destination_city}}</strong></span>
+          </div>
+        </div>
+        <div class="bg-danger text-white text-center card-status">
+          <span>Cancelado</span>
+        </div>
+      </div>
+    </div>
+  </div>

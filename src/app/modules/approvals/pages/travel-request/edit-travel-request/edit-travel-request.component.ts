@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TravelRequestService } from '../../../../services/travel-request.service';
-import { TravelRequest } from '../../../../models/TravelRequest.model';
-import { User } from '../../../../models/User.model';
-import { Business } from '../../../../models/Business.model';
+import { TravelRequestService } from '../../../../../services/travel-request.service';
+import { TravelRequest } from '../../../../../models/TravelRequest.model';
+import { User } from '../../../../../models/User.model';
+import { Business } from '../../../../../models/Business.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BusinessService } from '../../../../services/business.service';
-import { UsersService } from '../../../../services/users.service';
+import { BusinessService } from '../../../../../services/business.service';
+import { UsersService } from '../../../../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { EmailsService } from '../../../../services/emails.service';
-import { ModalUsersComponent } from '../../../users/components/modal-users/modal-users.component';
+import { EmailsService } from '../../../../../services/emails.service';
+import { ModalUsersComponent } from '../../../../users/components/modal-users/modal-users.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TokensService } from '../../../../services/tokens.service';
+import { TokensService } from '../../../../../services/tokens.service';
 
 @Component({
   selector: 'app-edit-travel-request',
@@ -370,6 +370,7 @@ export class EditTravelRequestComponent implements OnInit {
   }
 
   displayFn(user: User): string {
+    console.log('user',user);
     return user && `${user.email}` ? `${user.email}` : '';
   }
 
@@ -390,7 +391,7 @@ export class EditTravelRequestComponent implements OnInit {
       const findUser = this.users.find(
         (user: User) =>
           user.email.trim().toLowerCase() ===
-          this.userForm.controls['user'].value?.trim().toLowerCase()
+          this.userForm.controls['user'].value
       );
       if (findUser) {
         this.validate_user = true;
@@ -418,10 +419,10 @@ export class EditTravelRequestComponent implements OnInit {
         getImage: '',
       };
       this.users.push(user);
+      console.log('this.users',this.users);
       //this.filteredOptions.push(user)
-
       this.userForm.controls['user'].setValue(data.email);
-      //this.displayFn(user)
+      this.displayFn(user)
     });
   }
 

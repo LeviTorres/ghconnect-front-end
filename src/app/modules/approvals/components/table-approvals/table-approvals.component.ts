@@ -20,12 +20,12 @@ export class TableApprovalsComponent implements OnInit {
     private _router: Router,
     private _travelService: TravelRequestService,
     private _spinner: NgxSpinnerService
-  ) {this._spinner.hide()}
+  ) {this._spinner.show()}
 
   ngOnInit(): void {
 
     this.getTravelRequest();
-    this._spinner.hide()
+
   }
 
   getTravelRequest() {
@@ -36,7 +36,6 @@ export class TableApprovalsComponent implements OnInit {
       this.travel_Send = data.filter(
         (travels: TravelRequest) => travels.status === 'SEND'
       );
-
       this.travel_passed = data.filter(
         (travels: TravelRequest) => travels.status === 'PASSED'
       );
@@ -46,7 +45,7 @@ export class TableApprovalsComponent implements OnInit {
       this.travel_cancelled = data.filter(
         (travels: TravelRequest) => travels.status === 'CANCELLED'
       );
-
+      this._spinner.hide()
     });
   }
 

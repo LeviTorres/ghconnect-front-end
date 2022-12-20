@@ -26,7 +26,11 @@ export class EmailsService {
   }
 
   sendEmail(formData: any) {
-    return this._http.post(`${base_url}/mailer`, formData,this.headers)
+    return this._http.post(`${base_url}/mailer/travel-request`, formData,this.headers)
+  }
+
+  sendEmailFianceRequest(formData: any) {
+    return this._http.post(`${base_url}/mailer/fiances-request`, formData,this.headers)
   }
 
 }

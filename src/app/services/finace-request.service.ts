@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { TravelRequest } from '../models/TravelRequest.model';
 
 const base_url = environment.base_url;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class TravelRequestService {
+export class FinaceRequestService {
   constructor(private _http: HttpClient) {}
 
   get token(): string {
@@ -24,41 +23,41 @@ export class TravelRequestService {
     };
   }
 
-  createTravelRequest(formData: any) {
+  createFinaceRequest(formData: any) {
     return this._http.post(
-      `${base_url}/travel-request`,
+      `${base_url}/finace-request`,
       formData,
       this.headers
     );
   }
 
-  updateTravelRequest(formData: any, _id: string) {
+  updateFinaceRequest(formData: any, _id: string) {
     return this._http.put(
-      `${base_url}/travel-request/${_id}`,
+      `${base_url}/finace-request/${_id}`,
       formData,
       this.headers
     );
   }
 
-  getTravelRequest() {
-    return this._http.get(`${base_url}/travel-request`, this.headers).pipe(
+  getFinaceRequest() {
+    return this._http.get(`${base_url}/finace-request`, this.headers).pipe(
       map((resp: any) => {
-        return resp.travels;
+        return resp.finaces;
       })
     );
   }
 
-  deleteTravelRequest(travel: TravelRequest) {
+  deleteFinaceRequest(finace: any) {
     return this._http.delete(
-      `${base_url}/travel-request/${travel._id}`,
+      `${base_url}/finace-request/${finace._id}`,
       this.headers
     );
   }
 
-  getUpdateTravelRequest(formData: any) {
+  getUpdateFinaceRequest(formData: any) {
     console.log('formData', formData);
     const findRefused = formData.authorizers.find(
-      (travelRequest: any) => travelRequest.status === 'CANCELLED'
+      (finaceRequest: any) => finaceRequest.status === 'CANCELLED'
     );
     if (findRefused) {
       if (formData.status != 'REFUSED') {
@@ -66,19 +65,19 @@ export class TravelRequestService {
           ...formData,
           status: 'REFUSED',
         };
-        this.updateTravelRequest(element, formData._id!).subscribe(() => {});
+        this.updateFinaceRequest(element, formData._id!).subscribe(() => {});
       }
     } else {
       if (formData.status === 'SEND') {
         const findStatus = formData.authorizers.filter(
-          (travelRequest: any) =>
-            travelRequest.required === true &&
-            travelRequest.status === 'ACCEPTED'
+          (finaceRequest: any) =>
+            finaceRequest.required === true &&
+            finaceRequest.status === 'ACCEPTED'
         );
 
         const findRequired = formData.authorizers.filter(
-          (travelRequest: any) =>
-            travelRequest.required === true
+          (finaceRequest: any) =>
+            finaceRequest.required === true
         );
 
         if(findRequired.length === findStatus.length){
@@ -86,7 +85,7 @@ export class TravelRequestService {
             ...formData,
             status: 'PASSED',
           };
-          this.updateTravelRequest(element, formData._id!).subscribe(() => {});
+          this.updateFinaceRequest(element, formData._id!).subscribe(() => {});
         }
       }
     }

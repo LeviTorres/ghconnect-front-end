@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TravelRequestService } from '../../../../services/travel-request.service';
-import { UsersService } from '../../../../services/users.service';
-import { User } from '../../../../models/User.model';
-import { TravelRequest } from '../../../../models/TravelRequest.model';
-import { TokensService } from '../../../../services/tokens.service';
+import { TravelRequestService } from '../../../../../services/travel-request.service';
+import { UsersService } from '../../../../../services/users.service';
+import { User } from '../../../../../models/User.model';
+import { TravelRequest } from '../../../../../models/TravelRequest.model';
+import { TokensService } from '../../../../../services/tokens.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({

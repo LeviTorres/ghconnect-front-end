@@ -77,14 +77,14 @@ export class ModalUsersComponent implements OnInit {
           this._spinner.hide()
           this._dialogRef.close()
           this._toastr.success('Usuario registrado con Exito')
+
+          this._dialogRef.close({
+            ...this.registerForm.value
+          })
         }, (err:any) =>{
           console.warn(err.error.msg)
           this._spinner.hide()
           this._toastr.error(`${err.error.msg}`)
-        })
-
-        this._dialogRef.close({
-          ...this.registerForm.value
         })
   }
 
