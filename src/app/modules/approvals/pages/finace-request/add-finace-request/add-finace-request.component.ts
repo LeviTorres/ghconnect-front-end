@@ -12,6 +12,10 @@ import { EmailsService } from '../../../../../services/emails.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TravelRequest } from '../../../../../models/TravelRequest.model';
 import { ModalUsersComponent } from '../../../../users/components/modal-users/modal-users.component';
+import { DivisasService } from '../../../../../services/divisas.service';
+import { Divisa } from '../../../../../models/Divisa.model';
+import { Ceco } from '../../../../../models/Ceco.model';
+import { CecosService } from '../../../../../services/cecos.service';
 
 @Component({
   selector: 'app-add-finace-request',
@@ -20,7 +24,9 @@ import { ModalUsersComponent } from '../../../../users/components/modal-users/mo
 })
 export class AddFinaceRequestComponent implements OnInit {
   public id_user!: any
-  public business: Business[] = [];
+  public business: Business[] = []
+  public cecos: Ceco[] = []
+  public divisas: Divisa[] = []
   public authorizers: any[] = [];
   public date: any
 
@@ -58,6 +64,8 @@ export class AddFinaceRequestComponent implements OnInit {
   constructor(
     private _businessService: BusinessService,
     private _userService: UsersService,
+    private _divisaService: DivisasService,
+    private _cecoService:CecosService,
     private _travelService: TravelRequestService,
     private _router: Router,
     private _toastr: ToastrService,
@@ -73,21 +81,33 @@ export class AddFinaceRequestComponent implements OnInit {
     this.date = new Date();
     this.travelForm.controls['travel_date'].setValue(this.date);
     this.travelForm.controls['travel_date'].disable();
-    this.getBusiness();
-    this.getUsers();
-
+    this.getBusiness()
+    this.getUsers()
+    this.getDivisas()
+    this.getCecos()
     //Autocompletado autorizadores
     this.userForm.controls['user'].valueChanges.subscribe((inputValue: any) => {
       this.validateUser()
       this.filterData(inputValue)
     })
-
   }
 
   getBusiness() {
     this._businessService.getBusiness().subscribe((business: Business[]) => {
       this.business = business;
     });
+  }
+
+  getCecos(){
+    this._cecoService.getCecos().subscribe((cecos: Ceco[]) => {
+      this.cecos = cecos
+    })
+  }
+
+  getDivisas(){
+    this._divisaService.getDivisas().subscribe((divisas: Divisa[]) => {
+      this.divisas = divisas
+    })
   }
 
   getUsers() {

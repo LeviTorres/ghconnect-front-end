@@ -11,7 +11,6 @@
           <input
             matInput
             [matDatepicker]="picker1"
-            formControlName="creation_date"
             placeholder="Selecciona una fecha"
           />
           <mat-datepicker-toggle
@@ -26,15 +25,14 @@
         <mat-form-field class="w-100" appearance="outline">
           <input
             matInput
-            [matDatepicker]="picker1"
-            formControlName="travel_date"
+            [matDatepicker]="picker4"
             placeholder="Selecciona una fecha"
           />
           <mat-datepicker-toggle
             matSuffix
-            [for]="picker1"
+            [for]="picker4"
           ></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+          <mat-datepicker #picker4></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
@@ -45,7 +43,6 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
-          formControlName="key_employee"
           placeholder="Escribe el codigo de empleado"
         />
         <mat-error
@@ -56,12 +53,11 @@
       </mat-form-field>
     </div>
     <div class="col-3">
-      <label>Solicitante</label>
+      <label>Tipo de poliza</label>
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
-          formControlName="name_applicant"
-          placeholder="Escribe el nombre de quien solicita"
+          placeholder="Selecciona el tipo de poliza"
         />
         <mat-error
           *ngIf="travelForm.controls['name_applicant'].hasError('required')"
@@ -71,14 +67,14 @@
       </mat-form-field>
     </div>
     <div class="col-3">
-      <label>Empresa</label>
+      <label>Ceco</label>
       <mat-form-field class="w-100" appearance="outline">
         <mat-select
           matInput
-          formControlName="business"
-          placeholder="Selecciona una empresa"
+          placeholder="Escribe el Ceco"
         >
-          <mat-option *ngFor="let item of business" [value]="item._id">{{
+          <mat-option *ngFor="let item of cecos" [value]="item._id">{{item.
+            key_ceco_business}} - {{
             item.name_short
           }}</mat-option>
         </mat-select>
@@ -88,12 +84,11 @@
       </mat-form-field>
     </div>
     <div class="col-3">
-      <label>Centro de costos</label>
+      <label>Empresa</label>
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
-          formControlName="cost_center"
-          placeholder="¿Donde se realizara el cargo?"
+          placeholder="Nombre empresa"
         />
         <mat-error
           *ngIf="travelForm.controls['cost_center'].hasError('required')"
@@ -104,26 +99,48 @@
     </div>
   </div>
   <div class="row d-flex align-items-center">
-    <div class="col-6">
-      <h2><strong>Datos del viaje</strong></h2>
+    <div class="col-3">
+      <div>
+        <label>Ordenante</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input
+          matInput
+          placeholder="Selecciona el ordenante"
+        />
+        <mat-error
+          *ngIf="travelForm.controls['name_applicant'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+        </mat-form-field>
+      </div>
     </div>
     <div class="col-3">
       <div>
-        <label>Fecha ida</label>
+        <label>Beneficiario</label>
         <mat-form-field class="w-100" appearance="outline">
           <input
-            matInput
-            formControlName="departure_date"
-            [matDatepicker]="picker3"
-            placeholder="Selecciona una fecha"
+          matInput
+          placeholder="Escribe el nombre del beneficiario"
+        />
+        <mat-error
+          *ngIf="travelForm.controls['name_applicant'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-3">
+      <div>
+        <label>Valor contrato principal</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input
+          matInput
+          placeholder="$000,000,000.00"
           />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker3"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker3></mat-datepicker>
           <mat-error
-            *ngIf="travelForm.controls['departure_date'].hasError('required')"
+            *ngIf="travelForm.controls['cost_center'].hasError('required')"
           >
             Campo requerido
           </mat-error>
@@ -132,21 +149,16 @@
     </div>
     <div class="col-3">
       <div>
-        <label>Fecha regreso</label>
+        <label>Divisa contrato principal</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input
-            matInput
-            formControlName="return_date"
-            [matDatepicker]="picker2"
-            placeholder="Selecciona una fecha"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker2"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
+          <mat-select
+          matInput
+          placeholder="Selecciona la divisa del contrato"
+          >
+            <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation_divisa}}</mat-option>
+          </mat-select>
           <mat-error
-            *ngIf="travelForm.controls['return_date'].hasError('required')"
+            *ngIf="travelForm.controls['cost_center'].hasError('required')"
           >
             Campo requerido
           </mat-error>
@@ -156,42 +168,41 @@
   </div>
   <div class="row">
     <div class="col-3">
-      <label>Ciudad de origen</label>
+      <label>Suma garantizada</label>
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
-          formControlName="origin_city"
-          placeholder="Escribe la ciudad de origen"
+          placeholder="$000,000,000.00"
         />
         <mat-error
-          *ngIf="travelForm.controls['origin_city'].hasError('required')"
+          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
         >
           Campo requerido
         </mat-error>
       </mat-form-field>
     </div>
     <div class="col-3">
-      <label>Ciudad de destino</label>
+      <label>Divisa de suma garantizada</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input
-          matInput
-          formControlName="destination_city"
-          placeholder="Escribe la ciudad de destino"
-        />
+        <mat-select
+        matInput
+        placeholder="Selecciona la divisa del contrato"
+        >
+          <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation_divisa}}</mat-option>
+        </mat-select>
         <mat-error
-          *ngIf="travelForm.controls['destination_city'].hasError('required')"
+          *ngIf="travelForm.controls['cost_center'].hasError('required')"
         >
           Campo requerido
         </mat-error>
       </mat-form-field>
     </div>
     <div class="col-6">
-      <label>Motivo del viaje</label>
+      <label>Valor de equivalencia contrato principal</label>
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
-          formControlName="reason_trip"
-          placeholder="Describe el motivo del viaje a realizar"
+          placeholder="Equivalente al 7% (Siete/cien por ciento) del contrato principal"
         />
         <mat-error
           *ngIf="travelForm.controls['reason_trip'].hasError('required')"
@@ -202,53 +213,132 @@
     </div>
   </div>
   <div class="row">
-    <h1 class="my-3"><strong>Requerimientos adicionales</strong></h1>
-  </div>
-  <div class="row">
-    <div class="col-5">
-      <span>¿Se requiere de hospedaje?</span>
-      <mat-slide-toggle
-        formControlName="lodging"
-        class="mx-5"
-      ></mat-slide-toggle>
-    </div>
-    <div class="col-5">
-      <span>¿Se requiere renta de vehiculo?</span>
-      <mat-slide-toggle
-        formControlName="vehicle"
-        class="mx-5"
-      ></mat-slide-toggle>
-    </div>
-  </div>
-  <div class="row my-4">
-    <div class="col-6 mt-3">
+    <div class="col-3">
+      <label>Inicio vigencia</label>
       <mat-form-field class="w-100" appearance="outline">
-        <textarea
-          matInput
-          formControlName="observations"
-          placeholder="Observaciones adicionales"
-        ></textarea>
+        <input
+        matInput
+        [matDatepicker]="picker3"
+        placeholder="Selecciona una fecha"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker3"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+        <mat-error
+          *ngIf="travelForm.controls['departure_date'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <label>Fin vigencia</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input
+        matInput
+        [matDatepicker]="picker2"
+        placeholder="Selecciona una fecha"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+        <mat-error
+          *ngIf="travelForm.controls['return_date'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="col-6">
-      <label
-        >Inserta los documentos de identidad necesarios para el viaje (frente y
-        reverso)</label
-      >
-      <div class="card">
-        <div class="text-center">
-          <img
-            class="my-3"
-            style="width: 60px; height: 60px"
-            src="../../../../../assets/icons/Upload.svg"
-            alt=""
-          />
-        </div>
-      </div>
+      <label>Vigencia de poliza</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input
+          matInput
+        />
+        <mat-error
+          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
     </div>
   </div>
   <div class="row">
-    <h1 class="my-3"><strong>Autorizadores</strong></h1>
+    <div class="col-8">
+      <label>Objeto del seguro/fianza</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input
+          matInput
+          placeholder="Escribe el objeto del beneficiario"
+        />
+        <mat-error
+          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <label>Procedimiento de ejecucion</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input
+          matInput
+          placeholder="Renovable, irrevocable y primer req."
+        />
+        <mat-error
+          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <label>Prima a pagar</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input
+          matInput
+          placeholder="$000,000,000.00"
+        />
+        <mat-error
+          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <label>Condiciones de pago</label>
+      <mat-form-field class="w-100" appearance="outline">
+        <input
+          matInput
+          placeholder="$000,000,000.00"
+        />
+        <mat-error
+          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        >
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div>
+      <h1 class="my-3"><strong>Documento</strong></h1>
+    </div>
+    <div>
+      <button class="btn-primary mx-3"  mat-raised-button>
+        Anadir documento
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <h1 class="my-3"><strong>Notificaciones</strong></h1>
   </div>
   <div class="row mb-5">
     <div class="col-6">
