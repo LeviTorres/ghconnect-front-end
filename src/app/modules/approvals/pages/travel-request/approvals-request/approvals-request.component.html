@@ -9,3 +9,84 @@
 >
   Rechazar
 </button>
+<div *ngIf="travelRequest">
+  <div class="row">
+    <h1 class="my-3"><strong>Solicitud de viaje</strong></h1>
+  </div>
+  <div class="row ">
+    <div class="col-6">
+      <h2>Datos del pasajero</h2>
+    </div>
+    <div class="col-6">
+      <div><strong>Fecha de creacion</strong></div>
+      <div>{{travelRequest.createdAt | date: "dd/MM/yyyy"}}</div>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col-3">
+      <div><strong>Codigo de empleado</strong></div>
+      <div>{{travelRequest.key_employee}}</div>
+    </div>
+    <div class="col-3">
+      <div><strong>Solicitante</strong></div>
+      <div>{{travelRequest.name_applicant}}</div>
+    </div>
+    <div class="col-3">
+      <div><strong>Empresa</strong></div>
+      <div>{{travelRequest.business.name_short}}</div>
+    </div>
+    <div class="col-3">
+      <div><strong>Centro de costos</strong></div>
+      <div>{{travelRequest.cost_center}}</div>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col-6">
+      <h2>Datos del viaje</h2>
+    </div>
+    <div class="col-6 row">
+      <div class="col-6">
+        <div><strong>Fecha ida</strong></div>
+        <div>{{travelRequest.departure_date | date:"dd/MM/yyyy"}}</div>
+      </div>
+      <div class="col-6">
+        <div><strong>Fecha regreso</strong></div>
+        <div>{{travelRequest.return_date | date:"dd/MM/yyyy"}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col-3">
+      <div><strong>Ciudad de origen</strong></div>
+      <div>{{travelRequest.origin_city}}</div>
+    </div>
+    <div class="col-3">
+      <div><strong>Ciudad de destino</strong></div>
+      <div>{{travelRequest.destination_city}}</div>
+    </div>
+    <div class="col-6">
+      <div><strong>Motivo del viaje</strong></div>
+      <div>{{travelRequest.reason_trip}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <h1 class="my-3"><strong>Requerimientos adicionales</strong></h1>
+  </div>
+  <div class="row my-4">
+    <div class="col-3">
+      <div><strong>¿Se requiere de hospedaje?</strong></div>
+      <div *ngIf="travelRequest.lodging">SI</div>
+      <div *ngIf="!travelRequest.lodging">NO</div>
+    </div>
+    <div class="col-3">
+      <div><strong>¿Se requiere renta de vehiculo?</strong></div>
+      <div *ngIf="travelRequest.vehicle">SI</div>
+      <div *ngIf="!travelRequest.vehicle">NO</div>
+    </div>
+    <div class="col-6">
+      <div><strong>Observaciones adicionales</strong></div>
+      <div>{{travelRequest.observations}}</div>
+      <div *ngIf="!travelRequest.observations">Sin observaciones</div>
+    </div>
+  </div>
+</div>

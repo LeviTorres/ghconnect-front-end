@@ -165,6 +165,8 @@ export class EditTravelRequestComponent implements OnInit {
       ...this.userForm.value,
       user: user._id,
     });
+    console.log('this.authorizers',this.authorizers);
+
     this.userForm.reset();
     this.addUser = false;
   }
@@ -270,6 +272,10 @@ export class EditTravelRequestComponent implements OnInit {
       date: new Date().getTime(),
       user: this.id_user,
     });
+
+    for (let index = 0; index < this.authorizers.length; index++) {
+      this.authorizers[index].status = 'SEND'
+    }
 
     const element = {
       ...this.travelForm.value,

@@ -225,6 +225,10 @@ export class AddTravelRequestComponent implements OnInit {
       }
     ];
 
+    for (let index = 0; index < this.authorizers.length; index++) {
+      this.authorizers[index].status = 'SEND'
+    }
+
     const element: TravelRequest = {
       ...this.travelForm.value,
       authorizers: this.authorizers,

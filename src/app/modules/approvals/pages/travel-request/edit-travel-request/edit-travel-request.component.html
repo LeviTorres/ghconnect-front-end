@@ -217,7 +217,10 @@
                 ></mat-checkbox>
               </td>
               <td>
-                <p class="mb-3">Por enviar</p>
+                <p *ngIf="authorizer.status === '' || !authorizer.status" class="mb-3">POR ENVIAR</p>
+                <p *ngIf="authorizer.status === 'SEND'" class="mb-3">ENVIADO</p>
+                <p *ngIf="authorizer.status === 'CANCELLED'" class="mb-3">CANCELADO</p>
+                <p *ngIf="authorizer.status === 'ACCEPTED'" class="mb-3">ACEPTADO</p>
               </td>
               <td *ngIf="travelRequest && travelRequest.status === 'TOSEND'">
                 <!--<i class="fa fa-edit me-4" (click)="openDialogEditDivisa(divisa)"></i>-->

@@ -36,21 +36,14 @@ export class ApprovalsRequestComponent implements OnInit {
         const tokensDB = tokens.find(
           (token: any) => token.key_token === this.token
         );
-        this.data = tokensDB;
-        console.log(this.data);
-
+        this.data = tokensDB
         if (!tokensDB) {
           this._router.navigateByUrl('/home');
         } else {
-          const info = JSON.parse(atob(params.token.split('.')[1]));
-          // const date = new Date(info.exp)
-          //const dateiat = new Date(info.iat)
-          //console.log('date exp',date);
-          //console.log('dateiat',dateiat);
+          const info = JSON.parse(atob(params.token.split('.')[1]))
           this.id_user = info.uid;
           this.getUser(info.uid);
           this.getTravelRequest(info.request);
-          this._spinner.hide();
         }
       });
     });
@@ -71,6 +64,7 @@ export class ApprovalsRequestComponent implements OnInit {
         );
         console.log(this.travelRequest);
         this.activities = this.travelRequest.history;
+        this._spinner.hide()
       });
   }
 
