@@ -17,6 +17,10 @@ import { Ceco } from '../../../../../models/Ceco.model';
 import { CecosService } from '../../../../../services/cecos.service';
 import { FinaceRequest } from '../../../../../models/FinaceRequest.model';
 import { FinaceRequestService } from '../../../../../services/finace-request.service';
+import { ClientsService } from '../../../../../services/clients.service';
+import { ProvidersService } from '../../../../../services/providers.service';
+import { Provider } from '../../../../../models/Provider.model';
+import { Client } from '../../../../../models/Client.model';
 
 @Component({
   selector: 'app-add-finace-request',
@@ -28,6 +32,9 @@ export class AddFinaceRequestComponent implements OnInit {
   public business: Business[] = []
   public cecos: Ceco[] = []
   public divisas: Divisa[] = []
+  public providers:Provider[] = []
+  public clients: Client[] = []
+  public arrays: any[] = []
   public authorizers: any[] = [];
   public date: any
 
@@ -39,6 +46,7 @@ export class AddFinaceRequestComponent implements OnInit {
   public addUser: boolean = false;
   public users: User[] = []
   public filteredOptions: any[] = [];
+  public filteredOptionsPayer: any[] = []
 
   public finaceForm: FormGroup = new FormGroup({
     creation_date: new FormControl('', Validators.required),
@@ -73,7 +81,8 @@ export class AddFinaceRequestComponent implements OnInit {
     private _userService: UsersService,
     private _divisaService: DivisasService,
     private _cecoService:CecosService,
-    private _travelService: TravelRequestService,
+    private _clientService: ClientsService,
+    private _providerService: ProvidersService,
     private _finaceService: FinaceRequestService,
     private _router: Router,
     private _toastr: ToastrService,
@@ -92,7 +101,6 @@ export class AddFinaceRequestComponent implements OnInit {
     this.finaceForm.controls['equivalent_value'].disable()
     this.finaceForm.controls['policy_validity'].disable()
     this.finaceForm.controls['business'].disable()
-    this.getBusiness()
     this.getUsers()
     this.getDivisas()
     this.getCecos()
@@ -113,17 +121,45 @@ export class AddFinaceRequestComponent implements OnInit {
       this.validateUser()
       this.filterData(inputValue)
     })
+
+    this.finaceForm.controls['payer'].valueChanges.subscribe((inputValue: any) => {
+      this.filterDataPayer(inputValue)
+    })
+    this.getBusiness()
+
+    setTimeout(() => {
+      this.getClients()
+      this.getProviders()
+    }, 2000);
   }
 
   getBusiness() {
     this._businessService.getBusiness().subscribe((business: Business[]) => {
       this.business = business;
+      console.log('this.business',this.business);
+
     });
   }
 
   getCecos(){
     this._cecoService.getCecos().subscribe((cecos: Ceco[]) => {
       this.cecos = cecos
+    })
+  }
+
+  getProviders(){
+    this._providerService.getProviders().subscribe((providers:Provider[]) => {
+      this.providers = providers
+      console.log('this.providers',this.providers);
+      this.arrays = [...this.clients, ...this.providers, ...this.business]
+      console.log('this.arrays',this.arrays);
+    })
+  }
+
+  getClients(){
+    this._clientService.getClients().subscribe((clients: Client[]) => {
+      this.clients = clients
+      console.log('this.clients',this.clients);
     })
   }
 
@@ -326,11 +362,26 @@ export class AddFinaceRequestComponent implements OnInit {
       : '';
   }
 
+  displayFnPayer(user: any): string {
+    return user && `${user.name}`
+      ? `${user.name}`
+      : '';
+  }
+
   filterData(value: string) {
     this.filteredOptions = this.users.filter((item: any) => {
       this.displayFn(item);
       return (
         item.email.toLowerCase().indexOf(value) > -1
+      );
+    });
+  }
+
+  filterDataPayer(value: string) {
+    this.filteredOptionsPayer = this.arrays.filter((item: any) => {
+      this.displayFnPayer(item);
+      return (
+        item.name.toLowerCase().indexOf(value) > -1
       );
     });
   }
@@ -382,15 +433,8 @@ export class AddFinaceRequestComponent implements OnInit {
         name: data.name,
         getImage: ''
       }
-      console.log(user);
       this.users.push(user)
-      console.log(this.users);
-
-      //this.filteredOptions.push(user)
-      //console.log(this.filteredOptions);
-
       this.userForm.controls['user'].setValue(data.email)
-      //this.displayFn(user)
     })
   }
 

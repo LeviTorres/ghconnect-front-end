@@ -110,10 +110,30 @@
         <label>Ordenante</label>
         <mat-form-field class="w-100" appearance="outline">
           <input
+          type="text"
+          class="w-100"
           matInput
           formControlName="payer"
-          placeholder="Selecciona el ordenante"
+          [matAutocomplete]="search1"
+          placeholder="Escribe al ordenante"
           />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #search1="matAutocomplete"
+            [displayWith]="displayFnPayer"
+          >
+            <mat-option value="" *ngIf="!finaceForm.controls['payer'].value">
+              Escribe algo...
+            </mat-option>
+            <div *ngIf="finaceForm.controls['payer'].value">
+              <mat-option
+                *ngFor="let option of filteredOptionsPayer"
+                [value]="option"
+              >
+                {{ option.name }}</mat-option
+              >
+            </div>
+          </mat-autocomplete>
           <mat-error
           *ngIf="finaceForm.controls['payer'].hasError('required')"
           >
