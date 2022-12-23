@@ -1,5 +1,5 @@
 <h1><strong>Nueva solicitud de Seguros/Fianzas</strong></h1>
-<form autocomplete="off" [formGroup]="travelForm">
+<form autocomplete="off" [formGroup]="finaceForm">
   <div class="row d-flex align-items-center">
     <div class="col-4">
       <h2><strong>Datos de poliza</strong></h2>
@@ -11,6 +11,7 @@
           <input
             matInput
             [matDatepicker]="picker1"
+            formControlName="creation_date"
             placeholder="Selecciona una fecha"
           />
           <mat-datepicker-toggle
@@ -44,9 +45,10 @@
         <input
           matInput
           placeholder="Escribe el codigo de empleado"
+          formControlName="key_policy"
         />
         <mat-error
-          *ngIf="travelForm.controls['key_employee'].hasError('required')"
+        *ngIf="finaceForm.controls['key_policy'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -57,10 +59,11 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          formControlName="policy_type"
           placeholder="Selecciona el tipo de poliza"
         />
         <mat-error
-          *ngIf="travelForm.controls['name_applicant'].hasError('required')"
+        *ngIf="finaceForm.controls['policy_type'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -72,13 +75,16 @@
         <mat-select
           matInput
           placeholder="Escribe el Ceco"
+          formControlName="ceco"
         >
-          <mat-option *ngFor="let item of cecos" [value]="item._id">{{item.
+          <mat-option *ngFor="let item of cecos" [value]="item">{{item.
             key_ceco_business}} - {{
             item.name_short
           }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="travelForm.controls['business'].hasError('required')">
+        <mat-error
+        *ngIf="finaceForm.controls['ceco'].hasError('required')"
+        >
           Campo requerido
         </mat-error>
       </mat-form-field>
@@ -86,15 +92,15 @@
     <div class="col-3">
       <label>Empresa</label>
       <mat-form-field class="w-100" appearance="outline">
-        <input
-          matInput
-          placeholder="Nombre empresa"
-        />
-        <mat-error
-          *ngIf="travelForm.controls['cost_center'].hasError('required')"
-        >
-          Campo requerido
-        </mat-error>
+        <mat-select
+        matInput
+        placeholder="Nombre empresa"
+        formControlName="business"
+      >
+        <mat-option *ngFor="let item of business" [value]="item._id"> {{
+          item.name_short
+        }}</mat-option>
+      </mat-select>
       </mat-form-field>
     </div>
   </div>
@@ -105,13 +111,14 @@
         <mat-form-field class="w-100" appearance="outline">
           <input
           matInput
+          formControlName="payer"
           placeholder="Selecciona el ordenante"
-        />
-        <mat-error
-          *ngIf="travelForm.controls['name_applicant'].hasError('required')"
-        >
-          Campo requerido
-        </mat-error>
+          />
+          <mat-error
+          *ngIf="finaceForm.controls['payer'].hasError('required')"
+          >
+            Campo requerido
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -121,10 +128,11 @@
         <mat-form-field class="w-100" appearance="outline">
           <input
           matInput
+          formControlName="beneficiary"
           placeholder="Escribe el nombre del beneficiario"
         />
         <mat-error
-          *ngIf="travelForm.controls['name_applicant'].hasError('required')"
+        *ngIf="finaceForm.controls['beneficiary'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -137,10 +145,12 @@
         <mat-form-field class="w-100" appearance="outline">
           <input
           matInput
+          type="number"
           placeholder="$000,000,000.00"
+          formControlName="main_contract_value"
           />
           <mat-error
-            *ngIf="travelForm.controls['cost_center'].hasError('required')"
+          *ngIf="finaceForm.controls['main_contract_value'].hasError('required')"
           >
             Campo requerido
           </mat-error>
@@ -153,12 +163,13 @@
         <mat-form-field class="w-100" appearance="outline">
           <mat-select
           matInput
+          formControlName="divisa_main_value"
           placeholder="Selecciona la divisa del contrato"
           >
             <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation_divisa}}</mat-option>
           </mat-select>
           <mat-error
-            *ngIf="travelForm.controls['cost_center'].hasError('required')"
+          *ngIf="finaceForm.controls['divisa_main_value'].hasError('required')"
           >
             Campo requerido
           </mat-error>
@@ -172,10 +183,12 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          type="number"
+          formControlName="guaranteed_sum"
           placeholder="$000,000,000.00"
         />
         <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        *ngIf="finaceForm.controls['guaranteed_sum'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -186,12 +199,13 @@
       <mat-form-field class="w-100" appearance="outline">
         <mat-select
         matInput
+        formControlName="divisa_guaranteed_sum"
         placeholder="Selecciona la divisa del contrato"
         >
           <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation_divisa}}</mat-option>
         </mat-select>
         <mat-error
-          *ngIf="travelForm.controls['cost_center'].hasError('required')"
+        *ngIf="finaceForm.controls['divisa_guaranteed_sum'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -202,13 +216,9 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          formControlName="equivalent_value"
           placeholder="Equivalente al 7% (Siete/cien por ciento) del contrato principal"
         />
-        <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
-        >
-          Campo requerido
-        </mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -219,6 +229,7 @@
         <input
         matInput
         [matDatepicker]="picker3"
+        formControlName="start_date"
         placeholder="Selecciona una fecha"
         />
         <mat-datepicker-toggle
@@ -227,7 +238,7 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker3></mat-datepicker>
         <mat-error
-          *ngIf="travelForm.controls['departure_date'].hasError('required')"
+        *ngIf="finaceForm.controls['start_date'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -239,6 +250,7 @@
         <input
         matInput
         [matDatepicker]="picker2"
+        formControlName="finish_date"
         placeholder="Selecciona una fecha"
         />
         <mat-datepicker-toggle
@@ -247,7 +259,7 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
         <mat-error
-          *ngIf="travelForm.controls['return_date'].hasError('required')"
+        *ngIf="finaceForm.controls['finish_date'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -258,12 +270,8 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          formControlName="policy_validity"
         />
-        <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
-        >
-          Campo requerido
-        </mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -273,10 +281,11 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          formControlName="insurance_object"
           placeholder="Escribe el objeto del beneficiario"
         />
         <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        *ngIf="finaceForm.controls['insurance_object'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -287,10 +296,11 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          formControlName="process_execution"
           placeholder="Renovable, irrevocable y primer req."
         />
         <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        *ngIf="finaceForm.controls['process_execution'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -303,10 +313,12 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
+          formControlName="premium_pay"
+          type="number"
           placeholder="$000,000,000.00"
         />
         <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        *ngIf="finaceForm.controls['premium_pay'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -317,10 +329,11 @@
       <mat-form-field class="w-100" appearance="outline">
         <input
           matInput
-          placeholder="$000,000,000.00"
+          formControlName="payment_conditions"
+          placeholder="Escribe la condicion de pago"
         />
         <mat-error
-          *ngIf="travelForm.controls['reason_trip'].hasError('required')"
+        *ngIf="finaceForm.controls['payment_conditions'].hasError('required')"
         >
           Campo requerido
         </mat-error>
@@ -428,17 +441,6 @@
                       {{ option.last_name }})</mat-option
                     >
                   </div>
-                  <!-- <mat-option
-                    value=""
-                    *ngIf="
-                      filteredOptions.length <= 0 &&
-                      this.userForm.controls['user'].value &&
-                      !validate_user
-                    "
-                  >
-                    No se encontró nada con el término:
-                    {{ userForm.controls["user"].value }}
-                  </mat-option> -->
                 </mat-autocomplete>
                 <mat-error
                   *ngIf="userForm.controls['user'].hasError('required')"
@@ -481,7 +483,7 @@
         <div *ngIf="this.users.length > 0">
           <p>
             {{ date | date: "dd/MM/yyyy h:mm a" }} - {{ getUser()!.name }}
-            {{ getUser()!.last_name }} - Creando una nueva solicitud de viaje...
+            {{ getUser()!.last_name }} - Creando una nueva solicitud de Seguros/Fianzas...
           </p>
         </div>
       </div>
@@ -490,7 +492,7 @@
   <div class="text-center">
     <button
       class="btn-primary mx-3"
-      (click)="registerTravel()"
+      (click)="registerFinace()"
       mat-raised-button
     >
       Guardar solicitud

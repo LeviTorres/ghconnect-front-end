@@ -10,12 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmailsService } from '../../../../../services/emails.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TravelRequest } from '../../../../../models/TravelRequest.model';
 import { ModalUsersComponent } from '../../../../users/components/modal-users/modal-users.component';
 import { DivisasService } from '../../../../../services/divisas.service';
 import { Divisa } from '../../../../../models/Divisa.model';
 import { Ceco } from '../../../../../models/Ceco.model';
 import { CecosService } from '../../../../../services/cecos.service';
+import { FinaceRequest } from '../../../../../models/FinaceRequest.model';
+import { FinaceRequestService } from '../../../../../services/finace-request.service';
 
 @Component({
   selector: 'app-add-finace-request',
@@ -39,20 +40,26 @@ export class AddFinaceRequestComponent implements OnInit {
   public users: User[] = []
   public filteredOptions: any[] = [];
 
-  public travelForm: FormGroup = new FormGroup({
-    travel_date: new FormControl('', Validators.required),
-    key_employee: new FormControl('', Validators.required),
-    name_applicant: new FormControl('', Validators.required),
+  public finaceForm: FormGroup = new FormGroup({
+    creation_date: new FormControl('', Validators.required),
+    key_policy: new FormControl('', Validators.required),
+    policy_type: new FormControl('', Validators.required),
+    ceco: new FormControl('', Validators.required),
     business: new FormControl('', Validators.required),
-    cost_center: new FormControl('', Validators.required),
-    departure_date: new FormControl('', Validators.required),
-    return_date: new FormControl('', Validators.required),
-    origin_city: new FormControl('', Validators.required),
-    destination_city: new FormControl('', Validators.required),
-    reason_trip: new FormControl('', Validators.required),
-    lodging: new FormControl(false),
-    vehicle: new FormControl(false),
-    observations: new FormControl(),
+    payer: new FormControl('', Validators.required),
+    beneficiary: new FormControl('', Validators.required),
+    main_contract_value: new FormControl('', Validators.required),
+    divisa_main_value: new FormControl('', Validators.required),
+    guaranteed_sum: new FormControl('', Validators.required),
+    divisa_guaranteed_sum: new FormControl('', Validators.required),
+    equivalent_value: new FormControl('', Validators.required),
+    start_date: new FormControl('', Validators.required),
+    finish_date: new FormControl('', Validators.required),
+    policy_validity: new FormControl('', Validators.required),
+    insurance_object: new FormControl('', Validators.required),
+    process_execution: new FormControl('', Validators.required),
+    premium_pay: new FormControl('', Validators.required),
+    payment_conditions: new FormControl('', Validators.required),
   });
 
   public userForm: FormGroup = new FormGroup({
@@ -67,6 +74,7 @@ export class AddFinaceRequestComponent implements OnInit {
     private _divisaService: DivisasService,
     private _cecoService:CecosService,
     private _travelService: TravelRequestService,
+    private _finaceService: FinaceRequestService,
     private _router: Router,
     private _toastr: ToastrService,
     private _spinner: NgxSpinnerService,
@@ -79,12 +87,27 @@ export class AddFinaceRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.date = new Date();
-    this.travelForm.controls['travel_date'].setValue(this.date);
-    this.travelForm.controls['travel_date'].disable();
+    this.finaceForm.controls['creation_date'].setValue(this.date)
+    this.finaceForm.controls['creation_date'].disable()
+    this.finaceForm.controls['equivalent_value'].disable()
+    this.finaceForm.controls['policy_validity'].disable()
+    this.finaceForm.controls['business'].disable()
     this.getBusiness()
     this.getUsers()
     this.getDivisas()
     this.getCecos()
+    this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue:any) => {
+      this.validateBusiness(inputValue)
+    })
+    this.finaceForm.controls['main_contract_value'].valueChanges.subscribe((value:any) => {
+      this.valueEquivalent(value)
+    })
+    this.finaceForm.controls['start_date'].valueChanges.subscribe(() => {
+      this.setValuePolicyValidity()
+    })
+    this.finaceForm.controls['finish_date'].valueChanges.subscribe(() => {
+      this.setValuePolicyValidity()
+    })
     //Autocompletado autorizadores
     this.userForm.controls['user'].valueChanges.subscribe((inputValue: any) => {
       this.validateUser()
@@ -171,32 +194,43 @@ export class AddFinaceRequestComponent implements OnInit {
     this.addUser = false;
   }
 
-  async registerTravel() {
+  async registerFinace() {
     this._spinner.show();
 
     const history_data = {
-      action: 'Solicitud de viaje creada',
+      action: 'Solicitud de Seguros/Fianzas creada',
       date: new Date().getTime(),
       user: this.id_user,
     };
 
-    const element: TravelRequest = {
-      ...this.travelForm.value,
+    const element: FinaceRequest = {
+      ...this.finaceForm.value,
       authorizers: this.authorizers,
-      departure_date: new Date(
-        this.travelForm.controls['departure_date'].value
+      creation_date: new Date(
+        this.finaceForm.controls['creation_date'].value
       ).getTime(),
-      return_date: new Date(
-        this.travelForm.controls['return_date'].value
+      start_date: new Date(
+        this.finaceForm.controls['start_date'].value
       ).getTime(),
+      finish_date: new Date(
+        this.finaceForm.controls['finish_date'].value
+      ).getTime(),
+      business: this.finaceForm.controls['business'].value,
+      main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
+      guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
+      equivalent_value: Number(this.finaceForm.controls['equivalent_value'].value),
+      premium_pay: Number(this.finaceForm.controls['premium_pay'].value),
+      ceco: this.finaceForm.controls['ceco'].value._id,
+      policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: history_data,
     };
+    console.log('element',element);
 
-    await this._travelService.createTravelRequest(element).subscribe(
+    await this._finaceService.createFinaceRequest(element).subscribe(
       (res: any) => {
-        this._router.navigateByUrl('/approvals/approvals-travel');
+        this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
-        this._toastr.success('Solicitud de viaje creada con Exito');
+        this._toastr.success('Solicitud de Seguros/Fianzas creada con Exito');
       },
       (err: any) => {
         this._spinner.hide();
@@ -227,7 +261,7 @@ export class AddFinaceRequestComponent implements OnInit {
 
     const history_data = [
       {
-        action: 'Solicitud de viaje creada',
+        action: 'Solicitud de Seguro/fianzas creada',
         date: new Date().getTime(),
         user: this.id_user,
       },
@@ -238,29 +272,43 @@ export class AddFinaceRequestComponent implements OnInit {
       }
     ];
 
-    const element: TravelRequest = {
-      ...this.travelForm.value,
+    const element: FinaceRequest = {
+      ...this.finaceForm.value,
       authorizers: this.authorizers,
-      departure_date: new Date(
-        this.travelForm.controls['departure_date'].value
+      creation_date: new Date(
+        this.finaceForm.controls['creation_date'].value
       ).getTime(),
-      return_date: new Date(
-        this.travelForm.controls['return_date'].value
+      start_date: new Date(
+        this.finaceForm.controls['start_date'].value
       ).getTime(),
+      finish_date: new Date(
+        this.finaceForm.controls['finish_date'].value
+      ).getTime(),
+      business: this.finaceForm.controls['business'].value,
+      main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
+      guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
+      equivalent_value: Number(this.finaceForm.controls['equivalent_value'].value),
+      premium_pay: Number(this.finaceForm.controls['premium_pay'].value),
+      ceco: this.finaceForm.controls['ceco'].value._id,
+      policy_validity: this.finaceForm.controls['policy_validity'].value,
+      history: history_data,
       status: 'SEND',
-      history: history_data
     };
-    await this._travelService.createTravelRequest(element).subscribe(
+    await this._finaceService.createFinaceRequest(element).subscribe(
       (res: any) => {
-        this._router.navigateByUrl('/approvals/approvals-travel');
+        this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
-        this._toastr.success('Solicitud de viaje enviada con Exito');
+        this._toastr.success('Solicitud de Seguro/fianzas enviada con Exito');
+        console.log('respuesta', res);
+
         for (let index = 0; index < this.authorizers.length; index++) {
           const element = {
             to: this.authorizers[index].user,
-            request: res.travel,
+            request: res.finace,
           };
-          this._emailService.sendEmail(element).subscribe((resp: any) => { });
+          console.log(element);
+
+          this._emailService.sendEmailFianceRequest(element).subscribe((resp: any) => { });
         }
       },
       (err: any) => {
@@ -350,6 +398,58 @@ export class AddFinaceRequestComponent implements OnInit {
   getEmailAuthorizer(id: string){
     const findAuthorizer = this.users.find((user: User) => user._id === id)
     return findAuthorizer?.email
+  }
+
+  validateBusiness(input:any){
+    console.log('input',input);
+    this.finaceForm.controls['business'].setValue(input.business._id)
+  }
+
+  valueEquivalent(value:any){
+    const valueEquivalence = (value*7)/100
+    this.finaceForm.controls['equivalent_value'].setValue(valueEquivalence)
+  }
+
+  setValuePolicyValidity(){
+    const start_date = new Date(this.finaceForm.controls['start_date'].value)
+    const finish_date = new Date(this.finaceForm.controls['finish_date'].value)
+    if(finish_date && start_date){
+      const resta = finish_date.getTime() - start_date.getTime()
+      if(resta >= 0){
+        this.finaceForm.controls['policy_validity'].setValue(
+          `${new Date(resta).getDate()} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth()+1)} ${start_date.getFullYear()} al ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth()+1)} ${finish_date.getFullYear()}`
+        )
+      }
+    }
+  }
+
+  getMonth(month:any){
+    if(month === 11){
+      return 'Noviembre'
+    }else if(month === 12){
+      return 'Diciembre'
+    }else if(month === 1){
+      return 'Enero'
+    }else if(month === 2){
+      return 'Febrero'
+    }else if(month === 3){
+      return 'Marzo'
+    }else if(month === 4){
+      return 'Abril'
+    }else if(month === 5){
+      return 'Mayo'
+    }else if(month === 6){
+      return 'Junio'
+    }else if(month === 7){
+      return 'Julio'
+    }else if(month === 8){
+      return 'Agosto'
+    }else if(month === 9){
+      return 'Septiembre'
+    }else if(month === 10){
+      return 'Octubre'
+    }
+    return ''
   }
 
 }

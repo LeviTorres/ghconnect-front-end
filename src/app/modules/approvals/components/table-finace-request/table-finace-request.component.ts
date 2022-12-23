@@ -19,7 +19,8 @@ export class TableFinaceRequestComponent implements OnInit {
     private _router: Router,
     private _finaceService: FinaceRequestService,
     private _spinner: NgxSpinnerService
-  ) {this._spinner.show()}
+  ) {//this._spinner.show()
+  }
 
   ngOnInit(): void {
     this.getFinaceRequest();
@@ -43,7 +44,7 @@ export class TableFinaceRequestComponent implements OnInit {
       this.finace_cancelled = data.filter(
         (finaces: any) => finaces.status === 'CANCELLED'
       );
-      this._spinner.hide()
+      //this._spinner.hide()
     });
   }
 
