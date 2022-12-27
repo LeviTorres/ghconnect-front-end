@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  public user: any
+
+  constructor(
+    private _router: Router,
+    private _spinner: NgxSpinnerService,
+    private _loginService: LoginService
+  ) {
+    this._spinner.show()
+    this.user = _loginService.user
+    this._spinner.hide()
+  }
 
   ngOnInit(): void {
   }
 
+  logOut() {
+    this._loginService.logout()
+    this._router.navigateByUrl('/login')
+  }
 }
