@@ -6,7 +6,7 @@
     </div>
     <div class="text-center">
       <h1 class="p-0 ">{{user.name}} {{user.last_name}}</h1>
-      <h3 class="text-capitalize text-bg-dark rounded-1">{{user.role}}</h3>
+      <h3 class="text-capitalize text-bg-dark rounded-1">{{getRole(user.role!)}}</h3>
       <h4 class="text-capitalize">{{user.email}}</h4>
       <button class="text-white" style="background:#FF5722; margin-top: 8rem;" mat-button (click)="logOut()">
         Cerrar sesion
