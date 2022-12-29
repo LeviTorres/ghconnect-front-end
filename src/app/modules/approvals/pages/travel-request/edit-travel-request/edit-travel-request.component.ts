@@ -165,7 +165,6 @@ export class EditTravelRequestComponent implements OnInit {
       ...this.userForm.value,
       user: user._id,
     });
-    console.log('this.authorizers',this.authorizers);
 
     this.userForm.reset();
     this.addUser = false;
@@ -376,7 +375,6 @@ export class EditTravelRequestComponent implements OnInit {
   }
 
   displayFn(user: User): string {
-    console.log('user',user);
     return user && `${user.email}` ? `${user.email}` : '';
   }
 
@@ -425,8 +423,6 @@ export class EditTravelRequestComponent implements OnInit {
         getImage: '',
       };
       this.users.push(user);
-      console.log('this.users',this.users);
-      //this.filteredOptions.push(user)
       this.userForm.controls['user'].setValue(data.email);
       this.displayFn(user)
     });

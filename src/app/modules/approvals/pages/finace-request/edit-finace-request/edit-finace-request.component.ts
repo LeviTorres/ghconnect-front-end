@@ -153,10 +153,7 @@ export class EditFinaceRequestComponent implements OnInit {
   }
 
   initValuesForm(){
-    console.log(this.finaceRequest);
     const findPayer = this.arrays.find((element: any) => element._id === this.finaceRequest.payer)
-    console.log('findPayer',findPayer);
-
     this.finaceForm.patchValue({
       key_policy: this.finaceRequest.key_policy,
       creation_date: new Date(this.finaceRequest.creation_date),
@@ -200,17 +197,13 @@ export class EditFinaceRequestComponent implements OnInit {
   getBusiness() {
     this._businessService.getBusiness().subscribe((business: Business[]) => {
       this.business = business;
-      console.log('this.business',this.business);
-
     });
   }
 
   getClients(){
     this._clientService.getClients().subscribe((clients:Client[]) => {
       this.clients = clients
-      console.log('this.clients',this.clients);
       this.arrays = [...this.clients, ...this.providers, ...this.business]
-      console.log(this.arrays);
       this.initValuesForm()
     })
   }
@@ -218,7 +211,6 @@ export class EditFinaceRequestComponent implements OnInit {
   getProviders(){
     this._providerService.getProviders().subscribe((providers: Provider[]) => {
       this.providers = providers
-      console.log('this.providers',this.providers);
     })
   }
 
@@ -285,7 +277,6 @@ export class EditFinaceRequestComponent implements OnInit {
       this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
       return
     }
-    console.log('user',user);
 
     this.authorizers.push({
       ...this.userForm.value,
@@ -326,7 +317,6 @@ export class EditFinaceRequestComponent implements OnInit {
       policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: this.activities,
     };
-    console.log('element',element);
 
     await this._finaceService.updateFinaceRequest(element, this.finaceRequest._id!).subscribe(
       (res: any) => {
@@ -346,7 +336,6 @@ export class EditFinaceRequestComponent implements OnInit {
     this._spinner.show();
 
     const validateAuthorizer = this.authorizers.find((authorizer: any) => authorizer.required === true)
-    console.log(validateAuthorizer);
 
     if(!validateAuthorizer){
       this._spinner.hide()
@@ -398,14 +387,12 @@ export class EditFinaceRequestComponent implements OnInit {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
         this._toastr.success('Solicitud de Seguro/fianzas enviada con Exito');
-        console.log('respuesta', res);
 
         for (let index = 0; index < this.authorizers.length; index++) {
           const element = {
             to: this.authorizers[index].user,
             request: res.finaceRequestUpdated,
           };
-          console.log(element);
 
           this._emailService.sendEmailFianceRequest(element).subscribe((resp: any) => { });
         }
@@ -473,23 +460,14 @@ export class EditFinaceRequestComponent implements OnInit {
       data: value
     });
     dialogRef.beforeClosed().subscribe((data: any) => {
-      console.log('data', data);
-
       const user: User = {
         email: data.email,
         last_name: data.last_name,
         name: data.name,
         getImage: ''
       }
-      console.log(user);
       this.users.push(user)
-      console.log(this.users);
-
-      //this.filteredOptions.push(user)
-      //console.log(this.filteredOptions);
-
       this.userForm.controls['user'].setValue(data.email)
-      //this.displayFn(user)
     })
   }
 
@@ -543,7 +521,6 @@ export class EditFinaceRequestComponent implements OnInit {
       history: this.activities,
       status: 'TOSEND',
     };
-    console.log('element',element);
 
     await this._finaceService
       .updateFinaceRequest(element, this.finaceRequest._id!)

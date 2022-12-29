@@ -44,7 +44,6 @@ export class ModalUsersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.initValuesForm()
     this.registerForm.controls['email'].valueChanges.subscribe((inputEmail:any) => {
       this.validateEmail(inputEmail)

@@ -385,7 +385,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
       return this.filterInvoiceProviders = this.invoices
     }
     this._searchService.search('invoiceProviders', term).subscribe((resp: any) => {
-      console.log(this.invoiceProviders);
       this.filterInvoiceProviders = resp
     })
     return

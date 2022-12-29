@@ -390,7 +390,6 @@ export class TableInvoiceClientsComponent implements OnInit {
       return this.filterInvoiceClients = this.invoices
     }
     this._searchService.search('invoiceClients', term).subscribe((resp: any) => {
-      console.log(this.invoiceClients);
       this.filterInvoiceClients = resp
     })
     return
@@ -425,8 +424,6 @@ export class TableInvoiceClientsComponent implements OnInit {
         'DESCRIPCION'
       ]
     }
-    console.log(element);
-
     this._excelService.downloadExcel(element, 'FacturasClientes', 'invoiceClients')
   }
 

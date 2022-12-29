@@ -149,7 +149,6 @@ export class AddFinaceRequestComponent implements OnInit {
     this._providerService.getProviders().subscribe((providers:Provider[]) => {
       this.providers = providers
       this.arrays = [...this.clients, ...this.providers, ...this.business]
-      console.log(this.arrays);
     })
   }
 
@@ -435,8 +434,6 @@ export class AddFinaceRequestComponent implements OnInit {
   }
 
   validateBusiness(input:any){
-    console.log('input',input);
-
     this.finaceForm.controls['business'].setValue(input.business._id)
   }
 

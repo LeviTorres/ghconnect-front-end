@@ -192,8 +192,6 @@ export class TableProvidersComponent implements OnInit {
   }
 
   createExcel() {
-    console.log(this.providersTemp);
-
     for (let index = 0; index < this.providersTemp.length; index++) {
       this.newArray.push({
         ...this.providersTemp[index],

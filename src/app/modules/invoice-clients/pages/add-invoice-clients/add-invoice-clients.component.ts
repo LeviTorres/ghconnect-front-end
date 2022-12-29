@@ -203,8 +203,6 @@ export class AddInvoiceClientsComponent implements OnInit {
       movement_type: this.invoiceForm.controls['movement_type'].value,
       status: 'draft',
     };
-    console.log(element);
-
     this._invoiceClientService.createInvoiceClient(element).subscribe(
       (res: any) => {
         this._router.navigateByUrl('/invoice-clients');

@@ -56,7 +56,6 @@ export class TravelRequestService {
   }
 
   getUpdateTravelRequest(formData: any) {
-    console.log('formData', formData);
     const findRefused = formData.authorizers.find(
       (travelRequest: any) => travelRequest.status === 'CANCELLED'
     );

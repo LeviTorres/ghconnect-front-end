@@ -62,7 +62,6 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
         this.finaceRequest = finacesRequest.find(
           (finaceRequest: FinaceRequest) => finaceRequest._id === id
         );
-        console.log(this.finaceRequest);
         this.activities = this.finaceRequest.history;
         this._spinner.hide()
       });
@@ -77,7 +76,6 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
     const findUser = this.finaceRequest.authorizers.findIndex(
       (user: any) => user.user.email === this.user.email
     );
-    console.log(findUser);
     this.finaceRequest.authorizers[findUser].status = 'ACCEPTED';
     this.activities.push({
       action: `Aprobo solicitud`,
@@ -93,7 +91,6 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
       authorizers: this.finaceRequest.authorizers,
       history: this.activities,
     };
-    console.log('element', element);
     this._finaceService
       .updateFinaceRequest(element, this.finaceRequest._id!)
       .subscribe(
@@ -136,7 +133,6 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
       authorizers: this.finaceRequest.authorizers,
       history: this.activities,
     };
-    console.log('element', element);
     this._finaceService
       .updateFinaceRequest(element, this.finaceRequest._id!)
       .subscribe(

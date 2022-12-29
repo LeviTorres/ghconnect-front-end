@@ -143,8 +143,6 @@ export class TableUsersComponent implements OnInit {
       return this.users = this.usersTemp
     }
     this._searchService.search('users', term).subscribe((resp: any) => {
-      console.log(this.users);
-
       this.users = resp
     })
     return

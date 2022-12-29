@@ -113,7 +113,6 @@ export class ExcelService {
           { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 },
           { width: 10 }
         ]
-        console.log(info.data);
         const subheaderProvider = []
         for (let index = 0; index < info.data.length; index++) {
           subheaderProvider[1] = info.data[index].status
@@ -137,8 +136,6 @@ export class ExcelService {
           { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 },
           { width: 10 }
         ]
-        console.log(info.data);
-
         const subheaderClient = []
         for (let index = 0; index < info.data.length; index++) {
           subheaderClient[1] = info.data[index].status

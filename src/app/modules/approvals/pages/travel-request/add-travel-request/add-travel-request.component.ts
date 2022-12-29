@@ -148,7 +148,6 @@ export class AddTravelRequestComponent implements OnInit {
       this._toastr.warning('Usuario previamente seleccionado', 'Seleccione un usuario distinto')
       return
     }
-    console.log('user',user);
 
     this.authorizers.push({
       ...this.userForm.value,
@@ -195,11 +194,7 @@ export class AddTravelRequestComponent implements OnInit {
 
   async sendRequest() {
     this._spinner.show();
-    console.log(this.authorizers);
-
     const validateAuthorizer = this.authorizers.find((authorizer: any) => authorizer.required === true)
-    console.log(validateAuthorizer);
-
     if(!validateAuthorizer){
       this._spinner.hide()
       this._toastr.warning('Selecciona al menos un autorizador requerido')
@@ -317,23 +312,14 @@ export class AddTravelRequestComponent implements OnInit {
       data: value
     });
     dialogRef.beforeClosed().subscribe((data: any) => {
-      console.log('data', data);
-
       const user: User = {
         email: data.email,
         last_name: data.last_name,
         name: data.name,
         getImage: ''
       }
-      console.log(user);
       this.users.push(user)
-      console.log(this.users);
-
-      //this.filteredOptions.push(user)
-      //console.log(this.filteredOptions);
-
       this.userForm.controls['user'].setValue(data.email)
-      //this.displayFn(user)
     })
   }
 
