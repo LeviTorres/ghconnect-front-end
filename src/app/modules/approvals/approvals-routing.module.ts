@@ -26,7 +26,7 @@ const routes: Routes = [
       { path: 'approvals-finace', component: MainFinaceRequestComponent },
       { path: 'approvals-finace/add-finace-request', component: AddFinaceRequestComponent },
       { path: 'approvals-finace/:id', component: EditFinaceRequestComponent },
-      { path: 'approvals-finace/:token', component: ApprovalsFinaceRequestComponent }
+      { path: 'approvals-finace-request/:token', component: ApprovalsFinaceRequestComponent }
     ]
   }
 ];

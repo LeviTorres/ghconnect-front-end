@@ -435,6 +435,8 @@ export class AddFinaceRequestComponent implements OnInit {
   }
 
   validateBusiness(input:any){
+    console.log('input',input);
+
     this.finaceForm.controls['business'].setValue(input.business._id)
   }
 

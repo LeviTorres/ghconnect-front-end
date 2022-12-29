@@ -9,13 +9,18 @@ import { UsersService } from '../../../../../services/users.service';
 import { DivisasService } from '../../../../../services/divisas.service';
 import { CecosService } from '../../../../../services/cecos.service';
 import { FinaceRequestService } from '../../../../../services/finace-request.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EmailsService } from '../../../../../services/emails.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FinaceRequest } from '../../../../../models/FinaceRequest.model';
 import { ModalUsersComponent } from '../../../../users/components/modal-users/modal-users.component';
+import { ClientsService } from '../../../../../services/clients.service';
+import { ProvidersService } from '../../../../../services/providers.service';
+import { Client } from 'src/app/models/Client.model';
+import { Provider } from '../../../../../models/Provider.model';
+import { TokensService } from '../../../../../services/tokens.service';
 
 @Component({
   selector: 'app-edit-finace-request',
@@ -24,11 +29,18 @@ import { ModalUsersComponent } from '../../../../users/components/modal-users/mo
 })
 export class EditFinaceRequestComponent implements OnInit {
   public id_user!: any
+  public finaceRequest!: FinaceRequest
   public business: Business[] = []
+  public clients: Client[] = []
+  public providers: Provider[] = []
   public cecos: Ceco[] = []
   public divisas: Divisa[] = []
+  public arrays: any[] = []
   public authorizers: any[] = [];
   public date: any
+  public filteredOptionsPayer: any[] = []
+  public activities: any;
+  public tokens: any[] = []
 
   public dynamicArray: Array<any> = [];
   public newDynamic: any = {};
@@ -70,6 +82,8 @@ export class EditFinaceRequestComponent implements OnInit {
   constructor(
     private _businessService: BusinessService,
     private _userService: UsersService,
+    private _clientService: ClientsService,
+    private _providerService:ProvidersService,
     private _divisaService: DivisasService,
     private _cecoService:CecosService,
     private _finaceService: FinaceRequestService,
@@ -77,23 +91,27 @@ export class EditFinaceRequestComponent implements OnInit {
     private _toastr: ToastrService,
     private _spinner: NgxSpinnerService,
     private _emailService: EmailsService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _activatedRoute: ActivatedRoute,
+    private _tokenService: TokensService
   ) {
+    this._spinner.show()
     this.id_user = JSON.parse(atob(this._userService.token.split('.')[1])).uid;
-
+    this.getBusiness()
+    this.getCecos()
+    this.getUsers()
+    this.getDivisas()
+    this.getTokens()
   }
 
   ngOnInit(): void {
-    this.date = new Date();
-    this.finaceForm.controls['creation_date'].setValue(this.date)
+    this._activatedRoute.params.subscribe((id:any) => {
+      this.getFinaceRequest(id.id)
+    })
     this.finaceForm.controls['creation_date'].disable()
     this.finaceForm.controls['equivalent_value'].disable()
     this.finaceForm.controls['policy_validity'].disable()
     this.finaceForm.controls['business'].disable()
-    this.getBusiness()
-    this.getUsers()
-    this.getDivisas()
-    this.getCecos()
     this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue:any) => {
       this.validateBusiness(inputValue)
     })
@@ -106,17 +124,102 @@ export class EditFinaceRequestComponent implements OnInit {
     this.finaceForm.controls['finish_date'].valueChanges.subscribe(() => {
       this.setValuePolicyValidity()
     })
+    this.finaceForm.controls['payer'].valueChanges.subscribe((inputValue: any) => {
+      this.filterDataPayer(inputValue)
+    })
     //Autocompletado autorizadores
     this.userForm.controls['user'].valueChanges.subscribe((inputValue: any) => {
       this.validateUser()
       this.filterData(inputValue)
     })
+    setTimeout(() => {
+      this.getClients()
+      this.getProviders()
+    }, 2000);
+  }
+
+  getTokens(){
+    this._tokenService.getTokens().subscribe((tokens:any) => {
+      this.tokens = tokens
+    })
+  }
+
+  getFinaceRequest(id:any){
+    this._finaceService.getFinaceRequest().subscribe((finacesRequest:any) => {
+      this.finaceRequest = finacesRequest.find((finaceRequest: FinaceRequest) =>
+        finaceRequest._id === id
+      )
+    })
+  }
+
+  initValuesForm(){
+    console.log(this.finaceRequest);
+    const findPayer = this.arrays.find((element: any) => element._id === this.finaceRequest.payer)
+    console.log('findPayer',findPayer);
+
+    this.finaceForm.patchValue({
+      key_policy: this.finaceRequest.key_policy,
+      creation_date: new Date(this.finaceRequest.creation_date),
+      policy_type: this.finaceRequest.policy_type,
+      ceco: this.finaceRequest.ceco._id,
+      business: this.finaceRequest.business._id,
+      payer: findPayer,
+      beneficiary: this.finaceRequest.beneficiary,
+      main_contract_value: this.finaceRequest.main_contract_value,
+      divisa_main_value: this.finaceRequest.divisa_main_value._id,
+      guaranteed_sum: this.finaceRequest.guaranteed_sum,
+      divisa_guaranteed_sum: this.finaceRequest.divisa_guaranteed_sum._id,
+      equivalent_value: this.finaceRequest.equivalent_value,
+      start_date: new Date(this.finaceRequest.start_date),
+      finish_date: new Date(this.finaceRequest.finish_date),
+      policy_validity: this.finaceRequest.policy_validity,
+      insurance_object: this.finaceRequest.insurance_object,
+      process_execution: this.finaceRequest.process_execution,
+      premium_pay: this.finaceRequest.premium_pay,
+      payment_conditions: this.finaceRequest.payment_conditions
+    })
+
+    for (
+      let index = 0;
+      index < this.finaceRequest.authorizers.length;
+      index++
+    ) {
+      this.authorizers.push({
+        user: this.finaceRequest.authorizers[index].user._id,
+        required: this.finaceRequest.authorizers[index].required,
+        status: this.finaceRequest.authorizers[index].status,
+        message: this.finaceRequest.authorizers[index].message,
+      });
+    }
+
+    this.activities = this.finaceRequest.history;
+
+    this._spinner.hide()
   }
 
   getBusiness() {
     this._businessService.getBusiness().subscribe((business: Business[]) => {
       this.business = business;
+      console.log('this.business',this.business);
+
     });
+  }
+
+  getClients(){
+    this._clientService.getClients().subscribe((clients:Client[]) => {
+      this.clients = clients
+      console.log('this.clients',this.clients);
+      this.arrays = [...this.clients, ...this.providers, ...this.business]
+      console.log(this.arrays);
+      this.initValuesForm()
+    })
+  }
+
+  getProviders(){
+    this._providerService.getProviders().subscribe((providers: Provider[]) => {
+      this.providers = providers
+      console.log('this.providers',this.providers);
+    })
   }
 
   getCecos(){
@@ -195,11 +298,11 @@ export class EditFinaceRequestComponent implements OnInit {
   async registerFinace() {
     this._spinner.show();
 
-    const history_data = {
-      action: 'Solicitud de Seguros/Fianzas creada',
+    this.activities.push({
+      action: 'Actualizacion de solicitud de Seguro/Fianzas',
       date: new Date().getTime(),
       user: this.id_user,
-    };
+    });
 
     const element: FinaceRequest = {
       ...this.finaceForm.value,
@@ -218,17 +321,18 @@ export class EditFinaceRequestComponent implements OnInit {
       guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
       equivalent_value: Number(this.finaceForm.controls['equivalent_value'].value),
       premium_pay: Number(this.finaceForm.controls['premium_pay'].value),
-      ceco: this.finaceForm.controls['ceco'].value._id,
+      ceco: this.finaceForm.controls['ceco'].value,
+      payer: this.finaceForm.controls['payer'].value._id,
       policy_validity: this.finaceForm.controls['policy_validity'].value,
-      history: history_data,
+      history: this.activities,
     };
     console.log('element',element);
 
-    await this._finaceService.createFinaceRequest(element).subscribe(
+    await this._finaceService.updateFinaceRequest(element, this.finaceRequest._id!).subscribe(
       (res: any) => {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
-        this._toastr.success('Solicitud de Seguros/Fianzas creada con Exito');
+        this._toastr.success('Solicitud de Seguros/Fianzas actualizada con Exito');
       },
       (err: any) => {
         this._spinner.hide();
@@ -240,7 +344,6 @@ export class EditFinaceRequestComponent implements OnInit {
 
   async sendRequest() {
     this._spinner.show();
-    console.log(this.authorizers);
 
     const validateAuthorizer = this.authorizers.find((authorizer: any) => authorizer.required === true)
     console.log(validateAuthorizer);
@@ -257,18 +360,15 @@ export class EditFinaceRequestComponent implements OnInit {
       return
     }
 
-    const history_data = [
-      {
-        action: 'Solicitud de Seguro/fianzas creada',
-        date: new Date().getTime(),
-        user: this.id_user,
-      },
-      {
-        action: 'Cambio de Estado Por enviar -> Enviado',
-        date: new Date().getTime(),
-        user: this.id_user,
-      }
-    ];
+    this.activities.push({
+      action: 'Cambio de Estado Por enviar -> Enviado',
+      date: new Date().getTime(),
+      user: this.id_user,
+    });
+
+    for (let index = 0; index < this.authorizers.length; index++) {
+      this.authorizers[index].status = 'SEND'
+    }
 
     const element: FinaceRequest = {
       ...this.finaceForm.value,
@@ -287,12 +387,13 @@ export class EditFinaceRequestComponent implements OnInit {
       guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
       equivalent_value: Number(this.finaceForm.controls['equivalent_value'].value),
       premium_pay: Number(this.finaceForm.controls['premium_pay'].value),
-      ceco: this.finaceForm.controls['ceco'].value._id,
+      ceco: this.finaceForm.controls['ceco'].value,
+      payer: this.finaceForm.controls['payer'].value._id,
       policy_validity: this.finaceForm.controls['policy_validity'].value,
-      history: history_data,
+      history: this.activities,
       status: 'SEND',
     };
-    await this._finaceService.createFinaceRequest(element).subscribe(
+    await this._finaceService.updateFinaceRequest(element, this.finaceRequest._id!).subscribe(
       (res: any) => {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
@@ -302,7 +403,7 @@ export class EditFinaceRequestComponent implements OnInit {
         for (let index = 0; index < this.authorizers.length; index++) {
           const element = {
             to: this.authorizers[index].user,
-            request: res.finace,
+            request: res.finaceRequestUpdated,
           };
           console.log(element);
 
@@ -343,7 +444,7 @@ export class EditFinaceRequestComponent implements OnInit {
       const findUser = this.users.find(
         (user: User) =>
           user.email.trim().toLowerCase() ===
-          this.userForm.controls['user'].value?.trim().toLowerCase()
+          this.userForm.controls['user'].value
       );
       if (findUser) {
         this.validate_user = true
@@ -354,11 +455,11 @@ export class EditFinaceRequestComponent implements OnInit {
     }
   }
 
-  getUser() {
-    const findUser = this.users.find((user: User) => user._id === this.id_user)
+  getUser(user_data?: any) {
+    const findUser = this.users.find((user: User) => user._id === user_data._id)
     return {
-      name: findUser!.name,
-      last_name: findUser!.last_name
+      name: findUser?.name,
+      last_name: findUser?.last_name
     }
   }
 
@@ -392,6 +493,83 @@ export class EditFinaceRequestComponent implements OnInit {
     })
   }
 
+  getStatus(status: string) {
+    if (status === 'SEND') {
+      return 'Enviado';
+    } else if (status === 'PASSED') {
+      return 'Aprobado';
+    } else if (status === 'REFUSED') {
+      return 'Rechazado';
+    } else if (status === 'CANCELLED') {
+      return 'Cancelado';
+    }
+    return;
+  }
+
+  async updatedToSend() {
+    this._spinner.show();
+    this.activities.push({
+      action: `Cambio de Estado ${this.getStatus(
+        this.finaceRequest.status
+      )} -> Por enviar`,
+      date: new Date().getTime(),
+      user: this.id_user,
+    });
+
+    for (let index = 0; index < this.authorizers.length; index++) {
+      this.authorizers[index].status = '';
+    }
+
+    const element = {
+      ...this.finaceForm.value,
+      authorizers: this.authorizers,
+      start_date: new Date(
+        this.finaceForm.controls['start_date'].value
+      ).getTime(),
+      finish_date: new Date(
+        this.finaceForm.controls['finish_date'].value
+      ).getTime(),
+      creation_date: new Date(
+        this.finaceForm.controls['creation_date'].value
+      ).getTime(),
+      business: this.finaceForm.controls['business'].value,
+      main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
+      guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
+      equivalent_value: Number(this.finaceForm.controls['equivalent_value'].value),
+      premium_pay: Number(this.finaceForm.controls['premium_pay'].value),
+      ceco: this.finaceForm.controls['ceco'].value,
+      payer: this.finaceForm.controls['payer'].value._id,
+      policy_validity: this.finaceForm.controls['policy_validity'].value,
+      history: this.activities,
+      status: 'TOSEND',
+    };
+    console.log('element',element);
+
+    await this._finaceService
+      .updateFinaceRequest(element, this.finaceRequest._id!)
+      .subscribe(
+        (res: any) => {
+          this._router.navigateByUrl('/approvals/approvals-finace');
+          this._spinner.hide();
+          this._toastr.success('Solicitud de Seguros/Fianzas actualizada con Exito');
+          for (let index = 0; index < this.finaceRequest.authorizers.length; index++) {
+
+            const findToken = this.tokens.find((token: any) => token.user.email === this.finaceRequest.authorizers[index].user.email)
+            if(findToken){
+              this._tokenService.deleteToken(findToken).subscribe(() => {
+
+              })
+            }
+          }
+        },
+        (err: any) => {
+          this._spinner.hide();
+          console.warn(err.error.msg);
+          this._toastr.error(`${err.error.msg}`);
+        }
+      );
+  }
+
 
   getEmailAuthorizer(id: string){
     const findAuthorizer = this.users.find((user: User) => user._id === id)
@@ -399,8 +577,8 @@ export class EditFinaceRequestComponent implements OnInit {
   }
 
   validateBusiness(input:any){
-    console.log('input',input);
-    this.finaceForm.controls['business'].setValue(input.business._id)
+    const findCeco = this.cecos.find((business:Ceco) => business._id === input)
+    this.finaceForm.controls['business'].setValue(findCeco?.business?._id)
   }
 
   valueEquivalent(value:any){
@@ -450,5 +628,19 @@ export class EditFinaceRequestComponent implements OnInit {
     return ''
   }
 
+  displayFnPayer(user: any): string {
+    return user && `${user.name}`
+      ? `${user.name}`
+      : '';
+  }
+
+  filterDataPayer(value: string) {
+    this.filteredOptionsPayer = this.arrays.filter((item: any) => {
+      this.displayFnPayer(item);
+      return (
+        item.name.toLowerCase().indexOf(value) > -1
+      );
+    });
+  }
 
 }
