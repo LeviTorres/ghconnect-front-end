@@ -319,6 +319,7 @@ export class AddFinaceRequestComponent implements OnInit {
       equivalent_value: Number(this.finaceForm.controls['equivalent_value'].value),
       premium_pay: Number(this.finaceForm.controls['premium_pay'].value),
       ceco: this.finaceForm.controls['ceco'].value._id,
+      payer: this.finaceForm.controls['payer'].value._id,
       policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: history_data,
       status: 'SEND',
