@@ -32,7 +32,7 @@ export class AddFinaceRequestComponent implements OnInit {
   public business: Business[] = []
   public cecos: Ceco[] = []
   public divisas: Divisa[] = []
-  public providers:Provider[] = []
+  public providers: Provider[] = []
   public clients: Client[] = []
   public arrays: any[] = []
   public authorizers: any[] = [];
@@ -80,7 +80,7 @@ export class AddFinaceRequestComponent implements OnInit {
     private _businessService: BusinessService,
     private _userService: UsersService,
     private _divisaService: DivisasService,
-    private _cecoService:CecosService,
+    private _cecoService: CecosService,
     private _clientService: ClientsService,
     private _providerService: ProvidersService,
     private _finaceService: FinaceRequestService,
@@ -104,10 +104,10 @@ export class AddFinaceRequestComponent implements OnInit {
     this.getUsers()
     this.getDivisas()
     this.getCecos()
-    this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue:any) => {
+    this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue: any) => {
       this.validateBusiness(inputValue)
     })
-    this.finaceForm.controls['main_contract_value'].valueChanges.subscribe((value:any) => {
+    this.finaceForm.controls['main_contract_value'].valueChanges.subscribe((value: any) => {
       this.valueEquivalent(value)
     })
     this.finaceForm.controls['start_date'].valueChanges.subscribe(() => {
@@ -139,27 +139,27 @@ export class AddFinaceRequestComponent implements OnInit {
     });
   }
 
-  getCecos(){
+  getCecos() {
     this._cecoService.getCecos().subscribe((cecos: Ceco[]) => {
       this.cecos = cecos
     })
   }
 
-  getProviders(){
-    this._providerService.getProviders().subscribe((providers:Provider[]) => {
+  getProviders() {
+    this._providerService.getProviders().subscribe((providers: Provider[]) => {
       this.providers = providers
       this.arrays = [...this.clients, ...this.providers, ...this.business]
       console.log(this.arrays);
     })
   }
 
-  getClients(){
+  getClients() {
     this._clientService.getClients().subscribe((clients: Client[]) => {
       this.clients = clients
     })
   }
 
-  getDivisas(){
+  getDivisas() {
     this._divisaService.getDivisas().subscribe((divisas: Divisa[]) => {
       this.divisas = divisas
     })
@@ -262,6 +262,8 @@ export class AddFinaceRequestComponent implements OnInit {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
         this._toastr.success('Solicitud de Seguros/Fianzas creada con Exito');
+        console.log('respuesta', res);
+
       },
       (err: any) => {
         this._spinner.hide();
@@ -276,13 +278,13 @@ export class AddFinaceRequestComponent implements OnInit {
 
     const validateAuthorizer = this.authorizers.find((authorizer: any) => authorizer.required === true)
 
-    if(!validateAuthorizer){
+    if (!validateAuthorizer) {
       this._spinner.hide()
       this._toastr.warning('Selecciona al menos un autorizador requerido')
       return
     }
 
-    if(this.authorizers.length <= 0){
+    if (this.authorizers.length <= 0) {
       this._spinner.hide()
       this._toastr.warning('Selecciona al menos un autorizador')
       return
@@ -429,59 +431,59 @@ export class AddFinaceRequestComponent implements OnInit {
   }
 
 
-  getEmailAuthorizer(id: string){
+  getEmailAuthorizer(id: string) {
     const findAuthorizer = this.users.find((user: User) => user._id === id)
     return findAuthorizer?.email
   }
 
-  validateBusiness(input:any){
-    console.log('input',input);
+  validateBusiness(input: any) {
+    console.log('input', input);
 
     this.finaceForm.controls['business'].setValue(input.business._id)
   }
 
-  valueEquivalent(value:any){
-    const valueEquivalence = (value*7)/100
+  valueEquivalent(value: any) {
+    const valueEquivalence = (value * 7) / 100
     this.finaceForm.controls['equivalent_value'].setValue(valueEquivalence)
   }
 
-  setValuePolicyValidity(){
+  setValuePolicyValidity() {
     const start_date = new Date(this.finaceForm.controls['start_date'].value)
     const finish_date = new Date(this.finaceForm.controls['finish_date'].value)
-    if(finish_date && start_date){
+    if (finish_date && start_date) {
       const resta = finish_date.getTime() - start_date.getTime()
-      if(resta >= 0){
+      if (resta >= 0) {
         this.finaceForm.controls['policy_validity'].setValue(
-          `${new Date(resta).getDate()} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth()+1)} ${start_date.getFullYear()} al ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth()+1)} ${finish_date.getFullYear()}`
+          `${new Date(resta).getDate()} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth() + 1)} ${start_date.getFullYear()} al ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth() + 1)} ${finish_date.getFullYear()}`
         )
       }
     }
   }
 
-  getMonth(month:any){
-    if(month === 11){
+  getMonth(month: any) {
+    if (month === 11) {
       return 'Noviembre'
-    }else if(month === 12){
+    } else if (month === 12) {
       return 'Diciembre'
-    }else if(month === 1){
+    } else if (month === 1) {
       return 'Enero'
-    }else if(month === 2){
+    } else if (month === 2) {
       return 'Febrero'
-    }else if(month === 3){
+    } else if (month === 3) {
       return 'Marzo'
-    }else if(month === 4){
+    } else if (month === 4) {
       return 'Abril'
-    }else if(month === 5){
+    } else if (month === 5) {
       return 'Mayo'
-    }else if(month === 6){
+    } else if (month === 6) {
       return 'Junio'
-    }else if(month === 7){
+    } else if (month === 7) {
       return 'Julio'
-    }else if(month === 8){
+    } else if (month === 8) {
       return 'Agosto'
-    }else if(month === 9){
+    } else if (month === 9) {
       return 'Septiembre'
-    }else if(month === 10){
+    } else if (month === 10) {
       return 'Octubre'
     }
     return ''
