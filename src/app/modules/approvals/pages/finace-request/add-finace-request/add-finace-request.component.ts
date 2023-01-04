@@ -149,7 +149,6 @@ export class AddFinaceRequestComponent implements OnInit {
     this._providerService.getProviders().subscribe((providers: Provider[]) => {
       this.providers = providers
       this.arrays = [...this.clients, ...this.providers, ...this.business]
-      console.log(this.arrays);
     })
   }
 

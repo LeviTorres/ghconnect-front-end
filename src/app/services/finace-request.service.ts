@@ -55,7 +55,6 @@ export class FinaceRequestService {
   }
 
   getUpdateFinaceRequest(formData: any) {
-    console.log('formData', formData);
     const findRefused = formData.authorizers.find(
       (finaceRequest: any) => finaceRequest.status === 'CANCELLED'
     );

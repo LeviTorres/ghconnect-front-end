@@ -111,8 +111,6 @@ export class SearchService {
   }
 
   private generateProviders(providers: any[]): Provider[] {
-    console.log(providers);
-
     return providers.map(
       (providers: Provider) => new Provider(
         providers.key_provider,

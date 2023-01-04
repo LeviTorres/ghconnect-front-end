@@ -1,0 +1,109 @@
+<div class="limiter">
+  <div class="container-register100 col-12">
+      <div class="col">
+        <div class="slides h-100">
+          <div class="slide ">
+            <img src="../../../../assets/slider/slide-01.webp" alt="" class="slide-image">
+          </div>
+          <div class="slide slide-2">
+            <img src="../../../../assets/slider/slide-02.webp" alt="" class="slide-image">
+          </div>
+          <div class="slide slide-3">
+            <img src="../../../../assets/slider/slide-03.webp" alt="" class="slide-image">
+          </div>
+        </div>
+      </div>
+    <div class="wrap-register100 col-5">
+        <div class="container-img mb-2">
+          <img src="../../../../assets/icons/GHconnect.svg" alt="">
+        </div>
+        <div class="text-center pb-2">
+          <h1 class="fs-24 fw-light text-white">¡ Registrate !</h1>
+        </div>
+        <form class="px-5" autocomplete="off" [formGroup]="workspaceForm" (ngSubmit)="createWorkspace()">
+          <div class="row">
+            <div class="col-6">
+              <label class="text-white">Nombre</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput type="text" formControlName="name" placeholder="Ingresa tu nombre"/>
+                <mat-error *ngIf="workspaceForm.controls['name'].hasError('required')">
+                  Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <label class="text-white">Apellido</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput type="text" formControlName="last_name" placeholder="Ingresa tu apellido"/>
+                <mat-error *ngIf="workspaceForm.controls['last_name'].hasError('required')">
+                  Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <label class="text-white" >Email</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput type="email" formControlName="email" placeholder="Ingresa tu email"/>
+            <mat-error *ngIf="workspaceForm.controls['email'].hasError('required')">
+              Campo requerido
+            </mat-error>
+            <mat-error *ngIf="workspaceForm.controls['email'].hasError('email')">
+              Correo electronico invalido
+            </mat-error>
+          </mat-form-field>
+          <label class="text-white">Empresa</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput type="text" formControlName="business" placeholder="Ingresa el nombre de tu empresa"/>
+            <mat-error *ngIf="workspaceForm.controls['business'].hasError('required')">
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+          <label class="text-white">Nombre corto Empresa</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput type="text" formControlName="business_short" placeholder="Ingresa el nombre corto de tu empresa"/>
+            <mat-error *ngIf="workspaceForm.controls['business_short'].hasError('required')">
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+          <label class="text-white">Clave de la empresa</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input matInput type="text" formControlName="key_business" placeholder="Ingresa la clave de tu empresa"/>
+            <mat-error *ngIf="workspaceForm.controls['key_business'].hasError('required')">
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+          <label class="text-white">Pais</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-select
+              matInput
+              placeholder="Selecciona el pais de tu empresa"
+              formControlName="country"
+            >
+              <mat-option  *ngFor="let item of countries" [value]="item">{{item.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="workspaceForm.controls['country'].hasError('required')">
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+      <!--      <div class="d-flex justify-content-between">
+              <label class="text-white pl-2" for="password">Contraseña</label>
+            </div>
+            <mat-form-field class="w-100" appearance="outline">
+              <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="Ingresa tu contraseña"/>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                Campo requerido
+              </mat-error>
+            </mat-form-field> -->
+          <div class="text-center w-100 py-4">
+            <button mat-raised-button class="btn-unique w-100 py-2" >Registrarse</button>
+          </div>
+        </form>
+        <div class="text-center">
+          <p class="text-white btn-return" routerLink="/login">Regresar inicio de sesion</p>
+        </div>
+    </div>
+  </div>
+</div>

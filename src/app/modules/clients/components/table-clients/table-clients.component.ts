@@ -192,8 +192,6 @@ export class TableClientsComponent implements OnInit {
   }
 
   createExcel() {
-    console.log(this.clientsTemp);
-
     for (let index = 0; index < this.clientsTemp.length; index++) {
       this.newArray.push({
         ...this.clientsTemp[index],

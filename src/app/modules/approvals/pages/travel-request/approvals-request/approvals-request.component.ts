@@ -62,7 +62,6 @@ export class ApprovalsRequestComponent implements OnInit {
         this.travelRequest = travelsRequest.find(
           (travelRequest: TravelRequest) => travelRequest._id === id
         );
-        console.log(this.travelRequest);
         this.activities = this.travelRequest.history;
         this._spinner.hide()
       });
@@ -77,7 +76,6 @@ export class ApprovalsRequestComponent implements OnInit {
     const findUser = this.travelRequest.authorizers.findIndex(
       (user: any) => user.user.email === this.user.email
     );
-    console.log(findUser);
     this.travelRequest.authorizers[findUser].status = 'ACCEPTED';
     this.activities.push({
       action: `Aprobo solicitud`,
@@ -90,7 +88,6 @@ export class ApprovalsRequestComponent implements OnInit {
       authorizers: this.travelRequest.authorizers,
       history: this.activities,
     };
-    console.log('element', element);
     this._travelRequestService
       .updateTravelRequest(element, this.travelRequest._id!)
       .subscribe(
@@ -130,7 +127,6 @@ export class ApprovalsRequestComponent implements OnInit {
       authorizers: this.travelRequest.authorizers,
       history: this.activities,
     };
-    console.log('element', element);
     this._travelRequestService
       .updateTravelRequest(element, this.travelRequest._id!)
       .subscribe(

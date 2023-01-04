@@ -209,8 +209,6 @@ export class EditInvoiceClientComponent implements OnInit {
       description: this.invoiceForm.controls['description'].value,
       movement_type: this.invoiceForm.controls['movement_type'].value,
     }
-    console.log(element);
-
     this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id)
       .subscribe((res: any) => {
         this._router.navigateByUrl('/invoice-clients')
