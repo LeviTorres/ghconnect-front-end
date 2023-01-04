@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
   },
   {
+    path: 'workspaces',
+    loadChildren: () => import('./modules/workspaces/workspaces.module').then(m => m.WorkspacesModule),
+  },
+  {
     path: 'divisas',
     loadChildren: () => import('./modules/divisas/divisas.module').then(m => m.DivisasModule),
     canActivate:[ AuthGuard ]

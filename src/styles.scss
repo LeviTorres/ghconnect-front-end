@@ -99,6 +99,12 @@ body {
   display: flex;
 }
 
+.container-register100 {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
 .wrap-login100 {
   background: #fff;
   overflow: hidden;
@@ -108,6 +114,18 @@ body {
   justify-content: center;
 }
 
+.btn-return{
+  cursor: pointer;
+  padding-bottom: 10px;
+}
+
+.wrap-register100 {
+  background: #fff;
+  overflow: auto;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
 
 .btn-primary{
   background-color: var(--tblr-626065);
