@@ -1,0 +1,4 @@
+<h1>Empresas</h1>
+<div *ngIf="this.user">
+  <p *ngFor="let item of this.user.tenant" (click)="goToHomeWithTenant(item.name)">{{item.name}}</p>
+</div>

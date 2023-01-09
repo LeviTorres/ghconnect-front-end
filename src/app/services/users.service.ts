@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment';
 import { User } from '../models/User.model';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 const base_url = environment.base_url
 
@@ -29,6 +29,28 @@ export class UsersService {
 
   createUser(formData: any) {
     return this._http.post(`${base_url}/users`, formData)
+  }
+
+  createUserWorspace( formData: any ) {
+
+    return this._http.post(`${ base_url }/users`, formData )
+              .pipe(
+                tap( (resp: any) => {
+                  console.log('resp',resp);
+                  localStorage.setItem('token', resp.token )
+
+                })
+              )
+  }
+
+  updateUserWorkspace(formData: any, _id:string) {
+    return this._http.put(`${base_url}/users/${ _id}`, formData)
+      .pipe(
+        tap( (resp: any) => {
+          console.log('resp',resp);
+          localStorage.setItem('token', resp.token )
+        })
+      )
   }
 
   getUsers(){

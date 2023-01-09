@@ -51,6 +51,33 @@
               Correo electronico invalido
             </mat-error>
           </mat-form-field>
+          <div class="row">
+            <div class="col-6">
+              <label class="text-white" >Contraseña</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="password" placeholder="Ingresa una contraseña"/>
+                <mat-error
+                  *ngIf="workspaceForm.controls['password'].hasError('required')"
+                >
+                  Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <label class="text-white">Repetir contraseña</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="password2" placeholder="Vuelve a ingresar la contraseña"/>
+                <mat-error
+                  *ngIf="workspaceForm.controls['password2'].hasError('required')"
+                >
+                  Campo requerido
+                </mat-error>
+                <mat-hint class="mat-hint-error" *ngIf="!samePassword &&
+                                  ( this.workspaceForm.controls['password2'].touched )"
+                >Contraseñas no coinciden</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
           <label class="text-white">Empresa</label>
           <mat-form-field class="w-100" appearance="outline">
             <input matInput type="text" formControlName="business" placeholder="Ingresa el nombre de tu empresa"/>
@@ -79,7 +106,7 @@
               placeholder="Selecciona el pais de tu empresa"
               formControlName="country"
             >
-              <mat-option  *ngFor="let item of countries" [value]="item">{{item.name }}</mat-option>
+              <mat-option  *ngFor="let item of countries" [value]="item._id">{{item.name }}</mat-option>
             </mat-select>
             <mat-error *ngIf="workspaceForm.controls['country'].hasError('required')">
               Campo requerido

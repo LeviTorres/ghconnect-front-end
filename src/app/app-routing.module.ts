@@ -65,6 +65,11 @@ const routes: Routes = [
     canActivate:[ AuthGuard ]
   },
   {
+    path: 'tenants',
+    loadChildren: () => import('./modules/tenants/tenants.module').then(m => m.TenantsModule),
+    canActivate:[ AuthGuard ]
+  },
+  {
     path: 'validation',
     loadChildren: () => import('./modules/validation/validation.module').then(m => m.ValidationModule),
     canActivate:[ AuthGuard ]
@@ -74,11 +79,11 @@ const routes: Routes = [
     loadChildren: () => import('./modules/control/control.module').then(m => m.ControlModule),
     canActivate:[ AuthGuard ]
   },
-  {
-    path: 'treasury',
-    loadChildren: () => import('./modules/treasury/treasury.module').then(m => m.TreasuryModule),
-    canActivate:[ AuthGuard ]
-  },
+  //{
+    //path: 'treasury',
+    //loadChildren: () => import('./modules/treasury/treasury.module').then(m => m.TreasuryModule),
+    //canActivate:[ AuthGuard ]
+  //},
   {
     path: 'invoice-providers',
     loadChildren: () => import('./modules/invoice-providers/invoice-providers.module').then(m => m.InvoiceProvidersModule),

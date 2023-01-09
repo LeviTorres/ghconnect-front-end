@@ -460,7 +460,7 @@ export class EditFinaceRequestComponent implements OnInit {
       data: value
     });
     dialogRef.beforeClosed().subscribe((data: any) => {
-      const user: User = {
+      const user: any = {
         email: data.email,
         last_name: data.last_name,
         name: data.name,
