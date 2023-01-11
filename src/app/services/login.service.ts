@@ -29,28 +29,14 @@ export class LoginService {
     return this.user._id || '';
   }
 
-  get tenant(): any{
-
-    if(this.user.tenant.length <= 1){
-      return this.user.tenant[0]
-    }
-
-    return
-  }
-
   login(formData: any){
     return this._http.post(`${base_url}/login`, formData)
           .pipe(
             tap((resp:any) => {
-              //const info = JSON.parse(atob(resp.token.split('.')[1]))
-              //console.log('info',info);
-              //const findUser = this.users.find((user:User) => user._id === info.uid)
-              //console.log('findUser',findUser);
               localStorage.setItem('token', resp.token)
             })
           )
   }
-
   validarToken(): Observable<boolean>{
     const token = localStorage.getItem('token') || ''
     return this._http.get(`${base_url}/login/renew`, {
@@ -61,15 +47,22 @@ export class LoginService {
       tap((resp:any) => {
         const {email, last_name, name, role, _id, img, tenant } = resp.user
         this.user = new User(name, last_name, email, tenant ,'', img, role, _id)
-        console.log('this.user',this.user);
+        const verifyTenant = localStorage.getItem('tenant')
+        if(!verifyTenant){
+          localStorage.setItem('tenant', tenant[0].name)
+        }
         localStorage.setItem('token', resp.token)
       }),
       map( resp => true),
       catchError(error => of(false))
     )
   }
+  changeTenant(tenant:any):any{
+    localStorage.setItem('tenant', tenant)
+  }
 
   logout(){
     localStorage.removeItem('token')
+    localStorage.removeItem('tenant')
   }
 }
