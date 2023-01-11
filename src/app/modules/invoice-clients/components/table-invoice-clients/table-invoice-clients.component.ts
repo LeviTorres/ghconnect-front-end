@@ -79,28 +79,23 @@ export class TableInvoiceClientsComponent implements OnInit {
     private _businessService: BusinessService,
     private _router: Router,
     private _excelService: ExcelService
-  ) { }
+  ) { this._spinner.show() }
 
   ngOnInit(): void {
-    this._spinner.show()
     this.getInvoiceClients()
     this.getDivisas()
     this.getExchanges()
     this.getHeadersInvoiceClient()
-    this._spinner.hide()
   }
 
   getHeadersInvoiceClient() {
-    this._spinner.show()
     this._headerService.getHeaders(this.header_name).subscribe((resp: any) => {
       this.headersInvoiceClient = resp
       this.initValuesHeader()
-      this._spinner.hide()
     })
   }
 
   initValuesHeader() {
-    this._spinner.show()
     const headerInvoiceClient = this.headersInvoiceClient.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     if (headerInvoiceClient) {
       this.trackingControl.setValue(headerInvoiceClient.tracking)
@@ -178,7 +173,6 @@ export class TableInvoiceClientsComponent implements OnInit {
       }
       this._headerService.createHeaders(element, this.header_name).subscribe((item: any) => {
         this.getHeadersInvoiceClient()
-        this._spinner.hide()
       }, () => {
         this._spinner.hide()
         this._toastr.error('Error al cargar los headers')
@@ -214,14 +208,12 @@ export class TableInvoiceClientsComponent implements OnInit {
       actions: this.actionsControl.value
     }
     this._headerService.updateHeaders(element, headerInvoiceClient._id, this.header_name).subscribe(() => {
-
     }, () => {
       this._toastr.error('Error al actualizar los headers')
     })
   }
 
   getInvoiceClients() {
-    this._spinner.show()
     this._invoiceClientService.getInvoiceClients().subscribe((resp: any) => {
       this.invoiceClients = resp
       this.invoices = this.invoiceClients.filter((item: InvoiceClient) => item.movement_type.type === 'CARGO')
@@ -244,26 +236,20 @@ export class TableInvoiceClientsComponent implements OnInit {
   }
 
   getDivisas() {
-    this._spinner.show()
     this._divisaService.getDivisas().subscribe((resp: any) => {
       this.divisas = resp
-      this._spinner.hide()
     })
   }
 
   getBusiness() {
-    this._spinner.show()
     this._businessService.getBusiness().subscribe((resp: any) => {
       this.business = resp
-      this._spinner.hide()
     })
   }
 
   getExchanges() {
-    this._spinner.show()
     this._exchangeService.getExchanges().subscribe((resp: any) => {
       this.exchanges = resp
-      this._spinner.hide()
     })
   }
 

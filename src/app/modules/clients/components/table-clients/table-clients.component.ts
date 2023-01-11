@@ -61,11 +61,9 @@ export class TableClientsComponent implements OnInit {
   }
 
   getHeadersClient() {
-    this._spinner.show()
     this._headerService.getHeaders('clients').subscribe((resp: any) => {
       this.headersClient = resp
       this.initValuesHeader()
-      this._spinner.hide()
     })
   }
 
@@ -144,7 +142,6 @@ export class TableClientsComponent implements OnInit {
   }
 
   getClients() {
-    this._spinner.show()
     this._clientsService.getClients().subscribe((resp: any) => {
       this.clients = resp
       this.clientsTemp = resp

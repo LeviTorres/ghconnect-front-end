@@ -53,7 +53,7 @@ export class TableProvidersComponent implements OnInit {
     private _headerService: HeadersService,
     private _excelService: ExcelService,
     private _router: Router
-  ) { }
+  ) { this._spinner.show() }
 
   ngOnInit(): void {
     this.getProviders()
@@ -61,11 +61,9 @@ export class TableProvidersComponent implements OnInit {
   }
 
   getHeadersProvider() {
-    this._spinner.show()
     this._headerService.getHeaders('providers').subscribe((resp: any) => {
       this.headersProvider = resp
       this.initValuesHeader()
-      this._spinner.hide()
     })
   }
 
@@ -144,7 +142,6 @@ export class TableProvidersComponent implements OnInit {
   }
 
   getProviders() {
-    this._spinner.show()
     this._providersService.getProviders().subscribe((resp: any) => {
       this.providers = resp
       this.providersTemp = resp

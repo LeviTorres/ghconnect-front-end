@@ -80,28 +80,25 @@ export class TableInvoiceProvidersComponent implements OnInit {
     private _businessService: BusinessService,
     private _router: Router,
     private _excelService: ExcelService
-  ) { }
+  ) { this._spinner.show()}
 
   ngOnInit(): void {
-    this._spinner.show()
+
     this.getInvoiceProviders()
     this.getDivisas()
     this.getExchanges()
     this.getHeadersInvoiceProvider()
-    this._spinner.hide()
+
   }
 
   getHeadersInvoiceProvider() {
-    this._spinner.show()
     this._headerService.getHeaders(this.header_name).subscribe((resp: any) => {
       this.headersInvoiceProvider = resp
       this.initValuesHeader()
-      this._spinner.hide()
     })
   }
 
   initValuesHeader() {
-    this._spinner.show()
     const headerInvoiceProvider = this.headersInvoiceProvider.find((item: any) => item.key_header === `${this._loginService.uid}-${this.header_name}`)
     if (headerInvoiceProvider) {
       this.trackingControl.setValue(headerInvoiceProvider.tracking)
@@ -127,7 +124,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
       this.checkbookControl.setValue(headerInvoiceProvider.checkbook)
       this.payStatusControl.setValue(headerInvoiceProvider.pay_status)
       this.actionsControl.setValue(headerInvoiceProvider.actions)
-      this._spinner.hide()
     } else {
       this.trackingControl.setValue(true)
       this.statusControl.setValue(true)
@@ -181,7 +177,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
 
       this._headerService.createHeaders(element, this.header_name).subscribe((item: any) => {
         this.getHeadersInvoiceProvider()
-        this._spinner.hide()
       }, () => {
         this._spinner.hide()
         this._toastr.error('Error al cargar los headers')
@@ -223,7 +218,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   getInvoiceProviders() {
-    this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((resp: any) => {
       this.invoiceProviders = resp
       this.invoices = this.invoiceProviders.filter((item: InvoiceProviders) => item.movement_type.type === 'CARGO')
@@ -246,26 +240,20 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   getDivisas() {
-    this._spinner.show()
     this._divisaService.getDivisas().subscribe((resp: any) => {
       this.divisas = resp
-      this._spinner.hide()
     })
   }
 
   getBusiness() {
-    this._spinner.show()
     this._businessService.getBusiness().subscribe((resp: any) => {
       this.business = resp
-      this._spinner.hide()
     })
   }
 
   getExchanges() {
-    this._spinner.show()
     this._exchangeService.getExchanges().subscribe((resp: any) => {
       this.exchanges = resp
-      this._spinner.hide()
     })
   }
 
