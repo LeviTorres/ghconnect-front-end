@@ -6,6 +6,13 @@ import { TokensService } from '../../../../../services/tokens.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../../../../../models/User.model';
 import { FinaceRequest } from '../../../../../models/FinaceRequest.model';
+import { ProvidersService } from '../../../../../services/providers.service';
+import { Provider } from '../../../../../models/Provider.model';
+import { Client } from '../../../../../models/Client.model';
+import { Business } from '../../../../../models/Business.model';
+import { ClientsService } from 'src/app/services/clients.service';
+import { BusinessService } from '../../../../../services/business.service';
+
 
 @Component({
   selector: 'app-approvals-finace-request',
@@ -21,7 +28,16 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
   public token: string = '';
   public data: any;
 
+  public arrays: (Provider | Client | Business)[] = [];
+  public providers: Provider[] = [];
+  public clients: Client[] = [];
+  public business: Business[] = [];
+  public payer: Provider | Client | Business | null = null;
+
   constructor(
+    private _providerService: ProvidersService,
+    private _clientService: ClientsService,
+    private _businessService: BusinessService,
     private _activatedRoute: ActivatedRoute,
     private _finaceService: FinaceRequestService,
     private _userService: UsersService,
@@ -43,6 +59,9 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
           const info = JSON.parse(atob(params.token.split('.')[1]))
           this.id_user = info.uid;
           this.getUser(info.uid);
+          this.getProviders();
+          this.getClients();
+          this.getBusiness();
           this.getFinaceRequest(info.request);
         }
       });
@@ -55,16 +74,46 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
     });
   }
 
+  getProviders() {
+    this._providerService.getProviders().subscribe((providers: Provider[]) => {
+      this.providers = providers
+      this.arrays = [...this.clients, ...this.providers, ...this.business];
+      console.log(this.arrays);
+    })
+  }
+
+  getBusiness() {
+    this._businessService.getBusiness().subscribe((business: Business[]) => {
+      this.business = business;
+      console.log('this.business', this.business);
+
+    });
+  }
+
+  getClients() {
+    this._clientService.getClients().subscribe((clients: Client[]) => {
+      this.clients = clients
+      console.log('this.clients', this.clients);
+      this.arrays = [...this.clients, ...this.providers, ...this.business]
+      console.log(this.arrays);
+    })
+  }
+
   getFinaceRequest(id: string) {
     this._finaceService
       .getFinaceRequest()
       .subscribe((finacesRequest: any[]) => {
         this.finaceRequest = finacesRequest.find(
-          (finaceRequest: FinaceRequest) => finaceRequest._id === id
+          (finaceRequest: FinaceRequest) => finaceRequest._id === id,
         );
         this.activities = this.finaceRequest.history;
+        this.FindPayer(this.finaceRequest);
         this._spinner.hide()
       });
+  }
+
+  FindPayer(finaceRequest: FinaceRequest) {
+    this.payer = this.arrays.find((element) => element._id === finaceRequest.payer) as (Provider | Client | Business | null);
   }
 
   ngOnInit(): void {
