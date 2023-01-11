@@ -36,9 +36,7 @@ export class UsersService {
     return this._http.post(`${ base_url }/users`, formData )
               .pipe(
                 tap( (resp: any) => {
-                  console.log('resp',resp);
                   localStorage.setItem('token', resp.token )
-
                 })
               )
   }
@@ -47,7 +45,6 @@ export class UsersService {
     return this._http.put(`${base_url}/users/${ _id}`, formData)
       .pipe(
         tap( (resp: any) => {
-          console.log('resp',resp);
           localStorage.setItem('token', resp.token )
         })
       )
@@ -57,7 +54,6 @@ export class UsersService {
     return this._http.get(`${base_url}/users`,this.headers)
             .pipe(
               map((resp:any) => {
-                //const users = resp.users.map((user:any) => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id))
                 return resp.users
               })
             )

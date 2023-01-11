@@ -32,7 +32,6 @@ export class TenantsComponent implements OnInit {
   async goToHomeWithTenant(name: string){
     this._loginService.changeTenant(name)
     this._router.navigateByUrl('/home')
-    console.log('name',name);
   }
 
 }

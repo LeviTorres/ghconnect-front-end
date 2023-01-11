@@ -104,7 +104,6 @@ export class WorkspaceComponent implements OnInit {
     }
 
     const findEmail = this.users.find((users: User) => users.email?.trim() === this.workspaceForm.controls['email'].value?.trim())
-    console.log('findEmail',findEmail);
 
     if(!findEmail){
       const elementUser = {
@@ -116,7 +115,6 @@ export class WorkspaceComponent implements OnInit {
           name: this.workspaceForm.controls['business'].value
         }]
       }
-      console.log('elementUser',elementUser);
 
       const elementBusiness = {
         name: this.workspaceForm.controls['business'].value,
@@ -142,12 +140,10 @@ export class WorkspaceComponent implements OnInit {
     }else {
 
       this.tenants = findEmail.tenant
-      console.log('this.tenants',this.tenants);
 
       this.tenants.push({
         name: this.workspaceForm.controls['business'].value
       })
-      console.log('this.tenants 1',this.tenants);
 
       const elementUser = {
         name: this.workspaceForm.controls['name'].value,
@@ -156,7 +152,6 @@ export class WorkspaceComponent implements OnInit {
         role: findEmail.role,
         tenant: this.tenants
       }
-      console.log('elementUser',elementUser);
 
       const elementBusiness = {
         name: this.workspaceForm.controls['business'].value,
