@@ -26,8 +26,7 @@ export class UsersService {
   get headers(){
     return {
       headers: {
-        'x-token': this.token,
-        'tenant': this.tenant
+        'x-token': this.token
       }
     }
   }
