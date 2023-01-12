@@ -18,10 +18,15 @@ export class InvoiceProvidersService{
     return localStorage.getItem('token') || '';
   }
 
+  get tenant(): any{
+    return localStorage.getItem('tenant')
+  }
+
   get headers(){
     return {
       headers: {
-        'x-token': this.token
+        'x-token': this.token,
+        'tenant': this.tenant
       }
     }
   }

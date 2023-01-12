@@ -28,10 +28,15 @@ export class SearchService {
     return localStorage.getItem('token') || '';
   }
 
-  get headers() {
+  get tenant(): any{
+    return localStorage.getItem('tenant')
+  }
+
+  get headers(){
     return {
       headers: {
-        'x-token': this.token
+        'x-token': this.token,
+        'tenant': this.tenant
       }
     }
   }
