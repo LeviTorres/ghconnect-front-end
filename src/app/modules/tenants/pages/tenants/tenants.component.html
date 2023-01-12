@@ -1,4 +1,19 @@
-<h1>Empresas</h1>
-<div *ngIf="this.user">
-  <p *ngFor="let item of this.user.tenant" (click)="goToHomeWithTenant(item.name)">{{item.name}}</p>
+<div class="content m-4">
+  <div class="row">
+    <h1 class="">Selecciona la empresa</h1>
+    <p class="let">Elige la empresa con la cual deseas continuar.
+      Podrás cambiar de empresa más adelante en el menú lateral, opción de “Cambiar de empresa”
+    </p>
+  </div>
+  <div *ngIf="this.user" class="row">
+    <div *ngFor="let item of this.user.tenant; let indice = index;" class="col-3 ">
+      <div class="card my-2">
+        <div class="card-body bg-dark bg-gradient text-white text-center rounded-2">
+          <p class="text-end text-muted">{{indice+1}}</p>
+          <h2 (click)="goToHomeWithTenant(item.name)">{{item.name}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
