@@ -152,8 +152,6 @@ export class EditFinaceRequestComponent implements OnInit {
 
   initValuesForm(){
     const findPayer = this.arrays.find((element: any) => element._id === this.finaceRequest.payer)
-    console.log('findPayer',findPayer);
-
     this.finaceForm.patchValue({
       issue_date: new Date(this.finaceRequest.issue_date),
       key_policy: this.finaceRequest.key_policy,
