@@ -20,7 +20,7 @@ export class CountriesService {
   }
 
   get tenant(): any{
-    return localStorage.getItem('tenant')
+    return localStorage.getItem('tenant')|| ''
   }
 
   get headers(){

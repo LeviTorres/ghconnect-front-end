@@ -20,7 +20,7 @@ export class BusinessService {
   }
 
   get tenant(): any{
-    return localStorage.getItem('tenant')
+    return localStorage.getItem('tenant') || ''
   }
 
   get headers(){
@@ -34,10 +34,18 @@ export class BusinessService {
 
   createBusiness(formData: any) {
     return this._http.post(`${base_url}/business`, formData, this.headers)
+                        .pipe(
+                          map((resp:any) => resp.business)
+                        )
   }
 
   updateBusiness(formData: any, _id:string) {
     return this._http.put(`${base_url}/business/${ _id}`, formData, this.headers)
+                        .pipe(
+                          map((resp:any) => {
+                            return resp.businessUpdated
+                          })
+                        )
   }
 
   getBusiness(){

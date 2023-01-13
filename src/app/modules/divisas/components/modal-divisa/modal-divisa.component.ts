@@ -15,7 +15,7 @@ export class ModalDivisaComponent implements OnInit {
 
   public sameName: boolean = false;
 
-  public divisa: Divisa[] = []
+  public divisas: Divisa[] = []
 
   public registerForm = this._fb.group({
     name: ['', Validators.required ],
@@ -32,7 +32,14 @@ export class ModalDivisaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getDivisas()
+  }
 
+  getDivisas(){
+    this._divisaService.getDivisas().subscribe((divisas:Divisa[]) => {
+      this.divisas = divisas
+      console.log(this.divisas);
+    })
   }
 
   registerDivisa() {
@@ -48,6 +55,7 @@ export class ModalDivisaComponent implements OnInit {
           this._dialogRef.close()
           this._toastr.success('Divisa registrado con Exito')
         }, (err:any) =>{
+          this._spinner.hide()
           console.warn(err.error.msg)
           this._toastr.error(`${err.error.msg}`)
         })

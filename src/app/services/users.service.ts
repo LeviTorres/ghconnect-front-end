@@ -19,10 +19,6 @@ export class UsersService {
     return localStorage.getItem('token') || '';
   }
 
-  get tenant(): any{
-    return localStorage.getItem('tenant')
-  }
-
   get headers(){
     return {
       headers: {
@@ -41,7 +37,8 @@ export class UsersService {
               .pipe(
                 tap( (resp: any) => {
                   localStorage.setItem('token', resp.token )
-                })
+                }),
+                map((resp:any) => resp.user)
               )
   }
 
@@ -50,6 +47,9 @@ export class UsersService {
       .pipe(
         tap( (resp: any) => {
           localStorage.setItem('token', resp.token )
+        }),
+        map((resp:any) => {
+          return resp.userUpdated
         })
       )
   }
@@ -61,6 +61,18 @@ export class UsersService {
                 return resp.users
               })
             )
+  }
+
+  updateUser(formData: any, _id:string) {
+    return this._http.put(`${base_url}/users/${ _id}`, formData, this.headers)
+                .pipe(
+                  tap( (resp: any) => {
+                    localStorage.setItem('token', resp.token )
+                  }),
+                  map((resp:any) => {
+                    return resp.userUpdated
+                  })
+                )
   }
 
   deleteUser(user:User){
