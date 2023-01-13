@@ -76,15 +76,12 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
   getProvidersClients() {
     this._providerService.getProvidersClients().subscribe((providersclients: Provider[]) => {
       this.arrays = providersclients
-      console.log(this.arrays);
     })
   }
 
   getBusiness() {
     this._businessService.getBusiness().subscribe((business: Business[]) => {
       this.business = business;
-      console.log('this.business', this.business);
-
     });
   }
 
@@ -102,7 +99,6 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
 
   findPayer(finaceRequest: FinaceRequest) {
     this.payer = this.arrays.find((element) => element._id === finaceRequest.payer)
-    console.log(this.payer);
     return this.payer.name
   }
 
