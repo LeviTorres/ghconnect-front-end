@@ -19,10 +19,15 @@ export class ProvidersService {
     return localStorage.getItem('token') || '';
   }
 
+  get tenant(): any{
+    return localStorage.getItem('tenant')
+  }
+
   get headers(){
     return {
       headers: {
-        'x-token': this.token
+        'x-token': this.token,
+        'tenant': this.tenant
       }
     }
   }
@@ -40,6 +45,15 @@ export class ProvidersService {
               .pipe(
                 map((resp:any) => {
                   return resp.providers
+                })
+              )
+  }
+
+  getProvidersClients(){
+    return this._http.get(`${base_url}/providers/providers-clients`,this.headers)
+              .pipe(
+                map((resp:any) => {
+                  return resp.providersclients
                 })
               )
   }

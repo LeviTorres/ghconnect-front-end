@@ -49,7 +49,7 @@ export class LoginService {
         this.user = new User(name, last_name, email, tenant ,'', img, role, _id)
         const verifyTenant = localStorage.getItem('tenant')
         if(!verifyTenant){
-          localStorage.setItem('tenant', tenant[0].name)
+          localStorage.setItem('tenant', tenant[0].tenant_id)
         }
         localStorage.setItem('token', resp.token)
       }),

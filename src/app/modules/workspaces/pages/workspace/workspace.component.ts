@@ -34,6 +34,12 @@ export class WorkspaceComponent implements OnInit {
 
   public tenants: any[] = []
 
+  public user_created: any
+  public business_created:any
+
+  public user_updated:any
+  public business_updated:any
+
   public workspaceForm = this._fb.group({
     email: [ '', [ Validators.required, Validators.email ] ],
     name: [ '', Validators.required ],
@@ -111,23 +117,37 @@ export class WorkspaceComponent implements OnInit {
         last_name: this.workspaceForm.controls['last_name'].value,
         email: this.workspaceForm.controls['email'].value,
         password: this.workspaceForm.controls['password'].value,
-        tenant: [{
-          name: this.workspaceForm.controls['business'].value
-        }]
       }
 
       const elementBusiness = {
         name: this.workspaceForm.controls['business'].value,
         name_short: this.workspaceForm.controls['business_short'].value,
         key_business: this.workspaceForm.controls['key_business'].value,
-        country: this.workspaceForm.controls['country'].value,
-        tenant: this.workspaceForm.controls['business'].value
+        country: this.workspaceForm.controls['country'].value
       }
 
-      this._userService.createUserWorspace(elementUser).subscribe(() => {
-        this._businessService.createBusiness(elementBusiness).subscribe(() => {
-          this._router.navigateByUrl('/home')
+      this._userService.createUserWorspace(elementUser).subscribe((user:any) => {
+        this.user_created = user
+        this._businessService.createBusiness(elementBusiness).subscribe((business) => {
+          console.log('business creado', business);
+          this.business_created = business
+          this.tenants.push({
+            tenant_id: business._id
+          })
+          const updatedUser = {
+            ...user,
+            tenant: this.tenants
+          }
+          this._userService.updateUser(updatedUser,this.user_created._id).subscribe(() => {
+            this._router.navigateByUrl('/home')
+          },(error:any) => {
+            this._userService.deleteUser(this.user_created).subscribe(()=> {})
+            this._spinner.hide();
+            console.warn(error.error.msg);
+            this._toastr.error(`${error.error.msg}`);
+          })
         },(error:any) =>{
+          this._userService.deleteUser(this.user_created).subscribe(()=> {})
           this._spinner.hide();
           console.warn(error.error.msg);
           this._toastr.error(`${error.error.msg}`);
@@ -137,34 +157,49 @@ export class WorkspaceComponent implements OnInit {
         console.warn(error.error.msg);
         this._toastr.error(`${error.error.msg}`);
       })
+
     }else {
 
-      this.tenants = findEmail.tenant
+     // this.tenants = findEmail.tenant
 
-      this.tenants.push({
-        name: this.workspaceForm.controls['business'].value
-      })
+     // this.tenants.push({
+     //   name: this.workspaceForm.controls['business'].value
+    //  })
 
       const elementUser = {
         name: this.workspaceForm.controls['name'].value,
         last_name: this.workspaceForm.controls['last_name'].value,
         email: this.workspaceForm.controls['email'].value,
         role: findEmail.role,
-        tenant: this.tenants
       }
 
       const elementBusiness = {
         name: this.workspaceForm.controls['business'].value,
         name_short: this.workspaceForm.controls['business_short'].value,
         key_business: this.workspaceForm.controls['key_business'].value,
-        country: this.workspaceForm.controls['country'].value,
-        tenant: this.workspaceForm.controls['business'].value
+        country: this.workspaceForm.controls['country'].value
       }
-      this._userService.updateUserWorkspace(elementUser, findEmail._id!).subscribe(() => {
-        this._businessService.createBusiness(elementBusiness).subscribe(() => {
-          this._router.navigateByUrl('/tenants')
-          this._spinner.hide();
+
+      this._userService.updateUserWorkspace(elementUser, findEmail._id!).subscribe((user:any) => {
+        this.user_updated = user
+        console.log('elementUser',elementUser);
+        this._businessService.createBusiness(elementBusiness).subscribe((business: any) => {
+          this.business_updated = business
+          this.user_updated.tenant.push({
+            tenant_id: business._id
+          })
+          const updatedUser = {
+            ...user,
+            tenant: this.user_updated.tenant
+          }
+          console.log('updatedUser',updatedUser);
+
+          this._userService.updateUser(updatedUser, findEmail._id!).subscribe(() => {
+            this._router.navigateByUrl('/tenants')
+            this._spinner.hide();
+          })
         },(error:any) =>{
+          this._userService.deleteUser(this.user_updated).subscribe(()=> {})
           this._spinner.hide();
           console.warn(error.error.msg);
           this._toastr.error(`${error.error.msg}`);
@@ -213,10 +248,6 @@ export class WorkspaceComponent implements OnInit {
       this.workspaceForm.controls['name'].setValue(findEmail.name)
       this.workspaceForm.controls['last_name'].setValue(findEmail.last_name)
     }
-  }
-
-  loginn(){
-
   }
 
 }

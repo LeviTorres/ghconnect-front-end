@@ -49,6 +49,7 @@ export class AddFinaceRequestComponent implements OnInit {
   public filteredOptionsPayer: any[] = []
 
   public finaceForm: FormGroup = new FormGroup({
+    issue_date: new FormControl('', Validators.required),
     creation_date: new FormControl('', Validators.required),
     key_policy: new FormControl('', Validators.required),
     policy_type: new FormControl('', Validators.required),
@@ -90,8 +91,8 @@ export class AddFinaceRequestComponent implements OnInit {
     private _emailService: EmailsService,
     private _dialog: MatDialog
   ) {
+    this._spinner.show()
     this.id_user = JSON.parse(atob(this._userService.token.split('.')[1])).uid;
-
   }
 
   ngOnInit(): void {
@@ -104,6 +105,7 @@ export class AddFinaceRequestComponent implements OnInit {
     this.getUsers()
     this.getDivisas()
     this.getCecos()
+    this.getProvidersClients()
     this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue: any) => {
       this.validateBusiness(inputValue)
     })
@@ -126,11 +128,6 @@ export class AddFinaceRequestComponent implements OnInit {
       this.filterDataPayer(inputValue)
     })
     this.getBusiness()
-
-    setTimeout(() => {
-      this.getClients()
-      this.getProviders()
-    }, 2000);
   }
 
   getBusiness() {
@@ -145,16 +142,11 @@ export class AddFinaceRequestComponent implements OnInit {
     })
   }
 
-  getProviders() {
-    this._providerService.getProviders().subscribe((providers: Provider[]) => {
-      this.providers = providers
-      this.arrays = [...this.clients, ...this.providers, ...this.business]
-    })
-  }
-
-  getClients() {
-    this._clientService.getClients().subscribe((clients: Client[]) => {
-      this.clients = clients
+  getProvidersClients() {
+    this._providerService.getProvidersClients().subscribe((providersclients: Provider[]) => {
+      this.arrays = providersclients
+      console.log(this.arrays);
+      this._spinner.hide()
     })
   }
 
@@ -224,11 +216,11 @@ export class AddFinaceRequestComponent implements OnInit {
     this.addUser = false;
   }
 
-  async registerFinace() {
+  registerFinace() {
     this._spinner.show();
 
     const history_data = {
-      action: 'Solicitud de Seguros/Fianzas creada',
+      action: 'Solicitud de Seguros y Fianzas creada',
       date: new Date().getTime(),
       user: this.id_user,
     };
@@ -245,6 +237,9 @@ export class AddFinaceRequestComponent implements OnInit {
       finish_date: new Date(
         this.finaceForm.controls['finish_date'].value
       ).getTime(),
+      issue_date: new Date(
+        this.finaceForm.controls['issue_date'].value
+      ).getTime(),
       business: this.finaceForm.controls['business'].value,
       main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
       guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
@@ -255,8 +250,9 @@ export class AddFinaceRequestComponent implements OnInit {
       policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: history_data,
     };
+    console.log('creado',element);
 
-    await this._finaceService.createFinaceRequest(element).subscribe(
+    this._finaceService.createFinaceRequest(element).subscribe(
       (res: any) => {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
@@ -291,7 +287,7 @@ export class AddFinaceRequestComponent implements OnInit {
 
     const history_data = [
       {
-        action: 'Solicitud de Seguro/fianzas creada',
+        action: 'Solicitud de Seguro y fianzas creada',
         date: new Date().getTime(),
         user: this.id_user,
       },
@@ -313,6 +309,9 @@ export class AddFinaceRequestComponent implements OnInit {
       ).getTime(),
       finish_date: new Date(
         this.finaceForm.controls['finish_date'].value
+      ).getTime(),
+      issue_date: new Date(
+        this.finaceForm.controls['issue_date'].value
       ).getTime(),
       business: this.finaceForm.controls['business'].value,
       main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
@@ -450,10 +449,12 @@ export class AddFinaceRequestComponent implements OnInit {
     const start_date = new Date(this.finaceForm.controls['start_date'].value)
     const finish_date = new Date(this.finaceForm.controls['finish_date'].value)
     if (finish_date && start_date) {
-      const resta = finish_date.getTime() - start_date.getTime()
+      let milisegundosDia = 24 * 60 * 60 * 1000
+      let milisegundosTranscurridos = Math.abs(start_date.getTime() - finish_date.getTime())
+      const resta = Math.round(milisegundosTranscurridos/milisegundosDia)
       if (resta >= 0) {
         this.finaceForm.controls['policy_validity'].setValue(
-          `${new Date(resta).getDate()} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth() + 1)} ${start_date.getFullYear()} al ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth() + 1)} ${finish_date.getFullYear()}`
+          `${resta} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth() + 1)} ${start_date.getFullYear()} hasta ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth() + 1)} ${finish_date.getFullYear()}`
         )
       }
     }

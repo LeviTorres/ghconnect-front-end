@@ -38,8 +38,10 @@
   <mat-menu #menuTask="matMenu">
     <app-task></app-task>
   </mat-menu>
-
-  <span class="mx-5 p-5"></span>
+  <span class="mx-1 p-3"></span>
+  <button class="" *ngIf="this.user.tenant.length > 1" mat-button routerLink="/tenants">
+    <span>Cambiar empresa</span>
+  </button>
   <button class="mx-5" mat-icon-button [matMenuTriggerFor]="menu">
     <div class="container-2">
       <div class="container-letter-name">

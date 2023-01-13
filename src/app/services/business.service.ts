@@ -19,20 +19,33 @@ export class BusinessService {
     return localStorage.getItem('token') || '';
   }
 
+  get tenant(): any{
+    return localStorage.getItem('tenant') || ''
+  }
+
   get headers(){
     return {
       headers: {
-        'x-token': this.token
+        'x-token': this.token,
+        'tenant': this.tenant
       }
     }
   }
 
   createBusiness(formData: any) {
     return this._http.post(`${base_url}/business`, formData, this.headers)
+                        .pipe(
+                          map((resp:any) => resp.business)
+                        )
   }
 
   updateBusiness(formData: any, _id:string) {
     return this._http.put(`${base_url}/business/${ _id}`, formData, this.headers)
+                        .pipe(
+                          map((resp:any) => {
+                            return resp.businessUpdated
+                          })
+                        )
   }
 
   getBusiness(){

@@ -18,6 +18,7 @@ interface History {
 
 export class FinaceRequest {
   constructor(
+    public issue_date: number,
     public creation_date: number,
     public key_policy: string,
     public policy_type: string,
