@@ -21,6 +21,7 @@ import { ClientsService } from '../../../../../services/clients.service';
 import { ProvidersService } from '../../../../../services/providers.service';
 import { Provider } from '../../../../../models/Provider.model';
 import { Client } from '../../../../../models/Client.model';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-finace-request',
@@ -89,7 +90,8 @@ export class AddFinaceRequestComponent implements OnInit {
     private _toastr: ToastrService,
     private _spinner: NgxSpinnerService,
     private _emailService: EmailsService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _currecyPipe: CurrencyPipe
   ) {
     this._spinner.show()
     this.id_user = JSON.parse(atob(this._userService.token.split('.')[1])).uid;
@@ -106,6 +108,13 @@ export class AddFinaceRequestComponent implements OnInit {
     this.getDivisas()
     this.getCecos()
     this.getProvidersClients()
+    this.finaceForm.valueChanges.subscribe(form => {
+      if(form.main_contract_value){
+        this.finaceForm.patchValue({
+          main_contract_value: this._currecyPipe.transform(form.main_contract_value.replace(/\D/g,'').replace(/^0+/,''), 'USD','symbol','1.0-0')
+        },{ emitEvent: false})
+      }
+    })
     this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue: any) => {
       this.validateBusiness(inputValue)
     })

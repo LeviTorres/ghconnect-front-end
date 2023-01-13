@@ -23,6 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   exports: [
@@ -50,6 +51,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     RouterModule,
     NgxPaginationModule,
     MatSlideToggleModule
-  ]
+  ],
+  providers: [CurrencyPipe]
 })
 export class SharedModule { }
