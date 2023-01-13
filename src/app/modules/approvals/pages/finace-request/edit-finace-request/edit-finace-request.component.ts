@@ -282,7 +282,7 @@ export class EditFinaceRequestComponent implements OnInit {
     this._spinner.show();
 
     this.activities.push({
-      action: 'Actualizacion de solicitud de Seguro/Fianzas',
+      action: 'Actualizacion de solicitud de Seguro y Fianzas',
       date: new Date().getTime(),
       user: this.id_user,
     });
@@ -570,10 +570,12 @@ export class EditFinaceRequestComponent implements OnInit {
     const start_date = new Date(this.finaceForm.controls['start_date'].value)
     const finish_date = new Date(this.finaceForm.controls['finish_date'].value)
     if(finish_date && start_date){
-      const resta = finish_date.getTime() - start_date.getTime()
+      let milisegundosDia = 24 * 60 * 60 * 1000
+      let milisegundosTranscurridos = Math.abs(start_date.getTime() - finish_date.getTime())
+      const resta = Math.round(milisegundosTranscurridos/milisegundosDia)
       if(resta >= 0){
         this.finaceForm.controls['policy_validity'].setValue(
-          `${new Date(resta).getDate()} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth()+1)} ${start_date.getFullYear()} al ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth()+1)} ${finish_date.getFullYear()}`
+          `${resta} dias desde el ${start_date.getDate()} de ${this.getMonth(start_date.getMonth()+1)} ${start_date.getFullYear()} hasta ${finish_date.getDate()} de ${this.getMonth(finish_date.getMonth()+1)} ${finish_date.getFullYear()}`
         )
       }
     }
