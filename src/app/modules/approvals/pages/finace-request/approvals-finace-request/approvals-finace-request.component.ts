@@ -32,7 +32,7 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
   public providers: Provider[] = [];
   public clients: Client[] = [];
   public business: Business[] = [];
-  public payer: Provider | Client | Business | null = null;
+  public payer: any
 
   constructor(
     private _providerService: ProvidersService,
@@ -59,8 +59,7 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
           const info = JSON.parse(atob(params.token.split('.')[1]))
           this.id_user = info.uid;
           this.getUser(info.uid);
-          this.getProviders();
-          this.getClients();
+          this.getProvidersClients()
           this.getBusiness();
           this.getFinaceRequest(info.request);
         }
@@ -74,10 +73,9 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
     });
   }
 
-  getProviders() {
-    this._providerService.getProviders().subscribe((providers: Provider[]) => {
-      this.providers = providers
-      this.arrays = [...this.clients, ...this.providers, ...this.business];
+  getProvidersClients() {
+    this._providerService.getProvidersClients().subscribe((providersclients: Provider[]) => {
+      this.arrays = providersclients
       console.log(this.arrays);
     })
   }
@@ -90,15 +88,6 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
     });
   }
 
-  getClients() {
-    this._clientService.getClients().subscribe((clients: Client[]) => {
-      this.clients = clients
-      console.log('this.clients', this.clients);
-      this.arrays = [...this.clients, ...this.providers, ...this.business]
-      console.log(this.arrays);
-    })
-  }
-
   getFinaceRequest(id: string) {
     this._finaceService
       .getFinaceRequest()
@@ -107,13 +96,14 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
           (finaceRequest: FinaceRequest) => finaceRequest._id === id,
         );
         this.activities = this.finaceRequest.history;
-        this.FindPayer(this.finaceRequest);
         this._spinner.hide()
       });
   }
 
-  FindPayer(finaceRequest: FinaceRequest) {
-    this.payer = this.arrays.find((element) => element._id === finaceRequest.payer) as (Provider | Client | Business | null);
+  findPayer(finaceRequest: FinaceRequest) {
+    this.payer = this.arrays.find((element) => element._id === finaceRequest.payer)
+    console.log(this.payer);
+    return this.payer.name
   }
 
   ngOnInit(): void {
@@ -148,6 +138,7 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
             () => {
               this._router.navigateByUrl('/approvals/approvals-finace');
               this._finaceService.getUpdateFinaceRequest(element);
+              this._spinner.hide()
             },
             (err) => {
               console.log(err);
@@ -188,8 +179,9 @@ export class ApprovalsFinaceRequestComponent implements OnInit {
         () => {
           this._tokenService.deleteToken(this.data).subscribe(
             () => {
-              this._router.navigateByUrl('/approvals/approvals-request');
+              this._router.navigateByUrl('/approvals/approvals-finace');
               this._finaceService.getUpdateFinaceRequest(element);
+              this._spinner.hide()
             },
             (err) => {
               console.log(err);

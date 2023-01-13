@@ -52,6 +52,7 @@ export class EditFinaceRequestComponent implements OnInit {
   public filteredOptions: any[] = [];
 
   public finaceForm: FormGroup = new FormGroup({
+    issue_date: new FormControl('', Validators.required),
     creation_date: new FormControl('', Validators.required),
     key_policy: new FormControl('', Validators.required),
     policy_type: new FormControl('', Validators.required),
@@ -112,6 +113,7 @@ export class EditFinaceRequestComponent implements OnInit {
     this.finaceForm.controls['equivalent_value'].disable()
     this.finaceForm.controls['policy_validity'].disable()
     this.finaceForm.controls['business'].disable()
+    this.getProvidersClients()
     this.finaceForm.controls['ceco'].valueChanges.subscribe((inputValue:any) => {
       this.validateBusiness(inputValue)
     })
@@ -132,10 +134,6 @@ export class EditFinaceRequestComponent implements OnInit {
       this.validateUser()
       this.filterData(inputValue)
     })
-    setTimeout(() => {
-      this.getClients()
-      this.getProviders()
-    }, 2000);
   }
 
   getTokens(){
@@ -154,7 +152,10 @@ export class EditFinaceRequestComponent implements OnInit {
 
   initValuesForm(){
     const findPayer = this.arrays.find((element: any) => element._id === this.finaceRequest.payer)
+    console.log('findPayer',findPayer);
+
     this.finaceForm.patchValue({
+      issue_date: new Date(this.finaceRequest.issue_date),
       key_policy: this.finaceRequest.key_policy,
       creation_date: new Date(this.finaceRequest.creation_date),
       policy_type: this.finaceRequest.policy_type,
@@ -200,17 +201,10 @@ export class EditFinaceRequestComponent implements OnInit {
     });
   }
 
-  getClients(){
-    this._clientService.getClients().subscribe((clients:Client[]) => {
-      this.clients = clients
-      this.arrays = [...this.clients, ...this.providers, ...this.business]
+  getProvidersClients(){
+    this._providerService.getProvidersClients().subscribe((providersclients:Client[]) => {
+      this.arrays = providersclients
       this.initValuesForm()
-    })
-  }
-
-  getProviders(){
-    this._providerService.getProviders().subscribe((providers: Provider[]) => {
-      this.providers = providers
     })
   }
 
@@ -286,7 +280,7 @@ export class EditFinaceRequestComponent implements OnInit {
     this.addUser = false;
   }
 
-  async registerFinace() {
+  registerFinace() {
     this._spinner.show();
 
     this.activities.push({
@@ -294,8 +288,9 @@ export class EditFinaceRequestComponent implements OnInit {
       date: new Date().getTime(),
       user: this.id_user,
     });
+    console.log('this.activities',this.activities);
 
-    const element: FinaceRequest = {
+    const element: any = {
       ...this.finaceForm.value,
       authorizers: this.authorizers,
       creation_date: new Date(
@@ -307,6 +302,9 @@ export class EditFinaceRequestComponent implements OnInit {
       finish_date: new Date(
         this.finaceForm.controls['finish_date'].value
       ).getTime(),
+      issue_date: new Date(
+        this.finaceForm.controls['issue_date'].value
+      ).getTime(),
       business: this.finaceForm.controls['business'].value,
       main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
       guaranteed_sum: Number(this.finaceForm.controls['guaranteed_sum'].value),
@@ -317,8 +315,9 @@ export class EditFinaceRequestComponent implements OnInit {
       policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: this.activities,
     };
+    console.log('element',element);
 
-    await this._finaceService.updateFinaceRequest(element, this.finaceRequest._id!).subscribe(
+    this._finaceService.updateFinaceRequest(element, this.finaceRequest._id!).subscribe(
       (res: any) => {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
@@ -370,6 +369,9 @@ export class EditFinaceRequestComponent implements OnInit {
       ).getTime(),
       finish_date: new Date(
         this.finaceForm.controls['finish_date'].value
+      ).getTime(),
+      issue_date: new Date(
+        this.finaceForm.controls['issue_date'].value
       ).getTime(),
       business: this.finaceForm.controls['business'].value,
       main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),
@@ -509,6 +511,9 @@ export class EditFinaceRequestComponent implements OnInit {
       ).getTime(),
       creation_date: new Date(
         this.finaceForm.controls['creation_date'].value
+      ).getTime(),
+      issue_date: new Date(
+        this.finaceForm.controls['issue_date'].value
       ).getTime(),
       business: this.finaceForm.controls['business'].value,
       main_contract_value: Number(this.finaceForm.controls['main_contract_value'].value),

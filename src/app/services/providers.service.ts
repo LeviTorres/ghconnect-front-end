@@ -49,6 +49,15 @@ export class ProvidersService {
               )
   }
 
+  getProvidersClients(){
+    return this._http.get(`${base_url}/providers/providers-clients`,this.headers)
+              .pipe(
+                map((resp:any) => {
+                  return resp.providersclients
+                })
+              )
+  }
+
   deleteProvider(provider: Provider){
     return this._http.delete(`${base_url}/providers/${provider._id}`,this.headers)
   }
