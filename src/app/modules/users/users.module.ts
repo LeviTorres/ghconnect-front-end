@@ -8,13 +8,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { NavbarModule } from '../../components/navbar/navbar.module';
 import { ModalUsersComponent } from './components/modal-users/modal-users.component';
 import { FooterModule } from '../../components/footer/footer.module';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 @NgModule({
   declarations: [
     ModalUsersComponent,
     TableUsersComponent,
-    UsersComponent
+    UsersComponent,
+    EditUserComponent
   ],
   imports: [
     CommonModule,

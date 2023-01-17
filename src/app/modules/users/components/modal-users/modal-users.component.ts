@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../../../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../../../../models/User.model';
-import { transition } from '@angular/animations';
 
 @Component({
   selector: 'app-modal-users',
@@ -26,6 +25,8 @@ export class ModalUsersComponent implements OnInit {
 
   public users: User[] = []
 
+  public tenantId: string = ''
+
   public registerForm = this._fb.group({
     name: ['', Validators.required ],
     last_name: [ '', Validators.required ],
@@ -39,12 +40,12 @@ export class ModalUsersComponent implements OnInit {
     private _userService: UsersService,
     private _toastr:ToastrService,
     private _dialogRef: MatDialogRef<ModalUsersComponent>,
-    private _spinner: NgxSpinnerService,
-     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    private _spinner: NgxSpinnerService
+  ) {
+    this.tenantId = this._userService.tenant
+   }
 
   ngOnInit(): void {
-    this.initValuesForm()
     this.registerForm.controls['email'].valueChanges.subscribe((inputEmail:any) => {
       this.validateEmail(inputEmail)
     })
@@ -58,12 +59,6 @@ export class ModalUsersComponent implements OnInit {
     })
   }
 
-  initValuesForm(){
-    this.registerForm.patchValue({
-      email: this.data
-    })
-  }
-
   registerUser() {
       this._spinner.show()
       if(this.registerForm.invalid || !this.samePassword || !this.sameEmail){
@@ -71,7 +66,13 @@ export class ModalUsersComponent implements OnInit {
         return
       }
 
-      this._userService.createUser(this.registerForm.value)
+      const element = {
+        ...this.registerForm.value,
+        tenant: {
+          tenant_id: this.tenantId
+        }
+      }
+      this._userService.createUser(element)
         .subscribe(( res:any ) => {
           this._spinner.hide()
           this._dialogRef.close()

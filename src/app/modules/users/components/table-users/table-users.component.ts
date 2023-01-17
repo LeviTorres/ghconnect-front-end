@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../../../services/login.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
+import { EditUserComponent } from '../edit-user/edit-user.component';
 
 @Component({
   selector: 'app-table-users',
@@ -146,6 +147,19 @@ export class TableUsersComponent implements OnInit {
       this.users = resp
     })
     return
+  }
+
+  editUser(user: User){
+    let dialogRef = this._dialog.open(EditUserComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: user
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getUsers()
+    })
   }
 
   delete(user: User) {

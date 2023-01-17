@@ -2,7 +2,7 @@
   <img class="avatar my-3" [src]="user.getImage" alt="">
 </div>
 <p class="text-center p-0 m-0">{{user.name}} {{user.last_name}}</p>
-<p class="text-center text-capitalize">{{user.role}}</p>
+<p class="text-center text-capitalize">{{getRole(user.role)}}</p>
 <hr class="m-0 p-0">
 <button mat-menu-item [routerLink]="['/profile']">
   <span class="item">Administrar Perfil</span>
