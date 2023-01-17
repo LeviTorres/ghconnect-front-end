@@ -26,6 +26,13 @@ export class MenuNavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getRole(role: string) {
+    if (role === 'ADMIN_ROLE') {
+      return 'Administrador'
+    }
+    return
+  }
+
   logOut(){
     this._loginService.logout()
     this._router.navigateByUrl('/login')
