@@ -6,6 +6,7 @@ import { BusinessService } from 'src/app/services/business.service';
 import { Business } from 'src/app/models/Business.model';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tenants',
@@ -17,6 +18,10 @@ export class TenantsComponent implements OnInit {
   public user!: any
 
   public business: Business[] = [];
+
+  private limitHoverChange: number = 0;
+
+  public contadorGlobal: number = 0;
 
   constructor(
     private _businessService: BusinessService,
@@ -32,7 +37,11 @@ export class TenantsComponent implements OnInit {
 
   getUsers() {
     this._userService.getUsers().subscribe((users: User[]) => {
+      console.log(users);
+
       this.user = users.find((user: User) => user._id === this._loginService.uid)
+      console.log(this.user);
+
       this._spinner.hide()
     })
   }
@@ -41,5 +50,9 @@ export class TenantsComponent implements OnInit {
     this._loginService.changeTenant(id)
     this._router.navigateByUrl('/home')
   }
+
+
+
+
 
 }
