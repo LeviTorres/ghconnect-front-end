@@ -19,6 +19,10 @@ export class UsersService {
     return localStorage.getItem('token') || '';
   }
 
+  get tenant(): string {
+    return localStorage.getItem('tenant') || '';
+  }
+
   get headers(){
     return {
       headers: {
