@@ -1,58 +1,60 @@
+<div class="content-navbar">
 <mat-toolbar class="color position-sticky">
-  <img class="active" src="../../../assets/icons/GHconnecticon.svg" [routerLink]="['/home']" alt="">
-  <span class="mx-3 title-navbar">{{title}}</span>
-  <div class="d-flex" *ngIf="title === 'Operaciones'">
-    <a class="mx-3" [routerLink]="['/operations']" routerLinkActive="active-link">Dashboard</a>
-    <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Clientes</a>
-    <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Proveedores</a>
-    <a class="mx-3" [routerLink]="['/contracts']" routerLinkActive="active-link">Contratos</a>
-    <div class="dropdown">
-      <a class="mx-3 dropbtn">Configuración</a>
-      <div class="dropdown-content">
-        <a [routerLink]="['/providers']" routerLinkActive="active-link">Gestion proveedores</a>
-        <a [routerLink]="['/clients']" routerLinkActive="active-link">Gestion clientes</a>
+    <img class="active" src="../../../assets/icons/GHconnecticon.svg" [routerLink]="['/home']" alt="">
+    <span class="mx-3 title-navbar">{{title}}</span>
+    <div class="d-flex" *ngIf="title === 'Operaciones'">
+      <a class="mx-3" [routerLink]="['/operations']" routerLinkActive="active-link">Dashboard</a>
+      <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Clientes</a>
+      <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Proveedores</a>
+      <a class="mx-3" [routerLink]="['/contracts']" routerLinkActive="active-link">Contratos</a>
+      <div class="dropdown">
+        <a class="mx-3 dropbtn">Configuración</a>
+        <div class="dropdown-content">
+          <a [routerLink]="['/providers']" routerLinkActive="active-link">Gestion proveedores</a>
+          <a [routerLink]="['/clients']" routerLinkActive="active-link">Gestion clientes</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="d-flex" *ngIf="title === 'Validacion'">
-    <div class="dropdown">
-      <a class="mx-3 dropbtn" [routerLink]="['/validation']" routerLinkActive="active-link">Cuadro comparativo</a>
-      <div class="dropdown-content">
-        <a [routerLink]="['/volumes']" routerLinkActive="active-link">Gestion volumenes</a>
+    <div class="d-flex" *ngIf="title === 'Validacion'">
+      <div class="dropdown">
+        <a class="mx-3 dropbtn" [routerLink]="['/validation']" routerLinkActive="active-link">Cuadro comparativo</a>
+        <div class="dropdown-content">
+          <a [routerLink]="['/volumes']" routerLinkActive="active-link">Gestion volumenes</a>
+        </div>
       </div>
+      <a class="mx-3" [routerLink]="['/approvals']" routerLinkActive="active-link">Aprobaciones</a>
     </div>
-    <a class="mx-3" [routerLink]="['/approvals']" routerLinkActive="active-link">Aprobaciones</a>
-  </div>
-  <span class="example-spacer"></span>
+    <span class="example-spacer"></span>
 
-  <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuChat">
-    <img src="../../../assets/icons/chat.svg" alt="">
-  </button>
-  <mat-menu #menuChat="matMenu">
-    <app-chat></app-chat>
-  </mat-menu>
+    <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuChat">
+      <img src="../../../assets/icons/chat.svg" alt="">
+    </button>
+    <mat-menu #menuChat="matMenu">
+      <app-chat></app-chat>
+    </mat-menu>
 
-  <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuTask">
-    <img src="../../../../assets/icons/task.svg" alt="">
-  </button>
-  <mat-menu #menuTask="matMenu">
-    <app-task></app-task>
-  </mat-menu>
-  <span class="mx-1 p-3"></span>
-  <button class="" *ngIf="this.user.tenant.length > 1" mat-button routerLink="/tenants">
-    <span>Cambiar empresa</span>
-  </button>
-  <button class="mx-5" mat-icon-button [matMenuTriggerFor]="menu">
-    <div class="container-2">
-      <div class="container-letter-name">
-        <p class="letter-name"><strong>{{letterNames}}</strong></p>
+    <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuTask">
+      <img src="../../../../assets/icons/task.svg" alt="">
+    </button>
+    <mat-menu #menuTask="matMenu">
+      <app-task></app-task>
+    </mat-menu>
+    <span class="mx-1 p-3"></span>
+    <button class="" *ngIf="this.user.tenant.length > 1" mat-button routerLink="/tenants">
+      <span>Cambiar empresa</span>
+    </button>
+    <button class="mx-5" mat-icon-button [matMenuTriggerFor]="menu">
+      <div class="container-2">
+        <div class="container-letter-name">
+          <p class="letter-name"><strong>{{letterNames}}</strong></p>
+        </div>
+        <div class="container-avatar-1">
+          <img class="avatar-color" alt="">
+        </div>
       </div>
-      <div class="container-avatar-1">
-        <img class="avatar-color" alt="">
-      </div>
-    </div>
-  </button>
-  <mat-menu #menu="matMenu">
-    <app-menu-navbar></app-menu-navbar>
-  </mat-menu>
+    </button>
+    <mat-menu #menu="matMenu">
+      <app-menu-navbar></app-menu-navbar>
+    </mat-menu>
 </mat-toolbar>
+</div>
