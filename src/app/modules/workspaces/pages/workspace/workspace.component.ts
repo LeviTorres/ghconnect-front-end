@@ -10,6 +10,7 @@ import { UsersService } from '../../../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Business } from '../../../../models/Business.model';
 import { User } from '../../../../models/User.model';
+import { CountriesOpenService } from '../../../../services/countries-open.service';
 
 @Component({
   selector: 'app-workspace',
@@ -54,17 +55,17 @@ export class WorkspaceComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _loginService: LoginService,
     private _countryService: CountriesService,
     private _businessService: BusinessService,
     private _userService: UsersService,
+    private _countriesOpenService: CountriesOpenService,
     private _toastr:ToastrService,
     private _router: Router,
     private _spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
-    this.getCountries()
+    this.getCountriesOpen()
     this.getBusiness()
     this.getUsers()
     this.workspaceForm.controls['password2'].valueChanges.subscribe((inputPassword2) => {
@@ -160,12 +161,6 @@ export class WorkspaceComponent implements OnInit {
 
     }else {
 
-     // this.tenants = findEmail.tenant
-
-     // this.tenants.push({
-     //   name: this.workspaceForm.controls['business'].value
-    //  })
-
       const elementUser = {
         name: this.workspaceForm.controls['name'].value,
         last_name: this.workspaceForm.controls['last_name'].value,
@@ -213,8 +208,8 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  getCountries(){
-    this._countryService.getCountries().subscribe((countries:Country[]) => {
+  getCountriesOpen(){
+    this._countriesOpenService.getCountriesOpen().subscribe((countries:Country[]) => {
       this.countries = countries
     })
   }
