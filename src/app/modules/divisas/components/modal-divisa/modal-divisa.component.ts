@@ -38,7 +38,6 @@ export class ModalDivisaComponent implements OnInit {
   getDivisas(){
     this._divisaService.getDivisas().subscribe((divisas:Divisa[]) => {
       this.divisas = divisas
-      console.log(this.divisas);
     })
   }
 

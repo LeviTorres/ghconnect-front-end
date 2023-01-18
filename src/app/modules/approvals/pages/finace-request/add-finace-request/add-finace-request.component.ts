@@ -154,7 +154,6 @@ export class AddFinaceRequestComponent implements OnInit {
   getProvidersClients() {
     this._providerService.getProvidersClients().subscribe((providersclients: Provider[]) => {
       this.arrays = providersclients
-      console.log(this.arrays);
       this._spinner.hide()
     })
   }
@@ -259,15 +258,12 @@ export class AddFinaceRequestComponent implements OnInit {
       policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: history_data,
     };
-    console.log('creado',element);
 
     this._finaceService.createFinaceRequest(element).subscribe(
       (res: any) => {
         this._router.navigateByUrl('/approvals/approvals-finace');
         this._spinner.hide();
         this._toastr.success('Solicitud de Seguros/Fianzas creada con Exito');
-        console.log('respuesta', res);
-
       },
       (err: any) => {
         this._spinner.hide();
@@ -444,8 +440,6 @@ export class AddFinaceRequestComponent implements OnInit {
   }
 
   validateBusiness(input: any) {
-    console.log('input', input);
-
     this.finaceForm.controls['business'].setValue(input.business._id)
   }
 

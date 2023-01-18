@@ -130,7 +130,6 @@ export class WorkspaceComponent implements OnInit {
       this._userService.createUserWorspace(elementUser).subscribe((user:any) => {
         this.user_created = user
         this._businessService.createBusiness(elementBusiness).subscribe((business) => {
-          console.log('business creado', business);
           this.business_created = business
           this.tenants.push({
             tenant_id: business._id
@@ -177,7 +176,6 @@ export class WorkspaceComponent implements OnInit {
 
       this._userService.updateUserWorkspace(elementUser, findEmail._id!).subscribe((user:any) => {
         this.user_updated = user
-        console.log('elementUser',elementUser);
         this._businessService.createBusiness(elementBusiness).subscribe((business: any) => {
           this.business_updated = business
           this.user_updated.tenant.push({
@@ -187,7 +185,6 @@ export class WorkspaceComponent implements OnInit {
             ...user,
             tenant: this.user_updated.tenant
           }
-          console.log('updatedUser',updatedUser);
 
           this._userService.updateUser(updatedUser, findEmail._id!).subscribe(() => {
             this._router.navigateByUrl('/tenants')

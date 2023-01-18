@@ -37,11 +37,7 @@ export class TenantsComponent implements OnInit {
 
   getUsers() {
     this._userService.getUsers().subscribe((users: User[]) => {
-      console.log(users);
-
       this.user = users.find((user: User) => user._id === this._loginService.uid)
-      console.log(this.user);
-
       this._spinner.hide()
     })
   }
