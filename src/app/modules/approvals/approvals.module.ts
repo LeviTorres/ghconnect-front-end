@@ -17,6 +17,7 @@ import { EditFinaceRequestComponent } from './pages/finace-request/edit-finace-r
 import { ApprovalsFinaceRequestComponent } from './pages/finace-request/approvals-finace-request/approvals-finace-request.component';
 import { MainFinaceRequestComponent } from './pages/finace-request/main-finace-request/main-finace-request.component';
 import { TableFinaceRequestComponent } from './components/table-finace-request/table-finace-request.component';
+import { AddDocumentFinaceRequestComponent } from './components/add-document-finace-request/add-document-finace-request.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { TableFinaceRequestComponent } from './components/table-finace-request/t
     EditFinaceRequestComponent,
     ApprovalsFinaceRequestComponent,
     MainFinaceRequestComponent,
-    TableFinaceRequestComponent
+    TableFinaceRequestComponent,
+    AddDocumentFinaceRequestComponent
   ],
   imports: [
     CommonModule,
