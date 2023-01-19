@@ -80,7 +80,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     private _businessService: BusinessService,
     private _router: Router,
     private _excelService: ExcelService
-  ) { this._spinner.show()}
+  ) { this._spinner.show() }
 
   ngOnInit(): void {
 

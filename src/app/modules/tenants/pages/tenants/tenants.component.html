@@ -1,16 +1,27 @@
-<div class="container m-4">
-  <div class="row">
-    <h1 class="">Selecciona la empresa</h1>
-    <h3>Elige la empresa con la cual deseas continuar.
-      Podrás cambiar de empresa más adelante en el menú lateral, opción de “Cambiar de empresa”
-    </h3>
+<div class="row container-tenant">
+  <h1 class="">Selecciona la empresa</h1>
+  <div class="d-flex justify-content-between col-12">
+    <div class="col-6">
+      <h3>Elige la empresa con la cual deseas continuar.
+        Podrás cambiar de empresa más adelante en el menú lateral, opción de “Cambiar de empresa”
+      </h3>
+    </div>
+    <div class="col-3">
+      <mat-form-field class="w-100" appearance="legacy">
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-label>Buscar...</mat-label>
+        <input type="text" matInput #txtTerm (keyup)="search(txtTerm.value)">
+      </mat-form-field>
+    </div>
   </div>
   <div *ngIf="this.user" class="row">
-    <div class="contenedor col-3 my-2" *ngFor="let item of this.user.tenant; let indice = index;">
+    <div class="contenedor col-3 my-2" *ngFor="let item of this.tenants; let indice = index;">
       <div class="card">
         <div class="face face1">
-          <div class="text-white text-center rounded-2">
+          <div class="m-1">
             <p class="text-end text-muted">{{indice+1}}</p>
+          </div>
+          <div class="text-white text-center rounded-2">
             <h2 (click)="goToHomeWithTenant(item.tenant_id._id)">{{item.tenant_id.name}}</h2>
           </div>
         </div>
@@ -23,27 +34,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="contenedor col-3 my-2">
-      <div class="card">
-        <div class="face face3">
-          <div class="text-white text-center rounded-2">
-            <p class="text-end text-muted">{{indice+1}}</p>
-            <h2 (click)="goToHomeWithTenant(item.tenant_id._id)">{{item.tenant_id.name}}</h2>
-            <h2>Empresa</h2>
-          </div>
-        </div>
-        <div class="face face4">
-          <div class="">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ab repudiandae, explicabo voluptate et hic
-              cum ratione a.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
-
-
-
 
 </div>

@@ -28,11 +28,11 @@ export class SearchService {
     return localStorage.getItem('token') || '';
   }
 
-  get tenant(): any{
+  get tenant(): any {
     return localStorage.getItem('tenant')
   }
 
-  get headers(){
+  get headers() {
     return {
       headers: {
         'x-token': this.token,
@@ -43,7 +43,7 @@ export class SearchService {
 
   private generateUsers(users: any[]): User[] {
     return users.map(
-      user => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id)
+      user => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id, user.tenant)
     )
   }
 
