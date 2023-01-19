@@ -286,7 +286,6 @@ export class EditFinaceRequestComponent implements OnInit {
       date: new Date().getTime(),
       user: this.id_user,
     });
-    console.log('this.activities',this.activities);
 
     const element: any = {
       ...this.finaceForm.value,
@@ -313,7 +312,6 @@ export class EditFinaceRequestComponent implements OnInit {
       policy_validity: this.finaceForm.controls['policy_validity'].value,
       history: this.activities,
     };
-    console.log('element',element);
 
     this._finaceService.updateFinaceRequest(element, this.finaceRequest._id!).subscribe(
       (res: any) => {

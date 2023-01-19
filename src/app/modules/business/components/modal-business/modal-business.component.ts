@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BusinessService } from '../../../../services/business.service';
+import { CountriesOpenService } from '../../../../services/countries-open.service';
 
 @Component({
   selector: 'app-modal-business',
@@ -31,18 +32,19 @@ export class ModalBusinessComponent implements OnInit {
     private _fb: FormBuilder,
     private _countriesService: CountriesService,
     private _businessService: BusinessService,
+    private _countriesOpenService: CountriesOpenService,
     private _toastr:ToastrService,
     private _dialogRef: MatDialogRef<ModalBusinessComponent>,
     private _spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
-    this.getCountries()
+    this.getCountriesOpen()
   }
 
-  getCountries(){
+  getCountriesOpen(){
     this._spinner.show()
-    this._countriesService.getCountries().subscribe((resp:any) => {
+    this._countriesOpenService.getCountriesOpen().subscribe((resp:any) => {
       this.countries = resp
       this._spinner.hide()
     })

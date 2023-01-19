@@ -7,6 +7,7 @@ import { BusinessService } from '../../../../services/business.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CountriesOpenService } from '../../../../services/countries-open.service';
 
 @Component({
   selector: 'app-edit-business',
@@ -30,6 +31,7 @@ export class EditBusinessComponent implements OnInit {
     private _fb: FormBuilder,
     private _countriesService: CountriesService,
     private _businessService: BusinessService,
+    private _countriesOpenService:CountriesOpenService,
     private _toastr:ToastrService,
     private _dialogRef: MatDialogRef<EditBusinessComponent>,
     private _spinner: NgxSpinnerService,
@@ -38,7 +40,7 @@ export class EditBusinessComponent implements OnInit {
 
   ngOnInit(): void {
     this.initValuesForm()
-    this.getCountries()
+    this.getCountriesOpen()
   }
 
   initValuesForm(){
@@ -50,9 +52,9 @@ export class EditBusinessComponent implements OnInit {
     })
   }
 
-  getCountries(){
+  getCountriesOpen(){
     this._spinner.show()
-    this._countriesService.getCountries().subscribe((resp:any) => {
+    this._countriesOpenService.getCountriesOpen().subscribe((resp:any) => {
       this.countries = resp
       this._spinner.hide()
     })

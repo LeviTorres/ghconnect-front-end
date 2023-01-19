@@ -1,9 +1,16 @@
 mat-toolbar{
   z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
 }
-.color {
+
+.content-navbar{
   background-color:  var(--tblr-FCCF06);
+}
+
+.color {
   top: 0;
+  background-color:  var(--tblr-FCCF06);
 }
 
 .example-spacer {
