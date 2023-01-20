@@ -11,6 +11,10 @@ import { LoginService } from '../../../../services/login.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { EditUserComponent } from '../edit-user/edit-user.component';
+import { environment } from 'src/environments/environment';
+
+
+const base_url = environment.base_url
 
 @Component({
   selector: 'app-table-users',
@@ -112,6 +116,10 @@ export class TableUsersComponent implements OnInit {
     }, () => {
       this._toastr.error('Error al actualizar los headers')
     })
+  }
+
+  getImage(url:any){
+    return `${ base_url }/upload/users/${ url }`
   }
 
   getUsers() {

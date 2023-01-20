@@ -57,8 +57,6 @@ export class ModalCecosComponent implements OnInit {
         return
       }
       const findBusiness = this.business.find((business:Business) => business._id === this.tenant_id)
-      console.log('findBusiness',findBusiness);
-
       const element: any = {
         name_large: this.registerForm.controls['name_large'].value?.trim(),
         name_short: this.registerForm.controls['name_short'].value?.trim(),

@@ -61,7 +61,9 @@
         <tr *ngFor="let user of users | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
           <td class="text-center img" *ngIf="avatarControl.value">
-            <span><img [src]="user.getImage" alt=""></span>
+            <span>
+              <img [src]="getImage(user.img)" alt="">
+            </span>
           </td>
           <td *ngIf="nameControl.value">
             <span>{{user.name}}</span>
