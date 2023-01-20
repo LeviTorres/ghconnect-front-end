@@ -17,13 +17,14 @@ export class ModalCecosComponent implements OnInit {
 
   public cecos: Ceco[] = []
 
+  public tenant_id: string = ''
+
   public business: Business[] = []
 
   public registerForm = this._fb.group({
     name_large: ['', Validators.required ],
     name_short: ['', Validators.required ],
     key_ceco: [ '', Validators.required ],
-    business: [ '', Validators.required ],
   })
 
   constructor(
@@ -33,7 +34,9 @@ export class ModalCecosComponent implements OnInit {
     private _toastr:ToastrService,
     private _dialogRef: MatDialogRef<ModalCecosComponent>,
     private _spinner: NgxSpinnerService
-  ) { }
+  ) {
+    this.tenant_id = this._cecosService.tenant
+  }
 
   ngOnInit(): void {
     this.getBusiness()
@@ -53,15 +56,13 @@ export class ModalCecosComponent implements OnInit {
         this._spinner.hide()
         return
       }
-
-      const busin:any = this.registerForm.controls['business'].value
-
+      const findBusiness = this.business.find((business:Business) => business._id === this.tenant_id)
       const element: any = {
         name_large: this.registerForm.controls['name_large'].value?.trim(),
         name_short: this.registerForm.controls['name_short'].value?.trim(),
         key_ceco: this.registerForm.controls['key_ceco'].value?.trim(),
-        business: busin._id,
-        key_ceco_business: `${busin.key_business}-${this.registerForm.controls['key_ceco'].value?.trim()}`
+        business: findBusiness?._id,
+        key_ceco_business: `${findBusiness?.key_business}-${this.registerForm.controls['key_ceco'].value?.trim()}`
       }
 
       this._cecosService.createCeco(element)

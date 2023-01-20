@@ -1,0 +1,64 @@
+<header class="d-flex align-items-flex-end">
+  <h2 mat-dialog-title class="col-md-10 p-0">
+    Menu cargar documentos
+  </h2>
+  <div class="d-flex justify-content-end w-100">
+    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+  </div>
+</header>
+<form autocomplete="off" [formGroup]="form">
+<div class="row col-12">
+    <div class="col-6">
+        <div class="">
+          <label>Selecciona el tipo de documento</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-select
+              matInput
+              placeholder="Selecciona tipo de documento"
+              formControlName="type_document"
+            >
+              <mat-option value="Pasaporte">Pasaporte</mat-option>
+              <mat-option value="Visa">Visa</mat-option>
+              <mat-option value="Otro">Otro</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="form.controls['type_document'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Descripcion de documento</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input
+              matInput
+              placeholder="Selecciona tipo de documento"
+              formControlName="description"
+            >
+            <mat-error
+              *ngIf="form.controls['description'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+    </div>
+    <div class="col-5">
+      <div class="text-center my-3">
+        <img src="../../../../../assets/icons/Upload.svg" alt="">
+      </div>
+      <div class="text-center">
+        <div class="d-flex container-input-file">
+          <label class="custom-file my-2">
+            <input style="display: none;" type="file" formControlName="document" (change)="handleImage($event)">
+            <span>Cargar documento</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button mat-raised-button class="btn-primary" (click)="addDocument()">Guardar documento</button>
+    </div>
+</div>
+</form>

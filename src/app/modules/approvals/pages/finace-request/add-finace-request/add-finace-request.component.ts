@@ -22,6 +22,7 @@ import { ProvidersService } from '../../../../../services/providers.service';
 import { Provider } from '../../../../../models/Provider.model';
 import { Client } from '../../../../../models/Client.model';
 import { CurrencyPipe } from '@angular/common';
+import { AddDocumentFinaceRequestComponent } from '../../../components/add-document-finace-request/add-document-finace-request.component';
 
 @Component({
   selector: 'app-add-finace-request',
@@ -38,6 +39,7 @@ export class AddFinaceRequestComponent implements OnInit {
   public arrays: any[] = []
   public authorizers: any[] = [];
   public date: any
+  public documents:any
 
   public dynamicArray: Array<any> = [];
   public newDynamic: any = {};
@@ -176,11 +178,12 @@ export class AddFinaceRequestComponent implements OnInit {
 
   returnTable() {
     this.addUser = false;
-    this.userForm.reset()
+    //this.userForm.reset()
   }
 
   addRow() {
     this.addUser = true;
+    this.userForm.reset()
   }
 
   registerUser() {
@@ -220,7 +223,6 @@ export class AddFinaceRequestComponent implements OnInit {
       ...this.userForm.value,
       user: user._id
     });
-    this.userForm.reset()
     this.addUser = false;
   }
 
@@ -386,7 +388,7 @@ export class AddFinaceRequestComponent implements OnInit {
   validateUser() {
     let user: any;
     const userSelect: any = this.userForm.controls['user'].value;
-    if (userSelect._id) {
+    if (userSelect?._id) {
       user = userSelect;
       this.validate_user = true
     } else {
@@ -413,7 +415,6 @@ export class AddFinaceRequestComponent implements OnInit {
   }
 
   createUser(value: string) {
-    this.userForm.reset()
     let dialogRef = this._dialog.open(ModalUsersComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -437,6 +438,15 @@ export class AddFinaceRequestComponent implements OnInit {
   getEmailAuthorizer(id: string) {
     const findAuthorizer = this.users.find((user: User) => user._id === id)
     return findAuthorizer?.email
+  }
+
+  openModalDocument(){
+    let dialogRef = this._dialog.open(AddDocumentFinaceRequestComponent, {
+      width: '750px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+    });
   }
 
   validateBusiness(input: any) {

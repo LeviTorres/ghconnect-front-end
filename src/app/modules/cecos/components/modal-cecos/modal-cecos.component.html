@@ -41,19 +41,6 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="">
-        <label>Empresa</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <mat-select  matInput formControlName="business" placeholder="Selecciona una empresa">
-              <mat-option *ngFor="let item of business" [value]="item">{{item.name}}</mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="registerForm.controls['business'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
       <mat-dialog-actions align="end" class="mat">
         <div></div>
         <div>
