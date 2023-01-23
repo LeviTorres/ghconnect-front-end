@@ -73,7 +73,8 @@ export class SearchService {
 
   private generateInvoiceProviders(invoiceProviders: any[]): InvoiceProviders[] {
     return invoiceProviders.map(
-      (invoiceProviders: InvoiceProviders) => new InvoiceProviders(invoiceProviders.ceco,
+      (invoiceProviders: InvoiceProviders) => new InvoiceProviders(
+        invoiceProviders.ceco,
         invoiceProviders.provider,
         invoiceProviders.key_invoice,
         invoiceProviders.upload_date,
@@ -95,7 +96,8 @@ export class SearchService {
 
   private generateInvoiceClients(invoiceClients: any[]): InvoiceClient[] {
     return invoiceClients.map(
-      (invoiceClients: InvoiceClient) => new InvoiceClient(invoiceClients.ceco,
+      (invoiceClients: InvoiceClient) => new InvoiceClient(
+        invoiceClients.ceco,
         invoiceClients.client,
         invoiceClients.key_invoice,
         invoiceClients.upload_date,
