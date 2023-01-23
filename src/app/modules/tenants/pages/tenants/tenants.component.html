@@ -16,8 +16,8 @@
   </div>
   <div *ngIf="this.user" class="row">
     <div class="contenedor col-3 my-2" *ngFor="let item of this.tenants; let indice = index;">
-      <div class="card">
-        <div class="face face1" (click)="goToHomeWithTenant(item.tenant_id._id)">
+      <div class="card" (click)="goToHomeWithTenant(item.tenant_id._id)">
+        <div class="face face1">
           <div class="m-1">
             <p class="text-end text-muted">{{indice + 1}}</p>
           </div>
