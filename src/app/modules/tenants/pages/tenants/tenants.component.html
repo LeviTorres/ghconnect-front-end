@@ -2,8 +2,8 @@
   <h1 class="">Seleccionar empresa</h1>
   <div class="d-flex justify-content-between col-12">
     <div class="col-6">
-      <h3>Elige la empresa con la cual deseas continuar.
-        Podrás cambiar de empresa más adelante en el menú lateral, opción de “Cambiar de empresa”
+      <h3>Elige la empresa con la cual deseas ingresar. Podrás cambiar de empresa más adelante en el menú lateral, dando
+        click en la empresa actual y seleccionando opción “Cambiar de empresa”
       </h3>
     </div>
     <div class="col-3">
@@ -19,9 +19,9 @@
       <div class="card">
         <div class="face face1">
           <div class="m-1">
-            <p class="text-end text-muted">{{indice+1}}</p>
+            <p class="text-end text-muted">{{indice + 1}}</p>
           </div>
-          <div class="text-white text-center rounded-2">
+          <div class="text-white text-center rounded-2 my-2">
             <p class="tenant-name" (click)="goToHomeWithTenant(item.tenant_id._id)">{{item.tenant_id.name}}</p>
           </div>
         </div>
