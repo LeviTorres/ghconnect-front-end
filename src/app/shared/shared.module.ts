@@ -24,9 +24,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CurrencyPipe } from '@angular/common';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   exports: [
+    DragDropModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,

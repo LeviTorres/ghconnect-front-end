@@ -1,128 +1,129 @@
-<header class="d-flex align-items-flex-end">
-  <h2 mat-dialog-title class="col-md-10 p-0">
-    Editar volumen
-  </h2>
-  <div class="d-flex justify-content-end w-100">
-    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
-  </div>
-</header>
-<div>
-  <form (ngSubmit)="registerCountry()" autocomplete="off" [formGroup]="registerForm">
-      <div class="">
-        <label>Insumo</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="insumo" placeholder="Ingresa el insumo"/>
-          <mat-error
-            *ngIf="registerForm.controls['insumo'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-          <mat-hint class="mat-hint-error" *ngIf="validationInsumo">Insumo previamente creado</mat-hint>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Frente</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="front" placeholder="Ingresa el frente"/>
-          <mat-error
-            *ngIf="registerForm.controls['front'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Partida</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="departure" placeholder="Ingresa la partida"/>
-          <mat-error
-            *ngIf="registerForm.controls['departure'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Tarjeta</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="card" placeholder="Ingresa la tarjeta"/>
-          <mat-error
-            *ngIf="registerForm.controls['card'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Descripcion</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="description" placeholder="Ingresa una descripcion"/>
-          <mat-error
-            *ngIf="registerForm.controls['description'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Unidad de medida</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="measure" placeholder="Ingresa la unidad de medida"/>
-          <mat-error
-            *ngIf="registerForm.controls['measure'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Volumen proyecto</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="project_volume" placeholder="Ingresa el volumen del proyecto"/>
-          <mat-error
-            *ngIf="registerForm.controls['project_volume'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Unidades compradas</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="units_purchased" placeholder="Ingresa las unidades compradas"/>
-          <mat-error
-            *ngIf="registerForm.controls['units_purchased'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-          <mat-hint class="mat-hint-error" *ngIf="validation"> Unidades compradas no puede ser mayor que el Volumen del proyecto</mat-hint>
-        </mat-form-field>
-      </div>
-      <div class="">
-        <label>Precio proforma</label>
-        <mat-form-field class="w-100" appearance="outline">
-          <input type="number" matInput formControlName="price_proforma" placeholder="Ingresa el precio proforma"/>
-          <mat-error
-            *ngIf="registerForm.controls['price_proforma'].hasError('required')"
-          >
-            Campo requerido
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <mat-dialog-actions align="end" class="mat">
-        <div></div>
-        <div>
-          <button mat-stroked-button color="warn" mat-dialog-close>
-            Cancelar
-          </button>
-          <button
-            mat-raised-button
-            class="mx-2 btn-primary"
-          >
-          Editar Volumen
-          </button>
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+  <header class="d-flex align-items-flex-end">
+    <h2 mat-dialog-title class="col-md-10 p-0">
+      Editar volumen
+    </h2>
+    <div class="d-flex justify-content-end w-100">
+      <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+    </div>
+  </header>
+  <div>
+    <form (ngSubmit)="registerCountry()" autocomplete="off" [formGroup]="registerForm">
+        <div class="">
+          <label>Insumo</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput formControlName="insumo" placeholder="Ingresa el insumo"/>
+            <mat-error
+              *ngIf="registerForm.controls['insumo'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+            <mat-hint class="mat-hint-error" *ngIf="validationInsumo">Insumo previamente creado</mat-hint>
+          </mat-form-field>
         </div>
-      </mat-dialog-actions>
-  </form>
+        <div class="">
+          <label>Frente</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput formControlName="front" placeholder="Ingresa el frente"/>
+            <mat-error
+              *ngIf="registerForm.controls['front'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Partida</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput formControlName="departure" placeholder="Ingresa la partida"/>
+            <mat-error
+              *ngIf="registerForm.controls['departure'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Tarjeta</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput formControlName="card" placeholder="Ingresa la tarjeta"/>
+            <mat-error
+              *ngIf="registerForm.controls['card'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Descripcion</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput formControlName="description" placeholder="Ingresa una descripcion"/>
+            <mat-error
+              *ngIf="registerForm.controls['description'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Unidad de medida</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="text" matInput formControlName="measure" placeholder="Ingresa la unidad de medida"/>
+            <mat-error
+              *ngIf="registerForm.controls['measure'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Volumen proyecto</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="number" matInput formControlName="project_volume" placeholder="Ingresa el volumen del proyecto"/>
+            <mat-error
+              *ngIf="registerForm.controls['project_volume'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Unidades compradas</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="number" matInput formControlName="units_purchased" placeholder="Ingresa las unidades compradas"/>
+            <mat-error
+              *ngIf="registerForm.controls['units_purchased'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+            <mat-hint class="mat-hint-error" *ngIf="validation"> Unidades compradas no puede ser mayor que el Volumen del proyecto</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="">
+          <label>Precio proforma</label>
+          <mat-form-field class="w-100" appearance="outline">
+            <input type="number" matInput formControlName="price_proforma" placeholder="Ingresa el precio proforma"/>
+            <mat-error
+              *ngIf="registerForm.controls['price_proforma'].hasError('required')"
+            >
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <mat-dialog-actions align="end" class="mat">
+          <div></div>
+          <div>
+            <button mat-stroked-button color="warn" mat-dialog-close>
+              Cancelar
+            </button>
+            <button
+              mat-raised-button
+              class="mx-2 btn-primary"
+            >
+            Editar Volumen
+            </button>
+          </div>
+        </mat-dialog-actions>
+    </form>
+  </div>
 </div>
-
