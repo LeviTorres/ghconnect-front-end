@@ -29,6 +29,10 @@ export class LoginService {
     return this.user._id || '';
   }
 
+  get tenant(): any{
+    return localStorage.getItem('tenant') || ''
+  }
+
   login(formData: any){
     return this._http.post(`${base_url}/login`, formData)
           .pipe(

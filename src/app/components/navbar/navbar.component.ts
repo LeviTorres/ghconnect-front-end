@@ -21,6 +21,9 @@ export class NavbarComponent implements OnInit {
   ) {
     this._spinner.show()
     this.user = _loginService.user
+    console.log(this.user.tenant);
+    console.log('this._loginService.tenant',this._loginService.tenant);
+
     this.letterNames = `${this.user.name.charAt(0).toUpperCase()}${this.user.last_name.charAt(0).toUpperCase()}`;
     this._spinner.hide()
    }
