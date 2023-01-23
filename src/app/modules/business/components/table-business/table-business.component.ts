@@ -13,6 +13,9 @@ import { LoginService } from '../../../../services/login.service';
 import { EditBusinessComponent } from '../edit-business/edit-business.component';
 import { Ceco } from '../../../../models/Ceco.model';
 import { CecosService } from '../../../../services/cecos.service';
+import { environment } from 'src/environments/environment';
+
+const base_url = environment.base_url
 
 @Component({
   selector: 'app-table-business',
@@ -28,6 +31,7 @@ export class TableBusinessComponent implements OnInit {
   public headersBusiness: any[] = []
   public header_name: string = 'business';
 
+  public avatarControl: FormControl = new FormControl()
   public nameControl: FormControl = new FormControl()
   public nameShortControl: FormControl = new FormControl()
   public keyBusinessControl: FormControl = new FormControl()
@@ -71,7 +75,9 @@ export class TableBusinessComponent implements OnInit {
       this.keyBusinessControl.setValue(headerBusiness.key_business)
       this.countryControl.setValue(headerBusiness.country)
       this.actionsControl.setValue(headerBusiness.actions)
+      this.avatarControl.setValue(headerBusiness.avatar)
     } else {
+      this.avatarControl.setValue(true)
       this.nameControl.setValue(true)
       this.nameShortControl.setValue(true)
       this.keyBusinessControl.setValue(true)
@@ -84,6 +90,7 @@ export class TableBusinessComponent implements OnInit {
         key_business: true,
         country: true,
         actions: true,
+        avatar: true
       }
       this._headerService.createHeaders(element, 'business').subscribe((item: any) => {
         this.getHeadersBusiness()
@@ -100,7 +107,8 @@ export class TableBusinessComponent implements OnInit {
       name_short: this.nameShortControl.value,
       key_business: this.keyBusinessControl.value,
       country: this.countryControl.value,
-      actions: this.actionsControl.value
+      actions: this.actionsControl.value,
+      avatar: this.avatarControl.value
     }
     this._headerService.updateHeaders(element, headerBusiness._id, 'business').subscribe(() => {
     }, () => {
@@ -174,6 +182,10 @@ export class TableBusinessComponent implements OnInit {
 
       }
     })
+  }
+
+  getImage(url:any){
+    return `${ base_url }/upload/business/${ url }`
   }
 
   openDialogEditBusiness(busines: Business) {

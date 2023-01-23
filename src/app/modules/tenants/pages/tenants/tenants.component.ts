@@ -43,9 +43,7 @@ export class TenantsComponent implements OnInit {
     this._userService.getUsers().subscribe((users: User[]) => {
       this.user = users.find((user: User) => user._id === this._loginService.uid)
       this.tenants = this.user.tenant
-      console.log('this.tenants', this.tenants);
       this.tenantsTemp = this.user.tenant
-      console.log(this.user);
       this._spinner.hide()
     })
   }

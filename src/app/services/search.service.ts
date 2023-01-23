@@ -43,13 +43,13 @@ export class SearchService {
 
   private generateUsers(users: any[]): User[] {
     return users.map(
-      user => new User(user.name, user.last_name, user.email, '', user.img, user.role, user._id, user.tenant)
+      user => new User(user.name, user.last_name, user.email, user.tenant, '', user.img, user.role, user._id)
     )
   }
 
   private generateDivisas(divisas: any[]): Divisa[] {
     return divisas.map(
-      divisa => new Divisa(divisa.name, divisa.abbreviation_name, divisa._id)
+      divisa => new Divisa(divisa.name, divisa.abbreviation_divisa, divisa.symbol, divisa.user, divisa._id)
     )
   }
 
@@ -61,7 +61,7 @@ export class SearchService {
 
   private generateBusiness(business: any[]): Business[] {
     return business.map(
-      business => new Business(business.name, business.name_short, business.key_business)
+      business => new Business(business.name, business.name_short, business.key_business, business.user, business.img, business.country, business._id)
     )
   }
 

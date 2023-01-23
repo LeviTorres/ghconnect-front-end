@@ -1,8 +1,12 @@
 <app-navbar></app-navbar>
 <div class="content d-flex">
   <div class="" style="margin: 0 auto;">
-    <div class="container-avatar">
+    <div class="container-avatar" style="position: relative;">
       <img class="avatar my-2 f" [src]="user.getImage" alt="">
+      <label style="position: absolute; right: 0; bottom: 0; padding-right: 15px; padding-bottom: 15px;" class="my-2">
+        <span style="cursor: pointer;" class="material-icons">photo_camera</span>
+        <input style="display: none;" type="file" (change)="changeImage($event)">
+      </label>
     </div>
     <div class="text-center">
       <h1 class="p-0 ">{{user.name}} {{user.last_name}}</h1>

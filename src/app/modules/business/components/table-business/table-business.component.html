@@ -15,6 +15,9 @@
     <table class="table text-nowrap">
       <thead>
         <tr>
+          <th *ngIf="avatarControl.value">
+            Avatar
+          </th>
           <th *ngIf="nameControl.value">
             Nombre
           </th>
@@ -37,6 +40,8 @@
           </th>
           <mat-menu #menu="matMenu">
             <div class="menu-table">
+              <mat-checkbox class="example-margin" [formControl]="avatarControl" (click)="$event.stopPropagation();">
+                Avatar</mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">
                 Nombre</mat-checkbox>
               <mat-checkbox class="example-margin" [formControl]="nameShortControl" (click)="$event.stopPropagation();">
@@ -55,6 +60,11 @@
       <tbody>
         <tr *ngFor="let busines of business | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
+        <td class="text-center img" *ngIf="avatarControl.value">
+          <span>
+            <img style="width: 50px; height: 50px;" [src]="getImage(busines.img)" alt="">
+          </span>
+        </td>
           <td *ngIf="nameControl.value">
             <span>{{ busines.name }}</span>
           </td>
