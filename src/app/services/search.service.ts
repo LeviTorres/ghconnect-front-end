@@ -67,7 +67,7 @@ export class SearchService {
 
   private generateCecos(cecos: any[]): Ceco[] {
     return cecos.map(
-      cecos => new Ceco(cecos.name_large, cecos.name_short, cecos.key_ceco, cecos.key_ceco_business)
+      cecos => new Ceco(cecos.name_large, cecos.name_short, cecos.key_ceco, cecos.key_ceco_business, cecos.user, cecos.business,cecos._id)
     )
   }
 
