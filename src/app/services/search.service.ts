@@ -55,7 +55,7 @@ export class SearchService {
 
   private generateCountries(countries: any[]): Country[] {
     return countries.map(
-      country => new Country(country.name, country.nationality)
+      country => new Country(country.name, country.nationality, country.user, country.divisa, country._id)
     )
   }
 
