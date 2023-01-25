@@ -12,7 +12,7 @@ import { MenuTenantsModule } from '../menu-tenants/menu-tenants.module';
   ],
   imports: [
     CommonModule,
-    MenuTenantsModule
+    SharedModule
   ],
   exports: [
     ModalQuestionComponent

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuTenantsComponent } from './menu-tenants.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ModalQuestionModule } from '../modal-question/modal-question.module';
 
 
 
@@ -11,7 +12,8 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    ModalQuestionModule
   ],
   exports: [
     MenuTenantsComponent
