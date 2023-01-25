@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { MenuNavbarModule } from '../menu-navbar/menu-navbar.module';
 import { TaskModule } from '../task/task.module';
 import { ChatModule } from '../chat/chat.module';
+import { MenuTenantsModule } from '../menu-tenants/menu-tenants.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ChatModule } from '../chat/chat.module';
     SharedModule,
     MenuNavbarModule,
     TaskModule,
+    MenuTenantsModule,
     ChatModule
   ],
   exports: [

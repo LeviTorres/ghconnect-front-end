@@ -1,0 +1,14 @@
+<div class="col-12 d-flex">
+  <div style="background: linear-gradient(46.25deg, #FF6F00 -2.76%, #FFC107 100.54%);" class="col-4 text-center">
+    <div class="p-3">
+    <h3>Actualmente esta trabajando en:</h3>
+    <img style="width: 90px;height: 90px;" [src]="getImage(business)" alt="">
+    </div>
+  </div>
+  <div class="col-8">
+      <button mat-stroked-button color="warn" (click)="close()">
+        Cancelar
+      </button>
+      <button class="btn-primary" mat-button-raised (click)="goToTenant()">Continuar</button>
+  </div>
+</div>

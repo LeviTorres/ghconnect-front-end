@@ -55,9 +55,9 @@ export class TenantsComponent implements OnInit {
 
   search(term: string) {
     if (term) {
-      let data = this.tenantsTemp.filter((item: any) => item.tenant_id.name.toLowerCase().includes(term))
+      const termino = term.toLowerCase().trim()
+      let data = this.tenantsTemp.filter((item: any) => item.tenant_id.name.toLowerCase().trim().includes(termino))
       this.tenants = data
-      console.log(this.tenants);
 
     } else {
       this.tenants = this.tenantsTemp

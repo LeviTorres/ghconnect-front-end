@@ -55,6 +55,13 @@ export class BusinessService {
               )
   }
 
+  getBusinessById(_id: string){
+    return this._http.get(`${base_url}/business/${_id}`,this.headers)
+              .pipe(
+                map((resp:any) => resp.business)
+              )
+  }
+
   deleteBusiness(business:Business){
     return this._http.delete(`${base_url}/business/${business._id}`,this.headers)
   }

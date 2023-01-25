@@ -5,6 +5,9 @@ import { tap, map, catchError } from 'rxjs/operators'
 import { Observable, of } from 'rxjs';
 import { User } from '../models/User.model';
 import { UsersService } from './users.service';
+import { BusinessService } from './business.service';
+import { Business } from '../models/Business.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const base_url = environment.base_url
 
@@ -14,15 +17,16 @@ const base_url = environment.base_url
 export class LoginService {
 
   public user!: User
-  public users: User[] = []
+
+  public business: Business[] = []
+
+  public name!: any
 
   constructor(
     private _http:HttpClient,
-    private _userService: UsersService
+    private _businessService:BusinessService,
+    private _spinner: NgxSpinnerService
   ) {
-    this._userService.getUsers().subscribe((users:User[]) => {
-      this.users = users
-    })
   }
 
   get uid():string {
@@ -33,6 +37,10 @@ export class LoginService {
     return localStorage.getItem('tenant') || ''
   }
 
+  get tenantName():any {
+    return localStorage.getItem('name-tenant') || ''
+  }
+
   login(formData: any){
     return this._http.post(`${base_url}/login`, formData)
           .pipe(
@@ -41,6 +49,7 @@ export class LoginService {
             })
           )
   }
+
   validarToken(): Observable<boolean>{
     const token = localStorage.getItem('token') || ''
     return this._http.get(`${base_url}/login/renew`, {
@@ -54,6 +63,9 @@ export class LoginService {
         const verifyTenant = localStorage.getItem('tenant')
         if(!verifyTenant){
           localStorage.setItem('tenant', tenant[0].tenant_id)
+          this._businessService.getBusinessById(tenant[0].tenant_id).subscribe((resp:any) => {
+            localStorage.setItem('name-tenant', resp.name_short)
+           })
         }
         localStorage.setItem('token', resp.token)
       }),
@@ -61,12 +73,19 @@ export class LoginService {
       catchError(error => of(false))
     )
   }
+
   changeTenant(tenant:any):any{
+    this._spinner.show()
     localStorage.setItem('tenant', tenant)
+    this._businessService.getBusinessById(tenant).subscribe((resp:any) => {
+      localStorage.setItem('name-tenant', resp.name_short)
+      this._spinner.hide()
+     })
   }
 
   logout(){
     localStorage.removeItem('token')
     localStorage.removeItem('tenant')
+    localStorage.removeItem('name-tenant')
   }
 }
