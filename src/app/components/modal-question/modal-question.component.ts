@@ -34,6 +34,7 @@ export class ModalQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   goToTenant(){
