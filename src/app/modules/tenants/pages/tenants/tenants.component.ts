@@ -9,7 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 import { SearchService } from 'src/app/services/search.service';
 import { TenantsModule } from '../../tenants.module';
-
+import { environment } from 'src/environments/environment';
+const base_url = environment.base_url
 @Component({
   selector: 'app-tenants',
   templateUrl: './tenants.component.html',
@@ -25,6 +26,8 @@ export class TenantsComponent implements OnInit {
 
   public tenants: any[] = []
   public tenantsTemp: any[] = []
+  public _id!: any
+
 
   constructor(
     private _businessService: BusinessService,
@@ -44,6 +47,8 @@ export class TenantsComponent implements OnInit {
       this.user = users.find((user: User) => user._id === this._loginService.uid)
       this.tenants = this.user.tenant
       this.tenantsTemp = this.user.tenant
+      console.log('this.tenants', this.tenants);
+
       this._spinner.hide()
     })
   }
@@ -58,10 +63,24 @@ export class TenantsComponent implements OnInit {
       const termino = term.toLowerCase().trim()
       let data = this.tenantsTemp.filter((item: any) => item.tenant_id.name.toLowerCase().trim().includes(termino))
       this.tenants = data
-
     } else {
       this.tenants = this.tenantsTemp
     }
   }
+
+  getImage(image: string) {
+    if (image) {
+      return `${base_url}/upload/business/${image}`
+    } else {
+      return `${base_url}/upload/business/image`
+    }
+  }
+
+  firstLetters() {
+    let id = this.tenants.map((item: any) => item.tenant_id._id.toLowerCase().substr(0, 5));
+    this._id = id;
+    return
+  }
+
 
 }

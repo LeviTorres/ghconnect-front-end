@@ -18,19 +18,23 @@
     <div class="contenedor col-3 my-2" *ngFor="let item of this.tenants; let indice = index;">
       <div class="card" (click)="goToHomeWithTenant(item.tenant_id._id)">
         <div class="face face1">
-          <div class="m-1">
-            <p class="text-end text-muted">{{indice + 1}}</p>
+          <div class=" row">
+            <div class="col-6">
+              <img class="imgSize m-1" [src]="getImage(item.tenant_id.img)">
+            </div>
+            <div class=" col-6">
+              <p class="text-end text-muted">{{item.tenant_id._id}}</p>
+            </div>
           </div>
-          <div class="text-white text-center rounded-2 my-2">
+          <div class="text-white text-center rounded-2">
             <p class="tenant-name">{{item.tenant_id.name}}</p>
           </div>
         </div>
         <div class="face faceSecond1">
           <div class="">
             <p class="tenant-p">Pruebas - Calzada Construcciones S.A. de C.V. Suc. Bolivia. Av. Las Ramblas, Santa
-              Cruz
-              de la Sierra,
-              Bolivia.</p>
+              Cruz de la Sierra,Bolivia.
+            </p>
           </div>
         </div>
       </div>
