@@ -75,12 +75,4 @@ export class TenantsComponent implements OnInit {
       return `${base_url}/upload/business/image`
     }
   }
-
-  firstLetters() {
-    let id = this.tenants.map((item: any) => item.tenant_id._id.toLowerCase().substr(0, 5));
-    this._id = id;
-    return
-  }
-
-
 }
