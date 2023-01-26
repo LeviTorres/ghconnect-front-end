@@ -9,14 +9,17 @@ import { FooterModule } from '../../components/footer/footer.module';
 import { ModalBusinessComponent } from './components/modal-business/modal-business.component';
 import { TableBusinessComponent } from './components/table-business/table-business.component';
 import { EditBusinessComponent } from './components/edit-business/edit-business.component';
-
+import { BusinessTenantsComponent } from './pages/business-tenants/business-tenants.component';
+import { HomeBusinessComponent } from './pages/home-business/home-business.component';
 
 @NgModule({
   declarations: [
     BusinessComponent,
     ModalBusinessComponent,
     TableBusinessComponent,
-    EditBusinessComponent
+    EditBusinessComponent,
+    BusinessTenantsComponent,
+    HomeBusinessComponent,
   ],
   imports: [
     CommonModule,
