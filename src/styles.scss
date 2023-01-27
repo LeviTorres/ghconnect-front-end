@@ -61,10 +61,16 @@
   --tblr-border-color-light-rgb: 242, 243, 244;
 }
 
+@font-face {
+  font-family: monserrat;
+  src: url(assets/fonts/MONTSERRAT-REGULAR.TTF) format("opentype");
+}
+
 *{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: 'monserrat', 'arial', sans-serif;
 }
 
 html{

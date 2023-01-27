@@ -5,105 +5,113 @@
     </div>
     <div style="background-color: #FFF8E1; border-radius: 4px;display: flex; padding: 8px;">
       <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0;">FECHA DE CREACIÓN</p>
-      <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0;" class="mx-3">26/01/2023</p>
+      <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0;" class="mx-3">{{date | date: 'dd/MM/yyyy'}}</p>
     </div>
 </div>
-<div class="row col-12 mx-0 mb-2">
-  <div class="form-group col-8">
-    <label class="mb-2" for="exampleFormControlInput1">Nombre de la empresa</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Grupo Hycsa Sucursal Bolivia Santa Cruz">
-  </div>
-  <div class="form-group col-4">
-    <label class="mb-2" for="exampleFormControlInput1">Nombre corto de la empresa</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Grupo Hycsa">
-  </div>
-</div>
-<div class="row col-12 mx-0 mb-2">
-  <div class="form-group col-8">
-    <label class="mb-2" for="exampleFormControlInput1">Dirección de la empresa</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Dirección 1">
-  </div>
-  <div class="form-group col-4">
-    <label class="mb-2" for="exampleFormControlInput1">Calle</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Calle 1">
-  </div>
-</div>
-<div class="row col-12 mx-0 mb-2">
-  <div class="form-group col-8">
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Dirección 2">
-  </div>
-  <div class="form-group col-4">
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Calle 2">
-  </div>
-</div>
-<div class="row col-12 mx-0 mb-2">
-  <div class="form-group col-3">
-    <label class="mb-2" for="exampleFormControlInput1">País</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Mexico">
-  </div>
-  <div class="form-group col-3">
-    <label class="mb-2" for="exampleFormControlInput1">Estado</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Jalisco">
-  </div>
-  <div class="form-group col-3">
-    <label class="mb-2" for="exampleFormControlInput1">Ciudad</label>
-    <input type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Zapopan">
-  </div>
-  <div class="form-group col-3">
-    <label class="mb-2" for="exampleFormControlInput1">Código postal</label>
-    <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="89283">
-  </div>
-</div>
-<div class="row mx-0 mb-2">
-  <div class="col-8 m-0">
-    <div class="form-group mb-2">
-      <label class="mb-2" for="exampleFormControlInput1">Numero de identificacion fiscal</label>
-      <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="RFC, NIT, RUC, ETC.">
+<form  autocomplete="off" [formGroup]="form">
+  <div class="row col-12 mx-0 mb-2">
+    <div class="form-group col-8">
+      <label class="mb-2" for="exampleFormControlInput1">Nombre de la empresa</label>
+      <input formControlName="name" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Grupo Hycsa Sucursal Bolivia Santa Cruz">
     </div>
-    <div class="row col-12 m-0">
-      <div class="form-group mb-2 col-3 ps-0">
-        <label class="mb-2" for="exampleFormControlInput1">Telefono</label>
-        <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
-      </div>
-      <div class="form-group mb-2 col-3">
-        <label class="mb-2" for="exampleFormControlInput1">Movil</label>
-        <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
-      </div>
-      <div class="form-group mb-2 col-6 pe-0">
-        <label class="mb-2" for="exampleFormControlInput1">Correo electronico</label>
-        <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
-      </div>
-    </div>
-    <div class="row col-12 m-0">
-      <div class="form-group mb-2 col-6 ps-0">
-        <label class="mb-2" for="exampleFormControlInput1">Sitio web</label>
-        <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
-      </div>
-      <div class="form-group mb-2 col-3">
-        <label class="mb-2" for="exampleFormControlInput1">ID</label>
-        <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
-      </div>
-      <div class="form-group mb-2 col-3 pe-0">
-        <label class="mb-2" for="exampleFormControlInput1">Moneda</label>
-        <input type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
-      </div>
+    <div class="form-group col-4">
+      <label class="mb-2" for="exampleFormControlInput1">Nombre corto de la empresa</label>
+      <input formControlName="name_short" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Grupo Hycsa">
     </div>
   </div>
-  <div style="border: 2px solid #2196F3; border-radius: 8px;padding: 10px;" class="col-4">
-      <h2 style="font-weight: 500; font-size: 25px; line-height: 30px;">LOGOTIPO DE LA EMPRESA</h2>
-      <div>
-        <div style="background-color: #E0E0E0;margin-top: 18px;margin-bottom: 20px;" class="text-center">
-          <img src="../../../../../assets/icons/Upload.svg" class="my-3" alt="">
+  <div class="row col-12 mx-0 mb-2">
+    <div class="form-group col-8">
+      <label class="mb-2" for="exampleFormControlInput1">Dirección de la empresa</label>
+      <input formControlName="address_1" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Dirección 1">
+    </div>
+    <div class="form-group col-4">
+      <label class="mb-2" for="exampleFormControlInput1">Calle</label>
+      <input formControlName="street_1" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Calle 1">
+    </div>
+  </div>
+  <div class="row col-12 mx-0 mb-2">
+    <div class="form-group col-8">
+      <input formControlName="address_2" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Dirección 2">
+    </div>
+    <div class="form-group col-4">
+      <input formControlName="street_2" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Calle 2">
+    </div>
+  </div>
+  <div class="row col-12 mx-0 mb-2">
+    <div class="form-group col-3">
+      <label class="mb-2" for="exampleFormControlInput1">País</label>
+      <input formControlName="country" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Mexico">
+    </div>
+    <div class="form-group col-3">
+      <label class="mb-2" for="exampleFormControlInput1">Estado</label>
+      <input formControlName="polity" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Jalisco">
+    </div>
+    <div class="form-group col-3">
+      <label class="mb-2" for="exampleFormControlInput1">Ciudad</label>
+      <input formControlName="city" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Zapopan">
+    </div>
+    <div class="form-group col-3">
+      <label class="mb-2" for="exampleFormControlInput1">Código postal</label>
+      <input formControlName="zip_code" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="89283">
+    </div>
+  </div>
+  <div class="row mx-0 mb-2">
+    <div class="col-8 m-0">
+      <div class="form-group mb-2">
+        <label class="mb-2" for="exampleFormControlInput1">Numero de identificacion fiscal</label>
+        <input formControlName="tax_identification_number" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="RFC, NIT, RUC, ETC.">
+      </div>
+      <div class="row col-12 m-0">
+        <div class="form-group mb-2 col-3 ps-0">
+          <label class="mb-2" for="exampleFormControlInput1">Telefono</label>
+          <input formControlName="phone_number" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
         </div>
-        <div style="background: linear-gradient(269.35deg, #2196F3 11.45%, #3F51B5 128.81%);border-radius: 5px;padding: 8px;display: flex;" class="">
-          <img src="../../../../../assets/icons/Permisos.svg" alt="">
-          <p style="color: white;margin: 0;font-weight: 400;font-size: 20px;line-height: 24px;" class="mx-2">Name</p>
+        <div class="form-group mb-2 col-3">
+          <label class="mb-2" for="exampleFormControlInput1">Movil</label>
+          <input formControlName="mobile_number" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="815 283 2389">
+        </div>
+        <div class="form-group mb-2 col-6 pe-0">
+          <label class="mb-2" for="exampleFormControlInput1">Correo electronico</label>
+          <input formControlName="email" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="empresa34_Bolivia@grupoempresa.com">
         </div>
       </div>
-      <p style="font-weight: 400;font-size: 13px;line-height: 16px;margin-top: 16px;">El archivo no debe exceder los 2mb, se recomienda subirlo en formato .png en color blanco</p>
+      <div class="row col-12 m-0">
+        <div class="form-group mb-2 col-6 ps-0">
+          <label class="mb-2" for="exampleFormControlInput1">Sitio web</label>
+          <input formControlName="url_web" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="www.grupoempresa.com">
+        </div>
+        <div class="form-group mb-2 col-3">
+          <label class="mb-2" for="exampleFormControlInput1">ID</label>
+          <input formControlName="key_business" type="text" style="background-color: #E0E0E0;" class="form-control" id="exampleFormControlInput1" placeholder="2389">
+        </div>
+        <div class="form-group mb-2 col-3 pe-0">
+          <label class="mb-2" for="exampleFormControlInput1">Moneda</label>
+          <select formControlName="divisa" type="text" style="background-color: #E0E0E0;" class="form-select" id="exampleFormControlInput1">
+            <option selected>Selecciona una moneda</option>
+            <option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div style="border: 2px solid #2196F3; border-radius: 8px;padding: 10px;" class="col-4">
+        <h2 style="font-weight: 500; font-size: 25px; line-height: 30px;">LOGOTIPO DE LA EMPRESA</h2>
+        <div>
+          <div style="background-color: #E0E0E0;margin-top: 18px;margin-bottom: 20px;" class="text-center">
+            <label class="my-2">
+              <img src="../../../../../assets/icons/Upload.svg" class="my-3" alt="">
+              <input style="display: none;" type="file" (change)="changeImage($event)">
+            </label>
+          </div>
+          <div *ngIf="imageSelect" style="background: linear-gradient(269.35deg, #2196F3 11.45%, #3F51B5 128.81%);border-radius: 5px;padding: 8px;display: flex;" class="">
+            <img src="../../../../../assets/icons/Permisos.svg" alt="">
+            <p style="color: white;margin: 0;font-weight: 400;font-size: 20px;line-height: 24px;" class="mx-2">{{imageSelect.name}}</p>
+          </div>
+        </div>
+        <p style="font-weight: 400;font-size: 13px;line-height: 16px;margin-top: 16px;">El archivo no debe exceder los 2mb, se recomienda subirlo en formato .png en color blanco</p>
+    </div>
   </div>
-</div>
-<div style="margin-top: 90px;" class="text-center">
-  <button class="btn-primary mx-3" mat-raised-button>Cancelar</button>
-  <button class="btn-primary mx-3" mat-raised-button>Añadir empresa</button>
-</div>
+  <div style="margin-top: 90px;" class="text-center">
+    <button class="btn-primary mx-3" mat-raised-button>Cancelar</button>
+    <button class="btn-primary mx-3" mat-raised-button (click)="addBusiness()">Añadir empresa</button>
+  </div>
+</form>

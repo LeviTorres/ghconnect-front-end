@@ -22,7 +22,7 @@
     </div>
   </div>
   <div *ngIf="this.user" class="row">
-    <div class="contenedor col-3 my-2" *ngFor="let item of this.tenants; let indice = index;">
+    <div class="contenedor col-3 my-2" *ngFor="let item of tenants; let indice = index;">
       <div class="card" (click)="goToHomeWithTenant(item.tenant_id._id)">
         <div class="face face1">
           <div class=" row">
@@ -30,7 +30,7 @@
               <img class="imgSize m-1" [src]="getImage(item.tenant_id.img)">
             </div>
             <div class=" col-6">
-              <p class="text-end text-muted">{{item.tenant_id._id}}</p>
+              <p class="text-end text-muted">{{item.tenant_id.key_business}}</p>
             </div>
           </div>
           <div class="text-white text-center rounded-2">
@@ -47,5 +47,4 @@
       </div>
     </div>
   </div>
-
 </div>

@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   public hide: boolean = true;
 
-  public users: User[] = []
+  public users: any[] = []
 
   public loginForm = this._fb.group({
     email: [ '', [ Validators.required, Validators.email ] ],
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   loginn(){
     this._loginService.login(this.loginForm.value).subscribe( () => {
-      const findUser = this.users.find((user:User) => user.email === this.loginForm.controls['email'].value)
+      const findUser = this.users.find((user:any) => user.email === this.loginForm.controls['email'].value)
       if(findUser?.tenant.length <= 1 ){
         this._router.navigateByUrl('/home')
       }else{
