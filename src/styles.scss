@@ -93,6 +93,23 @@ body {
   margin: 0 auto;
 }
 
+.error-input {
+  border: 1px solid red;
+}
+
+.validation {
+  top: 74px;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  background: #dd4949;
+  transform-origin: 50% 0%;
+  transition: 0.4s;
+  color: white;
+}
+
 .content {
   height: calc(100% - 114px);
   padding: 20px;

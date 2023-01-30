@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CountriesOpenService } from '../../../../services/countries-open.service';
 import { Countryopen } from '../../../../models/Countryopen.model';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BusinessService } from '../../../../services/business.service';
 import { UsersService } from '../../../../services/users.service';
 import { Business } from '../../../../models/Business.model';
@@ -23,26 +23,27 @@ export class BusinessTenantsComponent implements OnInit {
   public date: any
   public imageSelect: any
   public user!: any
+  public imgView: any
 
   public form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    name_short: new FormControl(''),
+    name: new FormControl('', Validators.required),
+    name_short: new FormControl('', Validators.required),
     creation_date: new FormControl(''),
-    key_business: new FormControl(''),
-    address_1: new FormControl(''),
-    street_1: new FormControl(''),
+    key_business: new FormControl('', Validators.required),
+    address_1: new FormControl('', Validators.required),
+    street_1: new FormControl('', Validators.required),
     address_2: new FormControl(''),
     street_2: new FormControl(''),
-    country: new FormControl(''),
-    polity: new FormControl(''),
-    city: new FormControl(''),
-    zip_code: new FormControl(''),
-    tax_identification_number: new FormControl(''),
-    phone_number: new FormControl(''),
-    mobile_number: new FormControl(''),
-    email: new FormControl(''),
+    country: new FormControl('', Validators.required),
+    polity: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    zip_code: new FormControl('', Validators.required),
+    tax_identification_number: new FormControl('', Validators.required),
+    phone_number: new FormControl('', Validators.required),
+    mobile_number: new FormControl('', Validators.required),
+    email: new FormControl('', [ Validators.required, Validators.email]),
     url_web: new FormControl(''),
-    divisa: new FormControl('')
+    divisa: new FormControl('', Validators.required)
   })
 
   constructor(
@@ -69,6 +70,7 @@ export class BusinessTenantsComponent implements OnInit {
   addBusiness(){
 
     if(this.form.invalid){
+      this.form.markAllAsTouched()
       return
     }
 
@@ -108,6 +110,15 @@ export class BusinessTenantsComponent implements OnInit {
 
   changeImage(event: any){
     this.imageSelect = event.target.files[0]
+    if(this.imageSelect){
+      //this.imgView = this._convertImg.encodeFileAsBase64URL(this.imageSelect)
+      //console.log(this.imgView);
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imgView = reader.result as string;
+      }
+      reader.readAsDataURL(this.imageSelect)
+    }
   }
 
   getCountryOpen(){
