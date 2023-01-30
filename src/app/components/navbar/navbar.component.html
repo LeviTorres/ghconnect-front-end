@@ -1,5 +1,5 @@
 <div class="content-navbar">
-<mat-toolbar class="color position-sticky">
+  <mat-toolbar class="color position-sticky">
     <img class="active" src="../../../assets/icons/GHconnecticon.svg" [routerLink]="['/home']" alt="">
     <span class="mx-3 title-navbar">{{title}}</span>
     <div class="d-flex" *ngIf="title === 'Operaciones'">
@@ -40,7 +40,8 @@
       <app-task></app-task>
     </mat-menu>
     <span style="cursor: pointer; display: flex;" [matMenuTriggerFor]="menuTenant">
-      <h3 style="font-size: small;padding-right: 5px; color: var(--tblr-626065); font-weight: 600;" class="">{{userTenant}}</h3>
+      <h3 style="font-size: small;padding-right: 5px; color: var(--tblr-626065); font-weight: 600;" class="">
+        {{userTenant}}</h3>
       <span style="color: var(--tblr-626065);" class="material-icons mt-1">change_circle</span>
     </span>
     <mat-menu #menuTenant="matMenu">
@@ -59,5 +60,5 @@
     <mat-menu #menu="matMenu">
       <app-menu-navbar></app-menu-navbar>
     </mat-menu>
-</mat-toolbar>
+  </mat-toolbar>
 </div>
