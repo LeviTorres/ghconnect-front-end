@@ -27,7 +27,6 @@ export class NavbarComponent implements OnInit {
     private _router: Router,
     private _businessService:BusinessService
   ) {
-    console.log(window.localStorage.getItem('name-tenant'));
     this.user = _loginService.user
     this.userTenant = _loginService.tenantName
     this.letterNames = `${this.user.name.charAt(0).toUpperCase()}${this.user.last_name.charAt(0).toUpperCase()}`;

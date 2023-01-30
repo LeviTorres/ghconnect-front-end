@@ -59,13 +59,23 @@ export class LoginService {
     }).pipe(
       tap((resp:any) => {
         const {email, last_name, name, role, _id, img, tenant } = resp.user
-        this.user = new User(name, last_name, email, tenant ,'', img, role, _id)
+        console.log(tenant);
+        console.log(this.tenant);
+        const findBusiness = tenant.find((tenant:any) => this.tenant === tenant.tenant_id)
+         console.log(findBusiness);
+
+        this.user = new User(name, last_name, email, findBusiness,'', img, role, _id)
+        console.log('this.user',this.user);
+
         const verifyTenant = localStorage.getItem('tenant')
         if(!verifyTenant){
           localStorage.setItem('tenant', tenant[0].tenant_id)
           this._businessService.getBusinessById(tenant[0].tenant_id).subscribe((resp:any) => {
             localStorage.setItem('name-tenant', resp.name_short)
+            this.name = resp.name_short
            })
+        }else {
+          this.name = localStorage.getItem('name-tenant')
         }
         localStorage.setItem('token', resp.token)
       }),
@@ -79,8 +89,22 @@ export class LoginService {
     localStorage.setItem('tenant', tenant)
     this._businessService.getBusinessById(tenant).subscribe((resp:any) => {
       localStorage.setItem('name-tenant', resp.name_short)
+      this.name = resp.name_short
       this._spinner.hide()
      })
+  }
+
+  async nameTenant(id: any){
+    let name
+    await this._businessService.getBusinessById(id).subscribe((resp:any) => {
+      //localStorage.setItem('name-tenant', resp.name_short)
+      console.log('resp',resp);
+
+      name = resp.name_short
+     })
+     console.log(name);
+
+     return name
   }
 
   logout(){

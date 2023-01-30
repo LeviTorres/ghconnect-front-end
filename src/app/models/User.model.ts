@@ -8,7 +8,7 @@ export class User {
     public name: string,
     public last_name: string,
     public email: string,
-    public tenant: Business[],
+    public tenant: any,
     public password?: string,
     public img?: string,
     public role?: string,
