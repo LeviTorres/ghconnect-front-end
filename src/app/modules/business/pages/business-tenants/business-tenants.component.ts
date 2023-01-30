@@ -24,6 +24,7 @@ export class BusinessTenantsComponent implements OnInit {
   public imageSelect: any
   public user!: any
   public imgView: any
+  public flag: boolean = false
 
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -65,6 +66,10 @@ export class BusinessTenantsComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  goToComment(){
+    this.flag = !this.flag
   }
 
   addBusiness(){

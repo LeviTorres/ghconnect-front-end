@@ -40,12 +40,12 @@ export class ModalQuestionComponent implements OnInit {
   goToTenant(){
     this._spinner.show()
     this._loginService.changeTenant(this.id)
-    setTimeout(()=>{
       this._router.navigateByUrl('/home')
       this._dialogRef.close()
       this._spinner.hide()
-    }, 2000)
-
+      if(this.id){
+        window.location.reload()
+      }
   }
 
   close(){

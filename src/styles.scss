@@ -94,7 +94,7 @@ body {
 }
 
 .error-input {
-  border: 1px solid red;
+  border: 1px solid #FF5252;
 }
 
 .validation {
@@ -104,10 +104,13 @@ body {
   padding: 10px;
   margin-top: 5px;
   border-radius: 6px;
-  background: #dd4949;
+  background: #FF5252;
   transform-origin: 50% 0%;
   transition: 0.4s;
   color: white;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 .content {
