@@ -48,7 +48,7 @@ export class EditBusinessComponent implements OnInit {
       name: this.businessData.name,
       name_short: this.businessData.name_short,
       key_business: this.businessData.key_business,
-      country: this.businessData.country?._id,
+     // country: this.businessData.country?._id,
     })
   }
 

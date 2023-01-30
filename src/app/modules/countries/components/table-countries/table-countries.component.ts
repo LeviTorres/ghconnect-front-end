@@ -157,12 +157,12 @@ export class TableCountriesComponent implements OnInit {
   }
 
   async delete(country: Country) {
-    const findCountryBusiness = this.business.find((business: Business) => business.country?._id === country._id)
+  //  const findCountryBusiness = this.business.find((business: Business) => business.country?._id === country._id)
 
-    if (findCountryBusiness) {
-      this._toastr.warning('No se puede eliminar porque contiene una empresa relacionada')
-      return
-    }
+   // if (findCountryBusiness) {
+    //  this._toastr.warning('No se puede eliminar porque contiene una empresa relacionada')
+    //  return
+   // }
 
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
