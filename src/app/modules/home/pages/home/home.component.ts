@@ -11,187 +11,187 @@ export class HomeComponent implements OnInit {
     {
       name: 'Aprobaciones',
       icon: '../../../../../assets/newIcons/Aprobaciones.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Arrendamiento',
       icon: '../../../../../assets/newIcons/Arrendamiento.svg',
-      type: ''
+      type: 'Ventas'
     },
     {
       name: 'Asistencia',
       icon: '.../../../../../assets/newIcons/Asistencia.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Clientes',
       icon: '../../../../../assets/newIcons/Clientes.svg',
-      type: ''
+      type: 'Contabilidad'
     },
     {
       name: 'Comidas',
       icon: '../../../../../assets/newIcons/Comidas.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Compras',
       icon: './../../../../assets/newIcons/Compras.svg',
-      type: ''
+      type: 'Contabilidad'
     },
     {
       name: 'Contratos y Subcontratos',
       icon: '../../../../../assets/newIcons/Contratos y subcontratos.svg',
-      type: ''
+      type: 'Operaciones'
     },
     {
       name: 'CRM',
       icon: '../../../../../assets/newIcons/CRM.svg',
-      type: ''
+      type: 'Ventas'
     },
     {
       name: 'Cuadro Comparativo',
       icon: '../../../../../assets/newIcons/Cuadro comparativo.svg',
-      type: ''
+      type: 'Operaciones'
     },
     {
       name: 'e-Learning',
       icon: '../../../../../assets/newIcons/eLearning.svg',
-      type: ''
+      type: 'Productividad'
     },
     {
       name: 'Empleados',
       icon: '../../../../../assets/newIcons/Empleados.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Encuestas',
       icon: '../../../../../assets/newIcons/Encuestas.svg',
-      type: ''
+      type: 'Productividad'
     },
     {
       name: 'Eventos',
       icon: '../../../../../assets/newIcons/Eventos.svg',
-      type: ''
+      type: 'Productividad'
     },
     {
       name: 'Facturacion',
       icon: '../../../../../assets/newIcons/Facturación.svg',
-      type: ''
+      type: 'Contabilidad'
     },
     {
       name: 'Flota',
       icon: '../../../../../assets/newIcons/Flota.svg',
-      type: ''
+      type: 'Operaciones'
     },
     {
       name: 'Geston de Archivos',
       icon: '../../../../../assets/newIcons/Gestión de Archivos.svg',
-      type: ''
+      type: 'Contabilidad'
     },
     {
       name: 'Inventario',
       icon: '../../../../../assets/newIcons/Inventario.svg',
-      type: ''
+      type: 'Contabilidad'
     },
     {
       name: 'Mantenimiento',
       icon: '../../../../../assets/newIcons/Mantenimiento.svg',
-      type: ''
+      type: 'Operaciones'
     },
     {
       name: 'Nomina',
       icon: '../../../../../assets/newIcons/Nómina.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Organigrama',
       icon: '../../../../../assets/newIcons/Organigrama.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Pedidos',
       icon: '../../../../../assets/newIcons/Pedidos.svg',
-      type: ''
+      type: 'Ventas'
     },
     {
       name: 'Precio Unitario',
       icon: '../../../../../assets/newIcons/Precio Unitario.svg',
-      type: ''
+      type: 'Operaciones'
     },
     {
       name: 'Presupuestos',
       icon: '../../../../../assets/newIcons/Presupuestos.svg',
-      type: ''
+      type: 'Operaciones'
     },
     {
       name: 'Proceso de Seleccion',
       icon: '../../../../../assets/newIcons/Proceso de selección.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Recomendaciones Empleados',
       icon: '../../../../../assets/newIcons/Recomendaciones de empleados.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Remesas',
       icon: '../../../../../assets/newIcons/Remesas.svg',
-      type: ''
+      type: 'Tesoreria'
     },
     {
       name: 'Suscripciones',
       icon: '../../../../../assets/newIcons/Suscripciones.svg',
-      type: ''
+      type: 'Ventas'
     },
     {
       name: 'Administracion de Habilidades',
       icon: '../../../../../assets/newIcons/Administración de habilidades.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Mesa de Ayuda',
       icon: '../../../../../assets/newIcons/../../../../../assets/newIcons/Mesa de Ayuda.svg',
-      type: ''
+      type: 'Productividad'
     },
     {
       name: 'Gastos de Representacion',
       icon: '../../../../../assets/newIcons/Gastos de representación.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Bancos',
       icon: '../../../../../assets/newIcons/Bancos.svg',
-      type: ''
+      type: 'Tesoreria'
     },
     {
       name: 'Politicas',
       icon: '../../../../../assets/newIcons/Políticas.svg',
-      type: ''
+      type: 'Productividad'
     },
     {
       name: 'Evaluaciones',
       icon: '../../../../../assets/newIcons/Evaluaciones.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Contratos Empleados',
       icon: '../../../../../assets/newIcons/Contratos empleados.svg',
-      type: ''
+      type: 'Recursos Humanos'
     },
     {
       name: 'Proveedores',
       icon: '../../../../../assets/newIcons/Proveedores.svg',
-      type: ''
+      type: 'Contabilidad'
     },
     {
       name: 'Cuentas Bancarias',
       icon: '../../../../../assets/newIcons/Cuentas bancarias.svg',
-      type: ''
+      type: 'Tesoreria'
     },
     {
       name: 'Validaciones',
       icon: '../../../../../assets/newIcons/Validaciones.svg',
-      type: ''
+      type: 'Productividad'
     },
 
   ]
