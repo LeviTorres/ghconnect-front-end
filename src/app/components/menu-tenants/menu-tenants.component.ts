@@ -55,7 +55,7 @@ export class MenuTenantsComponent implements OnInit {
       data: id
     });
     dialogRef.beforeClosed().subscribe(() => {
-
+      //window.location.reload()
     })
 
   }

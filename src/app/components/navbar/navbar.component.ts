@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
     private _businessService:BusinessService
   ) {
     this.user = _loginService.user
-    this.userTenant = _loginService.tenantName
+    this.userTenant = _loginService.business.name_short
     this.letterNames = `${this.user.name.charAt(0).toUpperCase()}${this.user.last_name.charAt(0).toUpperCase()}`;
    }
 

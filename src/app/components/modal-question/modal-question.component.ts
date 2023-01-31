@@ -37,14 +37,10 @@ export class ModalQuestionComponent implements OnInit {
 
   }
 
-  async goToTenant(){
-    this._spinner.show()
+  goToTenant(){
     this._loginService.changeTenant(this.id)
-    const v = await this._loginService.nameTenant(this.id)
-    console.log('cambio', v );
-      this._router.navigateByUrl('/home')
-      this._dialogRef.close()
-      this._spinner.hide()
+    this._router.navigateByUrl('/home')
+    this._dialogRef.close()
   }
 
   close(){

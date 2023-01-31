@@ -18,7 +18,7 @@ export class LoginService {
 
   public user!: User
 
-  public business: Business[] = []
+  public business!: Business
 
   public name!: any
 
@@ -33,12 +33,12 @@ export class LoginService {
     return this.user._id || '';
   }
 
-  get tenant(): any{
-    return localStorage.getItem('tenant') || ''
+  get tenantName(): any{
+    return this.business.name_short
   }
 
-  get tenantName():any {
-    return localStorage.getItem('name-tenant') || ''
+  get tenant(): any{
+    return localStorage.getItem('tenant') || ''
   }
 
   login(formData: any){
@@ -52,31 +52,20 @@ export class LoginService {
 
   validarToken(): Observable<boolean>{
     const token = localStorage.getItem('token') || ''
+    const tenant = localStorage.getItem('tenant') || ''
     return this._http.get(`${base_url}/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': token,
+        'tenant': tenant
       }
     }).pipe(
       tap((resp:any) => {
         const {email, last_name, name, role, _id, img, tenant } = resp.user
-        console.log(tenant);
-        console.log(this.tenant);
-        const findBusiness = tenant.find((tenant:any) => this.tenant === tenant.tenant_id)
-         console.log(findBusiness);
-
-        this.user = new User(name, last_name, email, findBusiness,'', img, role, _id)
-        console.log('this.user',this.user);
-
-        const verifyTenant = localStorage.getItem('tenant')
-        if(!verifyTenant){
-          localStorage.setItem('tenant', tenant[0].tenant_id)
-          this._businessService.getBusinessById(tenant[0].tenant_id).subscribe((resp:any) => {
-            localStorage.setItem('name-tenant', resp.name_short)
-            this.name = resp.name_short
-           })
-        }else {
-          this.name = localStorage.getItem('name-tenant')
-        }
+        const { name_business, name_short, creation_date, key_business} = resp.business
+        this.user = new User(name, last_name, email, tenant,'', img, role, _id)
+        this.business = new Business(name_business, name_short, creation_date, key_business)
+        localStorage.setItem('name-tenant', this.business.name_short)
+        localStorage.setItem('tenant', resp.business._id)
         localStorage.setItem('token', resp.token)
       }),
       map( resp => true),
@@ -85,26 +74,7 @@ export class LoginService {
   }
 
   changeTenant(tenant:any):any{
-    this._spinner.show()
     localStorage.setItem('tenant', tenant)
-    this._businessService.getBusinessById(tenant).subscribe((resp:any) => {
-      localStorage.setItem('name-tenant', resp.name_short)
-      this.name = resp.name_short
-      this._spinner.hide()
-     })
-  }
-
-  async nameTenant(id: any){
-    let name
-    await this._businessService.getBusinessById(id).subscribe((resp:any) => {
-      //localStorage.setItem('name-tenant', resp.name_short)
-      console.log('resp',resp);
-
-      name = resp.name_short
-     })
-     console.log(name);
-
-     return name
   }
 
   logout(){
