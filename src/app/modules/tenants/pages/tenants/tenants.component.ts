@@ -51,8 +51,9 @@ export class TenantsComponent implements OnInit {
   }
 
   async goToHomeWithTenant(id: string) {
-    this._loginService.changeTenant(id)
-    this._router.navigateByUrl('/home')
+   // this._loginService.changeTenant(id)
+   localStorage.setItem('tenant', id)
+   this._router.navigateByUrl('/home')
   }
 
   search(term: string) {

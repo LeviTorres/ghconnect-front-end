@@ -64,7 +64,7 @@ export class LoginService {
         const { name_business, name_short, creation_date, key_business} = resp.business
         this.user = new User(name, last_name, email, tenant,'', img, role, _id)
         this.business = new Business(name_business, name_short, creation_date, key_business)
-        localStorage.setItem('name-tenant', this.business.name_short)
+        //localStorage.setItem('name-tenant', this.business.name_short)
         localStorage.setItem('tenant', resp.business._id)
         localStorage.setItem('token', resp.token)
       }),
@@ -73,9 +73,9 @@ export class LoginService {
     )
   }
 
-  changeTenant(tenant:any):any{
-    localStorage.setItem('tenant', tenant)
-  }
+ // changeTenant(tenant:any):any{
+  //  localStorage.setItem('tenant', tenant)
+  //}
 
   logout(){
     localStorage.removeItem('token')

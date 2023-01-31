@@ -27,10 +27,12 @@ export class ModalQuestionComponent implements OnInit {
     private _router:Router,
     private businessService:BusinessService
   ) {
+    this.data = _loginService.business
     this.tenant = localStorage.getItem('tenant')
     this.businessService.getBusinessById(this.tenant).subscribe((resp:Business) => {
       this.business = resp
     })
+
   }
 
   ngOnInit(): void {
@@ -38,7 +40,12 @@ export class ModalQuestionComponent implements OnInit {
   }
 
   goToTenant(){
-    this._loginService.changeTenant(this.id)
+    this.businessService.getBusinessById(this.id).subscribe((resp:Business) => {
+      this.data.name_short = resp.name_short
+      localStorage.setItem('tenant', this.id)
+      console.log(this.data.name_short);
+    })
+    //this._loginService.changeTenant(this.id)
     this._router.navigateByUrl('/home')
     this._dialogRef.close()
   }
