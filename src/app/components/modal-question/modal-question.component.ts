@@ -39,15 +39,10 @@ export class ModalQuestionComponent implements OnInit {
 
   }
 
-  goToTenant(){
-    this.businessService.getBusinessById(this.id).subscribe((resp:Business) => {
-      this.data.name_short = resp.name_short
-      localStorage.setItem('tenant', this.id)
-      console.log(this.data.name_short);
-    })
-    //this._loginService.changeTenant(this.id)
-    this._router.navigateByUrl('/home')
+  goToTenants(){
+    this._spinner.show()
     this._dialogRef.close()
+    this._router.navigateByUrl('/tenants')
   }
 
   close(){

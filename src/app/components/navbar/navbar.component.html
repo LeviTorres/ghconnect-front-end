@@ -39,14 +39,11 @@
     <mat-menu #menuTask="matMenu">
       <app-task></app-task>
     </mat-menu>
-    <span style="cursor: pointer; display: flex;" [matMenuTriggerFor]="menuTenant">
+    <span style="cursor: pointer; display: flex;" (click)="changeTenant()">
       <h3 style="font-size: small;padding-right: 5px; color: var(--tblr-626065); font-weight: 600;" class="">
-        {{userTenant}}</h3>
+        {{userTenant.name_short}}</h3>
       <span style="color: var(--tblr-626065);" class="material-icons mt-1">change_circle</span>
     </span>
-    <mat-menu #menuTenant="matMenu">
-      <app-menu-tenants></app-menu-tenants>
-    </mat-menu>
     <button class="mx-3" mat-icon-button [matMenuTriggerFor]="menu">
       <div class="container-2">
         <div class="container-letter-name">

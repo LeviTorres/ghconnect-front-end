@@ -1,25 +1,14 @@
 <app-navbar></app-navbar>
-
 <div class="content p-0">
-  <!-- <div class="content-imgs">
-    <div class="container-img">
-      <div class="item-img" [routerLink]="['/operations']">
-        <img src="../../../../../assets/icons/Operaciones.svg" alt="">
-        <h2 class="text-center">Operación</h2>
-      </div>
-      <div class="item-img" [routerLink]="['/control']">
-        <img src="../../../../../assets/icons/Control.svg" alt="">
-        <h2 class="text-center">Control</h2>
-      </div>
-      <div class="item-img" [routerLink]="['/validation']">
-        <img src="../../../../../assets/icons/Validación.svg" alt="">
-        <h2 class="text-center">Validación</h2>
-      </div>
-    </div>
-  </div> -->
   <div class="d-flex justify-content-between col-12">
-    <div class="col-6"></div>
-    <div class="col-3 mt-3">
+    <div class="col"></div>
+    <div class="col-1 mt-3" style="display: flex;align-items: center;justify-content: end;">
+      <i class="fa-solid fa-filter" [matMenuTriggerFor]="menu"></i>
+    </div>
+    <mat-menu #menu="matMenu" xPosition="before" class="p-3 d-flex flex-column">
+      <mat-checkbox (click)="$event.stopPropagation();" [(ngModel)]="item.completed" (ngModelChange)="filterData(item)" *ngFor="let item of filters">{{item.name}}</mat-checkbox>
+    </mat-menu>
+    <div class="col-3 mx-3 mt-3">
       <mat-form-field class="w-100" appearance="legacy">
         <mat-icon matSuffix>search</mat-icon>
         <mat-label>Buscar...</mat-label>
@@ -33,7 +22,5 @@
       <p class="text-center">{{item.name}}</p>
     </div>
   </div>
-
 </div>
-
 <app-footer></app-footer>

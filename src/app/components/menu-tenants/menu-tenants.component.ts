@@ -46,18 +46,13 @@ export class MenuTenantsComponent implements OnInit {
   }
 
   goToTenant(id:string){
-
-    let dialogRef = this._dialog.open(ModalQuestionComponent, {
+    this._dialog.open(ModalQuestionComponent, {
       width: '640px',
       maxHeight: '95vh',
       disableClose: true,
       autoFocus: false,
       data: id
     });
-    dialogRef.beforeClosed().subscribe(() => {
-      //window.location.reload()
-    })
-
   }
 
 }
