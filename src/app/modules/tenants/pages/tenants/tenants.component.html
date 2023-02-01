@@ -27,13 +27,13 @@
         <div class="face face1">
           <div class=" row">
             <div class="col-6">
-             <img class="imgSize m-1" [src]="getImage(item.tenant_id.img)">
+              <img class="imgSize" [src]="getImage(item.tenant_id.img)">
             </div>
             <div class=" col-6">
-              <p class="text-end text-muted">{{item.tenant_id.key_business}}</p>
+              <p class="text-end text-muted idSize">{{item.tenant_id.key_business}}</p>
             </div>
           </div>
-          <div class="text-white text-center rounded-2">
+          <div class="text-white text-center rounded-2 text-uppercase">
             <p class="tenant-name">{{item.tenant_id.name_short}}</p>
           </div>
         </div>

@@ -83,11 +83,16 @@ h1{
 }
 
 .contenedor .card:hover .face.faceSecond1{
-    transform: translateY(-50px);
+    transform: translateY(-55px);
     z-index: 1;
     
 } 
+.idSize{
+  padding: 10px;
+}
 
 .imgSize{
-  max-height: 3rem;
+  // width: 124px;
+  height: 35px;
+  margin: 10px 0 0 10px;
 }
