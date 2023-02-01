@@ -25,9 +25,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CurrencyPipe } from '@angular/common';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   exports: [
+    MatChipsModule,
     DragDropModule,
     MatButtonModule,
     MatFormFieldModule,

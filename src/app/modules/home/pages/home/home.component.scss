@@ -23,7 +23,7 @@ img {
   align-self: center;
   justify-self: center;
   cursor: pointer;
-  
+
 }
 
 .cont-icon{
@@ -41,4 +41,17 @@ img {
   font-size: 20px;
   font-weight: 500;
   line-height: 24px;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+::ng-deep .mat-radio-button {
+  display: none;
 }
