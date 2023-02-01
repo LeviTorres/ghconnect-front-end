@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     { name: 'Eventos', icon: '../../../../../assets/newIcons/Eventos.svg', type: 'Productividad' },
     { name: 'Facturacion', icon: '../../../../../assets/newIcons/Facturación.svg', type: 'Contabilidad' },
     { name: 'Flota', icon: '../../../../../assets/newIcons/Flota.svg', type: 'Operaciones' },
-    { name: 'Geston de Activos', icon: '../../../../../assets/newIcons/Gestión de Archivos.svg', type: 'Contabilidad' },
+    { name: 'Gestion de Activos', icon: '../../../../../assets/newIcons/Gestión de Archivos.svg', type: 'Contabilidad' },
     { name: 'Inventario', icon: '../../../../../assets/newIcons/Inventario.svg', type: 'Contabilidad' },
     { name: 'Mantenimiento', icon: '../../../../../assets/newIcons/Mantenimiento.svg', type: 'Operaciones' },
     { name: 'Nomina', icon: '../../../../../assets/newIcons/Nómina.svg', type: 'Recursos Humanos' },
@@ -63,16 +63,25 @@ export class HomeComponent implements OnInit {
 
   public selectedFilter: string = 'Todos'
 
-  constructor() { }
+  constructor() {
+    this.servicesTemp = this.services
+    this.servicesFilters = this.servicesTemp
+  }
 
   ngOnInit(): void {
-    this.servicesTemp = this.services
+
+  }
+
+  changeAll(){
+    this.selectedFilter = 'Todos'
+    this.services = this.servicesTemp
+    this.servicesFilters = this.services
   }
 
   selected(value:string){
     if(value === 'Todos'){
       this.services = this.servicesTemp
-      this.servicesFilters = this.servicesTemp
+      this.servicesFilters = this.services
     }else {
       this.services = this.servicesTemp.filter((element:any) => element.type === value)
       this.servicesFilters = this.services
@@ -85,7 +94,11 @@ export class HomeComponent implements OnInit {
       let data = this.servicesFilters.filter((item:any) => item.name.toLowerCase().trim().includes(termino))
       this.services = data
     }else {
-      this.services = this.servicesFilters
+      if(this.selectedFilter === 'Todos'){
+        this.services = this.servicesTemp
+      }else {
+        this.services = this.servicesFilters
+      }
     }
   }
 }

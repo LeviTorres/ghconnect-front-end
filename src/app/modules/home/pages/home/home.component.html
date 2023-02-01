@@ -2,8 +2,8 @@
 <div class="content p-0">
   <div class="d-flex justify-content-between col-12">
     <div class="col"></div>
-    <div class="col-1 mx-3 mt-3" style="display: flex;align-items: center;justify-content: end;" *ngIf="selectedFilter != 'Todos'">
-      {{selectedFilter}}
+    <div class="col-2 mx-3 mt-3" style="display: flex;align-items: center;justify-content: end;" *ngIf="selectedFilter != 'Todos'">
+      <div style="padding: 5px 10px; background-color: gray;border-radius: 15px;color: white;cursor: pointer;display: flex;align-items: center;" (click)="changeAll()">{{selectedFilter}}<mat-icon class="ms-2">cancel</mat-icon></div>
     </div>
     <div class=" mt-3" style="display: flex;align-items: center;justify-content: end;">
       <i class="fa-solid fa-filter" [matMenuTriggerFor]="menu"></i>
@@ -25,11 +25,14 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="col-12 d-flex flex-wrap mt-3">
+  <div *ngIf="services.length > 0" class="col-12 d-flex flex-wrap mt-3">
     <div *ngFor="let item of services" class="col-3 text-center">
       <img class="icons" [src]="item.icon">
       <p class="text-center">{{item.name}}</p>
     </div>
+  </div>
+  <div *ngIf="services.length <= 0" class="text-center">
+    SIN RESULTADOS
   </div>
 </div>
 <app-footer></app-footer>
