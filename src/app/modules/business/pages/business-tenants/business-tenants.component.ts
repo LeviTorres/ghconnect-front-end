@@ -106,7 +106,6 @@ export class BusinessTenantsComponent implements OnInit {
           tenant: this.user.tenant
         }
         this._userService.updateUser(element,this.user._id!).subscribe((resp) => {
-          console.log('resp user', resp);
           this.user.tenant = element.tenant
           this._router.navigateByUrl('/tenants')
         })
@@ -116,8 +115,6 @@ export class BusinessTenantsComponent implements OnInit {
   changeImage(event: any){
     this.imageSelect = event.target.files[0]
     if(this.imageSelect){
-      //this.imgView = this._convertImg.encodeFileAsBase64URL(this.imageSelect)
-      //console.log(this.imgView);
       const reader = new FileReader();
       reader.onload = () => {
         this.imgView = reader.result as string;
