@@ -27,7 +27,7 @@ export class TenantsComponent implements OnInit {
   public tenants: any[] = []
   public tenantsTemp: any[] = []
   public _id!: any
-  public data:any[] = []
+  public data: any[] = []
 
   constructor(
     private _businessService: BusinessService,
@@ -36,7 +36,7 @@ export class TenantsComponent implements OnInit {
     private _searchService: SearchService,
     private _router: Router,
     private _spinner: NgxSpinnerService
-  ) {this._spinner.show()}
+  ) { this._spinner.show() }
 
   ngOnInit(): void {
     this.getUsers()
@@ -51,9 +51,9 @@ export class TenantsComponent implements OnInit {
   }
 
   async goToHomeWithTenant(id: string) {
-   // this._loginService.changeTenant(id)
-   localStorage.setItem('tenant', id)
-   this._router.navigateByUrl('/home')
+    // this._loginService.changeTenant(id)
+    localStorage.setItem('tenant', id)
+    this._router.navigateByUrl('/home')
   }
 
   search(term: string) {
