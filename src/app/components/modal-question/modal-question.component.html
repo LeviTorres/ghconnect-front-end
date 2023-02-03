@@ -1,15 +1,17 @@
 <div class="col-12 d-flex">
   <div style="background: linear-gradient(46.25deg, #FF6F00 -2.76%, #FFC107 100.54%);" class="col-4 text-center">
     <div style="height:100%; display:flex; align-items: center;" class="p-3">
-      <div >
-        <h3 style="color: white;font-weight: 400px;font-size: 13px;line-height: 16px;">Actualmente esta trabajando en:</h3>
+      <div>
+        <h3 style="color: white;font-weight: 400px;font-size: 13px;line-height: 16px;">Actualmente esta trabajando en:
+        </h3>
         <img style="width: 145px;height: 55px;" [src]="getImage(business)" alt="">
       </div>
     </div>
   </div>
   <div class="col-8" style="padding:30px">
     <div style="padding-bottom: 60px;">
-      <p style="font-weight: 400;font-size: 20px;line-height: 24px;">Puedes continuar con la sesion actual con la empresa actual, o cambiar de espacio de trabajo.</p>
+      <p style="font-weight: 400;font-size: 20px;line-height: 24px;">Puedes continuar con la sesion actual con la
+        empresa actual, o cambiar de espacio de trabajo.</p>
       <p style="font-weight: 400;font-size: 20px;line-height: 24px;">Antes de cambiar de empresa,</p>
       <p style="font-weight: 600;font-size: 30px;line-height: 36px;">¿Desea guardar los cambios recientes?</p>
     </div>
@@ -17,7 +19,7 @@
       <button class="btn-primary" mat-raised-button (click)="close()">
         Continuar sesion
       </button>
-      <button class="btn-primary" mat-raised-button (click)="goToTenants()" >Salir y guardar</button>
+      <button class="btn-primary" mat-raised-button (click)="goToTenants()">Guardar y salir</button>
     </mat-dialog-actions>
   </div>
 </div>
