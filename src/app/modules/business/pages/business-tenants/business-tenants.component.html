@@ -180,6 +180,20 @@
     </form>
   </div>
   <div *ngIf="!flag" class="col-4 m-3">
-    Hola
+    <mat-tab-group class="p-0 m-0">
+      <mat-tab mat-stretch-tabs="false" class="p-0 m-0"label="Actividades">
+        <div>
+          <div class="container-2">
+            <div class="container-letter-name">
+              <p class="letter-name"><strong>{{letterNames}}</strong></p>
+            </div>
+            <div class="container-avatar-1">
+              <img class="avatar-color" alt="">
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab mat-stretch-tabs="false" class="p-0 m-0" label="Poner una nota"> Content 2 </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

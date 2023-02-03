@@ -25,6 +25,7 @@ export class BusinessTenantsComponent implements OnInit {
   public user!: any
   public imgView: any
   public flag: boolean = false
+  public letterNames: string = ''
 
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -62,6 +63,7 @@ export class BusinessTenantsComponent implements OnInit {
     this.date = new Date();
     this.form.controls['creation_date'].setValue(this.date)
     this.user = _loginService.user
+    this.letterNames = `${this.user.name.charAt(0).toUpperCase()}`;
   }
 
   ngOnInit(): void {
