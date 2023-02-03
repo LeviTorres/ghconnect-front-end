@@ -11,6 +11,7 @@ import { TableBusinessComponent } from './components/table-business/table-busine
 import { EditBusinessComponent } from './components/edit-business/edit-business.component';
 import { BusinessTenantsComponent } from './pages/business-tenants/business-tenants.component';
 import { HomeBusinessComponent } from './pages/home-business/home-business.component';
+import { AddActivitiesComponent } from './components/add-activities/add-activities.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HomeBusinessComponent } from './pages/home-business/home-business.compo
     EditBusinessComponent,
     BusinessTenantsComponent,
     HomeBusinessComponent,
+    AddActivitiesComponent,
   ],
   imports: [
     CommonModule,

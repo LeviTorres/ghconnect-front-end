@@ -179,21 +179,48 @@
       </div>
     </form>
   </div>
-  <div *ngIf="!flag" class="col-4 m-3">
-    <mat-tab-group class="p-0 m-0">
-      <mat-tab mat-stretch-tabs="false" class="p-0 m-0"label="Actividades">
-        <div>
-          <div class="container-2">
-            <div class="container-letter-name">
-              <p class="letter-name"><strong>{{letterNames}}</strong></p>
-            </div>
-            <div class="container-avatar-1">
-              <img class="avatar-color" alt="">
-            </div>
-          </div>
+  <div *ngIf="!flag" class="col-4 mx-3">
+    <div class="d-flex">
+        <div style="border-bottom: 3px solid blue;padding: 10px; padding-top: 0px;">Poner una nota</div>
+        <div style="padding: 10px; padding-top: 0px;cursor: pointer;" (click)="openDialogAddActivity()">
+          <span>Actividades</span>
         </div>
-      </mat-tab>
-      <mat-tab mat-stretch-tabs="false" class="p-0 m-0" label="Poner una nota"> Content 2 </mat-tab>
-    </mat-tab-group>
+      </div>
+    <div>
+    <div class="d-flex m-3 col-12" style="width: 100%;">
+      <div class="container-2">
+        <div class="container-letter-name">
+          <p class="letter-name"><strong>{{letterNames}}</strong></p>
+        </div>
+        <div class="container-avatar-1">
+          <img class="avatar-color" alt="">
+        </div>
+      </div>
+      <div class="ms-3 col">
+        <textarea type="text" [formControl]="formActivity" class="form-control" style="background-color: #E0E0E0; width: 100%;" placeholder="Escribe una nota"></textarea>
+      </div>
+    </div>
+    <div class="mx-3">
+      <button class="btn-primary" mat-raised-button (click)="addActivity()">ENVIAR</button>
+    </div>
+  </div>
+  <div>
+    <div class="d-flex m-3 col-12" style="width: 100%;" *ngFor="let item of history">
+      <div class="container-2">
+        <div class="container-letter-name">
+          <p class="letter-name"><strong>{{letterNames}}</strong></p>
+        </div>
+        <div class="container-avatar-1">
+          <img class="avatar-color" alt="">
+        </div>
+      </div>
+      <div class="ms-3 col">
+        <div>
+          <span style="font-weight: bold;">{{item.name}}{{item.last_name}} - </span>
+          <span>{{item.fecha | date: "dd/MM/yyyy h:mm a"}}</span>
+        </div>
+          <span>{{item.note}}</span>
+      </div>
+    </div>
   </div>
 </div>

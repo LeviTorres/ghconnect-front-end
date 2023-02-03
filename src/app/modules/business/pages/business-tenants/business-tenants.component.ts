@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../../../services/login.service';
 import { User } from '../../../../models/User.model';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddActivitiesComponent } from '../../components/add-activities/add-activities.component';
 
 @Component({
   selector: 'app-business-tenants',
@@ -26,6 +28,9 @@ export class BusinessTenantsComponent implements OnInit {
   public imgView: any
   public flag: boolean = false
   public letterNames: string = ''
+  public history: any [] = []
+
+  public formActivity:FormControl = new FormControl('')
 
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -56,7 +61,8 @@ export class BusinessTenantsComponent implements OnInit {
     private _userService:UsersService,
     private _uploadService: UploadFileService,
     private _toastr: ToastrService,
-    private _router: Router
+    private _router: Router,
+    private _dialog:MatDialog,
   ) {
     this._spinner.show()
     this.getCountryOpen()
@@ -64,6 +70,7 @@ export class BusinessTenantsComponent implements OnInit {
     this.form.controls['creation_date'].setValue(this.date)
     this.user = _loginService.user
     this.letterNames = `${this.user.name.charAt(0).toUpperCase()}`;
+
   }
 
   ngOnInit(): void {
@@ -72,6 +79,35 @@ export class BusinessTenantsComponent implements OnInit {
 
   goToComment(){
     this.flag = !this.flag
+  }
+
+  openDialogAddActivity(){
+    let dialogRef = this._dialog.open(AddActivitiesComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+
+    })
+  }
+
+  addActivity(){
+    const value = this.formActivity.value
+    if(value.length <= 0 ){
+      this._toastr.warning('Es obligatorio escribir una nota')
+      return
+    }
+
+    this.history.push({
+      name: this.user.name,
+      last_name: this.user.last_name,
+      note: this.formActivity.value,
+      fecha: new Date().getTime()
+    })
+
+    this.formActivity.reset()
   }
 
   addBusiness(){
