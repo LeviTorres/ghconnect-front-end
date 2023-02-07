@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     { name: 'Cuentas Bancarias', icon: '../../../../../assets/newIcons/Cuentas bancarias.svg', type: 'Tesoreria', url: '' },
     { name: 'Validaciones', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Productividad', url: '' },
     { name: 'Pagos de Clientes', icon: '../../../../../assets/newIcons/Cuentas bancarias.svg', type: 'Tesoreria', url: '/invoice-clients' },
-    { name: 'Pagos a proveedores', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Tesoreria', url: '/invoice-providers' },
+    { name: 'Pagos a Proveedores', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Tesoreria', url: '/invoice-providers' },
   ]
 
   public filters: any[] = [
