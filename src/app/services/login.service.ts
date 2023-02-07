@@ -61,9 +61,9 @@ export class LoginService {
     }).pipe(
       tap((resp:any) => {
         const {email, last_name, name, role, _id, img, tenant } = resp.user
-        const { name_business, name_short, creation_date, key_business} = resp.business
+        const { name_business, name_short, creation_date, key_business, activities} = resp.business
         this.user = new User(name, last_name, email, tenant,'', img, role, _id)
-        this.business = new Business(name_business, name_short, creation_date, key_business)
+        this.business = new Business(name_business, name_short, creation_date, key_business, activities)
         //localStorage.setItem('name-tenant', this.business.name_short)
         localStorage.setItem('tenant', resp.business._id)
         localStorage.setItem('token', resp.token)

@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   public userTenant: any
   public tenants:any
   @Input() title:any;
+  @Input() type:any;
 
   constructor(
     private _loginService: LoginService,
@@ -37,6 +38,15 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  goToHome() {
+    this._router.navigate(['/home'],
+      {
+        queryParams: {
+          menu: this.title,
+        }
+      });
   }
 
   changeTenant(){

@@ -94,7 +94,9 @@ export class BusinessTenantsComponent implements OnInit {
   }
 
   addActivity(){
-    const value = this.formActivity.value
+    const value = this.formActivity.value.trim()
+    console.log();
+
     if(value.length <= 0 ){
       this._toastr.warning('Es obligatorio escribir una nota')
       return
@@ -104,10 +106,10 @@ export class BusinessTenantsComponent implements OnInit {
       name: this.user.name,
       last_name: this.user.last_name,
       note: this.formActivity.value,
-      fecha: new Date().getTime()
+      date: new Date().getTime()
     })
 
-    this.formActivity.reset()
+    this.formActivity.setValue('')
   }
 
   addBusiness(){
@@ -117,14 +119,19 @@ export class BusinessTenantsComponent implements OnInit {
       return
     }
 
+
+
     if(!this.imageSelect){
       this._toastr.warning('Selecciona el logotipo de la empresa')
       return
     }
     const element: Business = {
       ...this.form.value,
-      creation_date: new Date(this.form.controls['creation_date'].value).getTime()
+      creation_date: new Date(this.form.controls['creation_date'].value).getTime(),
+      activities: this.history
     }
+    console.log(element);
+
     this._businessService.createBusiness(element).subscribe((resp: Business) => {
         this._uploadService.updateFile(this.imageSelect,'business',resp._id!).then((resp:any) => {})
         this.user.tenant.push({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     { name: 'Cuentas Bancarias', icon: '../../../../../assets/newIcons/Cuentas bancarias.svg', type: 'Tesoreria', url: '' },
     { name: 'Validaciones', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Productividad', url: '' },
     { name: 'Pagos de Clientes', icon: '../../../../../assets/newIcons/Cuentas bancarias.svg', type: 'Tesoreria', url: '/invoice-clients' },
-    { name: 'Pagos a proveedores', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Tesoreria', url: '/invoice-providers' },
+    { name: 'Pagos a Proveedores', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Tesoreria', url: '/invoice-providers' },
   ]
 
   public filters: any[] = [
@@ -62,17 +62,28 @@ export class HomeComponent implements OnInit {
     { name: 'Recursos Humanos' }
   ]
 
-  public selectedFilter: string = 'Todos'
+  public selectedFilter: string = ''
 
   constructor(
     private _router: Router,
+    private _activatedRoute: ActivatedRoute
   ) {
     this.servicesTemp = this.services
     this.servicesFilters = this.servicesTemp
+    this._activatedRoute.queryParams.subscribe((params: any) => {
+      if(params.menu){
+        this.selectedFilter = params.menu
+        this.services = this.servicesTemp.filter((element: any) => element.type === params.menu)
+        this.servicesFilters = this.services
+      }else {
+        this.selectedFilter = 'Todos'
+        this.services = this.servicesTemp
+        this.servicesFilters = this.services
+      }
+    })
   }
 
   ngOnInit(): void {
-
   }
 
   changeAll() {

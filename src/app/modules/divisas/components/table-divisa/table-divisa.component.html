@@ -10,8 +10,8 @@
     </mat-form-field>
   </div>
 </div>
-<div class="table-responsive mt-4">
-  <table class="table text-nowrap">
+<div class="table-responsive mt-4 overflow-auto card">
+  <table class="table card-table table-vcenter text-nowrap datatable">
     <thead>
       <tr>
         <th *ngIf="nameControl.value">
@@ -28,8 +28,7 @@
         </th>
         <th class="last" style="width: 15px;">
           <span class="button-menu" [matMenuTriggerFor]="menu">
-            <i class="material-icons" style="color:white "><img
-                src="../../../../../assets/icons/more-vert-icon.svg"></i>
+            <i class="material-icons" style="color:white ">more_vert</i>
           </span>
         </th>
         <mat-menu #menu="matMenu">
