@@ -1,7 +1,7 @@
 <div class="content-navbar">
   <mat-toolbar class="color position-sticky">
     <img class="active" src="../../../assets/icons/GHconnecticon.svg" [routerLink]="['/home']" alt="">
-    <span class="mx-3 title-navbar">{{title}}</span>
+    <span style="cursor: pointer;" class="mx-3 title-navbar" (click)="goToHome()">{{title}}</span>
    <!-- <div class="d-flex" *ngIf="title === 'Operaciones'">
       <a class="mx-3" [routerLink]="['/operations']" routerLinkActive="active-link">Dashboard</a>
       <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Clientes</a>

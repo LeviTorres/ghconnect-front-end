@@ -40,6 +40,15 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  goToHome() {
+    this._router.navigate(['/home'],
+      {
+        queryParams: {
+          menu: this.title,
+        }
+      });
+  }
+
   changeTenant(){
     this._dialog.open(ModalQuestionComponent, {
       width: '640px',
