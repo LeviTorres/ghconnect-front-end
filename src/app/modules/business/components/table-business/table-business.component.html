@@ -35,7 +35,8 @@
           </th>
           <th class="last" style="width: 15px;">
             <span class="button-menu" [matMenuTriggerFor]="menu">
-              <i class="material-icons" style="color:white ">more_vert</i>
+              <i class="material-icons" style="color:white "><img
+                  src="../../../../../assets/icons/more-vert-icon.svg"></i>
             </span>
           </th>
           <mat-menu #menu="matMenu">
@@ -60,11 +61,11 @@
       <tbody>
         <tr *ngFor="let busines of business | paginate: { itemsPerPage: selectedValue, currentPage: page };
         index as i">
-        <td class="text-center img" *ngIf="avatarControl.value">
-          <span>
-            <img style="width: 50px; height: 50px;" [src]="getImage(busines.img)" alt="">
-          </span>
-        </td>
+          <td class="text-center img" *ngIf="avatarControl.value">
+            <span>
+              <img style="width: 50px; height: 50px;" [src]="getImage(busines.img)" alt="">
+            </span>
+          </td>
           <td *ngIf="nameControl.value">
             <span>{{ busines.name }}</span>
           </td>
@@ -75,7 +76,7 @@
             <span>{{ busines.key_business }}</span>
           </td>
           <td *ngIf="countryControl.value">
-           <!-- <span>{{ busines.country?.name}}</span>-->
+            <!-- <span>{{ busines.country?.name}}</span>-->
           </td>
           <td class="last" *ngIf="actionsControl.value">
             <i class="fa fa-edit me-4" (click)="openDialogEditBusiness(busines)"></i>
@@ -90,12 +91,12 @@
 <div class="col-12 d-flex flex-row-reverse">
   <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
     [responsive]="true"></pagination-controls>
-    <mat-form-field>
-      <mat-select [(value)]="selectedValue">
-        <mat-option [value]="10">10</mat-option>
-        <mat-option [value]="20">20</mat-option>
-        <mat-option [value]="50">50</mat-option>
-        <mat-option [value]="100">100</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-select [(value)]="selectedValue">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="20">20</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="100">100</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
