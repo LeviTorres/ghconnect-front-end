@@ -4,6 +4,7 @@ import { InvoiceClientsComponent } from './pages/invoice-clients/invoice-clients
 import { MainComponent } from './pages/main/main.component';
 import { AddInvoiceClientsComponent } from './pages/add-invoice-clients/add-invoice-clients.component';
 import { EditInvoiceClientComponent } from './pages/edit-invoice-client/edit-invoice-client.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
     children: [
       { path: '', component: InvoiceClientsComponent },
       { path: 'add-invoice-clients', component: AddInvoiceClientsComponent },
-      { path: 'edit-invoice-client', component: EditInvoiceClientComponent }
+      { path: 'edit-invoice-client', component: EditInvoiceClientComponent },
+      { path: 'dashboard', component: DashboardComponent }
     ]
   }
 ];
