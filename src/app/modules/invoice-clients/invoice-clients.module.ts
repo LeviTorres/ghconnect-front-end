@@ -11,6 +11,7 @@ import { AddInvoiceClientsComponent } from './pages/add-invoice-clients/add-invo
 import { TableInvoiceClientsComponent } from './components/table-invoice-clients/table-invoice-clients.component';
 import { ModalTrackingComponent } from './components/modal-tracking/modal-tracking.component';
 import { EditInvoiceClientComponent } from './pages/edit-invoice-client/edit-invoice-client.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { EditInvoiceClientComponent } from './pages/edit-invoice-client/edit-inv
     AddInvoiceClientsComponent,
     TableInvoiceClientsComponent,
     ModalTrackingComponent,
-    EditInvoiceClientComponent
+    EditInvoiceClientComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
