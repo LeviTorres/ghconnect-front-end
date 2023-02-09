@@ -28,9 +28,9 @@ export class BusinessTenantsComponent implements OnInit {
   public imgView: any
   public flag: boolean = false
   public letterNames: string = ''
-  public history: any [] = []
+  public history: any[] = []
 
-  public formActivity:FormControl = new FormControl('')
+  public formActivity: FormControl = new FormControl('')
 
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -48,7 +48,7 @@ export class BusinessTenantsComponent implements OnInit {
     tax_identification_number: new FormControl('', Validators.required),
     phone_number: new FormControl('', Validators.required),
     mobile_number: new FormControl('', Validators.required),
-    email: new FormControl('', [ Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     url_web: new FormControl(''),
     divisa: new FormControl('', Validators.required)
   })
@@ -58,11 +58,11 @@ export class BusinessTenantsComponent implements OnInit {
     private _countryService: CountriesOpenService,
     private _businessService: BusinessService,
     private _loginService: LoginService,
-    private _userService:UsersService,
+    private _userService: UsersService,
     private _uploadService: UploadFileService,
     private _toastr: ToastrService,
     private _router: Router,
-    private _dialog:MatDialog,
+    private _dialog: MatDialog,
   ) {
     this._spinner.show()
     this.getCountryOpen()
@@ -77,11 +77,11 @@ export class BusinessTenantsComponent implements OnInit {
 
   }
 
-  goToComment(){
+  goToComment() {
     this.flag = !this.flag
   }
 
-  openDialogAddActivity(){
+  openDialogAddActivity() {
     let dialogRef = this._dialog.open(AddActivitiesComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -93,11 +93,11 @@ export class BusinessTenantsComponent implements OnInit {
     })
   }
 
-  addActivity(){
+  addActivity() {
     const value = this.formActivity.value.trim()
     console.log();
 
-    if(value.length <= 0 ){
+    if (value.length <= 0) {
       this._toastr.warning('Es obligatorio escribir una nota')
       return
     }
@@ -112,16 +112,16 @@ export class BusinessTenantsComponent implements OnInit {
     this.formActivity.setValue('')
   }
 
-  addBusiness(){
+  addBusiness() {
 
-    if(this.form.invalid){
+    if (this.form.invalid) {
       this.form.markAllAsTouched()
       return
     }
 
 
 
-    if(!this.imageSelect){
+    if (!this.imageSelect) {
       this._toastr.warning('Selecciona el logotipo de la empresa')
       return
     }
@@ -133,33 +133,33 @@ export class BusinessTenantsComponent implements OnInit {
     console.log(element);
 
     this._businessService.createBusiness(element).subscribe((resp: Business) => {
-        this._uploadService.updateFile(this.imageSelect,'business',resp._id!).then((resp:any) => {})
-        this.user.tenant.push({
-          tenant_id: {
-            divisa: resp.divisa,
-            key_business: resp.key_business,
-            name: resp.name,
-            name_short: resp.name_short,
-            user: resp.user,
-            __v: 0,
-            _id: resp._id
-          }
-        })
-        const element = {
-          name: this.user.name,
-          last_name: this.user.last_name,
-          tenant: this.user.tenant
+      this._uploadService.updateFile(this.imageSelect, 'business', resp._id!).then((resp: any) => { })
+      this.user.tenant.push({
+        tenant_id: {
+          divisa: resp.divisa,
+          key_business: resp.key_business,
+          name: resp.name,
+          name_short: resp.name_short,
+          user: resp.user,
+          __v: 0,
+          _id: resp._id
         }
-        this._userService.updateUser(element,this.user._id!).subscribe((resp) => {
-          this.user.tenant = element.tenant
-          this._router.navigateByUrl('/tenants')
-        })
+      })
+      const element = {
+        name: this.user.name,
+        last_name: this.user.last_name,
+        tenant: this.user.tenant
+      }
+      this._userService.updateUser(element, this.user._id!).subscribe((resp) => {
+        this.user.tenant = element.tenant
+        this._router.navigateByUrl('/tenants')
+      })
     })
   }
 
-  changeImage(event: any){
+  changeImage(event: any) {
     this.imageSelect = event.target.files[0]
-    if(this.imageSelect){
+    if (this.imageSelect) {
       const reader = new FileReader();
       reader.onload = () => {
         this.imgView = reader.result as string;
@@ -168,7 +168,7 @@ export class BusinessTenantsComponent implements OnInit {
     }
   }
 
-  getCountryOpen(){
+  getCountryOpen() {
     this._countryService.getCountriesOpen().subscribe((resp: Countryopen[]) => {
       this.divisas = resp
       this._spinner.hide()

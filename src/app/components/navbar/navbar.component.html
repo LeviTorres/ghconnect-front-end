@@ -2,7 +2,7 @@
   <mat-toolbar class="color position-sticky">
     <img class="active" src="../../../assets/icons/GHconnecticon.svg" [routerLink]="['/home']" alt="">
     <span style="cursor: pointer;" class="mx-3 title-navbar" (click)="goToHome()">{{title}}</span>
-   <!-- <div class="d-flex" *ngIf="title === 'Operaciones'">
+    <!-- <div class="d-flex" *ngIf="title === 'Operaciones'">
       <a class="mx-3" [routerLink]="['/operations']" routerLinkActive="active-link">Dashboard</a>
       <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Clientes</a>
       <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Proveedores</a>
@@ -16,14 +16,22 @@
       </div>
     </div>-->
     <div class="d-flex" *ngIf="type === 'Pago a Proveedores'">
-      <a class="mx-3"  routerLinkActive="active-link">Dashboard</a>
-      <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Proveedores</a>
-      <a class="mx-3" [routerLink]="['/providers']" routerLinkActive="active-link">Gestion proveedores</a>
+      <a class="mx-3" routerLinkActive="active-link">Dashboard</a>
+      <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Facturas</a>
+      <a class="mx-3" routerLinkActive="active-link">Contratos</a>
+      <a class="mx-3" routerLinkActive="active-link">Garantias</a>
+      <a class="mx-3" routerLinkActive="active-link">Consultas</a>
+      <a class="mx-3" routerLinkActive="active-link">Informes</a>
+      <a class="mx-3" [routerLink]="['/providers']" routerLinkActive="active-link">Configuracion</a>
     </div>
     <div class="d-flex" *ngIf="type === 'Pago a Clientes'">
-      <a class="mx-3"  routerLinkActive="active-link">Dashboard</a>
-      <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Clientes</a>
-      <a class="mx-3" [routerLink]="['/clients']" routerLinkActive="active-link">Gestion clientes</a>
+      <a class="mx-3" routerLinkActive="active-link">Dashboard</a>
+      <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Facturas</a>
+      <a class="mx-3" routerLinkActive="active-link">Contratos</a>
+      <a class="mx-3" routerLinkActive="active-link">Garantias</a>
+      <a class="mx-3" routerLinkActive="active-link">Consultas</a>
+      <a class="mx-3" routerLinkActive="active-link">Informes</a>
+      <a class="mx-3" [routerLink]="['/clients']" routerLinkActive="active-link">Configuracion</a>
     </div>
     <div class="d-flex" *ngIf="type === 'Cuadro Comparativo'">
       <div class="dropdown">
@@ -42,7 +50,7 @@
     <div class="d-flex" *ngIf="type === 'Proveedores'">
       <a class="mx-3" [routerLink]="['/providers']" routerLinkActive="active-link">Proveedores</a>
     </div>
-   <!-- <div class="d-flex" *ngIf="title === 'Validacion'">
+    <!-- <div class="d-flex" *ngIf="title === 'Validacion'">
       <div class="dropdown">
         <a class="mx-3 dropbtn" [routerLink]="['/validation']" routerLinkActive="active-link">Cuadro comparativo</a>
         <div class="dropdown-content">

@@ -1,3 +1,4 @@
+
 :root {
   --tblr-FCCF06: #fccf06;
   --tblr-fff: #fff;
@@ -64,13 +65,14 @@
 @font-face {
   font-family: monserrat;
   src: url(assets/fonts/MONTSERRAT-REGULAR.TTF) format("opentype");
+  
 }
 
 *{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'monserrat', 'arial', sans-serif;
+  // font-family: 'monserrat', 'arial', sans-serif;
 }
 
 html{
@@ -191,9 +193,10 @@ td {
  position: sticky;
  right: 0;
 }
+
 .table tr:last-of-type{
   padding-bottom: 50px;
- }
+}
 
 .last {
   text-align: center;

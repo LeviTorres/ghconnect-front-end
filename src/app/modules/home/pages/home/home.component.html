@@ -28,8 +28,10 @@
     </div>
   </div>
   <div *ngIf="services.length > 0" style="max-width: 900px; margin: 0 auto;" class="col-12 d-flex flex-wrap ">
-    <div *ngFor="let item of services" class="col-3 text-center my-3 cont-icon" [routerLink]="[item.url]">
-      <img class="icons" [src]="item.icon">
+    <div *ngFor="let item of services" class="col-2 text-center my-3" [routerLink]="[item.url]">
+      <div class="cont-icon">
+        <img class="icons" [src]="item.icon">
+      </div>
       <p class="text-center">{{item.name}}</p>
     </div>
   </div>
