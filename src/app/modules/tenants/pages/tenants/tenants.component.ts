@@ -66,7 +66,7 @@ export class TenantsComponent implements OnInit {
     }
   }
 
-  getImage(image: string) {
+  getImage(image?: string) {
     if (image) {
       return `${base_url}/upload/business/${image}`
     } else {

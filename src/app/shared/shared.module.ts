@@ -26,6 +26,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { CurrencyPipe } from '@angular/common';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatChipsModule} from '@angular/material/chips';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 
 @NgModule({
   exports: [
