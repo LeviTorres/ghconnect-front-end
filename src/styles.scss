@@ -71,6 +71,7 @@
 }
 
 *{
+  // verificar para el contenido de la tabla
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
@@ -119,7 +120,7 @@ body {
 
 .content {
   height: calc(100% - 114px);
-  padding: 20px;
+  padding: 10px;
   //max-width: 1440px;
   margin: 0 auto;
   overflow-y: auto;

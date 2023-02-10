@@ -16,6 +16,7 @@
       </div>
     </div>-->
     <div class="d-flex" *ngIf="type === 'Pago a Proveedores'">
+      <img src="../../../assets/newIcons/Icon_Proveedores.svg">
       <a class="mx-3" routerLinkActive="active-link">Dashboard</a>
       <a class="mx-3" [routerLink]="['/invoice-providers']" routerLinkActive="active-link">Facturas</a>
       <a class="mx-3" routerLinkActive="active-link">Contratos</a>
@@ -25,6 +26,7 @@
       <a class="mx-3" [routerLink]="['/providers']" routerLinkActive="active-link">Configuracion</a>
     </div>
     <div class="d-flex" *ngIf="type === 'Pago a Clientes'">
+      <img src="../../../assets/newIcons/Icon_Proveedores.svg">
       <a class="mx-3" routerLinkActive="active-link">Dashboard</a>
       <a class="mx-3" [routerLink]="['/invoice-clients']" routerLinkActive="active-link">Facturas</a>
       <a class="mx-3" routerLinkActive="active-link">Contratos</a>
