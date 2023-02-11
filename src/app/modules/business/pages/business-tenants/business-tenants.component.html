@@ -1,9 +1,5 @@
 <div class="col-12 d-flex">
-  <div class="col" style="position: relative;">
-    <div style="position: absolute; right: 0;">
-      <button *ngIf="!flag" class="btn-primary" (click)="goToComment()"><i class="fa-solid fa-arrow-right"></i></button>
-      <button *ngIf="flag" class="btn-primary" (click)="goToComment()"><i class="fa-solid fa-arrow-left"></i></button>
-    </div>
+  <div class="col">
     <div style="background: linear-gradient(269.73deg, #FFC107 29.96%, #FF8F00 95.46%);border-radius: 8px;padding: 15px; display: flex; justify-content: space-between;margin-bottom: 30px;">
         <div style="display: flex;align-items: center; height: 100%;">
           <h4 style="font-weight: 600;font-size: 40px;color: white; margin: 0;">+ Empresa</h4>
@@ -11,8 +7,10 @@
         </div>
         <div style="background-color: #FFF8E1; border-radius: 4px;display: flex; padding: 8px;">
           <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0;">FECHA DE CREACIÓN</p>
-          <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0; display: flex; align-items: center;" class="">{{date | date: 'dd/MM/yyyy'}}</p>
+          <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0; display: flex; align-items: center;" class="ms-2">{{date | date: 'dd/MM/yyyy'}}</p>
         </div>
+        <button  *ngIf="!flag" class="btn-primary ms-2" mat-raised-button (click)="goToComment()"><i class="fa-solid fa-arrow-right"></i></button>
+        <button *ngIf="flag" class="btn-primary ms-2" mat-raised-button (click)="goToComment()"><i class="fa-solid fa-arrow-left"></i></button>
     </div>
     <form  autocomplete="off" [formGroup]="form">
       <div class="row col-12 mx-0 mb-2">
