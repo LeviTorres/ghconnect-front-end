@@ -23,7 +23,13 @@
       <a class="mx-3" routerLinkActive="active-link">Garantias</a>
       <a class="mx-3" routerLinkActive="active-link">Consultas</a>
       <a class="mx-3" routerLinkActive="active-link">Informes</a>
-      <a class="mx-3" [routerLink]="['/providers']" routerLinkActive="active-link">Configuracion</a>
+      <div class="dropdown">
+        <a class="mx-3 dropbtn">Configuración</a>
+        <div class="dropdown-content">
+          <a [routerLink]="['/providers']" routerLinkActive="active-link">Gestion proveedores</a>
+          <a [routerLink]="['/movement-types']" routerLinkActive="active-link">Gestion movimientos</a>
+        </div>
+      </div>
     </div>
     <div class="d-flex" *ngIf="type === 'Pago a Clientes'">
       <img src="../../../assets/newIcons/Icon_Proveedores.svg">
@@ -33,7 +39,13 @@
       <a class="mx-3" routerLinkActive="active-link">Garantias</a>
       <a class="mx-3" routerLinkActive="active-link">Consultas</a>
       <a class="mx-3" routerLinkActive="active-link">Informes</a>
-      <a class="mx-3" [routerLink]="['/clients']" routerLinkActive="active-link">Configuracion</a>
+      <div class="dropdown">
+        <a class="mx-3 dropbtn">Configuración</a>
+        <div class="dropdown-content">
+          <a [routerLink]="['/clients']" routerLinkActive="active-link">Gestion clientes</a>
+          <a [routerLink]="['/movement-types']" routerLinkActive="active-link">Gestion movimientos</a>
+        </div>
+      </div>
     </div>
     <div class="d-flex" *ngIf="type === 'Cuadro Comparativo'">
       <div class="dropdown">

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import { MovementType } from '../models/MovementType.model';
 
 const base_url = environment.base_url
 
@@ -38,4 +39,17 @@ export class MovementsTypeService {
                 })
               )
   }
+
+  createMovementType(formData: any) {
+    return this._http.post(`${base_url}/movements-type`, formData, this.headers)
+  }
+
+  updateMovementType(formData: any, _id:string) {
+    return this._http.put(`${base_url}/movements-type/${ _id}`, formData, this.headers)
+  }
+
+  deleteMovementType(movementType: MovementType){
+    return this._http.delete(`${base_url}/movements-type/${movementType._id}`,this.headers)
+  }
+
 }
