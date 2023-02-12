@@ -1,1 +1,43 @@
-<p>edit-movement-types works!</p>
+<header class="d-flex align-items-flex-end">
+  <h2 class="col-md-10 p-0">Editar Tipo de movimiento</h2>
+</header>
+<form autocomplete="off" [formGroup]="form">
+  <div class="row col-12 mb-3">
+    <div class="form-group col-3">
+      <label class="mb-2" for="exampleFormControlInput1">Clave de la empresa</label>
+      <input [ngClass]="{'error-input': form.controls['key_movement'].errors && form.controls['key_movement'].touched}" formControlName="key_movement" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="14">
+        <div *ngIf="form.controls['key_movement'].errors && form.controls['key_movement'].touched" class="validation">
+          Campo requerido
+        </div>
+    </div>
+    <div class="form-group col-5">
+      <label class="mb-2" for="exampleFormControlInput1">Nombre tipo de movimiento</label>
+      <input [ngClass]="{'error-input': form.controls['name_movement'].errors && form.controls['name_movement'].touched}" formControlName="name_movement" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Facturas - Comprobantes fiscales">
+        <div *ngIf="form.controls['name_movement'].errors && form.controls['name_movement'].touched" class="validation">
+          Campo requerido
+        </div>
+    </div>
+  </div>
+  <div class="row col-12 mb-5">
+    <div class="form-group col-3">
+      <label class="mb-2" for="exampleFormControlInput1">Tipo de movimiento</label>
+      <select [ngClass]="{'error-input': form.controls['type'].errors && form.controls['type'].touched}" formControlName="type" type="text" style="background-color: #E0E0E0" class="form-select" id="exampleFormControlInput1">
+        <option value="" selected disabled>Selecciona una tipo de movimiento</option>
+        <option *ngFor="let item of optionsType" [value]="item.name">{{item.name}}</option>
+      </select>
+        <div *ngIf="form.controls['type'].errors && form.controls['type'].touched" class="validation">
+          Campo requerido
+        </div>
+    </div>
+    <div class="form-check col-5 ms-3" style="display: flex; align-items: center;">
+      <input class="form-check-input" formControlName="invoice" style="background-color: #E0E0E0" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label mx-3" for="flexCheckDefault">
+        Factura
+      </label>
+    </div>
+  </div>
+  <div class="text-center">
+    <button class="btn-primary mx-3" mat-raised-button routerLink="/movement-types">Cancelar</button>
+    <button class="btn-primary mx-3" mat-raised-button (click)="editMovementType()">Editar Tipo de Movimiento</button>
+  </div>
+</form>

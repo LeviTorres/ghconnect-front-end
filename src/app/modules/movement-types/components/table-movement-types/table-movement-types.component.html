@@ -1,1 +1,89 @@
-<p>table-movement-types works!</p>
+<div class="d-flex justify-content-between col-12">
+  <div>
+    <button class="btn-primary" mat-raised-button routerLink="/movement-types/add-movement-type">Crear tipo de movimiento</button>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-100" appearance="legacy">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-label>Buscar...</mat-label>
+      <input type="text" matInput #txtTerm (keyup)="search(txtTerm.value)">
+    </mat-form-field>
+  </div>
+</div>
+  <div class="table-responsive mt-4 overflow-auto card">
+    <table class="table card-table table-vcenter text-nowrap datatable">
+      <thead>
+        <tr>
+          <th *ngIf="keyMovementControl.value">
+            Clave Movimiento
+          </th>
+          <th *ngIf="nameMovementControl.value">
+            Nombre Movimiento
+          </th>
+          <th *ngIf="typeControl.value">
+            Tipo Movimiento
+          </th>
+          <th *ngIf="invoiceControl.value">
+            Factura
+          </th>
+          <th class="last" *ngIf="actionsControl.value">
+            Acciones
+          </th>
+          <th class="last" style="width: 15px;">
+            <span class="button-menu" [matMenuTriggerFor]="menu">
+              <i class="material-icons" style="color:white ">more_vert</i>
+            </span>
+          </th>
+          <mat-menu #menu="matMenu">
+            <div class="menu-table">
+              <mat-checkbox class="example-margin" [formControl]="keyMovementControl" (click)="$event.stopPropagation();">
+                Clave movimiento</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="nameMovementControl" (click)="$event.stopPropagation();">
+                Nombre movimiento</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="typeControl" (click)="$event.stopPropagation();">
+                Tipo movimiento</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="invoiceControl" (click)="$event.stopPropagation();">
+                Factura</mat-checkbox>
+              <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
+                Acciones</mat-checkbox>
+              <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
+            </div>
+          </mat-menu>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movement of movements| paginate: { itemsPerPage: selectedValue, currentPage: page };
+        index as i">
+          <td *ngIf="keyMovementControl.value">
+            <span>{{movement.key_movement}}</span>
+          </td>
+          <td *ngIf="nameMovementControl.value">
+            <span>{{movement.name_movement}}</span>
+          </td>
+          <td *ngIf="typeControl.value">
+            <span>{{movement.type}}</span>
+          </td>
+          <td *ngIf="invoiceControl.value">
+            <span>{{movement.invoice}}</span>
+          </td>
+          <td class="last" *ngIf="actionsControl.value">
+            <i class="fa fa-edit me-4" (click)="goToEditMovementTypes(movement)"></i>
+            <i class="fa fa-trash" (click)="delete(movement)"></i>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<div class="col-12 d-flex flex-row-reverse">
+  <pagination-controls class="mt-3" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"
+    [responsive]="true"></pagination-controls>
+  <mat-form-field>
+    <mat-select [(value)]="selectedValue">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="20">20</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="100">100</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
