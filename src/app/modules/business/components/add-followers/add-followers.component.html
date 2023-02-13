@@ -1,0 +1,66 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+  <header class="d-flex align-items-flex-end">
+    <h2 mat-dialog-title class="col-md-10 p-0">
+      Invitar seguidor
+    </h2>
+    <div class="d-flex justify-content-end w-100">
+      <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+    </div>
+  </header>
+  <div>
+    <form (ngSubmit)="registerActivity()" autocomplete="off" [formGroup]="activityForm">
+        <div class="form-group col-12">
+          <label class="mb-2" for="exampleFormControlInput1">Destinatario</label>
+            <input
+              [ngClass]="{'error-input': activityForm.controls['user'].errors && activityForm.controls['user'].touched}"
+              formControlName="user"
+              type="text"
+              style="background-color: #E0E0E0"
+              class="form-control"
+              [matAutocomplete]="search"
+              id="exampleFormControlInput1"
+              placeholder="Escribe algo..."
+            />
+            <mat-autocomplete
+                  autoActiveFirstOption
+                  #search="matAutocomplete"
+                  [displayWith]="displayFn"
+                >
+                  <mat-option value="" *ngIf="!activityForm.controls['user'].value">
+                    Escribe algo...
+                  </mat-option>
+                  <div *ngIf="activityForm.controls['user'].value">
+                    <mat-option
+                      *ngFor="let option of filteredOptions"
+                      [value]="option"
+                    >
+                      {{ option.email }} </mat-option
+                    >
+                  </div>
+                </mat-autocomplete>
+          <div *ngIf="activityForm.controls['user'].errors && activityForm.controls['user'].touched" class="validation">
+              Campo requerido
+            </div>
+        </div>
+        <div class="form-check col-12 m-0  my-3 p-0" style="display: flex; ">
+          <label class="form-check-label me-5" for="flexCheckDefault">
+            Enviar correo electronico
+          </label>
+          <input class="form-check-input" formControlName="sendEmail" style="background-color: #E0E0E0" type="checkbox" value="" id="flexCheckDefault">
+        </div>
+      <div class="row col-12 mb-3">
+        <div class="form-group col-12">
+          <label class="mb-2" for="exampleFormControlInput1">Mensaje</label>
+          <textarea [ngClass]="{'error-input': activityForm.controls['message'].errors && activityForm.controls['message'].touched}" formControlName="message" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Grupo Hycsa Sucursal Bolivia Santa Cruz"></textarea>
+            <div *ngIf="activityForm.controls['message'].errors && activityForm.controls['message'].touched" class="validation">
+              Campo requerido
+            </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="mx-3" color="warn" mat-stroked-button mat-dialog-close>Cancelar</button>
+        <button class="btn-primary mx-3" mat-raised-button (click)="registerActivity()">Anadir seguidor</button>
+      </div>
+    </form>
+  </div>
+</div>

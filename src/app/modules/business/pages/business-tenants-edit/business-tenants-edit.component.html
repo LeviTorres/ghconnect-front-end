@@ -178,11 +178,14 @@
     </form>
   </div>
   <div *ngIf="!flag" class="col-4 mx-3">
-    <div class="d-flex">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex">
         <div style="border-bottom: 3px solid blue;padding: 10px; padding-top: 0px;">Poner una nota</div>
         <div style="padding: 10px; padding-top: 0px;cursor: pointer;" (click)="openDialogAddActivity()">
           <span>Actividades</span>
         </div>
+      </div>
+        <div (click)="openDialogAddFollower()" ><i class="fa-solid fa-user"></i></div>
       </div>
     <div>
     <div class="d-flex m-3 col-12" style="width: 100%;">

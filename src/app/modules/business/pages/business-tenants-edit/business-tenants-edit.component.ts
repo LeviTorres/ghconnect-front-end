@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddActivitiesComponent } from '../../components/add-activities/add-activities.component';
 import { Business } from '../../../../models/Business.model';
 import { environment } from '../../../../../environments/environment.prod';
+import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
 
 const base_url = environment.base_url
 
@@ -83,6 +84,26 @@ export class BusinessTenantsEditComponent implements OnInit {
         this.initValuesForm()
       })
 
+    })
+  }
+
+  openDialogAddFollower(){
+    let dialogRef = this._dialog.open(AddFollowersComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe((resp:any) => {
+      console.log('resp after dialog', resp);
+      /*if(resp){
+        const element = {
+          ...resp,
+          name: this.user.name,
+          last_name: this.user.last_name,
+        }
+        this.history.push(element)
+      } */
     })
   }
 
