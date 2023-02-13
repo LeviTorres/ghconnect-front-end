@@ -2,12 +2,11 @@
   <div class="col">
     <div style="background: linear-gradient(269.73deg, #FFC107 29.96%, #FF8F00 95.46%);border-radius: 8px;padding: 15px; display: flex; justify-content: space-between;margin-bottom: 30px;">
         <div style="display: flex;align-items: center; height: 100%;">
-          <h4 style="font-weight: 600;font-size: 40px;color: white; margin: 0;">+ Empresa</h4>
-          <p class="col-4 mx-4" style="font-weight: 400;font-size: 13px;line-height: 15px;color: white; margin: 0;">Añade una nueva empresa a tu espacio de trabajo</p>
+          <h4 style="font-weight: 600;font-size: 40px;color: white; margin: 0;">{{nameBusiness}}</h4>
         </div>
         <div style="background-color: #FFF8E1; border-radius: 4px;display: flex; padding: 8px;">
           <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0;">FECHA DE CREACIÓN</p>
-          <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0; display: flex; align-items: center;" class="ms-2">{{date | date: 'dd/MM/yyyy'}}</p>
+          <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0; display: flex; align-items: center;" class="ms-2">{{dateForm | date: 'dd/MM/yyyy'}}</p>
         </div>
         <button  *ngIf="!flag" class="btn-primary ms-2" mat-raised-button (click)="goToComment()"><i class="fa-solid fa-arrow-right"></i></button>
         <button *ngIf="flag" class="btn-primary ms-2" mat-raised-button (click)="goToComment()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -174,16 +173,18 @@
       </div>
       <div style="margin-top: 90px;" class="text-center">
         <button class="btn-primary mx-3" mat-raised-button routerLink="/tenants">Cancelar</button>
-        <button class="btn-primary mx-3" mat-raised-button (click)="addBusiness()">Añadir empresa</button>
+        <button class="btn-primary mx-3" mat-raised-button (click)="addBusiness()">Editar empresa</button>
       </div>
     </form>
   </div>
   <div *ngIf="!flag" class="col-4 mx-3">
     <div class="d-flex">
         <div style="border-bottom: 3px solid blue;padding: 10px; padding-top: 0px;">Poner una nota</div>
+        <div style="padding: 10px; padding-top: 0px;cursor: pointer;" (click)="openDialogAddActivity()">
+          <span>Actividades</span>
+        </div>
       </div>
     <div>
-  </div>
     <div class="d-flex m-3 col-12" style="width: 100%;">
       <div class="container-2">
         <div class="container-letter-name">
@@ -194,12 +195,38 @@
         </div>
       </div>
       <div class="ms-3 col">
-        <div>
-          <span style="font-weight: bold;">{{user.name}}{{user.last_name}} - </span>
-          <span>{{date | date: "dd/MM/yyyy h:mm a"}}</span>
-        </div>
-        <span>Creando una nueva empresa...</span>
+        <textarea type="text" [formControl]="formActivity" class="form-control" style="background-color: #E0E0E0; width: 100%;" placeholder="Escribe una nota"></textarea>
       </div>
     </div>
+    <div class="mx-3">
+      <button class="btn-primary" mat-raised-button (click)="addActivity()">ENVIAR</button>
+    </div>
+  </div>
+  <div>
+    <div class="d-flex m-3 col-12" *ngFor="let item of history.reverse()">
+      <div class="container-2">
+        <div class="container-letter-name">
+          <p class="letter-name"><strong>{{letterNames}}</strong></p>
+        </div>
+        <div class="container-avatar-1">
+          <img class="avatar-color" alt="">
+        </div>
+      </div>
+      <div class="ms-3 col" *ngIf="item.type === 'note'">
+        <div>
+          <span style="font-weight: bold;">{{item.name}}{{item.last_name}} - </span>
+          <span>{{item.date | date: "dd/MM/yyyy h:mm a"}}</span>
+        </div>
+          <span>{{item.note}}</span>
+      </div>
+      <div class="ms-3 col" *ngIf="item.type === 'activity'">
+        <div>
+          <span style="font-weight: bold;">{{item.name}}{{item.last_name}} - </span>
+          <span>{{item.date_expiration | date: "dd/MM/yyyy h:mm a"}}</span>
+        </div>
+          <span>{{item.summary}}</span>
+      </div>
+    </div>
+
   </div>
 </div>

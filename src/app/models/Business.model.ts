@@ -10,7 +10,7 @@ export class Business {
     public name_short: string,
     public creation_date: string,
     public key_business: string,
-    public activities?: [],
+    public activities: any[],
     public _id?: string,
     public address_1?: string,
     public street_1?: string,

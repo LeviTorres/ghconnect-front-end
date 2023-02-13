@@ -9,10 +9,8 @@ import { Business } from '../../../../models/Business.model';
 import { UploadFileService } from '../../../../services/upload-file.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../../../services/login.service';
-import { User } from '../../../../models/User.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddActivitiesComponent } from '../../components/add-activities/add-activities.component';
 
 @Component({
   selector: 'app-business-tenants',
@@ -81,44 +79,6 @@ export class BusinessTenantsComponent implements OnInit {
     this.flag = !this.flag
   }
 
-  openDialogAddActivity() {
-    let dialogRef = this._dialog.open(AddActivitiesComponent, {
-      width: '550px',
-      maxHeight: '95vh',
-      disableClose: true,
-      autoFocus: false
-    });
-    dialogRef.beforeClosed().subscribe((resp:any) => {
-      console.log('resp after dialog', resp);
-      if(resp){
-        const element = {
-          ...resp,
-          name: this.user.name,
-        last_name: this.user.last_name,
-        }
-        this.history.push(element)
-      }
-    })
-  }
-
-  addActivity() {
-    const value = this.formActivity.value.trim()
-
-    if (value.length <= 0) {
-      this._toastr.warning('Es obligatorio escribir una nota')
-      return
-    }
-
-    this.history.push({
-      name: this.user.name,
-      last_name: this.user.last_name,
-      note: this.formActivity.value,
-      date: new Date().getTime(),
-      type: 'note'
-    })
-
-    this.formActivity.setValue('')
-  }
 
   addBusiness() {
 
@@ -131,35 +91,48 @@ export class BusinessTenantsComponent implements OnInit {
       this._toastr.warning('Selecciona el logotipo de la empresa')
       return
     }
+
+    this.history.push({
+      name: this.user.name,
+      last_name: this.user.last_name,
+      note: `Empresa creada`,
+      date: new Date().getTime(),
+      type: 'note'
+    })
+
     const element: Business = {
       ...this.form.value,
       creation_date: new Date(this.form.controls['creation_date'].value).getTime(),
       activities: this.history
     }
-    console.log(element);
 
-    this._businessService.createBusiness(element).subscribe((resp: Business) => {
-      this._uploadService.updateFile(this.imageSelect, 'business', resp._id!).then((resp: any) => { })
-      this.user.tenant.push({
-        tenant_id: {
-          divisa: resp.divisa,
-          key_business: resp.key_business,
-          name: resp.name,
-          name_short: resp.name_short,
-          user: resp.user,
-          __v: 0,
-          _id: resp._id
+    this._businessService.createBusiness(element).subscribe((respuesta: Business) => {
+      this._uploadService.updateFile(this.imageSelect, 'business', respuesta._id!).then((resp: any) => { })
+        this.user.tenant.push({
+          tenant_id: {
+            divisa: respuesta.divisa,
+            key_business: respuesta.key_business,
+            name: respuesta.name,
+            name_short: respuesta.name_short,
+            user: respuesta.user,
+            __v: 0,
+            _id: respuesta._id
+          }
+        })
+        const element = {
+          name: this.user.name,
+          last_name: this.user.last_name,
+          tenant: this.user.tenant
         }
-      })
-      const element = {
-        name: this.user.name,
-        last_name: this.user.last_name,
-        tenant: this.user.tenant
-      }
-      this._userService.updateUser(element, this.user._id!).subscribe((resp) => {
-        this.user.tenant = element.tenant
-        this._router.navigateByUrl('/tenants')
-      })
+        this._userService.updateUser(element, this.user._id!).subscribe((resp) => {
+          this.user.tenant = element.tenant
+          this._router.navigate(['/business/edit'],
+          {
+            queryParams: {
+              id: respuesta._id,
+            }
+          });
+        })
     })
   }
 
