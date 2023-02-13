@@ -14,6 +14,7 @@ import { AddActivitiesComponent } from '../../components/add-activities/add-acti
 import { Business } from '../../../../models/Business.model';
 import { environment } from '../../../../../environments/environment.prod';
 import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
+import { User } from '../../../../models/User.model';
 
 const base_url = environment.base_url
 
@@ -35,6 +36,7 @@ export class BusinessTenantsEditComponent implements OnInit {
   public business!: Business
   public dateForm:any
   public nameBusiness:any
+  public followers: any[] = []
 
   public formActivity: FormControl = new FormControl('')
 
@@ -92,24 +94,40 @@ export class BusinessTenantsEditComponent implements OnInit {
       width: '550px',
       maxHeight: '95vh',
       disableClose: true,
-      autoFocus: false
+      autoFocus: false,
+      data: this.followers
     });
     dialogRef.beforeClosed().subscribe((resp:any) => {
       console.log('resp after dialog', resp);
-      /*if(resp){
+      if(resp){
         const element = {
-          ...resp,
-          name: this.user.name,
-          last_name: this.user.last_name,
+          followers: [ ...this.followers, resp],
         }
-        this.history.push(element)
-      } */
+        //this.followers.push(element)
+        console.log(element);
+
+        this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
+          console.log('respuesta exitosa',resp);
+          this.followers = [...resp.followers!]
+        })
+      }
+    })
+  }
+
+  deleteFollower(index:any){
+    this.followers.splice(index, 1);
+    const element = {
+      followers: [ ...this.followers],
+    }
+    this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
+      this.followers = [...resp.followers!]
     })
   }
 
   initValuesForm(){
     this.dateForm = new Date(this.business.creation_date)
     this.nameBusiness = this.business.name
+    console.log(this.business);
 
     //this.imageSelect = `${ base_url }/upload/business/${ this.business.img }`
     //console.log(this.imageSelect)
@@ -136,7 +154,7 @@ export class BusinessTenantsEditComponent implements OnInit {
     console.log();
 
     this.history = [ ...this.business.activities ]
-
+    this.followers = [...this.business.followers! ]
     /*for (
       let index = 0;
       index < this.business.activities.length;
@@ -247,6 +265,21 @@ export class BusinessTenantsEditComponent implements OnInit {
       this.divisas = resp
       this._spinner.hide()
     })
+  }
+
+  getUser(id:string){
+   // console.log(id);
+    let user:any
+    let users:any
+    this._userService.getUsers().subscribe((resp: User[]) => {
+      console.log(resp);
+
+      // user = resp.find((element:User) => element._id === id)
+    })
+   // console.log(user);
+
+
+    return id
   }
 
 }

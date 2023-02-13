@@ -185,7 +185,18 @@
           <span>Actividades</span>
         </div>
       </div>
-        <div (click)="openDialogAddFollower()" ><i class="fa-solid fa-user"></i></div>
+      <div  [matMenuTriggerFor]="menu" style="display: flex; align-items: center; cursor: pointer;">
+        <i class="fa-solid fa-user me-1"></i>
+        <span class="">{{followers.length}}</span>
+      </div>
+      <mat-menu #menu="matMenu" class="text-center">
+        <button (click)="openDialogAddFollower()" mat-menu-item>Añadir seguidores</button>
+        <div *ngFor="let item of followers; index as i" class="mx-2">
+          <span>{{item.user.name}} {{item.user.last_name}}</span>
+          <i class="fa fa-edit mx-2"></i>
+          <i class="fa fa-trash mx-2" (click)="deleteFollower(i)"></i>
+        </div>
+      </mat-menu>
       </div>
     <div>
     <div class="d-flex m-3 col-12" style="width: 100%;">

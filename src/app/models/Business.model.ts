@@ -11,6 +11,7 @@ export class Business {
     public creation_date: string,
     public key_business: string,
     public activities: any[],
+    public followers?: any[],
     public _id?: string,
     public address_1?: string,
     public street_1?: string,

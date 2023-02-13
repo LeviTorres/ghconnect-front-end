@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../../../../models/User.model';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from '../../../../services/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-followers',
@@ -33,10 +34,11 @@ export class AddFollowersComponent implements OnInit {
   constructor(
     private _dialog:MatDialog,
     private _dialogRef: MatDialogRef<AddFollowersComponent>,
-    private _users: UsersService
+    private _users: UsersService,
+    private _toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) public followers: any
   ) {
     this.getUsers()
-
   }
 
   ngOnInit(): void {
@@ -70,12 +72,15 @@ export class AddFollowersComponent implements OnInit {
   registerActivity(){
 
     if(this.activityForm.invalid){
-      console.log('invalid');
-      console.log(this.activityForm.value);
-
       this.activityForm.markAllAsTouched()
       return
     }
+    const findUser = this.followers.find((element:any) => element.user._id === this.activityForm.controls['user'].value._id)
+    if(findUser){
+      this._toastr.warning('Selecciona un destinatario diferente')
+      return
+    }
+
     const element = {
       ...this.activityForm.value,
     }
