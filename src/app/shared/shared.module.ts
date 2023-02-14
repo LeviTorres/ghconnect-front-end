@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,11 +22,11 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CurrencyPipe } from '@angular/common';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatChipsModule} from '@angular/material/chips';
-import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatChipsModule } from '@angular/material/chips';
+// import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 
 @NgModule({
   exports: [

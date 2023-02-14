@@ -52,8 +52,8 @@ export class TenantsComponent implements OnInit {
 
   async goToHomeWithTenant(id: string) {
     this._spinner.show()
-   localStorage.setItem('tenant', id)
-   this._router.navigateByUrl('/home')
+    localStorage.setItem('tenant', id)
+    this._router.navigateByUrl('/home')
   }
 
   search(term: string) {
@@ -72,5 +72,10 @@ export class TenantsComponent implements OnInit {
     } else {
       return `${base_url}/upload/business/image`
     }
+  }
+
+  logOut() {
+    this._loginService.logout()
+    this._router.navigateByUrl('/login')
   }
 }
