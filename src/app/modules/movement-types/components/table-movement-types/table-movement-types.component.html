@@ -64,7 +64,8 @@
             <span>{{movement.type}}</span>
           </td>
           <td *ngIf="invoiceControl.value">
-            <span>{{movement.invoice}}</span>
+            <span *ngIf="movement.invoice">SI</span>
+            <span *ngIf="!movement.invoice">NO</span>
           </td>
           <td class="last" *ngIf="actionsControl.value">
             <i class="fa fa-edit me-4" (click)="goToEditMovementTypes(movement)"></i>
