@@ -193,8 +193,11 @@ export class BusinessTenantsEditComponent implements OnInit {
           ...resp,
           name: this.user.name,
           last_name: this.user.last_name,
+          status: 'DRAFT'
         }
         this.history.push(element)
+        console.log('this.history',this.history);
+
       }
     })
   }

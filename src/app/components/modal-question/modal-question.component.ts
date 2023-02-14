@@ -49,6 +49,16 @@ export class ModalQuestionComponent implements OnInit {
     this._dialogRef.close()
   }
 
+  goToEdit(){
+    this._router.navigate(['/business/edit'],
+          {
+            queryParams: {
+              id: this.business._id,
+            }
+          });
+    this._dialogRef.close()
+  }
+
   getImage(image: any){
     if(image) {
       return `${ base_url }/upload/business/${ image.img }`
