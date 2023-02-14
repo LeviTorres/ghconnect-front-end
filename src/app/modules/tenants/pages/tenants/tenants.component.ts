@@ -74,6 +74,18 @@ export class TenantsComponent implements OnInit {
     }
   }
 
+  goToEdit(id: string){
+    console.log(id);
+
+    this._router.navigate(['/business/edit'],
+          {
+            queryParams: {
+              id: id,
+            }
+          });
+  }
+
+
   logOut() {
     this._loginService.logout()
     this._router.navigateByUrl('/login')

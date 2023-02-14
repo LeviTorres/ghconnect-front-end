@@ -26,21 +26,22 @@
   </div>
   <div *ngIf="this.user" class="row">
     <div class="contenedor col-3 my-2" *ngFor="let item of tenants; let indice = index;">
-      <div class="card" (click)="goToHomeWithTenant(item.tenant_id._id)">
+      <div class="card">
         <div class="face face1">
           <div class=" row">
-            <div class="col-6">
+            <div class="col-6" (click)="goToHomeWithTenant(item.tenant_id._id)">
               <img class="imgSize" [src]="getImage(item.tenant_id.img)">
             </div>
-            <div class=" col-6">
-              <p class="text-end text-muted idSize">{{item.tenant_id.key_business}}</p>
+            <div class=" col-6 d-flex flex-row-reverse" style="align-items: center;">
+              <img style="width: 20px; height: 20px;" class="me-2" (click)="goToEdit(item.tenant_id._id)" src="../../../../../assets/icons/Settings-white.svg" alt="">
+              <p class="text-end text-muted idSize m-0">{{item.tenant_id.key_business}}</p>
             </div>
           </div>
-          <div class="text-white text-center rounded-2 text-uppercase">
+          <div class="text-white text-center rounded-2 text-uppercase" (click)="goToHomeWithTenant(item.tenant_id._id)">
             <p class="tenant-name">{{item.tenant_id.name_short}}</p>
           </div>
         </div>
-        <div class="face faceSecond1">
+        <div class="face faceSecond1" (click)="goToHomeWithTenant(item.tenant_id._id)">
           <div class="">
             <p class="tenant-p">Pruebas - Calzada Construcciones S.A. de C.V. Suc. Bolivia. Av. Las Ramblas, Santa
               Cruz de la Sierra,Bolivia.
