@@ -9,8 +9,8 @@
             <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0;">FECHA DE CREACIÓN</p>
             <p style="font-weight: 400; font-size: 12px; line-height: 20px;letter-spacing: 0.4px;margin: 0; display: flex; align-items: center;" class="ms-2">{{dateForm | date: 'dd/MM/yyyy'}}</p>
           </div>
-          <button  *ngIf="!flag" class="btn-primary ms-2" mat-raised-button (click)="goToComment()"><i class="fa-solid fa-arrow-right"></i></button>
-          <button *ngIf="flag" class="btn-primary ms-2" mat-raised-button (click)="goToComment()"><i class="fa-solid fa-arrow-left"></i></button>
+          <img style="cursor: pointer;" *ngIf="!flag" class="ms-2" (click)="goToComment()" src="../../../../../assets/icons/Panel de actividad 2.svg" alt="">
+          <img style="cursor: pointer;" *ngIf="flag" class="ms-2" (click)="goToComment()" src="../../../../../assets/icons/Panel de actividad.svg" alt="">
         </div>
     </div>
     <form  autocomplete="off" [formGroup]="form">
@@ -182,61 +182,62 @@
   <div *ngIf="!flag" class="col-4 mx-3">
     <div class="d-flex justify-content-between">
       <div class="d-flex">
-        <div style="border-bottom: 3px solid blue;padding: 10px; padding-top: 0px;">Poner una nota</div>
+        <div style="border-bottom: 3px solid blue;padding: 10px; padding-top: 0px; cursor: pointer;" (click)="viewNote()">Poner una nota</div>
         <div style="padding: 10px; padding-top: 0px;cursor: pointer;" (click)="openDialogAddActivity()">
           <span>Actividades</span>
         </div>
       </div>
       <div  [matMenuTriggerFor]="menu" style="display: flex; align-items: center; cursor: pointer;">
-        <i class="fa-solid fa-user me-1"></i>
+        <img class="me-2" src="../../../../../assets/icons/Seguidor.svg" alt="">
         <span class="">{{followers.length}}</span>
       </div>
-      <mat-menu #menu="matMenu" class="text-center">
-        <button (click)="openDialogAddFollower()" mat-menu-item>Añadir seguidores</button>
-        <div *ngFor="let item of followers; index as i" class="mx-2">
-          <span>{{item.user.name}} {{item.user.last_name}}</span>
-          <i class="fa fa-edit mx-2"></i>
-          <i class="fa fa-trash mx-2" (click)="deleteFollower(i)"></i>
+      <mat-menu #menu="matMenu" class="m-0 p-0 col-12">
+        <div class="col-12">
+          <button class="text-center" (click)="openDialogAddFollower()" mat-menu-item>Añadir seguidores</button>
+          <div *ngFor="let item of followers; index as i" class="d-flex col-12 ps-4 mb-2">
+            <div class="col me-2">
+              <span>{{getUser(item.user).name}} {{getUser(item.user).last_name}}</span>
+            </div>
+            <div class="col-1 me-2">
+              <i class="fa fa-edit"></i>
+            </div>
+            <div class="col-1 me-3">
+              <i class="fa fa-trash" (click)="deleteFollower(i)"></i>
+            </div>
+          </div>
         </div>
       </mat-menu>
       </div>
-    <div>
-    <div class="d-flex m-3 col-12" style="width: 100%;">
-      <div class="container-2">
-        <div class="container-letter-name">
-          <p class="letter-name"><strong>{{letterNames}}</strong></p>
-        </div>
-        <div class="container-avatar-1">
-          <img class="avatar-color" alt="">
-        </div>
-      </div>
-      <div class="ms-3 col">
-        <textarea type="text" [formControl]="formActivity" class="form-control" style="background-color: #E0E0E0; width: 100%;" placeholder="Escribe una nota"></textarea>
-      </div>
-    </div>
-    <div class="mx-3">
-      <button class="btn-primary" mat-raised-button (click)="addActivity()">ENVIAR</button>
-    </div>
-  </div>
-  <div>
-    <div class="d-flex m-3 col-12" *ngFor="let item of history.reverse()">
-      <div *ngIf="item.type === 'activity' && item.status === 'DRAFT'">
-        <div class="text-center col-12">
-          <h3>Actividades planificadas</h3>
-        </div>
-        <div class="ms-3 col">
-          <div *ngIf="item.type === 'activity' && item.status === 'DRAFT'">
-            <span style="font-weight: bold;">{{item.name}}{{item.last_name}} - </span>
-            <span>{{item.date | date: "dd/MM/yyyy h:mm a"}}</span>
-            <span>{{item.note}}</span>
+    <div *ngIf="flagNote">
+      <div class="d-flex m-3 col-12" style="width: 100%;">
+        <div class="container-2">
+          <div class="container-letter-name">
+            <p class="letter-name"><strong>{{letterNames}}</strong></p>
+          </div>
+          <div class="container-avatar-1">
+            <img class="avatar-color" alt="">
           </div>
         </div>
+        <div class="ms-3 col">
+          <textarea type="text" [formControl]="formActivity" class="form-control" style="background-color: #E0E0E0; width: 100%;" placeholder="Escribe una nota"></textarea>
+        </div>
+      </div>
+      <div class="mx-3">
+        <button class="btn-primary" mat-raised-button (click)="addNote()">ENVIAR</button>
       </div>
     </div>
-    <div class="d-flex m-3 col-12" *ngFor="let item of history.reverse()">
+  <div>
+    <div class="d-flex col-12">
+      <div class="d-flex col-12" style="align-items: center;">
+        <div class="col-3"><hr></div>
+        <div class="col text-center"><strong>Actividades planificadas</strong></div>
+        <div class="col-3"><hr></div>
+      </div>
+    </div>
+    <div class="d-flex my-3 col-12" *ngFor="let item of history.reverse()">
       <div class="container-2" *ngIf="item.status != 'DRAFT'">
         <div class="container-letter-name">
-          <p class="letter-name"><strong>{{letterNames}}</strong></p>
+          <p class="letter-name"><strong>{{ getUserInitial(item.user) }}</strong></p>
         </div>
         <div class="container-avatar-1">
           <img class="avatar-color" alt="">
@@ -244,14 +245,14 @@
       </div>
       <div class="ms-3 col" *ngIf="item.type === 'note'">
         <div>
-          <span style="font-weight: bold;">{{item.name}}{{item.last_name}} - </span>
+          <span style="font-weight: bold;">{{ getUser(item.user).name }} {{ getUser(item.user).last_name}} - </span>
           <span>{{item.date | date: "dd/MM/yyyy h:mm a"}}</span>
         </div>
-          <span>{{item.note}}</span>
+        <span>{{item.note}}</span>
       </div>
       <div class="ms-3 col" *ngIf="item.type === 'activity'  && item.status != 'DRAFT'">
         <div>
-          <span style="font-weight: bold;">{{item.name}}{{item.last_name}} - </span>
+          <span style="font-weight: bold;"> - </span>
           <span>{{item.date_expiration | date: "dd/MM/yyyy h:mm a"}}</span>
         </div>
           <span>{{item.summary}}</span>

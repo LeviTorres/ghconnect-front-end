@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../../../models/User.model';
 import { UsersService } from '../../../../services/users.service';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-add-activities',
@@ -21,6 +22,7 @@ export class AddActivitiesComponent implements OnInit {
 
   public users: User[] = []
   public filteredOptions: any[] = [];
+  public user!: User
 
   public activityForm: FormGroup = new FormGroup({
     type_activity: new FormControl('', Validators.required),
@@ -34,9 +36,11 @@ export class AddActivitiesComponent implements OnInit {
   constructor(
     private _dialog:MatDialog,
     private _dialogRef: MatDialogRef<AddActivitiesComponent>,
-    private _users: UsersService
+    private _users: UsersService,
+    private _loginService: LoginService
   ) {
     this.getUsers()
+    this.user = _loginService.user
   }
 
   ngOnInit(): void {
@@ -61,7 +65,6 @@ export class AddActivitiesComponent implements OnInit {
 
   filterData(value: string) {
     this.filteredOptions = this.users.filter((item: any) => {
-      console.log(item);
       this.displayFn(item);
       return (
         item.email.toLowerCase().indexOf(value) > -1
@@ -77,9 +80,14 @@ export class AddActivitiesComponent implements OnInit {
     }
     const element = {
       ...this.activityForm.value,
-      date_expiration: new Date(this.activityForm.controls['date_expiration'].value).getTime()
+      date_expiration: new Date(this.activityForm.controls['date_expiration'].value).getTime(),
+      user: this.user._id,
+      assignment: this.activityForm.controls['assignment'].value._id,
+      date: new Date().getTime()
     }
-    this._dialogRef.close(element);
+    console.log('element',element);
+
+    //this._dialogRef.close(element);
   }
 
 }

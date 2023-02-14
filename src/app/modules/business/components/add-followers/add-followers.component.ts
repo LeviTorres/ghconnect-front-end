@@ -4,6 +4,7 @@ import { User } from '../../../../models/User.model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from '../../../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-add-followers',
@@ -20,6 +21,7 @@ export class AddFollowersComponent implements OnInit {
     { name: 'Subir documento'}
   ]
 
+  public user:User
   public users: User[] = []
   public filteredOptions: any[] = [];
   public dateForm: any
@@ -36,9 +38,11 @@ export class AddFollowersComponent implements OnInit {
     private _dialogRef: MatDialogRef<AddFollowersComponent>,
     private _users: UsersService,
     private _toastr: ToastrService,
+    private _loginService: LoginService,
     @Inject(MAT_DIALOG_DATA) public followers: any
   ) {
     this.getUsers()
+    this.user = _loginService.user
   }
 
   ngOnInit(): void {
@@ -46,6 +50,7 @@ export class AddFollowersComponent implements OnInit {
       this.filterData(inputValue)
     })
     this.activityForm.controls['date'].setValue(new Date().getTime())
+    this.activityForm.controls['message'].setValue(`${this.user.name}${this.user.last_name} le invito seguir la empresa ${this.followers.name_business}`)
   }
 
   getUsers(){
@@ -75,7 +80,8 @@ export class AddFollowersComponent implements OnInit {
       this.activityForm.markAllAsTouched()
       return
     }
-    const findUser = this.followers.find((element:any) => element.user._id === this.activityForm.controls['user'].value._id)
+
+    const findUser = this.followers.followers.find((element:any) => element.user === this.activityForm.controls['user'].value._id)
     if(findUser){
       this._toastr.warning('Selecciona un destinatario diferente')
       return
@@ -83,7 +89,9 @@ export class AddFollowersComponent implements OnInit {
 
     const element = {
       ...this.activityForm.value,
+      user: this.activityForm.controls['user'].value._id
     }
+
     this._dialogRef.close(element);
     this._dialogRef.close()
   }

@@ -31,12 +31,14 @@ export class BusinessTenantsEditComponent implements OnInit {
   public user!: any
   public imgView: any
   public flag: boolean = false
+  public flagNote: boolean = false
   public letterNames: string = ''
   public history: any[] = []
   public business!: Business
   public dateForm:any
   public nameBusiness:any
   public followers: any[] = []
+  public users: any[] = []
 
   public formActivity: FormControl = new FormControl('')
 
@@ -75,6 +77,7 @@ export class BusinessTenantsEditComponent implements OnInit {
   ) {
     this._spinner.show()
     this.getCountryOpen()
+    this.getUsers()
     this.user = _loginService.user
     this.letterNames = `${this.user.name.charAt(0).toUpperCase()}`;
   }
@@ -95,7 +98,10 @@ export class BusinessTenantsEditComponent implements OnInit {
       maxHeight: '95vh',
       disableClose: true,
       autoFocus: false,
-      data: this.followers
+      data: {
+        followers: this.followers,
+        name_business: this.business.name
+      }
     });
     dialogRef.beforeClosed().subscribe((resp:any) => {
       console.log('resp after dialog', resp);
@@ -107,7 +113,6 @@ export class BusinessTenantsEditComponent implements OnInit {
         console.log(element);
 
         this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
-          console.log('respuesta exitosa',resp);
           this.followers = [...resp.followers!]
         })
       }
@@ -179,6 +184,10 @@ export class BusinessTenantsEditComponent implements OnInit {
     this.flag = !this.flag
   }
 
+  viewNote(){
+    this.flagNote = !this.flagNote
+  }
+
   openDialogAddActivity() {
     let dialogRef = this._dialog.open(AddActivitiesComponent, {
       width: '550px',
@@ -191,8 +200,6 @@ export class BusinessTenantsEditComponent implements OnInit {
       if(resp){
         const element = {
           ...resp,
-          name: this.user.name,
-          last_name: this.user.last_name,
           status: 'DRAFT'
         }
         this.history.push(element)
@@ -202,7 +209,7 @@ export class BusinessTenantsEditComponent implements OnInit {
     })
   }
 
-  addActivity() {
+  addNote() {
     const value = this.formActivity.value.trim()
 
     if (value.length <= 0) {
@@ -211,21 +218,22 @@ export class BusinessTenantsEditComponent implements OnInit {
     }
 
     this.history.push({
-      name: this.user.name,
-      last_name: this.user.last_name,
       note: this.formActivity.value,
       date: new Date().getTime(),
-      type: 'note'
+      type: 'note',
+      user: this.user._id
     })
 
     const element = {
-      ...this.form.value,
       activities: [
-        ...this.business.activities,
         ...this.history
       ]
     }
-    this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {})
+
+    this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
+
+    })
+
     this.formActivity.setValue('')
   }
 
@@ -270,19 +278,22 @@ export class BusinessTenantsEditComponent implements OnInit {
     })
   }
 
-  getUser(id:string){
-   // console.log(id);
-    let user:any
-    let users:any
+  getUsers(){
     this._userService.getUsers().subscribe((resp: User[]) => {
-      console.log(resp);
-
-      // user = resp.find((element:User) => element._id === id)
+      this.users = resp
     })
-   // console.log(user);
+  }
 
-
-    return id
+  getUser(id:any){
+    const findUser:any = this.users.find((user: any) => user._id === id)
+    return {
+      name: findUser?.name,
+      last_name: findUser?.last_name
+    }
+  }
+  getUserInitial(id:any){
+    const findUser:any = this.users.find((user: any) => user._id === id)
+    return findUser?.name.charAt(0).toUpperCase()
   }
 
 }
