@@ -17,13 +17,19 @@
     </mat-form-field>
   </div>
 </div>
+<div class="d-flex bd-highlight">
+  <div class="mx-auto p-2 bd-highlight"></div>
+  <div class="p-2 bd-highlight" style="margin-left: 5rem;">
+    <span class="button-menu" [matMenuTriggerFor]="menu">
+      <i class="material-icons" style="color:black ">more_vert</i>
+    </span>
+  </div>
+  <div class="me-auto p-2 bd-highlight"></div>
+</div>
 <div class="table-responsive mt-4 overflow-auto card">
   <table class="table card-table table-vcenter text-nowrap datatable">
     <thead>
       <tr>
-        <th *ngIf="trackingControl.value">
-          Tracking
-        </th>
         <th class="last" *ngIf="statusControl.value">
           <span>
             <img src="../../../../../assets/icons/traffic.svg" alt="">
@@ -89,15 +95,8 @@
         <th class="last" *ngIf="actionsControl.value">
           Acciones
         </th>
-        <th class="last" style="width: 15px;">
-          <span class="button-menu" [matMenuTriggerFor]="menu">
-            <i class="material-icons" style="color:white ">more_vert</i>
-          </span>
-        </th>
         <mat-menu #menu="matMenu">
           <div class="menu-table">
-            <mat-checkbox class="example-margin" [formControl]="trackingControl" (click)="$event.stopPropagation();">
-              Tracking</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
               Status</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="flowIdControl" (click)="$event.stopPropagation();">
@@ -159,73 +158,72 @@
     </thead>
     <tbody>
       <tr *ngFor="let invoice of filterInvoiceClients | paginate: { itemsPerPage: selectedValue, currentPage: page };
-      index as i">
-        <td class="text-center" *ngIf="trackingControl.value">
-          <span (click)="openDialogTracking(invoice)"><i class="material-icons" style="color:black">timeline</i></span>
+      index as i" style="cursor:pointer">
+        <td class="text-center" *ngIf="statusControl.value" (click)="goToEditInvoiceClient(invoice)">
+          <div *ngIf=" invoice.status === 'draft'"> <span>BORRADOR</span> </div>
         </td>
-        <td class="text-center" *ngIf="statusControl.value">
-          <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
-        </td>
-        <td *ngIf="flowIdControl.value">
+        <td *ngIf="flowIdControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span></span>
         </td>
-        <td *ngIf="remesaControl.value">
+        <td *ngIf="remesaControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
         </td>
-        <td *ngIf="nameBusinessControl.value">
+        <td *ngIf="nameBusinessControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice?.ceco?.business?.name_short}}</span>
         </td>
-        <td *ngIf="cecoControl.value">
+        <td *ngIf="cecoControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice?.ceco?.key_ceco_business}}</span>
         </td>
-        <td *ngIf="keyClientControl.value">
+        <td *ngIf="keyClientControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.client.key_client}}</span>
         </td>
-        <td *ngIf="clientControl.value">
+        <td *ngIf="clientControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.client.name}}</span>
         </td>
-        <td *ngIf="keyInvoiceControl.value">
+        <td *ngIf="keyInvoiceControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.key_invoice}}</span>
         </td>
-        <td *ngIf="uploadDateControl.value">
+        <td *ngIf="uploadDateControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.upload_date | date: 'dd/MM/yyyy'}}</span>
         </td>
-        <td *ngIf="invoiceDateControl.value">
+        <td *ngIf="invoiceDateControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.invoice_date | date: 'dd/MM/yyyy'}}</span>
         </td>
-        <td *ngIf="expirationDateControl.value">
+        <td *ngIf="expirationDateControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.expiration_date | date: 'dd/MM/yyyy'}}</span>
         </td>
-        <td *ngIf="invoiceTotalControl.value">
+        <td *ngIf="invoiceTotalControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{getTotal(invoice) | currency}}</span>
         </td>
-        <td *ngIf="invoiceTotalPaymentControl.value">
+        <td *ngIf="invoiceTotalPaymentControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{getTotalPayment(invoice) | currency}}</span>
         </td>
-        <td *ngIf="divisaControl.value">
+        <td *ngIf="divisaControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.divisa.abbreviation_divisa}}</span>
         </td>
-        <td *ngIf="tcControl.value">
+        <td *ngIf="tcControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{typeChange(invoice) === 0 ? 'SIN TIPO DE CAMBIO' : typeChange(invoice)}}</span>
         </td>
-        <td *ngIf="totalMNControl.value">
+        <td *ngIf="totalMNControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{totalMN(invoice) | currency}}</span>
         </td>
-        <td *ngIf="descriptionControl.value">
+        <td *ngIf="descriptionControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.description}}</span>
         </td>
-        <td *ngIf="contractControl.value">
+        <td *ngIf="contractControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.contract}}</span>
         </td>
-        <td *ngIf="checkbookControl.value">
+        <td *ngIf="checkbookControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span></span>
         </td>
-        <td *ngIf="payStatusControl.value">
+        <td *ngIf="payStatusControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span></span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
-          <i class="fa fa-edit me-4" (click)="goToEditInvoiceClient(invoice)"></i>
           <i class="fa fa-trash" (click)="delete(invoice)"></i>
+          <span (click)="openDialogTracking(invoice)">
+            <i class="material-icons" style="color:black; font-size: 15px; margin-left: 15px;">timeline</i>
+          </span>
         </td>
         <td></td>
       </tr>

@@ -182,26 +182,27 @@ td {
   background-color: white;
 }
 
-.table th:last-of-type,
-.table td:last-of-type{
- position: sticky;
- right: 0;
-}
+/* posicion del ultimo elemento de la tabla */
+// .table th:last-of-type,
+// .table td:last-of-type{
+//  position: sticky;
+//  right: 0;
+// }
 
-.table tr:last-of-type{
-  padding-bottom: 50px;
-}
+// .table tr:last-of-type{
+//   padding-bottom: 50px;
+// }
 
-.last {
-  text-align: center;
-  vertical-align: middle;
+// .last {
+//   text-align: center;
+//   vertical-align: middle;
 
-  a {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-}
+//   a {
+//     margin: 0;
+//     padding: 0;
+//     text-align: center;
+//   }
+// }
 
 i {
   cursor: pointer;
@@ -222,6 +223,16 @@ i {
 }
 
 .fa-edit:hover {
+  opacity: 0.5;
+}
+
+.fa-timeline{
+  color:black;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.fa-timeline:hover {
   opacity: 0.5;
 }
 
