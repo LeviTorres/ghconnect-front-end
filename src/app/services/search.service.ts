@@ -11,6 +11,7 @@ import { InvoiceProviders } from '../models/InvoiceProviders.model';
 import { InvoiceClient } from '../models/InvoiceClients.model';
 import { Provider } from '../models/Provider.model';
 import { Client } from '../models/Client.model';
+import { MovementType } from '../models/MovementType.model';
 
 const base_url = environment.base_url
 
@@ -67,7 +68,7 @@ export class SearchService {
 
   private generateCecos(cecos: any[]): Ceco[] {
     return cecos.map(
-      cecos => new Ceco(cecos.name_large, cecos.name_short, cecos.key_ceco, cecos.key_ceco_business, cecos.user, cecos.business,cecos._id)
+      cecos => new Ceco(cecos.name_large, cecos.name_short, cecos.key_ceco, cecos.key_ceco_business, cecos.user, cecos.business, cecos._id)
     )
   }
 
@@ -157,6 +158,11 @@ export class SearchService {
     )
   }
 
+  private generateMovementTypes(movements: any[]): MovementType[] {
+    return movements.map(
+      movements => new MovementType(movements.name_movement, movements.key_movement, movements.type, movements.invoice, movements._id)
+    )
+  }
 
   search(type: string, term: string) {
     return this._http.get<any[]>(`${base_url}/search/${type}/${term}`, this.headers)
@@ -181,6 +187,8 @@ export class SearchService {
               return this.generateProviders(resp.resultados)
             case 'clients':
               return this.generateClients(resp.resultados)
+            case 'movementTypes':
+              return this.generateMovementTypes(resp.resultados)
             default:
               return []
           }

@@ -164,7 +164,7 @@
           <span (click)="openDialogTracking(invoice)"><i class="material-icons" style="color:black">timeline</i></span>
         </td>
         <td class="text-center" *ngIf="statusControl.value">
-          <div [ngClass]="{'circule-inactivo': invoice.status === 'draft'}"></div>
+          <div *ngIf=" invoice.status === 'draft'"> <span>BORRADOR</span> </div>
         </td>
         <td *ngIf="flowIdControl.value">
           <span></span>

@@ -8,6 +8,7 @@ import { MovementsTypeService } from 'src/app/services/movements-type.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SearchService } from '../../../../services/search.service';
 
 @Component({
   selector: 'app-table-movement-types',
@@ -18,6 +19,7 @@ export class TableMovementTypesComponent implements OnInit {
 
   public movements: MovementType[] = []
   public movementsTemp: MovementType[] = []
+  public filterMovementsType: MovementType[] = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -31,14 +33,14 @@ export class TableMovementTypesComponent implements OnInit {
   public headersMovementTypes: any[] = []
   public header_name: string = 'movementTypes'
 
-
   constructor(
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _toastr: ToastrService,
     private _movementService: MovementsTypeService,
     private _spinner: NgxSpinnerService,
-    private _router: Router
+    private _router: Router,
+    private _searchService: SearchService
   ) { this._spinner.show() }
 
   ngOnInit(): void {
@@ -101,7 +103,7 @@ export class TableMovementTypesComponent implements OnInit {
     })
   }
 
-  goToEditMovementTypes(movement: MovementType){
+  goToEditMovementTypes(movement: MovementType) {
     this._router.navigate(['/movement-types/edit-movement-type'],
       {
         queryParams: {
@@ -110,20 +112,26 @@ export class TableMovementTypesComponent implements OnInit {
       });
   }
 
-  getMovementTypes(){
+  getMovementTypes() {
     this._movementService.getMovementsType().subscribe((movements: MovementType[]) => {
       this.movements = movements
       this.movementsTemp = movements
       console.log(this.movements);
-
     })
   }
 
-  search(term:string){
-
+  search(term: string) {
+    if (term.length === 0) {
+      return this.movements = this.movementsTemp
+    }
+    this._searchService.search('movementTypes', term).subscribe((resp: any) => {
+      this.movements = resp
+    })
+    console.log(this.movements);
+    return
   }
 
-  async delete(movement:MovementType){
+  async delete(movement: MovementType) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar el tipo de movimiento ${movement.name_movement}`,

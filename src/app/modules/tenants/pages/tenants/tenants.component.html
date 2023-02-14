@@ -5,6 +5,9 @@
     </div>
     <div style="height: 100%; display: flex;align-items: center;">
       <button mat-raised-button class="mx-2 btn-primary" routerLink="/business/new">Añadir nueva empresa</button>
+      <button class="mx-2 btn btn-danger" mat-button (click)="logOut()">
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
     </div>
   </div>
   <div class="d-flex justify-content-between col-12">
