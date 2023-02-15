@@ -3,7 +3,7 @@ import { Divisa } from '../../../../models/Divisa.model';
 import { MovementType } from '../../../../models/MovementType.model';
 import { Provider } from '../../../../models/Provider.model';
 import { Ceco } from '../../../../models/Ceco.model';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,6 +15,13 @@ import { ToastrService } from 'ngx-toastr';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
 import { formatDate } from '@angular/common';
+import { UsersService } from '../../../../services/users.service';
+import { LoginService } from '../../../../services/login.service';
+import { MatDialog } from '@angular/material/dialog';
+import { User } from '../../../../models/User.model';
+import { AddActivitiesComponent } from '../../components/add-activities/add-activities.component';
+import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
+import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
 
 @Component({
   selector: 'app-edit-invoice-provider',
@@ -28,11 +35,20 @@ export class EditInvoiceProviderComponent implements OnInit {
   public movements: MovementType[] = []
   public providers: Provider[] = []
   public cecos: Ceco[] = []
+  public users: any[] = []
+  public user:any
+  public history: any[] = []
+  public flagNote: boolean = false
+  public activitiesPlan: any[] = []
+  public followers: any[] = []
+  public letterNames: string = ''
 
   public filteredOptions: any[] = [];
   public filteredOptionsCeco: any[] = [];
 
   public showOption: boolean = false;
+
+  public formActivity: FormControl = new FormControl('')
 
   public invoiceForm = this._fb.group({
     ceco: ['', Validators.required],
@@ -57,8 +73,14 @@ export class EditInvoiceProviderComponent implements OnInit {
     private _movementsService: MovementsTypeService,
     private _fb: FormBuilder,
     private _toastr: ToastrService,
-    private _activatedRoute: ActivatedRoute
-  ) { }
+    private _activatedRoute: ActivatedRoute,
+    private _userService:UsersService,
+    private _loginService:LoginService,
+    private _dialog: MatDialog,
+  ) {
+    this.user = _loginService.user
+    this.letterNames = `${this.user.name.charAt(0).toUpperCase()}`;
+   }
 
   ngOnInit(): void {
     this._spinner.show()
@@ -66,6 +88,7 @@ export class EditInvoiceProviderComponent implements OnInit {
     this.getMovements()
     this.getDivisas()
     this.getProviders()
+    this.getUsers()
     this._activatedRoute.queryParams.subscribe((params: any) => {
       this.getInvoiceProviders(params.invoice)
     })
@@ -109,6 +132,7 @@ export class EditInvoiceProviderComponent implements OnInit {
     this._invoiceProvidersService.getInvoiceProviders().subscribe((invoices: InvoiceProviders[]) => {
       this.invoiceProviders = invoices.find((invoice: InvoiceProviders) => invoice._id === id)
       this.initValueForm()
+      this.viewActivitiesPlan()
       this._spinner.hide()
     })
   }
@@ -219,5 +243,197 @@ export class EditInvoiceProviderComponent implements OnInit {
         this._toastr.error(`${err.error.msg}`)
       })
   }
+
+
+
+  getUsers(){
+    this._userService.getUsers().subscribe((resp: User[]) => {
+      this.users = resp
+    })
+  }
+
+  getUser(id:any){
+    const findUser:any = this.users.find((user: any) => user._id === id)
+    return {
+      name: findUser?.name,
+      last_name: findUser?.last_name
+    }
+  }
+  getUserInitial(id:any){
+    const findUser:any = this.users.find((user: any) => user._id === id)
+    return findUser?.name.charAt(0).toUpperCase()
+  }
+
+  addNote() {
+    const value = this.formActivity.value.trim()
+
+    if (value.length <= 0) {
+      this._toastr.warning('Es obligatorio escribir una nota')
+      return
+    }
+
+    this.history.push({
+      note: this.formActivity.value,
+      date: new Date().getTime(),
+      type: 'note',
+      user: this.user._id
+    })
+
+    const element = {
+      activities: [
+        ...this.history
+      ]
+    }
+
+    this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: any) => {})
+
+    this.formActivity.setValue('')
+  }
+
+  openDialogAddActivity() {
+    let dialogRef = this._dialog.open(AddActivitiesComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe((resp:any) => {
+      console.log('resp after dialog', resp);
+      if(resp){
+        const element1 = {
+          ...resp
+        }
+        this.history.push(element1)
+        console.log('this.history',this.history);
+        const element = {
+          activities: [
+            ...this.history
+          ]
+        }
+
+        this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: any) => {})
+        this.viewActivitiesPlan()
+      }
+    })
+  }
+
+  viewActivitiesPlan(){
+    let findActivity:any
+    findActivity = this.history.filter((element:any) => {
+      return element.type === 'activity' && element.status === 'DRAFT'
+    })
+
+    if(findActivity){
+      this.activitiesPlan = findActivity
+    }
+  }
+
+  viewNote(){
+    this.flagNote = !this.flagNote
+  }
+
+  deleteFollower(index:any){
+    this.followers.splice(index, 1);
+    const element = {
+      followers: [ ...this.followers],
+    }
+    this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: InvoiceProviders) => {
+      this.followers = [...resp.followers!]
+    })
+  }
+
+  openDialogAddFollower(){
+    let dialogRef = this._dialog.open(AddFollowersComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        followers: this.followers,
+        key_invoice: this.invoiceProviders.key_invoice
+      }
+    });
+    dialogRef.beforeClosed().subscribe((resp:any) => {
+      console.log('resp after dialog', resp);
+      if(resp){
+        const element = {
+          followers: [ ...this.followers, resp],
+        }
+        this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: InvoiceProviders) => {
+          this.followers = [...resp.followers!]
+        })
+      }
+    })
+  }
+
+  goToEditActivity(id: string){
+    console.log(id);
+    let dialogRef = this._dialog.open(EditActivitiesComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: id
+    })
+    dialogRef.beforeClosed().subscribe((resp:any) => {
+      console.log('resp after dialog', resp);
+      if(resp){
+        const element1 = {
+          ...resp
+        }
+
+        const findIndexActivity = this.history.findIndex((element:any) => element._id === element1._id)
+
+        this.history[findIndexActivity] = element1
+
+        const element = {
+          activities: [
+           ...this.history
+         ]
+        }
+
+        this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: InvoiceProviders) => {
+          this.history = [...resp.activities!]
+        })
+        this.viewActivitiesPlan()
+      }
+    })
+  }
+
+  cancelActivity(data: any){
+    const findActivity = this.history.findIndex((element:any) => element._id === data._id)
+    this.history.splice(findActivity,1)
+    const element = {
+      activities: [
+       ...this.history
+     ]
+    }
+    this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: InvoiceProviders) => {
+      this.history = [...resp.activities!]
+    })
+    this.viewActivitiesPlan()
+  }
+
+  markActivityDone(data:any){
+
+    const findActivity = this.history.findIndex((element:any) => element._id === data._id)
+    const element1 = {
+      ...data,
+      status: 'DONE',
+      date: new Date().getTime(),
+      user: this.user._id
+    }
+    this.history[findActivity] = element1
+    const element = {
+      activities: [
+       ...this.history,
+     ]
+    }
+    this._invoiceProvidersService.updateInvoiceProvider(element, this.invoiceProviders._id!).subscribe((resp: InvoiceProviders) => {
+      this.history = [...resp.activities!]
+    })
+    this.viewActivitiesPlan()
+  }
+
 
 }
