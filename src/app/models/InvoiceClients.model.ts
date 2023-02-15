@@ -17,6 +17,8 @@ export class InvoiceClient {
     public divisa: Divisa,
     public description: string,
     public movement_type: MovementType,
+    public activities: any[],
+    public followers?: any[],
     public user?: User,
     public contract?: string,
     public status?: string,

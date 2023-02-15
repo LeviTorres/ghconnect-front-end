@@ -72,3 +72,44 @@ i {
   border-radius: 5px;
   border: none;
 }
+
+.container-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  border-radius: 100px;
+  width: 70px;
+  height: 70px;
+}
+
+.avatar-1 {
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+}
+
+.container-2 {
+  position: relative;;
+}
+
+.avatar-color {
+  background-color: var(--tblr-626065);
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+.container-letter-name {
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  color: white;
+}
+
+.letter-name {
+  font-size: 18px;
+}
+

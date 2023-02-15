@@ -12,6 +12,9 @@ import { TableInvoiceClientsComponent } from './components/table-invoice-clients
 import { ModalTrackingComponent } from './components/modal-tracking/modal-tracking.component';
 import { EditInvoiceClientComponent } from './pages/edit-invoice-client/edit-invoice-client.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { EditActivitiesComponent } from './components/edit-activities/edit-activities.component';
+import { AddActivitiesComponent } from './components/add-activities/add-activities.component';
+import { AddFollowersComponent } from './components/add-followers/add-followers.component';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     TableInvoiceClientsComponent,
     ModalTrackingComponent,
     EditInvoiceClientComponent,
-    DashboardComponent
+    DashboardComponent,
+    EditActivitiesComponent,
+    AddActivitiesComponent,
+    AddFollowersComponent
   ],
   imports: [
     CommonModule,

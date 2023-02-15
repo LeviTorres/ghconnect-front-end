@@ -13,6 +13,7 @@ import { DivisasService } from '../../../../services/divisas.service';
 import { MovementsTypeService } from '../../../../services/movements-type.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-add-invoice-clients',
@@ -29,6 +30,8 @@ export class AddInvoiceClientsComponent implements OnInit {
   public filteredOptionsCeco: any[] = [];
 
   public showOption: boolean = false;
+  public history: any[] = []
+  public user:any
 
   public invoiceForm = this._fb.group({
     ceco: ['', Validators.required],
@@ -52,8 +55,11 @@ export class AddInvoiceClientsComponent implements OnInit {
     private _divisasService: DivisasService,
     private _movementsService: MovementsTypeService,
     private _fb: FormBuilder,
-    private _toastr: ToastrService
-  ) {}
+    private _toastr: ToastrService,
+    private _loginService: LoginService
+  ) {
+    this.user = _loginService.user
+  }
 
   ngOnInit(): void {
     this.getCecos();
@@ -182,11 +188,17 @@ export class AddInvoiceClientsComponent implements OnInit {
       this._toastr.error('No se ha seleccionado un ceco correctamente');
       return;
     }
+    this.history.push({
+      user: this.user._id,
+      note: `Factura creada`,
+      date: new Date().getTime(),
+      type: 'note'
+    })
 
     const element = {
+      activities: this.history,
       ceco: ceco._id,
       client: client._id,
-
       key_invoice: String(this.invoiceForm.controls['key_invoice'].value),
       upload_date: new Date(
         this.invoiceForm.controls['upload_date'].value!
@@ -205,9 +217,16 @@ export class AddInvoiceClientsComponent implements OnInit {
     };
     this._invoiceClientService.createInvoiceClient(element).subscribe(
       (res: any) => {
-        this._router.navigateByUrl('/invoice-clients');
+        //this._router.navigateByUrl('/invoice-clients');
+          this._router.navigate(['/invoice-clients/edit-invoice-client'],
+            {
+              queryParams: {
+                invoice: res._id,
+              }
+            });
+
         this._spinner.hide();
-        this._toastr.success('Factura creada con Exito');
+        //this._toastr.success('Factura creada con Exito');
       },
       (err: any) => {
         this._spinner.hide();

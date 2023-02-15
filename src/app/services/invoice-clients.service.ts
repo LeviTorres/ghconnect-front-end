@@ -35,10 +35,20 @@ export class InvoiceClientsService {
 
   createInvoiceClient(formData: any) {
     return this._http.post(`${base_url}/invoice-clients`, formData, this.headers)
+                .pipe(
+                  map((resp: any) => {
+                    return resp.invoice_client
+                  })
+                )
   }
 
   updateInvoiceClient(formData: any, _id: string) {
     return this._http.put(`${base_url}/invoice-clients/${_id}`, formData, this.headers)
+                  .pipe(
+                    map((resp: any) => {
+                      return resp.invoiceUpdated
+                    })
+                  )
   }
 
   getInvoiceClients() {
