@@ -41,6 +41,7 @@ export class UsersService {
               .pipe(
                 tap( (resp: any) => {
                   localStorage.setItem('token', resp.token )
+
                 }),
                 map((resp:any) => resp.user)
               )
@@ -71,10 +72,10 @@ export class UsersService {
     return this._http.put(`${base_url}/users/${ _id}`, formData, this.headers)
                 .pipe(
                   tap( (resp: any) => {
-                    localStorage.setItem('token', resp.token )
+                    //localStorage.setItem('token', resp.token )
                   }),
                   map((resp:any) => {
-                    return resp.userUpdated
+                    return resp
                   })
                 )
   }
