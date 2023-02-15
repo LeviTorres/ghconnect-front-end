@@ -43,6 +43,8 @@ export class AddFollowersComponent implements OnInit {
   ) {
     this.getUsers()
     this.user = _loginService.user
+    console.log(followers);
+
   }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class AddFollowersComponent implements OnInit {
       this.filterData(inputValue)
     })
     this.activityForm.controls['date'].setValue(new Date().getTime())
-    this.activityForm.controls['message'].setValue(`${this.user.name}${this.user.last_name} le invito seguir la empresa ${this.followers.name_business}`)
+    this.activityForm.controls['message'].setValue(`${this.user.name}${this.user.last_name} le invito seguir la factura #${this.followers.key_invoice}`)
   }
 
   getUsers(){
