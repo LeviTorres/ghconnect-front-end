@@ -191,6 +191,7 @@ export class WorkspaceComponent implements OnInit {
             {
               tenant_id: business._id,
             },
+            ...findEmail.tenant
           ]
         };
 
