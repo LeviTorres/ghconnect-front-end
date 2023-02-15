@@ -13,14 +13,22 @@
     </mat-form-field>
   </div>
 </div>
-<div class="table-responsive mt-4 overflow-auto card">
+<div class="d-flex bd-highlight">
+  <div class="mx-auto p-2 bd-highlight"></div>
+  <div class="p-2 bd-highlight" style="margin-left: 5rem;">
+    <span class="button-menu" [matMenuTriggerFor]="menu">
+      <i class="material-icons" style="color:black "> <img src="../../../../../assets/icons/Ajustes.svg"
+          style="width:20px"></i>
+    </span>
+  </div>
+  <div class="me-auto p-2 bd-highlight"></div>
+</div>
+<div class="table-responsive overflow-auto card">
   <table class="table card-table table-vcenter text-nowrap datatable">
     <thead>
       <tr>
         <th class="last" *ngIf="statusControl.value">
-          <span>
-            <img src="../../../../../assets/icons/traffic.svg" alt="">
-          </span>
+          <span>Estado</span>
         </th>
         <th *ngIf="keyProviderControl.value">
           No. proveedor
@@ -55,11 +63,6 @@
         <th class="last" *ngIf="actionsControl.value">
           Acciones
         </th>
-        <th class="last" style="width: 15px;">
-          <span class="button-menu" [matMenuTriggerFor]="menu">
-            <i class="material-icons" style="color:white ">more_vert</i>
-          </span>
-        </th>
         <mat-menu #menu="matMenu">
           <div class="menu-table">
             <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
@@ -93,49 +96,50 @@
     </thead>
     <tbody>
       <tr *ngFor="let provider of providersTemp | paginate: { itemsPerPage: selectedValue, currentPage: page };
-      index as i">
-        <td class="container-status" *ngIf="statusControl.value">
-          <div matTooltip={{provider.status}} [ngClass]="{
+      index as i" style="cursor:pointer">
+        <td class="container-status" *ngIf="statusControl.value" (click)="goToEditProvider(provider)">
+          <!-- <div matTooltip={{provider.status}} [ngClass]="{
             'circule-activo': provider.status === 'activo',
             'circule-inactivo': provider.status === 'inactivo',
             'circule-suspendido': provider.status === 'suspendido',
-            'circule-password': provider.status === 'habilitado por password'}"></div>
+            'circule-password': provider.status === 'habilitado por password'}">
+          </div> -->
+          <div *ngIf="provider.status === 'draft'"> <span>BORRADOR</span> </div>
         </td>
-        <td *ngIf="keyProviderControl.value">
+        <td *ngIf="keyProviderControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.key_provider }}</span>
         </td>
-        <td *ngIf="nameControl.value">
+        <td *ngIf="nameControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.name }}</span>
         </td>
-        <td *ngIf="nitControl.value">
+        <td *ngIf="nitControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.nit }}</span>
         </td>
-        <td *ngIf="paymentConditionsControl.value">
+        <td *ngIf="paymentConditionsControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.payment_conditions.name_payment }}</span>
         </td>
-        <td *ngIf="thirdTypeControl.value">
+        <td *ngIf="thirdTypeControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.third_type}}</span>
         </td>
-        <td *ngIf="societyTypeControl.value">
+        <td *ngIf="societyTypeControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.society_type}}</span>
         </td>
-        <td *ngIf="providerTypeControl.value">
+        <td *ngIf="providerTypeControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.provider_type}}</span>
         </td>
-        <td *ngIf="phoneNumberControl.value">
+        <td *ngIf="phoneNumberControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.phone_number}}</span>
         </td>
-        <td *ngIf="mobileNumberControl.value">
+        <td *ngIf="mobileNumberControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.mobile_number}}</span>
         </td>
-        <td *ngIf="emailControl.value">
+        <td *ngIf="emailControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.email}}</span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
-          <i class="fa fa-edit me-4" (click)="goToEditProvider(provider)"></i>
+          <!-- <i class="fa fa-edit me-4" (click)="goToEditProvider(provider)"></i> -->
           <i class="fa fa-trash" (click)="delete(provider)"></i>
         </td>
-        <td></td>
       </tr>
     </tbody>
   </table>

@@ -10,7 +10,17 @@
     </mat-form-field>
   </div>
 </div>
-<div class="table-responsive mt-4 overflow-auto card">
+<div class="d-flex bd-highlight">
+  <div class="mx-auto p-2 bd-highlight"></div>
+  <div class="p-2 bd-highlight" style="margin-left: 5rem;">
+    <span class="button-menu" [matMenuTriggerFor]="menu">
+      <i class="material-icons" style="color:black "> <img src="../../../../../assets/icons/Ajustes.svg"
+          style="width:20px"></i>
+    </span>
+  </div>
+  <div class="me-auto p-2 bd-highlight"></div>
+</div>
+<div class="table-responsive overflow-auto card">
   <table class="table card-table table-vcenter text-nowrap datatable">
     <thead>
       <tr>
@@ -28,11 +38,6 @@
         </th>
         <th class="last" *ngIf="actionsControl.value">
           Acciones
-        </th>
-        <th class="last" style="width: 15px;">
-          <span class="button-menu" [matMenuTriggerFor]="menu">
-            <i class="material-icons" style="color:white ">more_vert</i>
-          </span>
         </th>
         <mat-menu #menu="matMenu">
           <div class="menu-table">
@@ -53,30 +58,29 @@
     </thead>
     <tbody>
       <tr *ngFor="let exchange of filterExchanges | paginate: { itemsPerPage: selectedValue, currentPage: page };
-        index as i">
-        <td *ngIf="nationalCurrencyControl.value">
+        index as i" style="cursor:pointer">
+        <td *ngIf="nationalCurrencyControl.value" (click)="openDialogEditExchange(exchange)">
           <span>{{exchange.national_currency.name}} - {{exchange.national_currency.abbreviation_divisa}}</span>
         </td>
-        <td *ngIf="foreignCurrencyControl.value">
+        <td *ngIf="foreignCurrencyControl.value" (click)="openDialogEditExchange(exchange)">
           <span>{{exchange.foreign_currency.name}} - {{exchange.foreign_currency.abbreviation_divisa}}</span>
         </td>
-        <td *ngIf="exchangeRateControl.value">
+        <td *ngIf="exchangeRateControl.value" (click)="openDialogEditExchange(exchange)">
           <span>1</span>
           <span> {{exchange.foreign_currency.abbreviation_divisa}}</span>
           <span> = </span>
           <span>{{ exchange.exchange_rate_amount}}</span>
           <span> {{exchange.national_currency.abbreviation_divisa}}</span>
         </td>
-        <td *ngIf="dateExchangeControl.value">
+        <td *ngIf="dateExchangeControl.value" (click)="openDialogEditExchange(exchange)">
           <span>{{exchange.date_exchange | date: 'dd/MM/yyyy' }}</span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
           <span class="span-last mr-3" (click)="openDialogNewExchange(exchange)">Nueva Tasa</span>
           <span class="span-last mx-3" (click)="goToDetailsExchanges(exchange)">Detalles Tasas</span>
-          <i class="fa fa-edit me-3" (click)="openDialogEditExchange(exchange)"></i>
+          <!-- <i class="fa fa-edit me-3" (click)="openDialogEditExchange(exchange)"></i> -->
           <i class="fa fa-trash" (click)="delete(exchange)"></i>
         </td>
-        <td></td>
       </tr>
     </tbody>
   </table>
