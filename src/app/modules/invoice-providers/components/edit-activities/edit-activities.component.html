@@ -1,1 +1,90 @@
-<p>edit-activities works!</p>
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+  <header class="d-flex align-items-flex-end">
+    <h2 mat-dialog-title class="col-md-10 p-0">
+      Planificacion de actividad
+    </h2>
+    <div class="d-flex justify-content-end w-100">
+      <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+    </div>
+  </header>
+  <div>
+    <form (ngSubmit)="registerActivity()" autocomplete="off" [formGroup]="activityForm">
+      <div class="row col-12 mb-3">
+        <div class="form-group col-6">
+          <label class="mb-2" for="exampleFormControlInput1">Tipo de actividad</label>
+          <select [ngClass]="{'error-input': activityForm.controls['type_activity'].errors && activityForm.controls['type_activity'].touched}" formControlName="type_activity" type="text" style="background-color: #E0E0E0" class="form-select" id="exampleFormControlInput1">
+            <option value="" selected disabled>Selecciona un tipo de actividad</option>
+            <option *ngFor="let item of activities" [value]="item.name">{{item.name}}</option>
+          </select>
+            <div *ngIf="activityForm.controls['type_activity'].errors && activityForm.controls['type_activity'].touched" class="validation">
+              Campo requerido
+            </div>
+        </div>
+        <div class="form-group col-6">
+          <label class="mb-2" for="exampleFormControlInput1">Fecha de vencimiento</label>
+          <div style="position: relative;">
+            <input [matDatepicker]="picker" [ngClass]="{'error-input': activityForm.controls['date_expiration'].errors && activityForm.controls['date_expiration'].touched}" formControlName="date_expiration" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="dd-mm-yyyy">
+            <div style="position: absolute; right: 0; top: 0;">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+          <div *ngIf="activityForm.controls['date_expiration'].errors && activityForm.controls['date_expiration'].touched" class="validation">
+              Campo requerido
+            </div>
+        </div>
+      </div>
+      <div class="row col-12 mb-3">
+        <div class="form-group col-6">
+          <label class="mb-2" for="exampleFormControlInput1">Resumen</label>
+          <input [ngClass]="{'error-input': activityForm.controls['summary'].errors && activityForm.controls['summary'].touched}" formControlName="summary" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Grupo Hycsa Sucursal Bolivia Santa Cruz">
+            <div *ngIf="activityForm.controls['summary'].errors && activityForm.controls['summary'].touched" class="validation">
+              Campo requerido
+            </div>
+        </div>
+        <div class="form-group col-6">
+          <label class="mb-2" for="exampleFormControlInput1">Asignada a</label>
+            <input
+              [ngClass]="{'error-input': activityForm.controls['assignment'].errors && activityForm.controls['assignment'].touched}"
+              formControlName="assignment"
+              type="text"
+              style="background-color: #E0E0E0"
+              class="form-control"
+              [matAutocomplete]="search"
+              id="exampleFormControlInput1"
+              placeholder="Escribe algo..."
+            />
+            <mat-autocomplete
+                  autoActiveFirstOption
+                  #search="matAutocomplete"
+                  [displayWith]="displayFn"
+                >
+                  <mat-option value="" *ngIf="!activityForm.controls['assignment'].value">
+                    Escribe algo...
+                  </mat-option>
+                  <div *ngIf="activityForm.controls['assignment'].value">
+                    <mat-option
+                      *ngFor="let option of filteredOptions"
+                      [value]="option"
+                    >
+                      {{ option.email }} </mat-option
+                    >
+                  </div>
+                </mat-autocomplete>
+          <div *ngIf="activityForm.controls['assignment'].errors && activityForm.controls['assignment'].touched" class="validation">
+              Campo requerido
+            </div>
+        </div>
+      </div>
+      <div class="row col-12 mb-3">
+        <div class="form-group col-12">
+          <textarea [ngClass]="{'error-input': activityForm.controls['note'].errors && activityForm.controls['note'].touched}" formControlName="note" type="text" style="background-color: #E0E0E0" class="form-control" id="exampleFormControlInput1" placeholder="Registrar una nota..."></textarea>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="mx-3" color="warn" mat-stroked-button mat-dialog-close>Cancelar</button>
+        <button class="btn-primary mx-3" mat-raised-button (click)="registerActivity()">Planificacion</button>
+      </div>
+    </form>
+  </div>
+</div>

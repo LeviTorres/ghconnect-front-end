@@ -33,10 +33,20 @@ export class InvoiceProvidersService{
 
   createInvoiceProvider(formData: any) {
     return this._http.post(`${base_url}/invoice-providers`, formData, this.headers)
+                          .pipe(
+                            map((resp: any) => {
+                              return resp.invoice_provider
+                            })
+                          )
   }
 
   updateInvoiceProvider(formData: any, _id:string) {
     return this._http.put(`${base_url}/invoice-providers/${ _id}`, formData, this.headers)
+                        .pipe(
+                          map((resp: any) => {
+                            return resp.invoiceUpdated
+                          })
+                        )
   }
 
   getInvoiceProviders(){
