@@ -10,8 +10,18 @@
     </mat-form-field>
   </div>
 </div>
+<div class="d-flex bd-highlight">
+  <div class="mx-auto p-2 bd-highlight"></div>
+  <div class="p-2 bd-highlight" style="margin-left: 5rem;">
+    <span class="button-menu" [matMenuTriggerFor]="menu">
+      <i class="material-icons" style="color:black "> <img src="../../../../../assets/icons/Ajustes.svg"
+          style="width:20px"></i>
+    </span>
+  </div>
+  <div class="me-auto p-2 bd-highlight"></div>
+</div>
 <div class="row">
-  <div class="table-responsive mt-4 overflow-auto card">
+  <div class="table-responsive overflow-auto card">
     <table class="table card-table table-vcenter text-nowrap datatable">
       <thead>
         <tr>
@@ -26,11 +36,6 @@
           </th>
           <th class="last" *ngIf="actionsControl.value">
             Acciones
-          </th>
-          <th class="last" style="width: 15px;">
-            <span class="button-menu" [matMenuTriggerFor]="menu">
-              <i class="material-icons" style="color:white ">more_vert</i>
-            </span>
           </th>
           <mat-menu #menu="matMenu">
             <div class="menu-table">
@@ -49,21 +54,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let country of countries | paginate: { itemsPerPage: selectedValue, currentPage: page };
-        index as i">
-          <td *ngIf="nameControl.value">
+        index as i" style="cursor:pointer">
+          <td *ngIf="nameControl.value" (click)="openDialogEditCountry(country)">
             <span>{{country.name}}</span>
           </td>
-          <td *ngIf="nationalityControl.value">
+          <td *ngIf="nationalityControl.value" (click)="openDialogEditCountry(country)">
             <span>{{country.nationality}}</span>
           </td>
-          <td *ngIf="divisaControl.value">
+          <td *ngIf="divisaControl.value" (click)="openDialogEditCountry(country)">
             <span>{{country.divisa?.name }}</span>
           </td>
-          <td class="last" *ngIf="actionsControl.value">
-            <i class="fa fa-edit me-4" (click)="openDialogEditCountry(country)"></i>
+          <td class="last" *ngIf="actionsControl.value" (click)="openDialogEditCountry(country)">
             <i class="fa fa-trash" (click)="delete(country)"></i>
           </td>
-          <td></td>
         </tr>
       </tbody>
     </table>

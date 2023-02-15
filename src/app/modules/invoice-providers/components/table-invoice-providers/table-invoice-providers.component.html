@@ -21,7 +21,8 @@
   <div class="mx-auto p-2 bd-highlight"></div>
   <div class="p-2 bd-highlight" style="margin-left: 5rem;">
     <span class="button-menu" [matMenuTriggerFor]="menu">
-      <i class="material-icons" style="color:black ">more_vert</i>
+      <i class="material-icons" style="color:black "> <img src="../../../../../assets/icons/Ajustes.svg"
+          style="width:20px"></i>
     </span>
   </div>
   <div class="me-auto p-2 bd-highlight"></div>
@@ -31,9 +32,7 @@
     <thead>
       <tr>
         <th class="last" *ngIf="statusControl.value">
-          <span>
-            <img src="../../../../../assets/icons/traffic.svg" alt="">
-          </span>
+          <span>Estado</span>
         </th>
         <th *ngIf="flowIdControl.value">
           Id flujo
