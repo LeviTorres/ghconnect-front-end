@@ -93,8 +93,7 @@ export class BusinessTenantsComponent implements OnInit {
     }
 
     this.history.push({
-      name: this.user.name,
-      last_name: this.user.last_name,
+      user: this.user._id,
       note: `Empresa creada`,
       date: new Date().getTime(),
       type: 'note'
