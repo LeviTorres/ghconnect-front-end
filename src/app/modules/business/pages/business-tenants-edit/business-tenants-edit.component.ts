@@ -15,6 +15,7 @@ import { Business } from '../../../../models/Business.model';
 import { environment } from '../../../../../environments/environment.prod';
 import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
 import { User } from '../../../../models/User.model';
+import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
 
 const base_url = environment.base_url
 
@@ -39,6 +40,7 @@ export class BusinessTenantsEditComponent implements OnInit {
   public nameBusiness:any
   public followers: any[] = []
   public users: any[] = []
+  public activitiesPlan: any[] = []
 
   public formActivity: FormControl = new FormControl('')
 
@@ -87,8 +89,8 @@ export class BusinessTenantsEditComponent implements OnInit {
       this._businessService.getBusinessById(params.id).subscribe((resp:any) => {
         this.business = resp
         this.initValuesForm()
+        this.viewActivitiesPlan()
       })
-
     })
   }
 
@@ -109,9 +111,6 @@ export class BusinessTenantsEditComponent implements OnInit {
         const element = {
           followers: [ ...this.followers, resp],
         }
-        //this.followers.push(element)
-        console.log(element);
-
         this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
           this.followers = [...resp.followers!]
         })
@@ -132,7 +131,6 @@ export class BusinessTenantsEditComponent implements OnInit {
   initValuesForm(){
     this.dateForm = new Date(this.business.creation_date)
     this.nameBusiness = this.business.name
-    console.log(this.business);
 
     //this.imageSelect = `${ base_url }/upload/business/${ this.business.img }`
     //console.log(this.imageSelect)
@@ -156,27 +154,9 @@ export class BusinessTenantsEditComponent implements OnInit {
       url_web: this.business.url_web,
       divisa: this.business.divisa
     })
-    console.log();
 
     this.history = [ ...this.business.activities ]
     this.followers = [...this.business.followers! ]
-    /*for (
-      let index = 0;
-      index < this.business.activities.length;
-      index++
-    ) {
-      this.history.push({
-        note: this.business.activities[index].note,
-        date: this.business.activities[index].date,
-        name: this.business.activities[index].name,
-        last_name: this.business.activities[index].last_name,
-        type_activity: this.business.activities[index].type_activity,
-        date_expiration: this.business.activities[index].date_expiration,
-        assignment: this.business.activities[index].assignment,
-        summary: this.business.activities[index].summary,
-        type: this.business.activities[index].type,
-      });
-    } */
 
   }
 
@@ -198,16 +178,103 @@ export class BusinessTenantsEditComponent implements OnInit {
     dialogRef.beforeClosed().subscribe((resp:any) => {
       console.log('resp after dialog', resp);
       if(resp){
-        const element = {
-          ...resp,
-          status: 'DRAFT'
+        const element1 = {
+          ...resp
         }
-        this.history.push(element)
+        this.history.push(element1)
         console.log('this.history',this.history);
+        const element = {
+          activities: [
+            ...this.history
+          ]
+        }
 
+        this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {})
+        this.viewActivitiesPlan()
       }
     })
   }
+
+  viewActivitiesPlan(){
+    let findActivity:any
+    findActivity = this.history.filter((element:any) => {
+      return element.type === 'activity' && element.status === 'DRAFT'
+    })
+
+    if(findActivity){
+      this.activitiesPlan = findActivity
+    }
+  }
+
+  markActivityDone(data:any){
+
+    const findActivity = this.history.findIndex((element:any) => element._id === data._id)
+    const element1 = {
+      ...data,
+      status: 'DONE',
+      date: new Date().getTime(),
+      user: this.user._id
+    }
+    this.history[findActivity] = element1
+    const element = {
+      activities: [
+       ...this.history,
+     ]
+    }
+    this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
+      this.history = [...resp.activities]
+    })
+    this.viewActivitiesPlan()
+  }
+
+  cancelActivity(data: any){
+    const findActivity = this.history.findIndex((element:any) => element._id === data._id)
+    this.history.splice(findActivity,1)
+    const element = {
+      activities: [
+       ...this.history
+     ]
+    }
+    this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
+      this.history = [...resp.activities]
+    })
+    this.viewActivitiesPlan()
+  }
+
+  goToEditActivity(id: string){
+    console.log(id);
+    let dialogRef = this._dialog.open(EditActivitiesComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: id
+    })
+    dialogRef.beforeClosed().subscribe((resp:any) => {
+      console.log('resp after dialog', resp);
+      if(resp){
+        const element1 = {
+          ...resp
+        }
+
+        const findIndexActivity = this.history.findIndex((element:any) => element._id === element1._id)
+
+        this.history[findIndexActivity] = element1
+
+        const element = {
+          activities: [
+           ...this.history
+         ]
+        }
+
+        this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
+          this.history = [...resp.activities]
+        })
+        this.viewActivitiesPlan()
+      }
+    })
+  }
+
 
   addNote() {
     const value = this.formActivity.value.trim()
