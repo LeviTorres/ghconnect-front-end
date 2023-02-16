@@ -87,11 +87,6 @@ export class BusinessTenantsComponent implements OnInit {
       return
     }
 
-    if (!this.imageSelect) {
-      this._toastr.warning('Selecciona el logotipo de la empresa')
-      return
-    }
-
     this.history.push({
       user: this.user._id,
       note: `Empresa creada`,

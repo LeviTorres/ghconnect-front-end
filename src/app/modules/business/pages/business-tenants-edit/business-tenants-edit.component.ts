@@ -310,11 +310,6 @@ export class BusinessTenantsEditComponent implements OnInit {
       this.form.markAllAsTouched()
       return
     }
-
-    if (!this.imageSelect) {
-      this._toastr.warning('Selecciona el logotipo de la empresa')
-      return
-    }
     const element: Business = {
       ...this.form.value
     }
