@@ -213,4 +213,9 @@ export class TableProvidersComponent implements OnInit {
     }
     this._excelService.downloadExcel(element, 'Proveedores', 'providers')
   }
+
+  importData(){
+
+  }
+
 }

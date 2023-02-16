@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-between col-12">
   <div style="display:flex; align-items:center">
-    <button class="btn-primary" mat-button routerLink="/providers/add-provider"
+    <button class="btn-primary" mat-raised-button routerLink="/providers/add-provider"
       routerLinkActive="router-link-active">Nuevo
       proveedor</button>
     <button class="btn-primary mx-3" mat-raised-button (click)="createExcel()">Exportar Excel</button>
+    <button class="btn-primary" mat-raised-button (click)="importData()">Importar datos</button>
   </div>
   <div class="col-4">
     <mat-form-field class="w-100" appearance="legacy">
