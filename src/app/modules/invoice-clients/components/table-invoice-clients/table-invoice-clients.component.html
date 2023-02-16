@@ -4,7 +4,7 @@
     clientes</p>
 </div>
 <div class="d-flex justify-content-between col-12">
-  <div>
+  <div style="display:flex; align-items:center">
     <button class="btn-primary" mat-raised-button routerLink="/invoice-clients/add-invoice-clients">Crear
       factura</button>
     <button class="btn-primary mx-3" mat-raised-button (click)="createExcel()">Exportar Excel</button>
@@ -15,9 +15,13 @@
       <mat-label>Buscar...</mat-label>
       <input type="text" matInput #txtTerm (keyup)="search(txtTerm.value)">
     </mat-form-field>
+    <span class="button-menu" [matMenuTriggerFor]="menu">
+      <i class="material-icons" style="color:black " data-toggle="tooltip" data-placement="right" title="Ajustes"> <img
+          src="../../../../../assets/icons/Ajustes.svg" style="width:20px"></i>
+    </span>
   </div>
 </div>
-<div class="d-flex bd-highlight">
+<!-- <div class="d-flex bd-highlight">
   <div class="mx-auto p-2 bd-highlight"></div>
   <div class="p-2 bd-highlight" style="margin-left: 5rem;">
     <span class="button-menu" [matMenuTriggerFor]="menu">
@@ -26,17 +30,11 @@
     </span>
   </div>
   <div class="me-auto p-2 bd-highlight"></div>
-</div>
+</div> -->
 <div class="table-responsive mt-4 overflow-auto card">
   <table class="table card-table table-vcenter text-nowrap datatable">
     <thead>
       <tr>
-        <th class="last" *ngIf="statusControl.value">
-          <span>Estado</span>
-        </th>
-        <th *ngIf="flowIdControl.value">
-          Id flujo
-        </th>
         <th *ngIf="remesaControl.value">
           Remesa
         </th>
@@ -82,11 +80,17 @@
         <th *ngIf="descriptionControl.value">
           Descripcion
         </th>
+        <th *ngIf="flowIdControl.value">
+          Id flujo
+        </th>
         <th *ngIf="contractControl.value">
           Contrato
         </th>
         <th *ngIf="checkbookControl.value">
           Bolsa/Chequera
+        </th>
+        <th class="last" *ngIf="statusControl.value">
+          <span>Estado</span>
         </th>
         <th *ngIf="payStatusControl.value">
           Estado de pago
@@ -158,12 +162,6 @@
     <tbody>
       <tr *ngFor="let invoice of filterInvoiceClients | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i" style="cursor:pointer">
-        <td class="text-center" *ngIf="statusControl.value" (click)="goToEditInvoiceClient(invoice)">
-          <div *ngIf=" invoice.status === 'draft'"> <span>BORRADOR</span> </div>
-        </td>
-        <td *ngIf="flowIdControl.value" (click)="goToEditInvoiceClient(invoice)">
-          <span></span>
-        </td>
         <td *ngIf="remesaControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.remesa ? invoice.remesa : 'No'}}</span>
         </td>
@@ -209,20 +207,25 @@
         <td *ngIf="descriptionControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.description}}</span>
         </td>
+        <td *ngIf="flowIdControl.value" (click)="goToEditInvoiceClient(invoice)">
+          <span></span>
+        </td>
         <td *ngIf="contractControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span>{{invoice.contract}}</span>
         </td>
         <td *ngIf="checkbookControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span></span>
         </td>
+        <td class="text-center" *ngIf="statusControl.value" (click)="goToEditInvoiceClient(invoice)">
+          <div *ngIf=" invoice.status === 'draft'"> <span>BORRADOR</span> </div>
+        </td>
         <td *ngIf="payStatusControl.value" (click)="goToEditInvoiceClient(invoice)">
           <span></span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(invoice)"></i>
-          <span (click)="openDialogTracking(invoice)">
-            <i class="material-icons" style="color:black; font-size: 15px; margin-left: 15px;">timeline</i>
-          </span>
+          <i class="material-icons" style="color:black; font-size: 15px; margin-left: 15px;"
+            (click)="openDialogTracking(invoice)">timeline</i>
         </td>
         <td></td>
       </tr>

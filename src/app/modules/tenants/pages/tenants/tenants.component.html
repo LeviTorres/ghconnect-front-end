@@ -33,7 +33,8 @@
               <img class="imgSize" [src]="getImage(item.tenant_id.img)">
             </div>
             <div class=" col-6 d-flex flex-row-reverse" style="align-items: center;">
-              <img style="width: 20px; height: 20px;" class="me-2" (click)="goToEdit(item.tenant_id._id)" src="../../../../../assets/icons/Settings-white.svg" alt="">
+              <img style="width: 20px; height: 20px;" class="me-2" (click)="goToEdit(item.tenant_id._id)"
+                src="../../../../../assets/icons/Settings-white.svg" alt="">
               <p class="text-end text-muted idSize m-0">{{item.tenant_id.key_business}}</p>
             </div>
           </div>
@@ -43,8 +44,9 @@
         </div>
         <div class="face faceSecond1" (click)="goToHomeWithTenant(item.tenant_id._id)">
           <div class="">
-            <p class="tenant-p">Pruebas - Calzada Construcciones S.A. de C.V. Suc. Bolivia. Av. Las Ramblas, Santa
-              Cruz de la Sierra,Bolivia.
+            <p class="tenant-p"> {{item.tenant_id.name}}. {{item.tenant_id.address_1}}, {{item.tenant_id.street_1}}.
+              {{item.tenant_id.zip_code}}. {{item.tenant_id.city}}, {{item.tenant_id.polity}},
+              {{item.tenant_id.country}}. {{item.tenant_id.tax_identification_number}}
             </p>
           </div>
         </div>
