@@ -126,6 +126,14 @@ export class TableMovementTypesComponent implements OnInit {
     })
   }
 
+  updateStatus(data: any){
+    const element = {
+      ...data,
+      status: !data.status
+    }
+    this._movementClientService.updateMovementTypeClient(element, data._id).subscribe((resp:any) => {})
+  }
+
   search(term: string) {
     if (term.length === 0) {
       return this.movements = this.movementsTemp

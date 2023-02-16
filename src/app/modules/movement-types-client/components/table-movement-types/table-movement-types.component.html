@@ -40,7 +40,7 @@
         <th *ngIf="statusControl.value">
           Estado
         </th>
-        <th class="last" *ngIf="actionsControl.value">
+        <th class="text-center" *ngIf="actionsControl.value">
           Acciones
         </th>
         <mat-menu #menu="matMenu">
@@ -79,11 +79,10 @@
           <span *ngIf="movement.invoice">SI</span>
           <span *ngIf="!movement.invoice">NO</span>
         </td>
-        <td *ngIf="statusControl.value" >
-          <span *ngIf="movement.status">SI</span>
-          <span *ngIf="!movement.status">NO</span>
+        <td *ngIf="statusControl.value" class="text-center">
+          <mat-slide-toggle [checked]="movement.status" (click)="updateStatus(movement)"></mat-slide-toggle>
         </td>
-        <td class="last" *ngIf="actionsControl.value">
+        <td class="text-center" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(movement)"></i>
         </td>
       </tr>

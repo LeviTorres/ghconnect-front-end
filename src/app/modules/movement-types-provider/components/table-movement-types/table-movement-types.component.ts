@@ -33,6 +33,7 @@ export class TableMovementTypesComponent implements OnInit {
   public headersMovementTypes: any[] = []
   public header_name: string = 'movementTypesProvider'
 
+
   constructor(
     private _loginService: LoginService,
     private _headerService: HeadersService,
@@ -46,6 +47,14 @@ export class TableMovementTypesComponent implements OnInit {
   ngOnInit(): void {
     this.getMovementTypes()
     this.getHeadersMovementType()
+  }
+
+  updateStatus(data: any){
+    const element = {
+      ...data,
+      status: !data.status
+    }
+    this._movementProviderService.updateMovementTypeProvider(element, data._id).subscribe((resp:any) => {})
   }
 
   getHeadersMovementType() {

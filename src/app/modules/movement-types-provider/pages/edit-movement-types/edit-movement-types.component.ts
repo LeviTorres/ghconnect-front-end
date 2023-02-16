@@ -24,8 +24,7 @@ export class EditMovementTypesComponent implements OnInit {
     key_movement: new FormControl('', Validators.required),
     name_movement: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
-    invoice: new FormControl(false, Validators.required),
-    status: new FormControl(false, Validators.required),
+    invoice: new FormControl(false, Validators.required)
   })
 
   constructor(
