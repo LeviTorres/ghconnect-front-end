@@ -101,7 +101,8 @@ export class BusinessTenantsComponent implements OnInit {
     }
 
     this._businessService.createBusiness(element).subscribe((respuesta: Business) => {
-      this._uploadService.updateFile(this.imageSelect, 'business', respuesta._id!).then((resp: any) => { })
+      if(this.imageSelect){
+        this._uploadService.updateFile(this.imageSelect, 'business', respuesta._id!).then((resp: any) => { })
         this.user.tenant.push({
           tenant_id: {
             divisa: respuesta.divisa,
@@ -127,6 +128,7 @@ export class BusinessTenantsComponent implements OnInit {
             }
           });
         })
+      }
     })
   }
 

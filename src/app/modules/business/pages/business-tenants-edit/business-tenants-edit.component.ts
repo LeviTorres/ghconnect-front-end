@@ -316,9 +316,11 @@ export class BusinessTenantsEditComponent implements OnInit {
     console.log(element);
 
     this._businessService.updateBusiness(element, this.business._id!).subscribe((resp: Business) => {
-      this._uploadService.updateFile(this.imageSelect, 'business', resp._id!).then((resp: any) => { })
+      if(this.imageSelect){
+        this._uploadService.updateFile(this.imageSelect, 'business', resp._id!).then((resp: any) => { })
         this._router.navigateByUrl('/tenants')
         this._toastr.success('Empresa actualizada con exito')
+      }
     })
   }
 
