@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { MovementsTypeService } from 'src/app/services/movements-type.service';
+import { MovementsTypeClientService } from '../../../../services/movements-type-client.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,13 +21,14 @@ export class AddMovementTypesComponent implements OnInit {
     key_movement: new FormControl('', Validators.required),
     name_movement: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
+    status: new FormControl(true, Validators.required),
     invoice: new FormControl(false, Validators.required),
   })
 
   constructor(
     private _spinner: NgxSpinnerService,
     private _toastr: ToastrService,
-    private _movementService: MovementsTypeService,
+    private _movementClientService: MovementsTypeClientService,
     private _router: Router
   ) {
 
@@ -44,12 +45,13 @@ export class AddMovementTypesComponent implements OnInit {
       return
     }
 
-    this._movementService.createMovementType(this.form.value).subscribe(() => {
-      this._router.navigateByUrl('/movement-types')
+    this._movementClientService.createMovementTypeClient(this.form.value).subscribe(() => {
+      this._router.navigateByUrl('/movement-types-client')
       this._toastr.success('Nuevo tipo de movimiento creado con exito')
       this._spinner.hide()
     },)
 
   }
+
 
 }

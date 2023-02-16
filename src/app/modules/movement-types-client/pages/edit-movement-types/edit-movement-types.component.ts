@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MovementsTypeService } from 'src/app/services/movements-type.service';
+import { MovementsTypeClientService } from '../../../../services/movements-type-client.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { MovementType } from 'src/app/models/MovementType.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
 
 @Component({
   selector: 'app-edit-movement-types',
@@ -25,11 +25,12 @@ export class EditMovementTypesComponent implements OnInit {
     name_movement: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
     invoice: new FormControl(false, Validators.required),
+    status: new FormControl(false, Validators.required),
   })
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _movementService:MovementsTypeService,
+    private _movementClientService:MovementsTypeClientService,
     private _spinner: NgxSpinnerService,
     private _toastr:ToastrService,
     private _router: Router,
@@ -44,8 +45,8 @@ export class EditMovementTypesComponent implements OnInit {
 
   getMovementTypes(id: string){
     this._spinner.show()
-    this._movementService.getMovementsType().subscribe((movements:MovementType[]) => {
-      this.movement = movements.find((movement: MovementType) => movement._id === id)
+    this._movementClientService.getMovementsTypeClient().subscribe((movements:MovementTypeClient[]) => {
+      this.movement = movements.find((movement: MovementTypeClient) => movement._id === id)
       this.initValuesForm()
       this._spinner.hide()
     })
@@ -73,10 +74,10 @@ export class EditMovementTypesComponent implements OnInit {
       ...this.form.value,
     }
 
-    this._movementService.updateMovementType(element, this.movement._id).subscribe(() => {
-          this._router.navigateByUrl('/movement-types')
+    this._movementClientService.updateMovementTypeClient(element, this.movement._id).subscribe(() => {
+          this._router.navigateByUrl('/movement-types-client')
           this._spinner.hide()
-          this._toastr.success('Tipo de cambio actualizado con Exito')
+          this._toastr.success('Tipo de movimiento actualizado con Exito')
     })
   }
 

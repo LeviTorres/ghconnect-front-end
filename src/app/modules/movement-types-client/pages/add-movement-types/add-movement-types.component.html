@@ -1,5 +1,5 @@
 <header class="d-flex align-items-flex-end">
-  <h2 class="col-md-10 p-0">Editar Tipo de movimiento</h2>
+  <h2 class="col-md-10 p-0">Nuevo Tipo de movimiento</h2>
 </header>
 <form autocomplete="off" [formGroup]="form">
   <div class="row col-12 mb-3">
@@ -29,15 +29,21 @@
           Campo requerido
         </div>
     </div>
-    <div class="form-check col-5 ms-3" style="display: flex; align-items: center;">
+    <div class="form-check col-3 ms-3" style="display: flex; align-items: center;">
       <input class="form-check-input" formControlName="invoice" style="background-color: #E0E0E0" type="checkbox" value="" id="flexCheckDefault">
       <label class="form-check-label mx-3" for="flexCheckDefault">
         Factura
       </label>
     </div>
+    <div class="form-check col-3 ms-3" style="display: flex; align-items: center;">
+      <input class="form-check-input" formControlName="status" style="background-color: #E0E0E0" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label mx-3" for="flexCheckDefault">
+        Activo
+      </label>
+    </div>
   </div>
   <div class="text-center">
-    <button class="btn-primary mx-3" mat-raised-button routerLink="/movement-types">Cancelar</button>
-    <button class="btn-primary mx-3" mat-raised-button (click)="editMovementType()">Editar Tipo de Movimiento</button>
+    <button class="btn-primary mx-3" mat-raised-button routerLink="/movement-types-client">Cancelar</button>
+    <button class="btn-primary mx-3" mat-raised-button (click)="addMovementType()">Añadir Tipo de Movimiento</button>
   </div>
 </form>

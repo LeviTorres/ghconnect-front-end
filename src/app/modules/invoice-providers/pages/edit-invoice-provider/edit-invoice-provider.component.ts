@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Divisa } from '../../../../models/Divisa.model';
-import { MovementType } from '../../../../models/MovementType.model';
 import { Provider } from '../../../../models/Provider.model';
 import { Ceco } from '../../../../models/Ceco.model';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
@@ -10,7 +9,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProvidersService } from '../../../../services/providers.service';
 import { CecosService } from '../../../../services/cecos.service';
 import { DivisasService } from '../../../../services/divisas.service';
-import { MovementsTypeService } from '../../../../services/movements-type.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
@@ -22,6 +20,8 @@ import { User } from '../../../../models/User.model';
 import { AddActivitiesComponent } from '../../components/add-activities/add-activities.component';
 import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
 import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
+import { MovementTypeProvider } from '../../../../models/MovementTypeProvider.model';
+import { MovementsTypeProviderService } from '../../../../services/movements-type-provider.service';
 
 @Component({
   selector: 'app-edit-invoice-provider',
@@ -32,7 +32,7 @@ export class EditInvoiceProviderComponent implements OnInit {
 
   public invoiceProviders: any
   public divisas: Divisa[] = []
-  public movements: MovementType[] = []
+  public movements: MovementTypeProvider[] = []
   public providers: Provider[] = []
   public cecos: Ceco[] = []
   public users: any[] = []
@@ -70,7 +70,7 @@ export class EditInvoiceProviderComponent implements OnInit {
     private _providersService: ProvidersService,
     private _cecosService: CecosService,
     private _divisasService: DivisasService,
-    private _movementsService: MovementsTypeService,
+    private _movementsProviderService: MovementsTypeProviderService,
     private _fb: FormBuilder,
     private _toastr: ToastrService,
     private _activatedRoute: ActivatedRoute,
@@ -151,11 +151,13 @@ export class EditInvoiceProviderComponent implements OnInit {
       description: this.invoiceProviders.description,
       movement_type: this.invoiceProviders.movement_type._id
     })
+    this.history = [ ...this.invoiceProviders.activities ]
+    this.followers = [...this.invoiceProviders.followers! ]
   }
 
   getMovements() {
     this._spinner.show()
-    this._movementsService.getMovementsType().subscribe((item: any) => {
+    this._movementsProviderService.getMovementsTypeProviderActive().subscribe((item: any) => {
       this.movements = item
       this._spinner.hide()
     })

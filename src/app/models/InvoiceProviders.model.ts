@@ -1,8 +1,8 @@
 import { Ceco } from './Ceco.model';
 import { Provider } from './Provider.model';
-import { MovementType } from './MovementType.model';
 import { User } from './User.model';
 import { Divisa } from './Divisa.model';
+import { MovementTypeProvider } from './MovementTypeProvider.model';
 
 
 export class InvoiceProviders {
@@ -16,7 +16,7 @@ export class InvoiceProviders {
     public invoice_total: string,
     public divisa: Divisa,
     public description: string,
-    public movement_type: MovementType,
+    public movement_type: MovementTypeProvider,
     public activities?: any[],
     public followers?: any[],
     public user?: User,

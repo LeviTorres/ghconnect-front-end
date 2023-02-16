@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between col-12">
   <div>
-    <button class="btn-primary" mat-raised-button routerLink="/movement-types/add-movement-type">Crear tipo de
+    <button class="btn-primary" mat-raised-button routerLink="/movement-types-provider/add-movement-type">Crear tipo de
       movimiento</button>
   </div>
   <div class="col-4">
@@ -37,6 +37,9 @@
         <th *ngIf="invoiceControl.value">
           Factura
         </th>
+        <th *ngIf="statusControl.value">
+          Estado
+        </th>
         <th class="last" *ngIf="actionsControl.value">
           Acciones
         </th>
@@ -51,6 +54,8 @@
               Tipo movimiento</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="invoiceControl" (click)="$event.stopPropagation();">
               Factura</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
+              Estado</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
               Acciones</mat-checkbox>
             <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
@@ -73,6 +78,10 @@
         <td *ngIf="invoiceControl.value" (click)="goToEditMovementTypes(movement)">
           <span *ngIf="movement.invoice">SI</span>
           <span *ngIf="!movement.invoice">NO</span>
+        </td>
+        <td *ngIf="statusControl.value" >
+          <span *ngIf="movement.status">SI</span>
+          <span *ngIf="!movement.status">NO</span>
         </td>
         <td class="last" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(movement)"></i>

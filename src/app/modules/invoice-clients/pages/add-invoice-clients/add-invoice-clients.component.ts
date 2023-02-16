@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Divisa } from '../../../../models/Divisa.model';
-import { MovementType } from '../../../../models/MovementType.model';
 import { Client } from '../../../../models/Client.model';
 import { Ceco } from '../../../../models/Ceco.model';
 import { Validators, FormBuilder } from '@angular/forms';
@@ -10,10 +9,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ClientsService } from '../../../../services/clients.service';
 import { CecosService } from '../../../../services/cecos.service';
 import { DivisasService } from '../../../../services/divisas.service';
-import { MovementsTypeService } from '../../../../services/movements-type.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { LoginService } from '../../../../services/login.service';
+import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
+import { MovementsTypeClientService } from '../../../../services/movements-type-client.service';
 
 @Component({
   selector: 'app-add-invoice-clients',
@@ -22,7 +22,7 @@ import { LoginService } from '../../../../services/login.service';
 })
 export class AddInvoiceClientsComponent implements OnInit {
   public divisas: Divisa[] = [];
-  public movements: MovementType[] = [];
+  public movements: MovementTypeClient[] = [];
   public clients: Client[] = [];
   public cecos: Ceco[] = [];
 
@@ -53,7 +53,7 @@ export class AddInvoiceClientsComponent implements OnInit {
     private _clientService: ClientsService,
     private _cecosService: CecosService,
     private _divisasService: DivisasService,
-    private _movementsService: MovementsTypeService,
+    private _movementsClientService: MovementsTypeClientService,
     private _fb: FormBuilder,
     private _toastr: ToastrService,
     private _loginService: LoginService
@@ -112,7 +112,7 @@ export class AddInvoiceClientsComponent implements OnInit {
 
   getMovements() {
     this._spinner.show();
-    this._movementsService.getMovementsType().subscribe((item: any) => {
+    this._movementsClientService.getMovementsTypeClientActive().subscribe((item: any) => {
       this.movements = item;
       this._spinner.hide();
     });

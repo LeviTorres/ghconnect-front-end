@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
 import { FormControl } from '@angular/forms';
 import { LoginService } from '../../../../services/login.service';
 import { HeadersService } from '../../../../services/headers.service';
 import { ToastrService } from 'ngx-toastr';
-import { MovementType } from 'src/app/models/MovementType.model';
-import { MovementsTypeService } from 'src/app/services/movements-type.service';
+import { MovementsTypeClientService } from '../../../../services/movements-type-client.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { SearchService } from '../../../../services/search.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-table-movement-types',
@@ -17,9 +18,9 @@ import { SearchService } from '../../../../services/search.service';
 })
 export class TableMovementTypesComponent implements OnInit {
 
-  public movements: MovementType[] = []
-  public movementsTemp: MovementType[] = []
-  public filterMovementsType: MovementType[] = []
+  public movements: MovementTypeClient[] = []
+  public movementsTemp: MovementTypeClient[] = []
+  public filterMovementsType: MovementTypeClient[] = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -28,16 +29,17 @@ export class TableMovementTypesComponent implements OnInit {
   public nameMovementControl: FormControl = new FormControl()
   public typeControl: FormControl = new FormControl()
   public invoiceControl: FormControl = new FormControl()
+  public statusControl: FormControl = new FormControl()
   public actionsControl: FormControl = new FormControl()
 
   public headersMovementTypes: any[] = []
-  public header_name: string = 'movementTypes'
+  public header_name: string = 'movementTypesClient'
 
   constructor(
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _toastr: ToastrService,
-    private _movementService: MovementsTypeService,
+    private _movementClientService: MovementsTypeClientService,
     private _spinner: NgxSpinnerService,
     private _router: Router,
     private _searchService: SearchService
@@ -62,6 +64,7 @@ export class TableMovementTypesComponent implements OnInit {
       this.nameMovementControl.setValue(headerProvider.name_movement)
       this.typeControl.setValue(headerProvider.type)
       this.invoiceControl.setValue(headerProvider.invoice)
+      this.statusControl.setValue(headerProvider.status)
       this.actionsControl.setValue(headerProvider.actions)
       this._spinner.hide()
     } else {
@@ -69,6 +72,7 @@ export class TableMovementTypesComponent implements OnInit {
       this.nameMovementControl.setValue(true)
       this.typeControl.setValue(true)
       this.invoiceControl.setValue(true)
+      this.statusControl.setValue(true)
       this.actionsControl.setValue(true)
       const element = {
         key_header: `${this._loginService.uid}-${this.header_name}`,
@@ -76,6 +80,7 @@ export class TableMovementTypesComponent implements OnInit {
         name_movement: true,
         type: true,
         invoice: true,
+        status: true,
         actions: true,
       }
       this._headerService.createHeaders(element, this.header_name).subscribe((item: any) => {
@@ -94,6 +99,7 @@ export class TableMovementTypesComponent implements OnInit {
       name_movement: this.nameMovementControl.value,
       type: this.typeControl.value,
       invoice: this.invoiceControl.value,
+      status: this.statusControl.value,
       actions: this.actionsControl.value
     }
     this._headerService.updateHeaders(element, headerProvider._id, this.header_name).subscribe(() => {
@@ -103,8 +109,8 @@ export class TableMovementTypesComponent implements OnInit {
     })
   }
 
-  goToEditMovementTypes(movement: MovementType) {
-    this._router.navigate(['/movement-types/edit-movement-type'],
+  goToEditMovementTypes(movement: MovementTypeClient) {
+    this._router.navigate(['/movement-types-client/edit-movement-type'],
       {
         queryParams: {
           movement: movement._id,
@@ -113,7 +119,7 @@ export class TableMovementTypesComponent implements OnInit {
   }
 
   getMovementTypes() {
-    this._movementService.getMovementsType().subscribe((movements: MovementType[]) => {
+    this._movementClientService.getMovementsTypeClient().subscribe((movements: MovementTypeClient[]) => {
       this.movements = movements
       this.movementsTemp = movements
       console.log(this.movements);
@@ -124,14 +130,14 @@ export class TableMovementTypesComponent implements OnInit {
     if (term.length === 0) {
       return this.movements = this.movementsTemp
     }
-    this._searchService.search('movementTypes', term).subscribe((resp: any) => {
+    this._searchService.search('movementTypesClient', term).subscribe((resp: any) => {
       this.movements = resp
     })
     console.log(this.movements);
     return
   }
 
-  async delete(movement: MovementType) {
+  async delete(movement: MovementTypeClient) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar el tipo de movimiento ${movement.name_movement}`,
@@ -141,7 +147,7 @@ export class TableMovementTypesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
-        this._movementService.deleteMovementType(movement).subscribe(() => {
+        this._movementClientService.deleteMovementTypeClient(movement).subscribe(() => {
           this.getMovementTypes()
           this._spinner.hide()
           this._toastr.success(`Tipo de movimiento ${movement.name_movement} eliminado con exito`)
@@ -150,4 +156,5 @@ export class TableMovementTypesComponent implements OnInit {
       }
     })
   }
+
 }

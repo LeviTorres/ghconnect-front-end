@@ -5,15 +5,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProvidersService } from '../../../../services/providers.service';
 import { CecosService } from '../../../../services/cecos.service';
 import { DivisasService } from '../../../../services/divisas.service';
-import { MovementsTypeService } from 'src/app/services/movements-type.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Divisa } from '../../../../models/Divisa.model';
-import { MovementType } from 'src/app/models/MovementType.model';
 import { Provider } from '../../../../models/Provider.model';
 import { Ceco } from '../../../../models/Ceco.model';
 import { ToastrService } from 'ngx-toastr';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { LoginService } from '../../../../services/login.service';
+import { MovementsTypeProviderService } from '../../../../services/movements-type-provider.service';
+import { MovementTypeProvider } from '../../../../models/MovementTypeProvider.model';
 
 @Component({
   selector: 'app-add-invoice-providers',
@@ -23,7 +23,7 @@ import { LoginService } from '../../../../services/login.service';
 export class AddInvoiceProvidersComponent implements OnInit {
 
   public divisas: Divisa[] = []
-  public movements: MovementType[] = []
+  public movements: MovementTypeProvider[] = []
   public providers: Provider[] = []
   public cecos: Ceco[] = []
 
@@ -54,7 +54,7 @@ export class AddInvoiceProvidersComponent implements OnInit {
     private _providersService: ProvidersService,
     private _cecosService: CecosService,
     private _divisasService: DivisasService,
-    private _movementsService: MovementsTypeService,
+    private _movementsProviderService: MovementsTypeProviderService,
     private _fb: FormBuilder,
     private _toastr: ToastrService,
     private _loginService: LoginService
@@ -104,7 +104,7 @@ export class AddInvoiceProvidersComponent implements OnInit {
 
   getMovements(){
     this._spinner.show()
-    this._movementsService.getMovementsType().subscribe((item:any) => {
+    this._movementsProviderService.getMovementsTypeProviderActive().subscribe((item:any) => {
       this.movements = item
       this._spinner.hide()
     })

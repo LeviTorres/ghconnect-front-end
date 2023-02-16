@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Divisa } from 'src/app/models/Divisa.model';
-import { MovementType } from 'src/app/models/MovementType.model';
 import { Client } from 'src/app/models/Client.model';
 import { Ceco } from 'src/app/models/Ceco.model';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
@@ -10,7 +9,6 @@ import { InvoiceClientsService } from 'src/app/services/invoice-clients.service'
 import { ClientsService } from 'src/app/services/clients.service';
 import { CecosService } from 'src/app/services/cecos.service';
 import { DivisasService } from 'src/app/services/divisas.service';
-import { MovementsTypeService } from 'src/app/services/movements-type.service';
 import { ToastrService } from 'ngx-toastr';
 import { InvoiceClient } from 'src/app/models/InvoiceClients.model';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -22,6 +20,8 @@ import { AddActivitiesComponent } from '../../components/add-activities/add-acti
 import { MatDialog } from '@angular/material/dialog';
 import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
 import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
+import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
+import { MovementsTypeClientService } from '../../../../services/movements-type-client.service';
 
 @Component({
   selector: 'app-edit-invoice-client',
@@ -32,7 +32,7 @@ export class EditInvoiceClientComponent implements OnInit {
 
   public invoiceClients: any
   public divisas: Divisa[] = []
-  public movements: MovementType[] = []
+  public movements: MovementTypeClient[] = []
   public clients: Client[] = []
   public cecos: Ceco[] = []
   public users: any[] = []
@@ -70,7 +70,7 @@ export class EditInvoiceClientComponent implements OnInit {
     private _clientsService: ClientsService,
     private _cecosService: CecosService,
     private _divisasService: DivisasService,
-    private _movementsService: MovementsTypeService,
+    private _movementsClientService: MovementsTypeClientService,
     private _fb: FormBuilder,
     private _toastr: ToastrService,
     private _activatedRoute: ActivatedRoute,
@@ -157,7 +157,7 @@ export class EditInvoiceClientComponent implements OnInit {
 
   getMovements() {
     this._spinner.show()
-    this._movementsService.getMovementsType().subscribe((item: any) => {
+    this._movementsClientService.getMovementsTypeClientActive().subscribe((item: any) => {
       this.movements = item
       this._spinner.hide()
     })

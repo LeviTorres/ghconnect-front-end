@@ -120,8 +120,13 @@ const routes: Routes = [
     canActivate:[ AuthGuard ]
   },
   {
-    path: 'movement-types',
-    loadChildren: () => import('./modules/movement-types/movement-types.module').then(m => m.MovementTypesModule),
+    path: 'movement-types-client',
+    loadChildren: () => import('./modules/movement-types-client/movement-types-client.module').then(m => m.MovementTypesClientModule),
+    canActivate:[ AuthGuard ]
+  },
+  {
+    path: 'movement-types-provider',
+    loadChildren: () => import('./modules/movement-types-provider/movement-types-provider.module').then(m => m.MovementTypesProviderModule),
     canActivate:[ AuthGuard ]
   },
   {
