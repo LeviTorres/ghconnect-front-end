@@ -9,6 +9,7 @@ h1{
   size: 20px;
   line-height: 24.38px;
   cursor: pointer;
+  margin: 10px 0 0 0;
 }
 
 .tenant-p{
@@ -83,7 +84,7 @@ h1{
 }
 
 .contenedor .card:hover .face.faceSecond1{
-    transform: translateY(-55px);
+    transform: translateY(-50px);
     z-index: 1;
     
 } 

@@ -1,42 +1,37 @@
 <div class="col-12 d-flex">
   <div class="col">
-    <div
-      style="
+    <div style="
         background: linear-gradient(269.73deg, #ffc107 29.96%, #ff8f00 95.46%);
         border-radius: 8px;
         padding: 15px;
         display: flex;
         justify-content: space-between;
         margin-bottom: 30px;
-      "
-    >
+      ">
       <div style="display: flex; align-items: center; height: 100%">
-        <h4 style="font-weight: 600; font-size: 40px; color: white; margin: 0">
+        <h4 style="font-weight: 600; font-size: 40px; color: white; margin: 0; line-height: 45px;">
           {{ nameBusiness }}
         </h4>
       </div>
       <div class="d-flex">
-        <div
-          style="
+        <div style="
             background-color: #fff8e1;
             border-radius: 4px;
             display: flex;
             padding: 8px;
-          "
-        >
-          <p
-            style="
+          ">
+          <p style="
               font-weight: 400;
               font-size: 12px;
               line-height: 20px;
               letter-spacing: 0.4px;
               margin: 0;
-            "
-          >
+              display:flex;
+              align-items: center;
+            ">
             FECHA DE CREACIÓN
           </p>
-          <p
-            style="
+          <p style="
               font-weight: 400;
               font-size: 12px;
               line-height: 20px;
@@ -44,258 +39,144 @@
               margin: 0;
               display: flex;
               align-items: center;
-            "
-            class="ms-2"
-          >
+            " class="ms-2">
             {{ dateForm | date : "dd/MM/yyyy" }}
           </p>
         </div>
-        <img
-          style="cursor: pointer"
-          *ngIf="!flag"
-          class="ms-2"
-          (click)="goToComment()"
-          src="../../../../../assets/icons/Panel de actividad 2.svg"
-          alt=""
-        />
-        <img
-          style="cursor: pointer"
-          *ngIf="flag"
-          class="ms-2"
-          (click)="goToComment()"
-          src="../../../../../assets/icons/Panel de actividad.svg"
-          alt=""
-        />
+        <img style="cursor: pointer" *ngIf="!flag" class="ms-2" (click)="goToComment()"
+          src="../../../../../assets/icons/Panel de actividad 2.svg" alt="" />
+        <img style="cursor: pointer" *ngIf="flag" class="ms-2" (click)="goToComment()"
+          src="../../../../../assets/icons/Panel de actividad.svg" alt="" />
       </div>
     </div>
     <form autocomplete="off" [formGroup]="form">
       <div class="row col-12 mx-0 mb-2">
         <div class="form-group col-8">
-          <label class="mb-2" for="exampleFormControlInput1"
-            >Nombre de la empresa</label
-          >
-          <input
-            [ngClass]="{
+          <label class="mb-2" for="exampleFormControlInput1">Nombre de la empresa</label>
+          <input [ngClass]="{
               'error-input':
                 form.controls['name'].errors && form.controls['name'].touched
-            }"
-            formControlName="name"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Grupo Hycsa Sucursal Bolivia Santa Cruz"
-          />
-          <div
-            *ngIf="
+            }" formControlName="name" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Grupo Hycsa Sucursal Bolivia Santa Cruz" />
+          <div *ngIf="
               form.controls['name'].errors && form.controls['name'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
         <div class="form-group col-4">
-          <label class="mb-2" for="exampleFormControlInput1"
-            >Nombre corto de la empresa</label
-          >
-          <input
-            [ngClass]="{
+          <label class="mb-2" for="exampleFormControlInput1">Nombre corto de la empresa</label>
+          <input [ngClass]="{
               'error-input':
                 form.controls['name_short'].errors &&
                 form.controls['name_short'].touched
-            }"
-            formControlName="name_short"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Grupo Hycsa"
-          />
-          <div
-            *ngIf="
+            }" formControlName="name_short" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Grupo Hycsa" />
+          <div *ngIf="
               form.controls['name_short'].errors &&
               form.controls['name_short'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
       </div>
       <div class="row col-12 mx-0 mb-2">
         <div class="form-group col-8">
-          <label class="mb-2" for="exampleFormControlInput1"
-            >Dirección de la empresa</label
-          >
-          <input
-            [ngClass]="{
+          <label class="mb-2" for="exampleFormControlInput1">Dirección de la empresa</label>
+          <input [ngClass]="{
               'error-input':
                 form.controls['address_1'].errors &&
                 form.controls['address_1'].touched
-            }"
-            formControlName="address_1"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Dirección 1"
-          />
-          <div
-            *ngIf="
+            }" formControlName="address_1" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Dirección 1" />
+          <div *ngIf="
               form.controls['address_1'].errors &&
               form.controls['address_1'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
         <div class="form-group col-4">
           <label class="mb-2" for="exampleFormControlInput1">Calle</label>
-          <input
-            [ngClass]="{
+          <input [ngClass]="{
               'error-input':
                 form.controls['street_1'].errors &&
                 form.controls['street_1'].touched
-            }"
-            formControlName="street_1"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Calle 1"
-          />
-          <div
-            *ngIf="
+            }" formControlName="street_1" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Calle 1" />
+          <div *ngIf="
               form.controls['street_1'].errors &&
               form.controls['street_1'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
       </div>
       <div class="row col-12 mx-0 mb-2">
         <div class="form-group col-8">
-          <input
-            formControlName="address_2"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Dirección 2"
-          />
+          <input formControlName="address_2" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Dirección 2" />
         </div>
         <div class="form-group col-4">
-          <input
-            formControlName="street_2"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Calle 2"
-          />
+          <input formControlName="street_2" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Calle 2" />
         </div>
       </div>
       <div class="row col-12 mx-0 mb-2">
         <div class="form-group col-3">
           <label class="mb-2" for="exampleFormControlInput1">País</label>
-          <input
-            [ngClass]="{
+          <input [ngClass]="{
               'error-input':
                 form.controls['street_1'].errors &&
                 form.controls['street_1'].touched
-            }"
-            formControlName="country"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Mexico"
-          />
-          <div
-            *ngIf="
+            }" formControlName="country" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Mexico" />
+          <div *ngIf="
               form.controls['country'].errors &&
               form.controls['country'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
         <div class="form-group col-3">
           <label class="mb-2" for="exampleFormControlInput1">Estado</label>
-          <input
-            [ngClass]="{
+          <input [ngClass]="{
               'error-input':
                 form.controls['polity'].errors &&
                 form.controls['polity'].touched
-            }"
-            formControlName="polity"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Jalisco"
-          />
-          <div
-            *ngIf="
+            }" formControlName="polity" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Jalisco" />
+          <div *ngIf="
               form.controls['polity'].errors && form.controls['polity'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
         <div class="form-group col-3">
           <label class="mb-2" for="exampleFormControlInput1">Ciudad</label>
-          <input
-            [ngClass]="{
+          <input [ngClass]="{
               'error-input':
                 form.controls['city'].errors && form.controls['city'].touched
-            }"
-            formControlName="city"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Zapopan"
-          />
-          <div
-            *ngIf="
+            }" formControlName="city" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="Zapopan" />
+          <div *ngIf="
               form.controls['city'].errors && form.controls['city'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
         <div class="form-group col-3">
-          <label class="mb-2" for="exampleFormControlInput1"
-            >Código postal</label
-          >
-          <input
-            [ngClass]="{
+          <label class="mb-2" for="exampleFormControlInput1">Código postal</label>
+          <input [ngClass]="{
               'error-input':
                 form.controls['zip_code'].errors &&
                 form.controls['zip_code'].touched
-            }"
-            formControlName="zip_code"
-            type="text"
-            style="background-color: #e0e0e0"
-            class="form-control"
-            id="exampleFormControlInput1"
-            placeholder="89283"
-          />
-          <div
-            *ngIf="
+            }" formControlName="zip_code" type="text" style="background-color: #e0e0e0" class="form-control"
+            id="exampleFormControlInput1" placeholder="89283" />
+          <div *ngIf="
               form.controls['zip_code'].errors &&
               form.controls['zip_code'].touched
-            "
-            class="validation"
-          >
+            " class="validation">
             Campo requerido
           </div>
         </div>
@@ -303,178 +184,104 @@
       <div class="row mx-0 mb-2">
         <div class="col-8 m-0">
           <div class="form-group mb-2">
-            <label class="mb-2" for="exampleFormControlInput1"
-              >Numero de identificacion fiscal</label
-            >
-            <input
-              [ngClass]="{
+            <label class="mb-2" for="exampleFormControlInput1">Numero de identificacion fiscal</label>
+            <input [ngClass]="{
                 'error-input':
                   form.controls['tax_identification_number'].errors &&
                   form.controls['tax_identification_number'].touched
-              }"
-              formControlName="tax_identification_number"
-              type="text"
-              style="background-color: #e0e0e0"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="RFC, NIT, RUC, ETC."
-            />
-            <div
-              *ngIf="
+              }" formControlName="tax_identification_number" type="text" style="background-color: #e0e0e0"
+              class="form-control" id="exampleFormControlInput1" placeholder="RFC, NIT, RUC, ETC." />
+            <div *ngIf="
                 form.controls['tax_identification_number'].errors &&
                 form.controls['tax_identification_number'].touched
-              "
-              class="validation"
-            >
+              " class="validation">
               Campo requerido
             </div>
           </div>
           <div class="row col-12 m-0">
             <div class="form-group mb-2 col-3 ps-0">
-              <label class="mb-2" for="exampleFormControlInput1"
-                >Telefono</label
-              >
-              <input
-                [ngClass]="{
+              <label class="mb-2" for="exampleFormControlInput1">Telefono</label>
+              <input [ngClass]="{
                   'error-input':
                     form.controls['phone_number'].errors &&
                     form.controls['phone_number'].touched
-                }"
-                formControlName="phone_number"
-                type="text"
-                style="background-color: #e0e0e0"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="815 283 2389"
-              />
-              <div
-                *ngIf="
+                }" formControlName="phone_number" type="text" style="background-color: #e0e0e0" class="form-control"
+                id="exampleFormControlInput1" placeholder="815 283 2389" />
+              <div *ngIf="
                   form.controls['phone_number'].errors &&
                   form.controls['phone_number'].touched
-                "
-                class="validation"
-              >
+                " class="validation">
                 Campo requerido
               </div>
             </div>
             <div class="form-group mb-2 col-3">
               <label class="mb-2" for="exampleFormControlInput1">Movil</label>
-              <input
-                [ngClass]="{
+              <input [ngClass]="{
                   'error-input':
                     form.controls['mobile_number'].errors &&
                     form.controls['mobile_number'].touched
-                }"
-                formControlName="mobile_number"
-                type="text"
-                style="background-color: #e0e0e0"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="815 283 2389"
-              />
-              <div
-                *ngIf="
+                }" formControlName="mobile_number" type="text" style="background-color: #e0e0e0" class="form-control"
+                id="exampleFormControlInput1" placeholder="815 283 2389" />
+              <div *ngIf="
                   form.controls['mobile_number'].errors &&
                   form.controls['mobile_number'].touched
-                "
-                class="validation"
-              >
+                " class="validation">
                 Campo requerido
               </div>
             </div>
             <div class="form-group mb-2 col-6 pe-0">
-              <label class="mb-2" for="exampleFormControlInput1"
-                >Correo electronico</label
-              >
-              <input
-                [ngClass]="{
+              <label class="mb-2" for="exampleFormControlInput1">Correo electronico</label>
+              <input [ngClass]="{
                   'error-input':
                     form.controls['email'].errors &&
                     form.controls['email'].touched
-                }"
-                formControlName="email"
-                type="text"
-                style="background-color: #e0e0e0"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="empresa34_Bolivia@grupoempresa.com"
-              />
-              <div
-                *ngIf="
+                }" formControlName="email" type="text" style="background-color: #e0e0e0" class="form-control"
+                id="exampleFormControlInput1" placeholder="empresa34_Bolivia@grupoempresa.com" />
+              <div *ngIf="
                   form.controls['email'].errors &&
                   form.controls['email'].touched &&
                   !form.controls['email'].hasError('email')
-                "
-                class="validation"
-              >
+                " class="validation">
                 Campo requerido
               </div>
-              <div
-                *ngIf="
+              <div *ngIf="
                   form.controls['email'].errors &&
                   form.controls['email'].touched &&
                   form.controls['email'].hasError('email')
-                "
-                class="validation"
-              >
+                " class="validation">
                 Email invalido
               </div>
             </div>
           </div>
           <div class="row col-12 m-0">
             <div class="form-group mb-2 col-6 ps-0">
-              <label class="mb-2" for="exampleFormControlInput1"
-                >Sitio web</label
-              >
-              <input
-                formControlName="url_web"
-                type="text"
-                style="background-color: #e0e0e0"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="www.grupoempresa.com"
-              />
+              <label class="mb-2" for="exampleFormControlInput1">Sitio web</label>
+              <input formControlName="url_web" type="text" style="background-color: #e0e0e0" class="form-control"
+                id="exampleFormControlInput1" placeholder="www.grupoempresa.com" />
             </div>
             <div class="form-group mb-2 col-3">
               <label class="mb-2" for="exampleFormControlInput1">ID</label>
-              <input
-                [ngClass]="{
+              <input [ngClass]="{
                   'error-input':
                     form.controls['key_business'].errors &&
                     form.controls['key_business'].touched
-                }"
-                formControlName="key_business"
-                type="text"
-                style="background-color: #e0e0e0"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="2389"
-              />
-              <div
-                *ngIf="
+                }" formControlName="key_business" type="text" style="background-color: #e0e0e0" class="form-control"
+                id="exampleFormControlInput1" placeholder="2389" />
+              <div *ngIf="
                   form.controls['key_business'].errors &&
                   form.controls['key_business'].touched
-                "
-                class="validation"
-              >
+                " class="validation">
                 Campo requerido
               </div>
             </div>
             <div class="form-group mb-2 col-3 pe-0">
               <label class="mb-2" for="exampleFormControlInput1">Moneda</label>
-              <select
-                [ngClass]="{
+              <select [ngClass]="{
                   'error-input':
                     form.controls['divisa'].errors &&
                     form.controls['divisa'].touched
-                }"
-                formControlName="divisa"
-                type="text"
-                style="background-color: #e0e0e0"
-                class="form-select"
-                id="exampleFormControlInput1"
-                placeholder="Selecciona una moneda"
-              >
+                }" formControlName="divisa" type="text" style="background-color: #e0e0e0" class="form-select"
+                id="exampleFormControlInput1" placeholder="Selecciona una moneda">
                 <option value="" selected disabled>
                   Selecciona una divisa
                 </option>
@@ -482,65 +289,36 @@
                   {{ item.divisa_short }}
                 </option>
               </select>
-              <div
-                *ngIf="
+              <div *ngIf="
                   form.controls['divisa'].errors &&
                   form.controls['divisa'].touched
-                "
-                class="validation"
-              >
+                " class="validation">
                 Campo requerido
               </div>
             </div>
           </div>
         </div>
-        <div
-          style="border: 2px solid #2196f3; border-radius: 8px; padding: 10px"
-          class="col-4"
-        >
+        <div style="border: 2px solid #2196f3; border-radius: 8px; padding: 10px" class="col-4">
           <h2 style="font-weight: 500; font-size: 25px; line-height: 30px">
             LOGOTIPO DE LA EMPRESA
           </h2>
           <div>
-            <label
-              *ngIf="!imageSelect"
-              class="my-2 text-center"
-              style="
+            <label *ngIf="!imageSelect" class="my-2 text-center" style="
                 background-color: #e0e0e0;
                 margin-top: 18px;
                 margin-bottom: 20px;
                 cursor: pointer;
                 width: 100%;
                 height: 100%;
-              "
-            >
-              <img
-                src="../../../../../assets/icons/Upload.svg"
-                class="my-3"
-                alt=""
-              />
-              <input
-                style="display: none"
-                type="file"
-                (change)="changeImage($event)"
-                accept=".png,.gif,.svg,.jpg,.webp"
-              />
+              ">
+              <img src="../../../../../assets/icons/Upload.svg" class="my-3" alt="" />
+              <input style="display: none" type="file" (change)="changeImage($event)"
+                accept=".png,.gif,.svg,.jpg,.webp" />
             </label>
-            <div
-              class="text-center my-2"
-              *ngIf="imageSelect"
-              style="background-color: #e0e0e0"
-            >
-              <img
-                style="width: 145px; height: 55px"
-                class="my-3"
-                [src]="imgView"
-                alt=""
-              />
+            <div class="text-center my-2" *ngIf="imageSelect" style="background-color: #e0e0e0">
+              <img style="width: 145px; height: 55px" class="my-3" [src]="imgView" alt="" />
             </div>
-            <div
-              *ngIf="imageSelect"
-              style="
+            <div *ngIf="imageSelect" style="
                 background: linear-gradient(
                   269.35deg,
                   #2196f3 11.45%,
@@ -550,24 +328,19 @@
                 padding: 8px;
                 display: flex;
                 justify-content: space-between;
-              "
-              class=""
-            >
+              " class="">
               <div class="d-flex">
                 <div style="display: flex; align-items: center">
                   <img src="../../../../../assets/icons/Permisos.svg" alt="" />
                 </div>
                 <div style="display: flex; align-items: center">
-                  <p
-                    style="
+                  <p style="
                       color: white;
                       margin: 0;
                       font-weight: 400;
                       font-size: 20px;
                       line-height: 24px;
-                    "
-                    class="mx-2"
-                  >
+                    " class="mx-2">
                     {{ imageSelect.name }}
                   </p>
                 </div>
@@ -575,42 +348,28 @@
               <div class="">
                 <label class="my-2" style="cursor: pointer">
                   <i class="fa fa-edit me-2" style="color: white"></i>
-                  <input
-                    style="display: none"
-                    type="file"
-                    (change)="changeImage($event)"
-                    accept=".png,.gif,.svg,.jpg,.webp"
-                  />
+                  <input style="display: none" type="file" (change)="changeImage($event)"
+                    accept=".png,.gif,.svg,.jpg,.webp" />
                 </label>
               </div>
             </div>
           </div>
-          <p
-            style="
+          <p style="
               font-weight: 400;
               font-size: 13px;
               line-height: 16px;
               margin-top: 16px;
-            "
-          >
+            ">
             El archivo no debe exceder los 2mb, se recomienda subirlo en formato
             .png en color blanco
           </p>
         </div>
       </div>
       <div style="margin-top: 90px" class="text-center">
-        <button
-          class="btn-primary mx-3"
-          mat-raised-button
-          routerLink="/tenants"
-        >
+        <button class="btn-primary mx-3" mat-raised-button routerLink="/tenants">
           Cancelar
         </button>
-        <button
-          class="btn-primary mx-3"
-          mat-raised-button
-          (click)="addBusiness()"
-        >
+        <button class="btn-primary mx-3" mat-raised-button (click)="addBusiness()">
           Editar empresa
         </button>
       </div>
@@ -619,53 +378,31 @@
   <div *ngIf="!flag" class="col-4 mx-3">
     <div class="d-flex justify-content-between mb-3">
       <div class="d-flex">
-        <div
-          style="
+        <div style="
             border-bottom: 3px solid blue;
             padding: 10px;
             padding-top: 0px;
             cursor: pointer;
-          "
-          (click)="viewNote()"
-        >
+          " (click)="viewNote()">
           Poner una nota
         </div>
-        <div
-          style="padding: 10px; padding-top: 0px; cursor: pointer"
-          (click)="openDialogAddActivity()"
-        >
+        <div style="padding: 10px; padding-top: 0px; cursor: pointer" (click)="openDialogAddActivity()">
           <span>Actividades</span>
         </div>
       </div>
-      <div
-        [matMenuTriggerFor]="menu"
-        style="display: flex; align-items: center; cursor: pointer"
-      >
-        <img
-          class="me-2"
-          src="../../../../../assets/icons/Seguidor.svg"
-          alt=""
-        />
+      <div [matMenuTriggerFor]="menu" style="display: flex; align-items: center; cursor: pointer">
+        <img class="me-2" src="../../../../../assets/icons/Seguidor.svg" alt="" />
         <span class="">{{ followers.length }}</span>
       </div>
       <mat-menu #menu="matMenu" class="m-0 p-0 col-12">
         <div class="col-12">
-          <button
-            class="text-center"
-            (click)="openDialogAddFollower()"
-            mat-menu-item
-          >
+          <button class="text-center" (click)="openDialogAddFollower()" mat-menu-item>
             Añadir seguidores
           </button>
-          <div
-            *ngFor="let item of followers; index as i"
-            class="d-flex col-12 ps-4 mb-2"
-          >
+          <div *ngFor="let item of followers; index as i" class="d-flex col-12 ps-4 mb-2">
             <div class="col me-2">
-              <span
-                >{{ getUser(item.user).name }}
-                {{ getUser(item.user).last_name }}</span
-              >
+              <span>{{ getUser(item.user).name }}
+                {{ getUser(item.user).last_name }}</span>
             </div>
             <div class="col-1 me-2">
               <i class="fa fa-edit"></i>
@@ -690,13 +427,8 @@
           </div>
         </div>
         <div class="ms-3 col">
-          <textarea
-            type="text"
-            [formControl]="formActivity"
-            class="form-control"
-            style="background-color: #e0e0e0; width: 100%"
-            placeholder="Escribe una nota"
-          ></textarea>
+          <textarea type="text" [formControl]="formActivity" class="form-control"
+            style="background-color: #e0e0e0; width: 100%" placeholder="Escribe una nota"></textarea>
         </div>
       </div>
       <div class="mx-3">
@@ -707,11 +439,15 @@
     </div>
     <div class="col-12" *ngIf="activitiesPlan.length > 0">
       <div class="d-flex col-12" style="align-items: center">
-        <div class="col-3"><hr /></div>
+        <div class="col-3">
+          <hr />
+        </div>
         <div class="col text-center">
           <strong>Actividades planificadas</strong>
         </div>
-        <div class="col-3"><hr /></div>
+        <div class="col-3">
+          <hr />
+        </div>
       </div>
       <div class="d-flex mb-3" *ngFor="let item of activitiesPlan">
         <div class="container-2 me-3">
@@ -727,34 +463,18 @@
         <div>
           <div>
             <span class="me-2">Vence {{ item.date_expiration | date }}:</span>
-            <span class="me-2"
-              ><strong>{{ item.type_activity }}</strong></span
-            >
-            <span class=""
-              >para {{ getUser(item.assignment).name }}
-              {{ getUser(item.assignment).last_name }}</span
-            >
+            <span class="me-2"><strong>{{ item.type_activity }}</strong></span>
+            <span class="">para {{ getUser(item.assignment).name }}
+              {{ getUser(item.assignment).last_name }}</span>
           </div>
           <div class="d-flex">
-            <div
-              style="cursor: pointer"
-              class="me-3"
-              (click)="markActivityDone(item)"
-            >
+            <div style="cursor: pointer" class="me-3" (click)="markActivityDone(item)">
               <i class="fa-solid fa-check"></i> Marcar como hecho
             </div>
-            <div
-              style="cursor: pointer"
-              class="me-3"
-              (click)="goToEditActivity(item)"
-            >
+            <div style="cursor: pointer" class="me-3" (click)="goToEditActivity(item)">
               <i class="fa-solid fa-pencil me-1"></i>Editar
             </div>
-            <div
-              style="cursor: pointer"
-              class=""
-              (click)="cancelActivity(item)"
-            >
+            <div style="cursor: pointer" class="" (click)="cancelActivity(item)">
               <i class="fa-solid fa-xmark me-1"></i>Cancelar
             </div>
           </div>
@@ -775,23 +495,18 @@
         </div>
         <div class="ms-3 col" *ngIf="item.type === 'note'">
           <div>
-            <span style="font-weight: bold"
-              >{{ getUser(item.user).name }}
+            <span style="font-weight: bold">{{ getUser(item.user).name }}
               {{ getUser(item.user).last_name }} -
             </span>
             <span>{{ item.date | date : "dd/MM/yyyy h:mm a" }}</span>
           </div>
           <span>{{ item.note }}</span>
         </div>
-        <div
-          class="ms-3 col"
-          *ngIf="item.type === 'activity' && item.status != 'DRAFT'"
-        >
+        <div class="ms-3 col" *ngIf="item.type === 'activity' && item.status != 'DRAFT'">
           <div>
             <span style="font-weight: bold">
               {{ getUser(item.user).name }}
-              {{ getUser(item.user).last_name }} -</span
-            >
+              {{ getUser(item.user).last_name }} -</span>
             <span>{{ item.date | date : "dd/MM/yyyy h:mm a" }}</span>
           </div>
           <div>
