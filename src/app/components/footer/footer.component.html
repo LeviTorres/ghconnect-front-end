@@ -1,8 +1,18 @@
 <footer class="position-sticky">
-  <div class="d-flex flex-row-reverse align-items-center h-100 container-icons">
-    <span class="mx-5 px-5"></span>
-    <img class="px-2" src="../../../assets/icons/linkedin.svg" alt="">
-    <img class="px-2" src="../../../assets/icons/twitter.svg" alt="">
-    <img class="px-2" src="../../../assets/icons/facebook.svg" alt="">
+  <div class="d-flex justify-content-between align-items-center h-100 container-icons">
+    <div>
+      <span style="cursor: pointer; display: flex;" (click)="changeTenant()">
+        <h3 style="font-size: small;padding-right: 5px; color: white; font-weight: 600; margin:0 0 0 2rem" class="">
+          {{userTenant.name_short}}</h3>
+      </span>
+    </div>
+    <div style="margin:0 2rem 0 0">
+      <span class="mx-5 px-5"></span>
+      <img class="px-2" src="../../../assets/icons/linkedin.svg" alt="">
+      <img class="px-2" src="../../../assets/icons/twitter.svg" alt="">
+      <img class="px-2" src="../../../assets/icons/facebook.svg" alt="">
+    </div>
+
   </div>
+
 </footer>

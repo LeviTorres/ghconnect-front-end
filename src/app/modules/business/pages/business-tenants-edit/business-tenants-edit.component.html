@@ -13,7 +13,7 @@
           {{ nameBusiness }}
         </h4>
       </div>
-      <div class="d-flex">
+      <div class="d-flex align-items-center">
         <div style="
             background-color: #fff8e1;
             border-radius: 4px;
@@ -43,9 +43,9 @@
             {{ dateForm | date : "dd/MM/yyyy" }}
           </p>
         </div>
-        <img style="cursor: pointer" *ngIf="!flag" class="ms-2" (click)="goToComment()"
+        <img style="cursor: pointer; width:3em" *ngIf="!flag" class="ms-2" (click)="goToComment()"
           src="../../../../../assets/icons/Panel de actividad 2.svg" alt="" />
-        <img style="cursor: pointer" *ngIf="flag" class="ms-2" (click)="goToComment()"
+        <img style="cursor: pointer; width:2em" *ngIf="flag" class="ms-2" (click)="goToComment()"
           src="../../../../../assets/icons/Panel de actividad.svg" alt="" />
       </div>
     </div>

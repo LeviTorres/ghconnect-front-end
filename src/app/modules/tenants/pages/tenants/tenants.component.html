@@ -44,9 +44,12 @@
         </div>
         <div class="face faceSecond1" (click)="goToHomeWithTenant(item.tenant_id._id)">
           <div class="">
-            <p class="tenant-p"> {{item.tenant_id.name}}. {{item.tenant_id.address_1}}, {{item.tenant_id.street_1}}.
-              {{item.tenant_id.zip_code}}. {{item.tenant_id.city}}, {{item.tenant_id.polity}},
-              {{item.tenant_id.country}}. {{item.tenant_id.tax_identification_number}}
+            <p class="tenant-p"> <span>{{item.tenant_id.name}}. </span>
+              <span *ngIf="item.tenant_id.address_1">{{item.tenant_id.address_1}}, </span>
+              <span *ngIf="item.tenant_id.street_1">{{item.tenant_id.street_1}}, </span>
+              <span *ngIf="item.tenant_id.city">{{item.tenant_id.city}}, </span>
+              <span *ngIf="item.tenant_id.country">{{item.tenant_id.country}}, </span>
+              <span *ngIf="item.tenant_id.tax_identification_number">{{item.tenant_id.tax_identification_number}}</span>
             </p>
           </div>
         </div>
