@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
+import { ImportFileComponent } from '../import-file/import-file.component';
 
 @Component({
   selector: 'app-table-providers',
@@ -52,7 +54,8 @@ export class TableProvidersComponent implements OnInit {
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _excelService: ExcelService,
-    private _router: Router
+    private _router: Router,
+    private _dialog: MatDialog
   ) { this._spinner.show() }
 
   ngOnInit(): void {
@@ -214,11 +217,17 @@ export class TableProvidersComponent implements OnInit {
     this._excelService.downloadExcel(element, 'Proveedores', 'providers')
   }
 
-  importData(){
 
-    console.log('Hola');
-
-
+  openDialogUploadExcel(){
+    let dialogRef = this._dialog.open(ImportFileComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getProviders()
+    })
   }
 
 }
