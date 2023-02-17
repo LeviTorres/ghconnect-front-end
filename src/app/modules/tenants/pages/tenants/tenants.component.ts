@@ -22,8 +22,6 @@ export class TenantsComponent implements OnInit {
 
   public business: Business[] = [];
 
-  public contadorGlobal: number = 0;
-
   public tenants: any[] = []
   public tenantsTemp: any[] = []
   public _id!: any
@@ -74,15 +72,15 @@ export class TenantsComponent implements OnInit {
     }
   }
 
-  goToEdit(id: string){
+  goToEdit(id: string) {
     console.log(id);
 
     this._router.navigate(['/business/edit'],
-          {
-            queryParams: {
-              id: id,
-            }
-          });
+      {
+        queryParams: {
+          id: id,
+        }
+      });
   }
 
 

@@ -23,34 +23,34 @@ export class LoginService {
   public name!: any
 
   constructor(
-    private _http:HttpClient,
-    private _businessService:BusinessService,
+    private _http: HttpClient,
+    private _businessService: BusinessService,
     private _spinner: NgxSpinnerService
   ) {
   }
 
-  get uid():string {
+  get uid(): string {
     return this.user._id || '';
   }
 
-  get tenantName(): any{
+  get tenantName(): any {
     return this.business.name_short
   }
 
-  get tenant(): any{
+  get tenant(): any {
     return localStorage.getItem('tenant') || ''
   }
 
-  login(formData: any){
+  login(formData: any) {
     return this._http.post(`${base_url}/login`, formData)
-          .pipe(
-            tap((resp:any) => {
-              localStorage.setItem('token', resp.token)
-            })
-          )
+      .pipe(
+        tap((resp: any) => {
+          localStorage.setItem('token', resp.token)
+        })
+      )
   }
 
-  validarToken(): Observable<boolean>{
+  validarToken(): Observable<boolean> {
     const token = localStorage.getItem('token') || ''
     const tenant = localStorage.getItem('tenant') || ''
     return this._http.get(`${base_url}/login/renew`, {
@@ -59,25 +59,25 @@ export class LoginService {
         'tenant': tenant
       }
     }).pipe(
-      tap((resp:any) => {
-        const {email, last_name, name, role, _id, img, tenant } = resp.user
-        const { name_business, name_short, creation_date, key_business, activities} = resp.business
-        this.user = new User(name, last_name, email, tenant,'', img, role, _id)
+      tap((resp: any) => {
+        const { email, last_name, name, role, _id, img, tenant } = resp.user
+        const { name_business, name_short, creation_date, key_business, activities } = resp.business
+        this.user = new User(name, last_name, email, tenant, '', img, role, _id)
         this.business = new Business(name_business, name_short, creation_date, key_business, activities)
         //localStorage.setItem('name-tenant', this.business.name_short)
         localStorage.setItem('tenant', resp.business._id)
         localStorage.setItem('token', resp.token)
       }),
-      map( resp => true),
+      map(resp => true),
       catchError(error => of(false))
     )
   }
 
- // changeTenant(tenant:any):any{
+  // changeTenant(tenant:any):any{
   //  localStorage.setItem('tenant', tenant)
   //}
 
-  logout(){
+  logout() {
     localStorage.removeItem('token')
     localStorage.removeItem('tenant')
     localStorage.removeItem('name-tenant')
