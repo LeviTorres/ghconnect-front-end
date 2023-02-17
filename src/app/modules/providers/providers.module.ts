@@ -10,6 +10,7 @@ import { AddProvidersComponent } from './pages/add-providers/add-providers.compo
 import { TableProvidersComponent } from './components/table-providers/table-providers.component';
 import { PageProvidersComponent } from './pages/page-providers/page-providers.component';
 import { EditProviderComponent } from './pages/edit-provider/edit-provider.component';
+import { ImportFileComponent } from './components/import-file/import-file.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EditProviderComponent } from './pages/edit-provider/edit-provider.compo
     AddProvidersComponent,
     TableProvidersComponent,
     PageProvidersComponent,
-    EditProviderComponent
+    EditProviderComponent,
+    ImportFileComponent
   ],
   imports: [
     CommonModule,
