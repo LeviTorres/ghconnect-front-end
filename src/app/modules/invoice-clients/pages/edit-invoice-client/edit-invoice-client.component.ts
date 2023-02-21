@@ -22,6 +22,8 @@ import { AddFollowersComponent } from '../../components/add-followers/add-follow
 import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
 import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
 import { MovementsTypeClientService } from '../../../../services/movements-type-client.service';
+import Swal from 'sweetalert2';
+import { ModalTrackingComponent } from '../../components/modal-tracking/modal-tracking.component';
 
 @Component({
   selector: 'app-edit-invoice-client',
@@ -36,7 +38,7 @@ export class EditInvoiceClientComponent implements OnInit {
   public clients: Client[] = []
   public cecos: Ceco[] = []
   public users: any[] = []
-  public user:any
+  public user: any
   public history: any[] = []
   public flagNote: boolean = false
   public activitiesPlan: any[] = []
@@ -66,6 +68,7 @@ export class EditInvoiceClientComponent implements OnInit {
   constructor(
     private _router: Router,
     private _invoiceClientsService: InvoiceClientsService,
+    private _invoiceClientService: InvoiceClientsService,
     private _spinner: NgxSpinnerService,
     private _clientsService: ClientsService,
     private _cecosService: CecosService,
@@ -74,8 +77,8 @@ export class EditInvoiceClientComponent implements OnInit {
     private _fb: FormBuilder,
     private _toastr: ToastrService,
     private _activatedRoute: ActivatedRoute,
-    private _userService:UsersService,
-    private _loginService:LoginService,
+    private _userService: UsersService,
+    private _loginService: LoginService,
     private _dialog: MatDialog,
   ) {
     this.user = _loginService.user
@@ -151,8 +154,8 @@ export class EditInvoiceClientComponent implements OnInit {
       description: this.invoiceClients.description,
       movement_type: this.invoiceClients.movement_type._id
     })
-    this.history = [ ...this.invoiceClients.activities ]
-    this.followers = [...this.invoiceClients.followers! ]
+    this.history = [...this.invoiceClients.activities]
+    this.followers = [...this.invoiceClients.followers!]
   }
 
   getMovements() {
@@ -246,21 +249,21 @@ export class EditInvoiceClientComponent implements OnInit {
       })
   }
 
-  getUsers(){
+  getUsers() {
     this._userService.getUsers().subscribe((resp: User[]) => {
       this.users = resp
     })
   }
 
-  getUser(id:any){
-    const findUser:any = this.users.find((user: any) => user._id === id)
+  getUser(id: any) {
+    const findUser: any = this.users.find((user: any) => user._id === id)
     return {
       name: findUser?.name,
       last_name: findUser?.last_name
     }
   }
-  getUserInitial(id:any){
-    const findUser:any = this.users.find((user: any) => user._id === id)
+  getUserInitial(id: any) {
+    const findUser: any = this.users.find((user: any) => user._id === id)
     return findUser?.name.charAt(0).toUpperCase()
   }
 
@@ -285,7 +288,7 @@ export class EditInvoiceClientComponent implements OnInit {
       ]
     }
 
-    this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: any) => {})
+    this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: any) => { })
 
     this.formActivity.setValue('')
   }
@@ -297,52 +300,52 @@ export class EditInvoiceClientComponent implements OnInit {
       disableClose: true,
       autoFocus: false
     });
-    dialogRef.beforeClosed().subscribe((resp:any) => {
+    dialogRef.beforeClosed().subscribe((resp: any) => {
       console.log('resp after dialog', resp);
-      if(resp){
+      if (resp) {
         const element1 = {
           ...resp
         }
         this.history.push(element1)
-        console.log('this.history',this.history);
+        console.log('this.history', this.history);
         const element = {
           activities: [
             ...this.history
           ]
         }
 
-        this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: any) => {})
+        this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: any) => { })
         this.viewActivitiesPlan()
       }
     })
   }
 
-  viewActivitiesPlan(){
-    let findActivity:any
-    findActivity = this.history.filter((element:any) => {
+  viewActivitiesPlan() {
+    let findActivity: any
+    findActivity = this.history.filter((element: any) => {
       return element.type === 'activity' && element.status === 'DRAFT'
     })
 
-    if(findActivity){
+    if (findActivity) {
       this.activitiesPlan = findActivity
     }
   }
 
-  viewNote(){
+  viewNote() {
     this.flagNote = !this.flagNote
   }
 
-  deleteFollower(index:any){
+  deleteFollower(index: any) {
     this.followers.splice(index, 1);
     const element = {
-      followers: [ ...this.followers],
+      followers: [...this.followers],
     }
     this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: InvoiceClient) => {
       this.followers = [...resp.followers!]
     })
   }
 
-  openDialogAddFollower(){
+  openDialogAddFollower() {
     let dialogRef = this._dialog.open(AddFollowersComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -353,11 +356,11 @@ export class EditInvoiceClientComponent implements OnInit {
         key_invoice: this.invoiceClients.key_invoice
       }
     });
-    dialogRef.beforeClosed().subscribe((resp:any) => {
+    dialogRef.beforeClosed().subscribe((resp: any) => {
       console.log('resp after dialog', resp);
-      if(resp){
+      if (resp) {
         const element = {
-          followers: [ ...this.followers, resp],
+          followers: [...this.followers, resp],
         }
         this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: InvoiceClient) => {
           this.followers = [...resp.followers!]
@@ -366,7 +369,7 @@ export class EditInvoiceClientComponent implements OnInit {
     })
   }
 
-  goToEditActivity(id: string){
+  goToEditActivity(id: string) {
     console.log(id);
     let dialogRef = this._dialog.open(EditActivitiesComponent, {
       width: '550px',
@@ -375,21 +378,21 @@ export class EditInvoiceClientComponent implements OnInit {
       autoFocus: false,
       data: id
     })
-    dialogRef.beforeClosed().subscribe((resp:any) => {
+    dialogRef.beforeClosed().subscribe((resp: any) => {
       console.log('resp after dialog', resp);
-      if(resp){
+      if (resp) {
         const element1 = {
           ...resp
         }
 
-        const findIndexActivity = this.history.findIndex((element:any) => element._id === element1._id)
+        const findIndexActivity = this.history.findIndex((element: any) => element._id === element1._id)
 
         this.history[findIndexActivity] = element1
 
         const element = {
           activities: [
-           ...this.history
-         ]
+            ...this.history
+          ]
         }
 
         this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: InvoiceClient) => {
@@ -400,13 +403,13 @@ export class EditInvoiceClientComponent implements OnInit {
     })
   }
 
-  cancelActivity(data: any){
-    const findActivity = this.history.findIndex((element:any) => element._id === data._id)
-    this.history.splice(findActivity,1)
+  cancelActivity(data: any) {
+    const findActivity = this.history.findIndex((element: any) => element._id === data._id)
+    this.history.splice(findActivity, 1)
     const element = {
       activities: [
-       ...this.history
-     ]
+        ...this.history
+      ]
     }
     this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: InvoiceClient) => {
       this.history = [...resp.activities]
@@ -414,9 +417,9 @@ export class EditInvoiceClientComponent implements OnInit {
     this.viewActivitiesPlan()
   }
 
-  markActivityDone(data:any){
+  markActivityDone(data: any) {
 
-    const findActivity = this.history.findIndex((element:any) => element._id === data._id)
+    const findActivity = this.history.findIndex((element: any) => element._id === data._id)
     const element1 = {
       ...data,
       status: 'DONE',
@@ -426,13 +429,46 @@ export class EditInvoiceClientComponent implements OnInit {
     this.history[findActivity] = element1
     const element = {
       activities: [
-       ...this.history,
-     ]
+        ...this.history,
+      ]
     }
     this._invoiceClientsService.updateInvoiceClient(element, this.invoiceClients._id!).subscribe((resp: InvoiceClient) => {
       this.history = [...resp.activities]
     })
     this.viewActivitiesPlan()
+  }
+
+  async delete(invoice: any) {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._invoiceClientService.deleteInvoiceClient(invoice).subscribe(() => {
+          // this._router.navigate(['/invoice-clients/table-invoice-client'])
+          this._spinner.hide()
+          this._toastr.success(`Factura ${invoice.key_invoice} eliminada con exito`)
+        })
+
+      }
+    })
+  }
+
+  openDialogTracking(invoice: any) {
+    let dialogRef = this._dialog.open(ModalTrackingComponent, {
+      width: '1000px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: invoice
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      // this._router.navigate(['/invoice-clients/table-invoice-client'])
+    })
   }
 
 }
