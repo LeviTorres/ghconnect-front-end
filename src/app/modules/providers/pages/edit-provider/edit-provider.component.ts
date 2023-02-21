@@ -18,6 +18,23 @@ export class EditProviderComponent implements OnInit {
 
   public payment_conditions: any;
 
+  public third_types_array: any[] = [
+    { name: 'Proveedor' },
+    { name: 'Intercompañia' },
+    { name: 'Empleado' }
+  ]
+
+  public society_types_array: any[] = [
+    { name: 'Natural' },
+    { name: 'Unipersonal' },
+    { name: 'Juridica' }
+  ]
+
+  public provider_array: any[] = [
+    { name: 'Nacional' },
+    { name: 'Extranjero' }
+  ]
+
   public providerForm = this._fb.group({
     key_provider: [ '', Validators.required ],
     name: [ '', Validators.required ],

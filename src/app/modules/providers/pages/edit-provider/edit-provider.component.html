@@ -61,9 +61,7 @@
           <label>Tipo de tercero</label>
           <mat-form-field class="w-100" appearance="outline">
             <mat-select required formControlName="third_type" placeholder="Selecciona un tipo de tercero">
-              <mat-option value="Proveedor">Proveedor</mat-option>
-              <mat-option value="Intercompañia">Intercompañia</mat-option>
-              <mat-option value="Empleado">Empleado</mat-option>
+              <mat-option *ngFor="let item of third_types_array" [value]="item.name">{{item.name}}</mat-option>
             </mat-select>
             <mat-error
               *ngIf="providerForm.controls['third_type'].hasError('required')"
@@ -78,9 +76,7 @@
           <label>Tipo de sociedad</label>
           <mat-form-field class="w-100" appearance="outline">
             <mat-select required formControlName="society_type" placeholder="Selecciona un tipo de sociedad">
-              <mat-option value="Natural">Natural</mat-option>
-              <mat-option value="Unipersonal">Unipersonal</mat-option>
-              <mat-option value="Juridica">Juridica</mat-option>
+              <mat-option *ngFor="let item of society_types_array" [value]="item.name">{{item.name}}</mat-option>
             </mat-select>
             <mat-error
               *ngIf="providerForm.controls['society_type'].hasError('required')"
@@ -93,8 +89,7 @@
           <label>Tipo de proveedor</label>
           <mat-form-field class="w-100" appearance="outline">
             <mat-select required formControlName="provider_type" placeholder="Selecciona un tipo de proveedor">
-              <mat-option value="Nacional">Nacional</mat-option>
-              <mat-option value="Extranjero">Extranjero</mat-option>
+              <mat-option *ngFor="let item of provider_array" [value]="item.name">{{item.name}}</mat-option>
             </mat-select>
             <mat-error
               *ngIf="providerForm.controls['provider_type'].hasError('required')"
