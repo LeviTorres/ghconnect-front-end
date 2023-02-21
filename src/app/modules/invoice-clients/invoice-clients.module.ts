@@ -15,6 +15,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EditActivitiesComponent } from './components/edit-activities/edit-activities.component';
 import { AddActivitiesComponent } from './components/add-activities/add-activities.component';
 import { AddFollowersComponent } from './components/add-followers/add-followers.component';
+import { ImportFileComponent } from './components/import-file/import-file.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AddFollowersComponent } from './components/add-followers/add-followers.
     DashboardComponent,
     EditActivitiesComponent,
     AddActivitiesComponent,
-    AddFollowersComponent
+    AddFollowersComponent,
+    ImportFileComponent
   ],
   imports: [
     CommonModule,

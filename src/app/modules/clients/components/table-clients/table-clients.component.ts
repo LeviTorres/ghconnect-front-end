@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../../../services/excel.service';
 import { PaymentConditions } from '../../../../models/PaymentConditions.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ImportFileComponent } from '../import-file/import-file.component';
 
 @Component({
   selector: 'app-table-clients',
@@ -52,7 +54,8 @@ export class TableClientsComponent implements OnInit {
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _excelService: ExcelService,
-    private _router: Router
+    private _router: Router,
+    private _dialog:MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -212,6 +215,18 @@ export class TableClientsComponent implements OnInit {
       ]
     }
     this._excelService.downloadExcel(element, 'Clientes', 'clients')
+  }
+
+  openDialogUploadExcel(){
+    let dialogRef = this._dialog.open(ImportFileComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getClients()
+    })
   }
 
 }

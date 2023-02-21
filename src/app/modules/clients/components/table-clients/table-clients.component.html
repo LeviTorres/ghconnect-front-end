@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-between col-12">
   <div style="display:flex; align-items:center">
-    <button class="btn-primary" mat-button mat-button-raised routerLink="/clients/add-client"
+    <button class="btn-primary" mat-raised-button routerLink="/clients/add-client"
       routerLinkActive="router-link-active">Nuevo
       cliente</button>
     <button class="btn-primary mx-3" mat-raised-button (click)="createExcel()">Exportar Excel</button>
+    <button class="btn-primary" mat-raised-button (click)="openDialogUploadExcel()">Importar datos</button>
   </div>
   <div class="col-4">
     <mat-form-field class="w-100" appearance="legacy">
@@ -124,7 +125,7 @@
         <td *ngIf="emailControl.value" (click)="goToEditClient(client)">
           <span>{{ client.email}}</span>
         </td>
-        <td class="last" *ngIf="actionsControl.value">
+        <td class="text-center" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(client)"></i>
         </td>
       </tr>

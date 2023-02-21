@@ -18,6 +18,7 @@ import { Business } from 'src/app/models/Business.model';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../../../services/excel.service';
+import { ImportFileComponent } from '../import-file/import-file.component';
 
 @Component({
   selector: 'app-table-invoice-clients',
@@ -411,6 +412,18 @@ export class TableInvoiceClientsComponent implements OnInit {
       ]
     }
     this._excelService.downloadExcel(element, 'FacturasClientes', 'invoiceClients')
+  }
+
+  openDialogUploadExcel(){
+    let dialogRef = this._dialog.open(ImportFileComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getInvoiceClients()
+    })
   }
 
 }

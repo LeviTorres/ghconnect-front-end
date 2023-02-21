@@ -10,6 +10,7 @@ import { PageClientsComponent } from './pages/page-clients/page-clients.componen
 import { TableClientsComponent } from './components/table-clients/table-clients.component';
 import { AddClientsComponent } from './pages/add-clients/add-clients.component';
 import { EditClientComponent } from './pages/edit-client/edit-client.component';
+import { ImportFileComponent } from './components/import-file/import-file.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EditClientComponent } from './pages/edit-client/edit-client.component';
     PageClientsComponent,
     TableClientsComponent,
     AddClientsComponent,
-    EditClientComponent
+    EditClientComponent,
+    ImportFileComponent
   ],
   imports: [
     CommonModule,
