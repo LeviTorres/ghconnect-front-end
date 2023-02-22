@@ -34,10 +34,20 @@ export class ProvidersService {
 
   createProvider(formData: any) {
     return this._http.post(`${base_url}/providers`, formData, this.headers)
+                          .pipe(
+                            map((resp: any) => {
+                              return resp.provider
+                            })
+                          )
   }
 
   updateProvider(formData: any, _id:string) {
     return this._http.put(`${base_url}/providers/${ _id}`, formData, this.headers)
+                      .pipe(
+                        map((resp: any) => {
+                          return resp.providerUpdated
+                        })
+                      )
   }
 
   getProviders(){

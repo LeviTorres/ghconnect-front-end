@@ -34,10 +34,20 @@ export class ClientsService {
 
   createClient(formData: any) {
     return this._http.post(`${base_url}/clients`, formData, this.headers)
+                          .pipe(
+                            map((resp: any) => {
+                              return resp.client
+                            })
+                          )
   }
 
   updateClient(formData: any, _id:string) {
     return this._http.put(`${base_url}/clients/${ _id}`, formData, this.headers)
+                        .pipe(
+                          map((resp: any) => {
+                            return resp.clientUpdated
+                          })
+                        )
   }
 
   getClients(){
