@@ -18,6 +18,7 @@ import { Business } from 'src/app/models/Business.model';
 import { BusinessService } from 'src/app/services/business.service';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../../../services/excel.service';
+import { ImportFileComponent } from '../import-file/import-file.component';
 
 @Component({
   selector: 'app-table-invoice-providers',
@@ -408,5 +409,17 @@ export class TableInvoiceProvidersComponent implements OnInit {
       ]
     }
     this._excelService.downloadExcel(element, 'FacturasProveedores', 'invoiceProviders')
+  }
+
+  openDialogUploadExcel(){
+    let dialogRef = this._dialog.open(ImportFileComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getInvoiceProviders()
+    })
   }
 }
