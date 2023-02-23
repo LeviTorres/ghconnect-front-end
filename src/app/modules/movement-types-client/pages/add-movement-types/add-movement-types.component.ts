@@ -45,7 +45,12 @@ export class AddMovementTypesComponent implements OnInit {
       return
     }
 
-    this._movementClientService.createMovementTypeClient(this.form.value).subscribe(() => {
+    const element = {
+      ...this.form.value,
+      key_movement: Number(this.form.controls['key_movement'].value)
+    }
+
+    this._movementClientService.createMovementTypeClient(element).subscribe(() => {
       this._router.navigateByUrl('/movement-types-client')
       this._toastr.success('Nuevo tipo de movimiento creado con exito')
       this._spinner.hide()

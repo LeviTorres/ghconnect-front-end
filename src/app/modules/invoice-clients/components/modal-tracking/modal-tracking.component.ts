@@ -49,55 +49,72 @@ export class ModalTrackingComponent implements OnInit {
     })
   }
 
-  getTotal(invoice: InvoiceClient) {
+  getTotal(invoice:InvoiceClient){
     const divisa = invoice.divisa
-    if (divisa?.abbreviation_divisa === 'BOB') {
-      if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+    if(divisa?.abbreviation_divisa === 'BOB'){
+      if(invoice.movement_type.type === 'CARGO'){
         return invoice.invoice_total
-      } else {
+      }
+      if(invoice.movement_type.type === 'ABONO'){
         return Number(invoice.invoice_total) * -1
       }
-    } else {
-      const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-      if (exchange) {
-        if (divisa && exchange) {
-          if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+      return 0
+    /* if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15' ){
+        return invoice.invoice_total
+      }else {
+        return Number(invoice.invoice_total) * -1
+      } */
+    }else{
+
+      return 0
+      //const exchange = this.exchanges.find((item:Exchange) => item.date_exchange === invoice.invoice_date);
+     /* if(exchange){
+        if(divisa && exchange){
+          if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15'){
             return Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          } else {
+          }else {
             return (Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)) * -1
           }
-        } else {
+        }else {
           return 0
         }
-      } else {
+      }else{
         return 0
-      }
+      } */
+
     }
   }
 
-  getTotalMN() {
-    let total: number = 0
-    this.invoiceClients.forEach((invoice: InvoiceClient) => {
-      const divisa = invoice.divisa
-      if (divisa?.abbreviation_divisa === 'BOB') {
-        if ((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15')) {
-          total += Number(invoice.invoice_total)
-        }
-        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
-          total -= Number(invoice.invoice_total)
-        }
-      } else {
-        const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-        if (divisa && exchange) {
-          if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
-            total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          } else {
-            total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+  getTotalMN(){
+    let total:number = 0
+      this.invoiceClients.forEach((invoice:InvoiceClient) =>{
+        const divisa = invoice.divisa
+        if(divisa?.abbreviation_divisa === 'BOB'){
+          if(invoice.movement_type.type === 'CARGO'){
+            total += Number(invoice.invoice_total)
           }
+          if(invoice.movement_type.type === 'ABONO'){
+            total -= Number(invoice.invoice_total)
+          }
+
+        /* if((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15')){
+              total += Number(invoice.invoice_total)
+          }
+          if(invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15' ){
+            total -= Number(invoice.invoice_total)
+          } */
+        }else{
+          const exchange = this.exchanges.find((item:Exchange) => item.date_exchange === invoice.invoice_date);
+         /* if(divisa && exchange){
+            if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15' ){
+              total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+            }else {
+              total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+            }
+          } */
         }
-      }
-    });
-    return total
+      });
+      return total
   }
 
   async delete(invoice: InvoiceClient) {

@@ -284,7 +284,7 @@ export class TableInvoiceClientsComponent implements OnInit {
         } */
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-        if (divisa && exchange) {
+      /*  if (divisa && exchange) {
           if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           } else if (invoice.movement_type.key_movement === '51') {
@@ -293,7 +293,7 @@ export class TableInvoiceClientsComponent implements OnInit {
           else {
             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           }
-        }
+        }*/
       }
     })
     return total
@@ -319,13 +319,13 @@ export class TableInvoiceClientsComponent implements OnInit {
         } */
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-        if (divisa && exchange) {
+       /* if (divisa && exchange) {
           if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           } else {
             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           }
-        }
+        } */
       }
     })
     return total

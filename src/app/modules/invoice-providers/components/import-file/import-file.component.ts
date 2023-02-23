@@ -122,7 +122,7 @@ export class ImportFileComponent implements OnInit {
             (e: MovementTypeProvider) =>
               e.name_movement.toLowerCase().trim() ===
                 element.Tipo_de_movimiento.toLowerCase().trim() ||
-              e.key_movement.toLowerCase().trim() ===
+              e.key_movement ===
                 element.Tipo_de_movimiento.toLowerCase().trim()
           );
           if (!findMovementType) {
@@ -184,7 +184,7 @@ export class ImportFileComponent implements OnInit {
               (e: MovementTypeProvider) =>
                 e.name_movement.toLowerCase().trim() ===
                   element.Tipo_de_movimiento.toLowerCase().trim() ||
-                e.key_movement.toLowerCase().trim() ===
+                e.key_movement ===
                   element.Tipo_de_movimiento.toLowerCase().trim()
             );
             const findProvider: any = this.providers.find(
