@@ -225,7 +225,11 @@ export class ImportFileComponent implements OnInit {
             console.log('data', datos);
             this._invoiceProviderService
               .createInvoiceProvider(datos)
-              .subscribe((resp: any) => {});
+              .subscribe((resp: any) => {},(err: any) => {
+                this._spinner.hide();
+                console.warn(err.error.msg);
+                this._toastr.error(`${err.error.msg}`);
+              });
           });
         }
         this._dialogRef.close();

@@ -267,7 +267,13 @@ export class TableInvoiceClientsComponent implements OnInit {
     array.forEach((invoice: InvoiceClient) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '51') {
+        if(invoice.movement_type.type === 'CARGO'){
+          total += Number(invoice.invoice_total)
+        }
+        if(invoice.movement_type.type === 'ABONO'){
+          total -= Number(invoice.invoice_total)
+        }
+        /* if (invoice.movement_type.key_movement === '51') {
           total += 0
         }
         if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
@@ -275,7 +281,7 @@ export class TableInvoiceClientsComponent implements OnInit {
         }
         if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
-        }
+        } */
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
         if (divisa && exchange) {
@@ -299,12 +305,18 @@ export class TableInvoiceClientsComponent implements OnInit {
     array.forEach((invoice: InvoiceClient) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+        if(invoice.movement_type.type === 'CARGO'){
+          total += Number(invoice.invoice_total)
+        }
+        if(invoice.movement_type.type === 'ABONO'){
+          total -= Number(invoice.invoice_total)
+        }
+       /* if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
         if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
-        }
+        } */
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
         if (divisa && exchange) {
