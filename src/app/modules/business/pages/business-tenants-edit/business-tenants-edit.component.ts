@@ -154,7 +154,7 @@ export class BusinessTenantsEditComponent implements OnInit {
       mobile_number: this.business.mobile_number,
       email: this.business.email,
       url_web: this.business.url_web,
-      divisa: this.business.divisa,
+      divisa: this.business.divisa?._id,
     })
 
     this.history = [ ...this.business.activities ]
