@@ -95,9 +95,6 @@
         <th *ngIf="payStatusControl.value">
           Estado de pago
         </th>
-        <th class="last" *ngIf="actionsControl.value">
-          Acciones
-        </th>
         <mat-menu #menuActions="matMenu">
           <div class="menu-table">
             <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
@@ -213,20 +210,20 @@
         <td *ngIf="contractControl.value" (click)="goToEditInvoiceProvider(invoice)">
           <span>{{invoice.contract}}</span>
         </td>
-        <!-- <td *ngIf="checkbookControl.value" (click)="goToEditInvoiceProvider(invoice)">
+        <td *ngIf="checkbookControl.value" (click)="goToEditInvoiceProvider(invoice)">
           <span></span>
-        </td> -->
+        </td>
         <td class="text-center" *ngIf="statusControl.value" (click)="goToEditInvoiceProvider(invoice)">
           <div *ngIf=" invoice.status === 'draft'"> <span>BORRADOR</span> </div>
         </td>
         <td *ngIf="payStatusControl.value" (click)="goToEditInvoiceProvider(invoice)">
           <span></span>
         </td>
-        <td class="last" *ngIf="actionsControl.value">
+        <!-- <td class="last" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(invoice)"></i>
           <i class="material-icons" style="color:black; font-size: 15px; margin-left: 15px;"
             (click)="openDialogTracking(invoice)">timeline</i>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>

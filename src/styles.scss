@@ -337,3 +337,14 @@ i {
 mat-form-field{
   margin-bottom: -1.25em !important;
 }
+
+// Baja el dropdown 
+.mat-select-panel-wrap{
+  position: relative;
+  top: 36px;
+}
+
+.mat-select-panel-wrap .mat-select-panel{
+  min-width: calc(100% + 22px) !important;
+  transform: translateX(4px) !important
+}
