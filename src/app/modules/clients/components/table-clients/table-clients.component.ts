@@ -13,6 +13,8 @@ import { ExcelService } from '../../../../services/excel.service';
 import { PaymentConditions } from '../../../../models/PaymentConditions.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ImportFileComponent } from '../import-file/import-file.component';
+import { InvoiceClient } from '../../../../models/InvoiceClients.model';
+import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
 
 @Component({
   selector: 'app-table-clients',
@@ -23,6 +25,7 @@ export class TableClientsComponent implements OnInit {
 
   public clients: Client[] = []
   public clientsTemp: Client[] = []
+  public invoiceClients: InvoiceClient[] = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -55,11 +58,13 @@ export class TableClientsComponent implements OnInit {
     private _headerService: HeadersService,
     private _excelService: ExcelService,
     private _router: Router,
-    private _dialog:MatDialog
+    private _dialog:MatDialog,
+    private _invoiceClientService: InvoiceClientsService
   ) { }
 
   ngOnInit(): void {
     this.getClients()
+    this.getInvoiceClients()
     this.getHeadersClient()
   }
 
@@ -152,6 +157,12 @@ export class TableClientsComponent implements OnInit {
     })
   }
 
+  getInvoiceClients(){
+    this._invoiceClientService.getInvoiceClients().subscribe((resp: InvoiceClient[]) => {
+      this.invoiceClients = resp
+    })
+  }
+
   goToEditClient(client: Client) {
     this._router.navigate(['/clients/edit-client'],
       {
@@ -171,6 +182,14 @@ export class TableClientsComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
+
+        const findInvoiceClient = this.invoiceClients.find((element:any) => element.client._id === client._id)
+        if(findInvoiceClient){
+          this._spinner.hide()
+          this._toastr.error('No se puede eliminar cliente porque tiene al menos una factura relacionada')
+          return
+        }
+
         this._clientsService.deleteClient(client).subscribe(() => {
           this.getClients()
           this._spinner.hide()

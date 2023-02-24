@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { ImportFileComponent } from '../import-file/import-file.component';
+import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
+import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
 
 @Component({
   selector: 'app-table-providers',
@@ -23,6 +25,7 @@ export class TableProvidersComponent implements OnInit {
 
   public providers: Provider[] = []
   public providersTemp: Provider[] = []
+  public invoiceProviders: InvoiceProviders[] = []
 
   public newArray: any = []
   public filterProviders: Provider[] = []
@@ -55,11 +58,13 @@ export class TableProvidersComponent implements OnInit {
     private _headerService: HeadersService,
     private _excelService: ExcelService,
     private _router: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _invoiceProviderService: InvoiceProvidersService
   ) { this._spinner.show() }
 
   ngOnInit(): void {
     this.getProviders()
+    this.getInvoiceProviders()
     this.getHeadersProvider()
   }
 
@@ -152,6 +157,12 @@ export class TableProvidersComponent implements OnInit {
     })
   }
 
+  getInvoiceProviders(){
+    this._invoiceProviderService.getInvoiceProviders().subscribe((resp: InvoiceProviders[]) =>{
+      this.invoiceProviders = resp
+    })
+  }
+
   goToEditProvider(provider: Provider) {
     this._router.navigate(['/providers/edit-provider'],
       {
@@ -171,6 +182,14 @@ export class TableProvidersComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
+
+        const findInvoiceProvider = this.invoiceProviders.find((element:any) => element.provider._id === provider._id)
+        if(findInvoiceProvider){
+          this._spinner.hide()
+          this._toastr.error('No se puede eliminar proveedor porque tiene al menos una factura relacionada')
+          return
+        }
+
         this._providersService.deleteProvider(provider).subscribe(() => {
           this.getProviders()
           this._spinner.hide()
