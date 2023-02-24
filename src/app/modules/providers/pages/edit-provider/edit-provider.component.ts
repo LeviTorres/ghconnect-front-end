@@ -6,6 +6,7 @@ import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { PaymentConditionsService } from '../../../../services/payment-conditions.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 import { LoginService } from '../../../../services/login.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from '../../../../services/users.service';
@@ -21,7 +22,7 @@ import { EditActivitiesComponent } from '../../components/edit-activities/edit-a
 })
 export class EditProviderComponent implements OnInit {
 
-  public provider:any;
+  public provider: any;
 
   public payment_conditions: any;
 
@@ -42,36 +43,36 @@ export class EditProviderComponent implements OnInit {
     { name: 'Extranjero' }
   ]
 
-    public users: any[] = []
-    public user: any
-    public history: any[] = []
-    public flagNote: boolean = false
-    public activitiesPlan: any[] = []
-    public followers: any[] = []
-    public letterNames: string = ''
+  public users: any[] = []
+  public user: any
+  public history: any[] = []
+  public flagNote: boolean = false
+  public activitiesPlan: any[] = []
+  public followers: any[] = []
+  public letterNames: string = ''
 
   public formActivity: FormControl = new FormControl('')
 
   public providerForm = this._fb.group({
-    key_provider: [ '', Validators.required ],
-    name: [ '', Validators.required ],
-    nit: ['', Validators.required ],
-    third_type: ['', Validators.required ],
-    society_type: ['', Validators.required ],
-    provider_type: ['', Validators.required ],
-    phone_number: ['', Validators.required ],
-    mobile_number: ['', Validators.required ],
-    email: ['', [ Validators.required, Validators.email ] ],
-    payment_conditions: ['', Validators.required ],
+    key_provider: ['', Validators.required],
+    name: ['', Validators.required],
+    nit: ['', Validators.required],
+    third_type: ['', Validators.required],
+    society_type: ['', Validators.required],
+    provider_type: ['', Validators.required],
+    phone_number: ['', Validators.required],
+    mobile_number: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    payment_conditions: ['', Validators.required],
   })
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _providerService:ProvidersService,
-    private _fb:FormBuilder,
+    private _providerService: ProvidersService,
+    private _fb: FormBuilder,
     private _paymentConditionsService: PaymentConditionsService,
     private _spinner: NgxSpinnerService,
-    private _toastr:ToastrService,
+    private _toastr: ToastrService,
     private _router: Router,
     private _loginService: LoginService,
     private _dialog: MatDialog,
@@ -81,13 +82,13 @@ export class EditProviderComponent implements OnInit {
   ngOnInit(): void {
     this._spinner.show()
     this.getUsers()
-    this._activatedRoute.queryParams.subscribe((params:any) => {
+    this._activatedRoute.queryParams.subscribe((params: any) => {
       this.getProviders(params.provider)
     })
     this.getPaymentConditions()
   }
 
-  public initValuesForm(){
+  public initValuesForm() {
     this._spinner.show()
     this.providerForm.patchValue({
       key_provider: this.provider.key_provider,
@@ -105,43 +106,43 @@ export class EditProviderComponent implements OnInit {
     this.followers = [...this.provider.followers!]
   }
 
-  getPaymentConditions(){
+  getPaymentConditions() {
     this._spinner.show()
-    this._paymentConditionsService.getPaymentConditions().subscribe((item:any) => {
+    this._paymentConditionsService.getPaymentConditions().subscribe((item: any) => {
       this.payment_conditions = item
       this._spinner.hide()
     })
   }
 
-  getProviders(id: string){
+  getProviders(id: string) {
     this._spinner.show()
-    this._providerService.getProviders().subscribe((providers:Provider[]) => {
+    this._providerService.getProviders().subscribe((providers: Provider[]) => {
       this.provider = providers.find((provider: Provider) => provider._id === id)
       this.initValuesForm()
       this._spinner.hide()
     })
   }
 
-  registerProvider(){
+  registerProvider() {
     this._spinner.show()
-      if(this.providerForm.invalid){
-        this._spinner.hide()
-        return
-      }
-      const element = {
-        ...this.providerForm.value,
-      }
+    if (this.providerForm.invalid) {
+      this._spinner.hide()
+      return
+    }
+    const element = {
+      ...this.providerForm.value,
+    }
 
-      this._providerService.updateProvider(element, this.provider._id)
-        .subscribe(( res:any ) => {
-          this._router.navigateByUrl('/providers')
-          this._spinner.hide()
-          this._toastr.success('Proveedor actualizado con Exito')
-        }, (err:any) =>{
-          this._spinner.hide()
-          console.warn(err.error.msg)
-          this._toastr.error(`${err.error.msg}`)
-        })
+    this._providerService.updateProvider(element, this.provider._id)
+      .subscribe((res: any) => {
+        this._router.navigateByUrl('/providers')
+        this._spinner.hide()
+        this._toastr.success('Proveedor actualizado con Exito')
+      }, (err: any) => {
+        this._spinner.hide()
+        console.warn(err.error.msg)
+        this._toastr.error(`${err.error.msg}`)
+      })
   }
 
 
@@ -332,6 +333,26 @@ export class EditProviderComponent implements OnInit {
 
   viewNote() {
     this.flagNote = !this.flagNote
+  }
+
+  async delete() {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar el proveedor ${this.provider.name}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._providerService.deleteProvider(this.provider).subscribe(() => {
+          this._router.navigate(['/providers'])
+          this._spinner.hide()
+          this._toastr.success(`Proveedor ${this.provider.name} eliminado con exito`)
+        })
+
+      }
+    })
   }
 
 }

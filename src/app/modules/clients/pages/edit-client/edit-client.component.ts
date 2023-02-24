@@ -8,12 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 import { ClientsService } from '../../../../services/clients.service';
 import { Client } from '../../../../models/Client.model';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 import { LoginService } from '../../../../services/login.service';
 import { UsersService } from '../../../../services/users.service';
 import { User } from '../../../../models/User.model';
 import { AddActivitiesComponent } from '../../components/add-activities/add-activities.component';
 import { AddFollowersComponent } from '../../components/add-followers/add-followers.component';
 import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
+import { ModalTrackingComponent } from '../../../invoice-clients/components/modal-tracking/modal-tracking.component';
 
 @Component({
   selector: 'app-edit-client',
@@ -21,7 +23,7 @@ import { EditActivitiesComponent } from '../../components/edit-activities/edit-a
   styleUrls: ['./edit-client.component.scss']
 })
 export class EditClientComponent implements OnInit {
-  public client:any;
+  public client: any;
 
   public payment_conditions: any;
 
@@ -53,16 +55,16 @@ export class EditClientComponent implements OnInit {
   public formActivity: FormControl = new FormControl('')
 
   public providerForm = this._fb.group({
-    key_client: [ '', Validators.required ],
-    name: [ '', Validators.required ],
-    nit: ['', Validators.required ],
-    third_type: ['', Validators.required ],
-    society_type: ['', Validators.required ],
-    provider_type: ['', Validators.required ],
-    phone_number: ['', Validators.required ],
-    mobile_number: ['', Validators.required ],
-    email: ['', [ Validators.required, Validators.email ] ],
-    payment_conditions: ['', Validators.required ],
+    key_client: ['', Validators.required],
+    name: ['', Validators.required],
+    nit: ['', Validators.required],
+    third_type: ['', Validators.required],
+    society_type: ['', Validators.required],
+    provider_type: ['', Validators.required],
+    phone_number: ['', Validators.required],
+    mobile_number: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    payment_conditions: ['', Validators.required],
   })
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -70,7 +72,7 @@ export class EditClientComponent implements OnInit {
     private _fb: FormBuilder,
     private _paymentConditionsService: PaymentConditionsService,
     private _spinner: NgxSpinnerService,
-    private _toastr:ToastrService,
+    private _toastr: ToastrService,
     private _router: Router,
     private _loginService: LoginService,
     private _dialog: MatDialog,
@@ -78,18 +80,18 @@ export class EditClientComponent implements OnInit {
   ) {
     this.user = _loginService.user
     this.letterNames = `${this.user.name.charAt(0).toUpperCase()}`;
-   }
+  }
 
   ngOnInit(): void {
     this._spinner.show()
     this.getUsers()
-    this._activatedRoute.queryParams.subscribe((params:any) => {
+    this._activatedRoute.queryParams.subscribe((params: any) => {
       this.getClients(params.client)
     })
     this.getPaymentConditions()
   }
 
-  public initValuesForm(){
+  public initValuesForm() {
     this._spinner.show()
     this.providerForm.patchValue({
       key_client: this.client.key_client,
@@ -107,43 +109,43 @@ export class EditClientComponent implements OnInit {
     this.followers = [...this.client.followers!]
   }
 
-  getPaymentConditions(){
+  getPaymentConditions() {
     this._spinner.show()
-    this._paymentConditionsService.getPaymentConditions().subscribe((item:any) => {
+    this._paymentConditionsService.getPaymentConditions().subscribe((item: any) => {
       this.payment_conditions = item
       this._spinner.hide()
     })
   }
 
-  getClients(id: string){
+  getClients(id: string) {
     this._spinner.show()
-    this._clientService.getClients().subscribe((clients:Client[]) => {
+    this._clientService.getClients().subscribe((clients: Client[]) => {
       this.client = clients.find((client: Client) => client._id === id)
       this.initValuesForm()
       this._spinner.hide()
     })
   }
 
-  registerClient(){
+  registerClient() {
     this._spinner.show()
-      if(this.providerForm.invalid){
-        this._spinner.hide()
-        return
-      }
-      const element = {
-        ...this.providerForm.value,
-      }
+    if (this.providerForm.invalid) {
+      this._spinner.hide()
+      return
+    }
+    const element = {
+      ...this.providerForm.value,
+    }
 
-      this._clientService.updateClient(element, this.client._id)
-        .subscribe(( res:any ) => {
-          this._router.navigateByUrl('/clients')
-          this._spinner.hide()
-          this._toastr.success('Cliente actualizado con Exito')
-        }, (err:any) =>{
-          this._spinner.hide()
-          console.warn(err.error.msg)
-          this._toastr.error(`${err.error.msg}`)
-        })
+    this._clientService.updateClient(element, this.client._id)
+      .subscribe((res: any) => {
+        this._router.navigateByUrl('/clients')
+        this._spinner.hide()
+        this._toastr.success('Cliente actualizado con Exito')
+      }, (err: any) => {
+        this._spinner.hide()
+        console.warn(err.error.msg)
+        this._toastr.error(`${err.error.msg}`)
+      })
   }
 
   getUsers() {
@@ -333,6 +335,39 @@ export class EditClientComponent implements OnInit {
 
   viewNote() {
     this.flagNote = !this.flagNote
+  }
+
+  async delete() {
+    return Swal.fire({
+      title: 'Estas seguro que deseas continuar?',
+      text: `Esta a punto de eliminar el cliente ${this.client.name}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar'
+    }).then((result) => {
+      if (result.value) {
+        this._spinner.show()
+        this._clientService.deleteClient(this.client).subscribe(() => {
+          this._router.navigate(['/clients'])
+          this._spinner.hide()
+          this._toastr.success(`Cliente ${this.client.name} eliminada con exito`)
+        })
+
+      }
+    })
+  }
+
+  openDialogTracking() {
+    let dialogRef = this._dialog.open(ModalTrackingComponent, {
+      width: '1000px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false,
+      data: this.client
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this._router.navigate(['/clients'])
+    })
   }
 
 }
