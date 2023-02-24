@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+// import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Divisa } from '../../../../models/Divisa.model';
 import { Provider } from '../../../../models/Provider.model';
 import { Ceco } from '../../../../models/Ceco.model';
@@ -66,6 +67,7 @@ export class EditInvoiceProviderComponent implements OnInit {
   })
 
   constructor(
+    // @Inject(MAT_DIALOG_DATA) public invoiceData: InvoiceProviders,
     private _router: Router,
     private _invoiceProvidersService: InvoiceProvidersService,
     private _spinner: NgxSpinnerService,
@@ -132,6 +134,7 @@ export class EditInvoiceProviderComponent implements OnInit {
   getInvoiceProviders(id: any) {
     this._spinner.show()
     this._invoiceProvidersService.getInvoiceProviders().subscribe((invoices: InvoiceProviders[]) => {
+      // this.invoiceProviders = invoices.filter((invoice: InvoiceProviders) => invoice.key_invoice === this.invoiceData.key_invoice && invoice.provider._id === this.invoiceData.provider._id)
       this.invoiceProviders = invoices.find((invoice: InvoiceProviders) => invoice._id === id)
       this.initValueForm()
       this.viewActivitiesPlan()
@@ -472,5 +475,6 @@ export class EditInvoiceProviderComponent implements OnInit {
       this._router.navigate(['/invoice-providers'])
     })
   }
+
 
 }
