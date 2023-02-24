@@ -175,6 +175,10 @@ export class TableProvidersComponent implements OnInit {
           this.getProviders()
           this._spinner.hide()
           this._toastr.success(`Proveedor ${provider.name} eliminado con exito`)
+        },(e:any) => {
+          this._spinner.hide();
+          console.warn(e.error.msg);
+          this._toastr.error(`${e.error.msg}`);
         })
 
       }

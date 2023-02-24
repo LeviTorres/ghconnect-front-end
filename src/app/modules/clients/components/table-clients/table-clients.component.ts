@@ -175,6 +175,10 @@ export class TableClientsComponent implements OnInit {
           this.getClients()
           this._spinner.hide()
           this._toastr.success(`Cliente ${client.name} eliminado con exito`)
+        },(e:any) => {
+          this._spinner.hide();
+          console.warn(e.error.msg);
+          this._toastr.error(`${e.error.msg}`);
         })
 
       }
