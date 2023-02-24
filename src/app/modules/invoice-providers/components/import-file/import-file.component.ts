@@ -17,6 +17,7 @@ import { LoginService } from '../../../../services/login.service';
 import { ProvidersService } from '../../../../services/providers.service';
 import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
 import * as XLSX from 'xlsx';
+import { ExcelService } from '../../../../services/excel.service';
 
 @Component({
   selector: 'app-import-file',
@@ -59,7 +60,8 @@ export class ImportFileComponent implements OnInit {
     private _dialogRef: MatDialogRef<ImportFileComponent>,
     private _movementTypeService: MovementsTypeProviderService,
     private _divisaService: DivisasService,
-    private _loginService: LoginService
+    private _loginService: LoginService,
+    private _excelService: ExcelService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
@@ -215,7 +217,7 @@ export class ImportFileComponent implements OnInit {
               ceco: findCeco._id,
               provider: findProvider._id,
               key_invoice: element.No_factura,
-              upload_date: new Date(element.Fecha_carga).getTime(),
+              upload_date: new Date().getTime(),
               invoice_date: new Date(element.Fecha_factura).getTime(),
               expiration_date: new Date(element.Fecha_vencimiento).getTime(),
               invoice_total: element.Total_factura,
@@ -235,6 +237,24 @@ export class ImportFileComponent implements OnInit {
         this._dialogRef.close();
       });
     };
+  }
+
+
+  createExcel(){
+    const element = {
+      headers: [
+        'Tipo_de_movimiento',
+        'No_factura',
+        'Proveedor',
+        'Fecha_factura',
+        'Fecha_vencimiento',
+        'Ceco',
+        'Total_factura',
+        'Divisa',
+        'Descripcion'
+      ]
+    }
+    this._excelService.downloadExcel(element, 'Facturas Proveedores', 'TemplateInvoiceProviders')
   }
 
 }

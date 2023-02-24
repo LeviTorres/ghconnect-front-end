@@ -16,6 +16,7 @@ import { Ceco } from '../../../../models/Ceco.model';
 import { Divisa } from '../../../../models/Divisa.model';
 import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
 import { LoginService } from '../../../../services/login.service';
+import { ExcelService } from '../../../../services/excel.service';
 
 @Component({
   selector: 'app-import-file',
@@ -58,7 +59,8 @@ export class ImportFileComponent implements OnInit {
     private _dialogRef: MatDialogRef<ImportFileComponent>,
     private _movementTypeService: MovementsTypeClientService,
     private _divisaService: DivisasService,
-    private _loginService: LoginService
+    private _loginService: LoginService,
+    private _excelService: ExcelService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
@@ -231,4 +233,22 @@ export class ImportFileComponent implements OnInit {
       });
     };
   }
+
+  createExcel(){
+    const element = {
+      headers: [
+        'Tipo_de_movimiento',
+        'No_factura',
+        'Cliente',
+        'Fecha_factura',
+        'Fecha_vencimiento',
+        'Ceco',
+        'Total_factura',
+        'Divisa',
+        'Descripcion'
+      ]
+    }
+    this._excelService.downloadExcel(element, 'Facturas Clientes', 'TemplateInvoiceClients')
+  }
+
 }

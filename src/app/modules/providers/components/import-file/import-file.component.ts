@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Provider } from '../../../../models/Provider.model';
+import { ExcelService } from '../../../../services/excel.service';
 
 @Component({
   selector: 'app-import-file',
@@ -45,6 +46,7 @@ export class ImportFileComponent implements OnInit {
     private _spinner:NgxSpinnerService,
     private _toastr: ToastrService,
     private _dialogRef: MatDialogRef<ImportFileComponent>,
+    private _excelService: ExcelService
   ) {
     this.tenant = localStorage.getItem('tenant')
   }
@@ -137,7 +139,24 @@ export class ImportFileComponent implements OnInit {
         this._dialogRef.close()
       })
     }
+  }
 
+  createExcel(){
+    const element = {
+      headers: [
+        'No_proveedor',
+        'Nombre_proveedor',
+        'NIT',
+        'Condiciones_de_pago',
+        'Tipo_de_tercero',
+        'Tipo_de_sociedad',
+        'Tipo_de_proveedor',
+        'Telefono_local',
+        'Telefono_movil',
+        'Email'
+      ]
+    }
+    this._excelService.downloadExcel(element, 'Proveedores', 'TemplateProviders')
   }
 
 }

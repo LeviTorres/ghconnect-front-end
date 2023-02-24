@@ -157,7 +157,109 @@ export class ExcelService {
           sheet.addRow(subheaderClient)
         }
         break;
+      case 'TemplateInvoiceProviders':
+        sheet.columns = [
+          { width: 20 }, { width: 15 }, { width: 20 }, { width: 20 }, { width: 20 },
+          { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 }
+        ]
+        sheet.getCell('A1').note = 'Nombre o Clave de movimiento. Tipo de dato alfanumerico'
+        sheet.getCell('B1').note = 'Tipo de dato Numerico'
+        sheet.getCell('C1').note = 'Nombre o Clave de Proveedor. Tipo de dato alfanumerico'
+        sheet.getCell('D1').note = 'Tipo de dato Texto'
+        sheet.getCell('E1').note = 'Tipo de dato Texto'
+        sheet.getCell('F1').note = 'Nombre o Clave de Ceco. Tipo de dato alfanumerico'
+        sheet.getCell('G1').note = 'Tipo de dato numerico'
+        sheet.getCell('H1').note = 'Abreviatura de Divisa. Tipo de dato alfanumerico'
+        sheet.getCell('I1').note = 'Tipo de dato Texto'
+        sheet.getCell('A2').value = '15'
+        sheet.getCell('B2').value = 1
+        sheet.getCell('C2').value = 'Juan Diaz'
+        sheet.getCell('D2').value = '01-12-2023'
+        sheet.getCell('E2').value = '20-12-2023'
+        sheet.getCell('F2').value = '9923'
+        sheet.getCell('G2').value = 902999
+        sheet.getCell('H2').value = 'BOB'
+        sheet.getCell('I2').value = 'Descripcion de prueba'
+      break
+      case 'TemplateInvoiceClients':
+        sheet.columns = [
+          { width: 20 }, { width: 15 }, { width: 20 }, { width: 20 }, { width: 20 },
+          { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 }
+        ]
+        sheet.getCell('A1').note = 'Nombre o Clave de movimiento. Tipo de dato alfanumerico'
+        sheet.getCell('B1').note = 'Tipo de dato Numerico'
+        sheet.getCell('C1').note = 'Nombre o Clave de Cliente. Tipo de dato alfanumerico'
+        sheet.getCell('D1').note = 'Tipo de dato Texto'
+        sheet.getCell('E1').note = 'Tipo de dato Texto'
+        sheet.getCell('F1').note = 'Nombre o Clave de Ceco. Tipo de dato alfanumerico'
+        sheet.getCell('G1').note = 'Tipo de dato numerico'
+        sheet.getCell('H1').note = 'Abreviatura de Divisa. Tipo de dato alfanumerico'
+        sheet.getCell('I1').note = 'Tipo de dato Texto'
+        sheet.getCell('A2').value = '15'
+        sheet.getCell('B2').value = 1
+        sheet.getCell('C2').value = 'Juan Diaz'
+        sheet.getCell('D2').value = '01-12-2023'
+        sheet.getCell('E2').value = '20-12-2023'
+        sheet.getCell('F2').value = '9923'
+        sheet.getCell('G2').value = 902999
+        sheet.getCell('H2').value = 'BOB'
+        sheet.getCell('I2').value = 'Descripcion de prueba'
+      break
+      case 'TemplateClients':
+        sheet.columns = [
+          { width: 15 }, { width: 20 }, { width: 15 }, { width: 20 }, { width: 20 },
+          { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 30 }
+        ]
 
+        sheet.getCell('A1').note = 'Tipo de dato numerico'
+        sheet.getCell('B1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('C1').note = 'Tipo de dato numerico'
+        sheet.getCell('D1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('E1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('F1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('G1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('H1').note = 'Tipo de dato numerico'
+        sheet.getCell('I1').note = 'Tipo de dato numerico'
+        sheet.getCell('J1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('A2').value = 1
+        sheet.getCell('B2').value = 'Fernando Herrera'
+        sheet.getCell('C2').value = 9921
+        sheet.getCell('D2').value = '2 meses'
+        sheet.getCell('E2').value = 'Proveedor'
+        sheet.getCell('F2').value = 'Natural'
+        sheet.getCell('G2').value = 'Nacional'
+        sheet.getCell('H2').value = 6647182002
+        sheet.getCell('I2').value = 6092393285
+        sheet.getCell('J2').value = 'fernando.herrera@gmail.com'
+      break
+
+      case 'TemplateProviders':
+        sheet.columns = [
+          { width: 15 }, { width: 20 }, { width: 15 }, { width: 20 }, { width: 20 },
+          { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 30 }
+        ]
+
+        sheet.getCell('A1').note = 'Tipo de dato numerico'
+        sheet.getCell('B1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('C1').note = 'Tipo de dato numerico'
+        sheet.getCell('D1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('E1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('F1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('G1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('H1').note = 'Tipo de dato numerico'
+        sheet.getCell('I1').note = 'Tipo de dato numerico'
+        sheet.getCell('J1').note = 'Tipo de dato alfanumerico'
+        sheet.getCell('A2').value = 1
+        sheet.getCell('B2').value = 'Fernando Herrera'
+        sheet.getCell('C2').value = 9921
+        sheet.getCell('D2').value = '2 meses'
+        sheet.getCell('E2').value = 'Proveedor'
+        sheet.getCell('F2').value = 'Natural'
+        sheet.getCell('G2').value = 'Nacional'
+        sheet.getCell('H2').value = 6647182002
+        sheet.getCell('I2').value = 6092393285
+        sheet.getCell('J2').value = 'fernando.herrera@gmail.com'
+      break
 
       default:
         break;

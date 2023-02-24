@@ -302,7 +302,16 @@
           <h2 style="font-weight: 500; font-size: 25px; line-height: 30px">
             LOGOTIPO DE LA EMPRESA
           </h2>
-          <div>
+          <div *ngIf="inputChangeImage">
+            <div class="container-avatar" style="position: relative;">
+              <img class="avatar-image my-2 " [src]="imageSelect" alt="">
+              <label style="position: absolute; right: 0; bottom: 0; padding-right: 30px; padding-top: 35px;">
+                <span style="cursor: pointer;" class="material-icons">edit</span>
+                <input style="display: none;" type="file" (change)="changeImage($event)">
+              </label>
+            </div>
+          </div>
+          <div *ngIf="!inputChangeImage">
             <div>
               <label *ngIf="!imageSelect" class="my-2 text-center" style="
                   background-color: #e0e0e0;
