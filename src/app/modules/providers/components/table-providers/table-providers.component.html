@@ -61,7 +61,7 @@
         <mat-menu #menu="matMenu">
           <div class="menu-table">
             <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
-              Status</mat-checkbox>
+              Estado</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="keyProviderControl" (click)="$event.stopPropagation();">
               No. proveedor</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">Nombre
@@ -93,13 +93,7 @@
       <tr *ngFor="let provider of providersTemp | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i" style="cursor:pointer">
         <td class="container-status" *ngIf="statusControl.value" (click)="goToEditProvider(provider)">
-          <!-- <div matTooltip={{provider.status}} [ngClass]="{
-            'circule-activo': provider.status === 'activo',
-            'circule-inactivo': provider.status === 'inactivo',
-            'circule-suspendido': provider.status === 'suspendido',
-            'circule-password': provider.status === 'habilitado por password'}">
-          </div> -->
-          <div *ngIf="provider.status === 'draft'"> <span>BORRADOR</span> </div>
+          <span *ngIf="provider.status === 'ACTIVE'">ACTIVO</span>
         </td>
         <td *ngIf="keyProviderControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.key_provider }}</span>

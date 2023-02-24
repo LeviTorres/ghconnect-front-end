@@ -42,6 +42,8 @@ export class BusinessTenantsEditComponent implements OnInit {
   public users: any[] = []
   public activitiesPlan: any[] = []
 
+  public inputChangeImage: boolean = false
+
   public formActivity: FormControl = new FormControl('')
 
   public form: FormGroup = new FormGroup({
@@ -129,10 +131,13 @@ export class BusinessTenantsEditComponent implements OnInit {
   }
 
   initValuesForm(){
-    this.dateForm = new Date(this.business.creation_date)
+    this.dateForm = new Date(this.business.creation_date).getTime()
+
     this.nameBusiness = this.business.name
 
-    //this.imageSelect = `${ base_url }/upload/business/${ this.business.img }`
+    this.imageSelect = `${ base_url }/upload/business/${ this.business.img }`
+    console.log(this.imageSelect);
+
     //console.log(this.imageSelect)
 
     this.form.patchValue({
@@ -152,7 +157,7 @@ export class BusinessTenantsEditComponent implements OnInit {
       mobile_number: this.business.mobile_number,
       email: this.business.email,
       url_web: this.business.url_web,
-      divisa: this.business.divisa
+      divisa: this.business.divisa?._id,
     })
 
     this.history = [ ...this.business.activities ]

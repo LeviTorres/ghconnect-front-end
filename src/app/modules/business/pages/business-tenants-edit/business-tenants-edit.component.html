@@ -302,67 +302,78 @@
           <h2 style="font-weight: 500; font-size: 25px; line-height: 30px">
             LOGOTIPO DE LA EMPRESA
           </h2>
-          <div>
-            <label *ngIf="!imageSelect" class="my-2 text-center" style="
-                background-color: #e0e0e0;
-                margin-top: 18px;
-                margin-bottom: 20px;
-                cursor: pointer;
-                width: 100%;
-                height: 100%;
-              ">
-              <img src="../../../../../assets/icons/Upload.svg" class="my-3" alt="" />
-              <input style="display: none" type="file" (change)="changeImage($event)"
-                accept=".png,.gif,.svg,.jpg,.webp" />
-            </label>
-            <div class="text-center my-2" *ngIf="imageSelect" style="background-color: #e0e0e0">
-              <img style="width: 145px; height: 55px" class="my-3" [src]="imgView" alt="" />
-            </div>
-            <div *ngIf="imageSelect" style="
-                background: linear-gradient(
-                  269.35deg,
-                  #2196f3 11.45%,
-                  #3f51b5 128.81%
-                );
-                border-radius: 5px;
-                padding: 8px;
-                display: flex;
-                justify-content: space-between;
-              " class="">
-              <div class="d-flex">
-                <div style="display: flex; align-items: center">
-                  <img src="../../../../../assets/icons/Permisos.svg" alt="" />
-                </div>
-                <div style="display: flex; align-items: center">
-                  <p style="
-                      color: white;
-                      margin: 0;
-                      font-weight: 400;
-                      font-size: 20px;
-                      line-height: 24px;
-                    " class="mx-2">
-                    {{ imageSelect.name }}
-                  </p>
-                </div>
-              </div>
-              <div class="">
-                <label class="my-2" style="cursor: pointer">
-                  <i class="fa fa-edit me-2" style="color: white"></i>
-                  <input style="display: none" type="file" (change)="changeImage($event)"
-                    accept=".png,.gif,.svg,.jpg,.webp" />
-                </label>
-              </div>
+          <div *ngIf="inputChangeImage">
+            <div class="container-avatar" style="position: relative;">
+              <img class="avatar-image my-2 " [src]="imageSelect" alt="">
+              <label style="position: absolute; right: 0; bottom: 0; padding-right: 30px; padding-top: 35px;">
+                <span style="cursor: pointer;" class="material-icons">edit</span>
+                <input style="display: none;" type="file" (change)="changeImage($event)">
+              </label>
             </div>
           </div>
-          <p style="
-              font-weight: 400;
-              font-size: 13px;
-              line-height: 16px;
-              margin-top: 16px;
-            ">
-            El archivo no debe exceder los 2mb, se recomienda subirlo en formato
-            .png en color blanco
-          </p>
+          <div *ngIf="!inputChangeImage">
+            <div>
+              <label *ngIf="!imageSelect" class="my-2 text-center" style="
+                  background-color: #e0e0e0;
+                  margin-top: 18px;
+                  margin-bottom: 20px;
+                  cursor: pointer;
+                  width: 100%;
+                  height: 100%;
+                ">
+                <img src="../../../../../assets/icons/Upload.svg" class="my-3" alt="" />
+                <input style="display: none" type="file" (change)="changeImage($event)"
+                  accept=".png,.gif,.svg,.jpg,.webp" />
+              </label>
+              <div class="text-center my-2" *ngIf="imageSelect" style="background-color: #e0e0e0">
+                <img style="width: 145px; height: 55px" class="my-3" [src]="imgView" alt="" />
+              </div>
+              <div *ngIf="imageSelect" style="
+                  background: linear-gradient(
+                    269.35deg,
+                    #2196f3 11.45%,
+                    #3f51b5 128.81%
+                  );
+                  border-radius: 5px;
+                  padding: 8px;
+                  display: flex;
+                  justify-content: space-between;
+                " class="">
+                <div class="d-flex">
+                  <div style="display: flex; align-items: center">
+                    <img src="../../../../../assets/icons/Permisos.svg" alt="" />
+                  </div>
+                  <div style="display: flex; align-items: center">
+                    <p style="
+                        color: white;
+                        margin: 0;
+                        font-weight: 400;
+                        font-size: 20px;
+                        line-height: 24px;
+                      " class="mx-2">
+                      {{ imageSelect.name }}
+                    </p>
+                  </div>
+                </div>
+                <div class="">
+                  <label class="my-2" style="cursor: pointer">
+                    <i class="fa fa-edit me-2" style="color: white"></i>
+                    <input style="display: none" type="file" (change)="changeImage($event)"
+                      accept=".png,.gif,.svg,.jpg,.webp" />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <p style="
+                font-weight: 400;
+                font-size: 13px;
+                line-height: 16px;
+                margin-top: 16px;
+              ">
+              El archivo no debe exceder los 2mb, se recomienda subirlo en formato
+              .png en color blanco
+            </p>
+          </div>
         </div>
       </div>
       <div style="margin-top: 90px" class="text-center">

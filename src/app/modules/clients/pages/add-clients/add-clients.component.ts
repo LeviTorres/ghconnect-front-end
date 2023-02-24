@@ -5,6 +5,7 @@ import { PaymentConditionsService } from '../../../../services/payment-condition
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-add-clients',
@@ -14,6 +15,25 @@ import { Router } from '@angular/router';
 export class AddClientsComponent implements OnInit {
 
   public payment_conditions: any;
+  public history: any[] = []
+  public user:any
+
+  public third_types_array: any[] = [
+    { name: 'Proveedor' },
+    { name: 'Intercompañia' },
+    { name: 'Empleado' }
+  ]
+
+  public society_types_array: any[] = [
+    { name: 'Natural' },
+    { name: 'Unipersonal' },
+    { name: 'Juridica' }
+  ]
+
+  public provider_array: any[] = [
+    { name: 'Nacional' },
+    { name: 'Extranjero' }
+  ]
 
   public providerForm = this._fb.group({
     key_client: [ '', Validators.required ],
@@ -34,8 +54,11 @@ export class AddClientsComponent implements OnInit {
     private _toastr:ToastrService,
     private _spinner: NgxSpinnerService,
     private _router: Router,
-    private _fb:FormBuilder
-  ) { }
+    private _fb:FormBuilder,
+    private _loginService: LoginService
+  ) {
+    this.user = _loginService.user
+  }
 
   ngOnInit(): void {
     this.getPaymentConditions()
@@ -54,16 +77,31 @@ export class AddClientsComponent implements OnInit {
         return
       }
 
+      this.history.push({
+        user: this.user._id,
+        note: `Cliente creado`,
+        date: new Date().getTime(),
+        type: 'note'
+      })
+
       const element = {
         ...this.providerForm.value,
-        status: 'inactivo'
+        activities: this.history,
       }
 
       this._clientsService.createClient(element)
         .subscribe(( res:any ) => {
-          this._router.navigateByUrl('/clients')
-          this._spinner.hide()
-          this._toastr.success('Cliente registrado con Exito')
+          //this._router.navigateByUrl('/clients')
+          console.log(res);
+
+          this._router.navigate(['/clients/edit-client'],
+            {
+              queryParams: {
+                client: res._id,
+              }
+            });
+            this._spinner.hide();
+          //this._toastr.success('Cliente registrado con Exito')
         }, (err:any) =>{
           this._spinner.hide()
           console.warn(err.error.msg)

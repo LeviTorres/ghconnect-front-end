@@ -14,6 +14,8 @@ export class Provider {
     public email: string,
     public status: string,
     public payment_conditions: PaymentConditions,
+    public activities?: any[],
+    public followers?: any[],
     public user?: User,
     public _id?: string
   ){}

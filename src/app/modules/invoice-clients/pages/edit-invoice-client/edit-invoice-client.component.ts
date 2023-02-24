@@ -438,36 +438,36 @@ export class EditInvoiceClientComponent implements OnInit {
     this.viewActivitiesPlan()
   }
 
-  async delete(invoice: any) {
+  async delete() {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
-      text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
+      text: `Esta a punto de eliminar la factura ${this.invoiceClients.key_invoice}`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Continuar'
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
-        this._invoiceClientService.deleteInvoiceClient(invoice).subscribe(() => {
-          // this._router.navigate(['/invoice-clients/table-invoice-client'])
+        this._invoiceClientService.deleteInvoiceClient(this.invoiceClients).subscribe(() => {
+          this._router.navigate(['/invoice-clients'])
           this._spinner.hide()
-          this._toastr.success(`Factura ${invoice.key_invoice} eliminada con exito`)
+          this._toastr.success(`Factura ${this.invoiceClients.key_invoice} eliminada con exito`)
         })
 
       }
     })
   }
 
-  openDialogTracking(invoice: any) {
+  openDialogTracking() {
     let dialogRef = this._dialog.open(ModalTrackingComponent, {
       width: '1000px',
       maxHeight: '95vh',
       disableClose: true,
       autoFocus: false,
-      data: invoice
+      data: this.invoiceClients
     });
     dialogRef.beforeClosed().subscribe(() => {
-      // this._router.navigate(['/invoice-clients/table-invoice-client'])
+      this._router.navigate(['/invoice-clients'])
     })
   }
 

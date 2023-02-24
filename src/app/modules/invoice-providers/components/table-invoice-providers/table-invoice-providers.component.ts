@@ -18,6 +18,7 @@ import { Business } from 'src/app/models/Business.model';
 import { BusinessService } from 'src/app/services/business.service';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../../../services/excel.service';
+import { ImportFileComponent } from '../import-file/import-file.component';
 
 @Component({
   selector: 'app-table-invoice-providers',
@@ -263,7 +264,13 @@ export class TableInvoiceProvidersComponent implements OnInit {
     array.forEach((invoice: InvoiceProviders) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '51') {
+        if(invoice.movement_type.type === 'CARGO'){
+          total += Number(invoice.invoice_total)
+        }
+        if(invoice.movement_type.type === 'ABONO'){
+          total -= Number(invoice.invoice_total)
+        }
+       /* if (invoice.movement_type.key_movement === '51') {
           total += 0
         }
         if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
@@ -271,10 +278,10 @@ export class TableInvoiceProvidersComponent implements OnInit {
         }
         if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
-        }
+        } */
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-        if (divisa && exchange) {
+      /*  if (divisa && exchange) {
           if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           } else if (invoice.movement_type.key_movement === '51') {
@@ -283,7 +290,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
           else {
             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           }
-        }
+        } */
       }
     })
     return total
@@ -295,21 +302,27 @@ export class TableInvoiceProvidersComponent implements OnInit {
     array.forEach((invoice: InvoiceProviders) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+        if(invoice.movement_type.type === 'CARGO'){
+          total += Number(invoice.invoice_total)
+        }
+        if(invoice.movement_type.type === 'ABONO'){
+          total -= Number(invoice.invoice_total)
+        }
+       /* if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
           total += Number(invoice.invoice_total)
         }
         if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
           total -= Number(invoice.invoice_total)
-        }
+        }*/
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-        if (divisa && exchange) {
+       /*  if (divisa && exchange) {
           if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           } else {
             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
           }
-        }
+        } */
       }
     })
     return total
@@ -408,5 +421,17 @@ export class TableInvoiceProvidersComponent implements OnInit {
       ]
     }
     this._excelService.downloadExcel(element, 'FacturasProveedores', 'invoiceProviders')
+  }
+
+  openDialogUploadExcel(){
+    let dialogRef = this._dialog.open(ImportFileComponent, {
+      width: '550px',
+      maxHeight: '95vh',
+      disableClose: true,
+      autoFocus: false
+    });
+    dialogRef.beforeClosed().subscribe(() => {
+      this.getInvoiceProviders()
+    })
   }
 }

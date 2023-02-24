@@ -1,154 +1,295 @@
-<div class="container-provider">
-  <h1 class="title">
-    Editar cliente
-  </h1>
-  <div class="card p-3 col-12">
-    <h2 class="m-0 p-0">
-      Datos personales
-    </h2>
-    <mat-divider class="my-3"></mat-divider>
-    <form (ngSubmit)="registerClient()" autocomplete="off" [formGroup]="providerForm" >
-      <div class="d-flex w-full col-12">
-        <div class="px-2 col-4">
-          <label>No. cliente</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="key_client" placeholder="Ingresa el # cliente"/>
-            <mat-error
-              *ngIf="providerForm.controls['key_client'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="px-2 col-8">
-          <label>Nombre cliente</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="name" placeholder="Ingresa el nombre del cliente"/>
-            <mat-error
-              *ngIf="this.providerForm.controls['name'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="d-flex col-12">
-        <div class="px-2 col-4">
-          <label>NIT</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="nit" placeholder="Ingresa el nit"/>
-            <mat-error
-              *ngIf="this.providerForm.controls['nit'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="px-2 col-4">
-          <label>Condiciones de pago</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select required formControlName="payment_conditions" placeholder="Selecciona una condicion de pago">
-              <mat-option *ngFor="let item of payment_conditions" [value]="item._id">{{item.name_payment}}</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['payment_conditions'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="px-2 col-4">
-          <label>Tipo de tercero</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select required formControlName="third_type" placeholder="Selecciona un tipo de tercero">
-              <mat-option value="Proveedor">Proveedor</mat-option>
-              <mat-option value="Intercompañia">Intercompañia</mat-option>
-              <mat-option value="Empleado">Empleado</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['third_type'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="d-flex col-12">
-        <div class="px-2 col-4">
-          <label>Tipo de sociedad</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select required formControlName="society_type" placeholder="Selecciona un tipo de sociedad">
-              <mat-option value="Natural">Natural</mat-option>
-              <mat-option value="Unipersonal">Unipersonal</mat-option>
-              <mat-option value="Juridica">Juridica</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['society_type'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="px-2 col-4">
-          <label>Tipo de proveedor</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select required formControlName="provider_type" placeholder="Selecciona un tipo de proveedor">
-              <mat-option value="Nacional">Nacional</mat-option>
-              <mat-option value="Extranjero">Extranjero</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['provider_type'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="px-2 col-4">
-          <label>Telefono local</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="phone_number" placeholder="Ingresa un # telefono local"/>
-            <mat-error
-              *ngIf="providerForm.controls['phone_number'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="d-flex col-12">
-        <div class="px-2 col-4">
-          <label>Telefono movil</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="mobile_number" placeholder="Ingresa un # telefono movil"/>
-            <mat-error
-              *ngIf="providerForm.controls['mobile_number'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="px-2 col-4">
-          <label>Email</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="email" placeholder="Ingresa un email"/>
-            <mat-error
-              *ngIf="providerForm.controls['email'].hasError('required')"
-            >
-            Campo requerido
-            </mat-error>
-            <mat-error
-              *ngIf="providerForm.controls['email'].hasError('email')"
-            >
-            Email invalido
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
+<div class="col-12 d-flex">
+  <div class="col">
+    <div class="container-provider">
+      <h1 class="title">
+        Editar cliente
+      </h1>
+      <div class="card p-3 col-12">
+        <h2 class="m-0 p-0">
+          Datos personales
+        </h2>
+        <mat-divider class="my-3"></mat-divider>
+        <form (ngSubmit)="registerClient()" autocomplete="off" [formGroup]="providerForm" >
+          <div class="d-flex w-full col-12">
+            <div class="px-2 col-4">
+              <label>No. cliente</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="key_client" placeholder="Ingresa el # cliente"/>
+                <mat-error
+                  *ngIf="providerForm.controls['key_client'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="px-2 col-8">
+              <label>Nombre cliente</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="name" placeholder="Ingresa el nombre del cliente"/>
+                <mat-error
+                  *ngIf="this.providerForm.controls['name'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex col-12">
+            <div class="px-2 col-4">
+              <label>NIT</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="nit" placeholder="Ingresa el nit"/>
+                <mat-error
+                  *ngIf="this.providerForm.controls['nit'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="px-2 col-4">
+              <label>Condiciones de pago</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-select required formControlName="payment_conditions" placeholder="Selecciona una condicion de pago">
+                  <mat-option *ngFor="let item of payment_conditions" [value]="item._id">{{item.name_payment}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="providerForm.controls['payment_conditions'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="px-2 col-4">
+              <label>Tipo de tercero</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-select required formControlName="third_type" placeholder="Selecciona un tipo de tercero">
+                  <mat-option *ngFor="let item of third_types_array" [value]="item.name">{{item.name}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="providerForm.controls['third_type'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex col-12">
+            <div class="px-2 col-4">
+              <label>Tipo de sociedad</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-select required formControlName="society_type" placeholder="Selecciona un tipo de sociedad">
+                  <mat-option *ngFor="let item of society_types_array" [value]="item.name">{{item.name}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="providerForm.controls['society_type'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="px-2 col-4">
+              <label>Tipo de proveedor</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-select required formControlName="provider_type" placeholder="Selecciona un tipo de proveedor">
+                  <mat-option *ngFor="let item of provider_array" [value]="item.name">{{item.name}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="providerForm.controls['provider_type'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="px-2 col-4">
+              <label>Telefono local</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="phone_number" placeholder="Ingresa un # telefono local"/>
+                <mat-error
+                  *ngIf="providerForm.controls['phone_number'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex col-12">
+            <div class="px-2 col-4">
+              <label>Telefono movil</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="mobile_number" placeholder="Ingresa un # telefono movil"/>
+                <mat-error
+                  *ngIf="providerForm.controls['mobile_number'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="px-2 col-4">
+              <label>Email</label>
+              <mat-form-field class="w-100" appearance="outline">
+                <input matInput formControlName="email" placeholder="Ingresa un email"/>
+                <mat-error
+                  *ngIf="providerForm.controls['email'].hasError('required')"
+                >
+                Campo requerido
+                </mat-error>
+                <mat-error
+                  *ngIf="providerForm.controls['email'].hasError('email')"
+                >
+                Email invalido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
 
-      <div class="d-flex flex-row-reverse">
-        <button class="btn-primary" mat-button mat-button-raised >Editar Cliente</button>
-        <button class="mx-3" mat-button mat-stroked-button color="warn" routerLink="/clients">Cancelar</button>
+          <div class="d-flex flex-row-reverse">
+            <button class="btn-primary" mat-button mat-button-raised >Editar Cliente</button>
+            <button class="mx-3" mat-button mat-stroked-button color="warn" routerLink="/clients">Cancelar</button>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
+  </div>
+  <div class="col-4 mx-3">
+    <div class="d-flex justify-content-between mb-3">
+      <div class="d-flex">
+        <div style="
+              border-bottom: 3px solid blue;
+              padding: 10px;
+              padding-top: 0px;
+              cursor: pointer;
+            " (click)="viewNote()">
+          Poner una nota
+        </div>
+        <div style="padding: 10px; padding-top: 0px; cursor: pointer" (click)="openDialogAddActivity()">
+          <span>Actividades</span>
+        </div>
+      </div>
+      <div [matMenuTriggerFor]="menu" style="display: flex; align-items: center; cursor: pointer">
+        <img class="me-2" src="../../../../../assets/icons/Seguidor.svg" alt="" />
+        <span class="">{{ followers.length }}</span>
+      </div>
+      <mat-menu #menu="matMenu" class="m-0 p-0 col-12">
+        <div class="col-12">
+          <button class="text-center" (click)="openDialogAddFollower()" mat-menu-item>
+            Añadir seguidores
+          </button>
+          <div *ngFor="let item of followers; index as i" class="d-flex col-12 ps-4 mb-2">
+            <div class="col me-2">
+              <span>{{ getUser(item.user).name }}
+                {{ getUser(item.user).last_name }}</span>
+            </div>
+            <div class="col-1 me-2">
+              <i class="fa fa-edit"></i>
+            </div>
+            <div class="col-1 me-3">
+              <i class="fa fa-trash" (click)="deleteFollower(i)"></i>
+            </div>
+          </div>
+        </div>
+      </mat-menu>
+    </div>
+    <div *ngIf="flagNote" class="mb-3">
+      <div class="d-flex m-3 col-12" style="width: 100%">
+        <div class="container-2">
+          <div class="container-letter-name">
+            <p class="letter-name">
+              <strong>{{ letterNames }}</strong>
+            </p>
+          </div>
+          <div class="container-avatar-1">
+            <img class="avatar-color" alt="" />
+          </div>
+        </div>
+        <div class="ms-3 col">
+          <textarea type="text" [formControl]="formActivity" class="form-control"
+            style="background-color: #e0e0e0; width: 100%" placeholder="Escribe una nota"></textarea>
+        </div>
+      </div>
+      <div class="mx-3">
+        <button class="btn-primary" mat-raised-button (click)="addNote()">
+          ENVIAR
+        </button>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="activitiesPlan.length > 0">
+      <div class="d-flex col-12" style="align-items: center">
+        <div class="col-3">
+          <hr />
+        </div>
+        <div class="col text-center">
+          <strong>Actividades planificadas</strong>
+        </div>
+        <div class="col-3">
+          <hr />
+        </div>
+      </div>
+      <div class="d-flex mb-3" *ngFor="let item of activitiesPlan">
+        <div class="container-2 me-3">
+          <div class="container-letter-name">
+            <p class="letter-name">
+              <strong>{{ getUserInitial(item.user) }}</strong>
+            </p>
+          </div>
+          <div class="container-avatar-1">
+            <img class="avatar-color" alt="" />
+          </div>
+        </div>
+        <div>
+          <div>
+            <span class="me-2">Vence {{ item.date_expiration | date }}:</span>
+            <span class="me-2"><strong>{{ item.type_activity }}</strong></span>
+            <span class="">para {{ getUser(item.assignment).name }}
+              {{ getUser(item.assignment).last_name }}</span>
+          </div>
+          <div class="d-flex">
+            <div style="cursor: pointer" class="me-3" (click)="markActivityDone(item)">
+              <i class="fa-solid fa-check"></i> Marcar como hecho
+            </div>
+            <div style="cursor: pointer" class="me-3" (click)="goToEditActivity(item)">
+              <i class="fa-solid fa-pencil me-1"></i>Editar
+            </div>
+            <div style="cursor: pointer" class="" (click)="cancelActivity(item)">
+              <i class="fa-solid fa-xmark me-1"></i>Cancelar
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="d-flex col-12" *ngFor="let item of history.reverse()">
+        <div class="container-2 mb-3" *ngIf="item.status != 'DRAFT'">
+          <div class="container-letter-name">
+            <p class="letter-name">
+              <strong>{{ getUserInitial(item.user) }}</strong>
+            </p>
+          </div>
+          <div class="container-avatar-1">
+            <img class="avatar-color" alt="" />
+          </div>
+        </div>
+        <div class="ms-3 col" *ngIf="item.type === 'note'">
+          <div>
+            <span style="font-weight: bold">{{ getUser(item.user).name }}
+              {{ getUser(item.user).last_name }} -
+            </span>
+            <span>{{ item.date | date : "dd/MM/yyyy h:mm a" }}</span>
+          </div>
+          <span>{{ item.note }}</span>
+        </div>
+        <div class="ms-3 col" *ngIf="item.type === 'activity' && item.status != 'DRAFT'">
+          <div>
+            <span style="font-weight: bold">
+              {{ getUser(item.user).name }}
+              {{ getUser(item.user).last_name }} -</span>
+            <span>{{ item.date | date : "dd/MM/yyyy h:mm a" }}</span>
+          </div>
+          <div>
+            <span>{{ item.type_activity }} </span>
+            <span>hecho</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

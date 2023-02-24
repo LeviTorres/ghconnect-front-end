@@ -96,7 +96,7 @@ export class BusinessTenantsComponent implements OnInit {
 
     const element: Business = {
       ...this.form.value,
-      creation_date: new Date(this.form.controls['creation_date'].value).getTime(),
+      creation_date: new Date().getTime(),
       activities: this.history
     }
 

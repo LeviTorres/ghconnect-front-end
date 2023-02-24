@@ -20,7 +20,6 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
-    "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "angular-bootstrap-datetimepicker": "^4.0.2",
     "bootstrap": "^5.2.3",
     "exceljs": "^4.3.0",

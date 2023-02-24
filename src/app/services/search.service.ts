@@ -180,6 +180,8 @@ export class SearchService {
           providers.email,
           providers.status,
           providers.payment_conditions,
+          providers.activities,
+          providers.followers,
           providers.user,
           providers._id
         )
@@ -201,6 +203,8 @@ export class SearchService {
           clients.email,
           clients.status,
           clients.payment_conditions,
+          clients.activities,
+          clients.followers,
           clients.user,
           clients._id
         )

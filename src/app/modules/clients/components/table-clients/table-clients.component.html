@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-between col-12">
   <div style="display:flex; align-items:center">
-    <button class="btn-primary" mat-button mat-button-raised routerLink="/clients/add-client"
+    <button class="btn-primary" mat-raised-button routerLink="/clients/add-client"
       routerLinkActive="router-link-active">Nuevo
       cliente</button>
     <button class="btn-primary mx-3" mat-raised-button (click)="createExcel()">Exportar Excel</button>
+    <button class="btn-primary" mat-raised-button (click)="openDialogUploadExcel()">Importar datos</button>
   </div>
   <div class="col-4">
     <mat-form-field class="w-100" appearance="legacy">
@@ -60,7 +61,7 @@
         <mat-menu #menu="matMenu">
           <div class="menu-table">
             <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
-              Status</mat-checkbox>
+              Estado</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="keyClientControl" (click)="$event.stopPropagation();">
               No. cliente</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="nameControl" (click)="$event.stopPropagation();">Nombre
@@ -92,13 +93,7 @@
       <tr *ngFor="let client of clientsTemp | paginate: { itemsPerPage: selectedValue, currentPage: page };
       index as i" style="cursor:pointer">
         <td class="container-status" *ngIf="statusControl.value" (click)="goToEditClient(client)">
-          <!-- <div matTooltip={{client.status}} [ngClass]="{
-            'circule-activo': client.status === 'activo',
-            'circule-inactivo': client.status === 'inactivo',
-            'circule-suspendido': client.status === 'suspendido',
-            'circule-password': client.status === 'habilitado por password'}">
-          </div> -->
-          <div *ngIf="client.status === 'draft'"> <span>BORRADOR</span> </div>
+          <span *ngIf="client.status === 'ACTIVE'">ACTIVO</span>
         </td>
         <td *ngIf="keyClientControl.value" (click)="goToEditClient(client)">
           <span>{{ client.key_client }}</span>
@@ -130,7 +125,7 @@
         <td *ngIf="emailControl.value" (click)="goToEditClient(client)">
           <span>{{ client.email}}</span>
         </td>
-        <td class="last" *ngIf="actionsControl.value">
+        <td class="text-center" *ngIf="actionsControl.value">
           <i class="fa fa-trash" (click)="delete(client)"></i>
         </td>
       </tr>

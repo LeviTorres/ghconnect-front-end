@@ -11,6 +11,9 @@ import { TableProvidersComponent } from './components/table-providers/table-prov
 import { PageProvidersComponent } from './pages/page-providers/page-providers.component';
 import { EditProviderComponent } from './pages/edit-provider/edit-provider.component';
 import { ImportFileComponent } from './components/import-file/import-file.component';
+import { AddActivitiesComponent } from './components/add-activities/add-activities.component';
+import { EditActivitiesComponent } from './components/edit-activities/edit-activities.component';
+import { AddFollowersComponent } from './components/add-followers/add-followers.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { ImportFileComponent } from './components/import-file/import-file.compon
     TableProvidersComponent,
     PageProvidersComponent,
     EditProviderComponent,
-    ImportFileComponent
+    ImportFileComponent,
+    AddActivitiesComponent,
+    EditActivitiesComponent,
+    AddFollowersComponent
   ],
   imports: [
     CommonModule,

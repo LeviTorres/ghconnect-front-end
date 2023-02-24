@@ -5,8 +5,8 @@
       <h2 class="col-md-10 p-0">
         Editar Factura
       </h2>
-<<<<<<< Updated upstream
-=======
+
+
       <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menu">
         <mat-icon style="cursor:pointer">settings</mat-icon>
       </button>
@@ -26,7 +26,22 @@
           </div>
         </div>
       </mat-menu>
->>>>>>> Stashed changes
+
+      <mat-icon [matMenuTriggerFor]="menu" style="cursor:pointer">settings</mat-icon>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <mat-radio-group class="example-radio-group">
+          <div class="d-flex flex-column bd-highlight p-2">
+            <div class="bd-highlight">
+              <span><i class="fa fa-trash" (click)="delete()"></i> Eliminar </span>
+            </div>
+            <div class="bd-highlight">
+              <i class="material-icons" (click)="openDialogTracking()"
+                style="color:black; font-size: 15px; margin-top: 0.5rem;">timeline</i> Detalles
+            </div>
+          </div>
+        </mat-radio-group>
+      </mat-menu>
+      >>>>>>> main
     </header>
     <div>
       <form (ngSubmit)="registerInvoice()" autocomplete="off" [formGroup]="invoiceForm">
@@ -37,9 +52,7 @@
               <mat-select matInput formControlName="movement_type" placeholder="Selecciona el tipo de movimiento">
                 <mat-option *ngFor="let item of movements" [value]="item._id">{{item.name_movement}}</mat-option>
               </mat-select>
-              <mat-error
-                *ngIf="invoiceForm.controls['movement_type'].hasError('required')"
-              >
+              <mat-error *ngIf="invoiceForm.controls['movement_type'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
@@ -47,10 +60,8 @@
           <div class="col-5">
             <label>No. Factura</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input matInput formControlName="key_invoice" placeholder="Indica # de factura"/>
-              <mat-error
-                *ngIf="invoiceForm.controls['key_invoice'].hasError('required')"
-              >
+              <input matInput formControlName="key_invoice" placeholder="Indica # de factura" />
+              <mat-error *ngIf="invoiceForm.controls['key_invoice'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
@@ -60,23 +71,17 @@
           <div class="col-7 pe-2">
             <label>Proveedor</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input
-                type="text"
-                class="w-100"
-                matInput
-                formControlName="provider"
-                [matAutocomplete]="search"
-                placeholder="Ingresa un proveedor"
-              />
-              <mat-autocomplete autoActiveFirstOption #search="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFn">
-                <mat-option *ngFor="let option of filteredOptions" [value]="option">{{option.key_provider}} - {{ option.name}}</mat-option>
+              <input type="text" class="w-100" matInput formControlName="provider" [matAutocomplete]="search"
+                placeholder="Ingresa un proveedor" />
+              <mat-autocomplete autoActiveFirstOption #search="matAutocomplete"
+                (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions" [value]="option">{{option.key_provider}} - {{
+                  option.name}}</mat-option>
                 <mat-option value="" *ngIf="filteredOptions.length <= 0 && this.invoiceForm.controls['provider'].value">
                   No se encontró nada con el término {{invoiceForm.controls['provider'].value}}
                 </mat-option>
               </mat-autocomplete>
-              <mat-error
-                *ngIf="invoiceForm.controls['provider'].hasError('required')"
-              >
+              <mat-error *ngIf="invoiceForm.controls['provider'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
@@ -86,42 +91,39 @@
           <div class="col-4 pe-2">
             <label>Fecha carga</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input matInput  [matDatepicker]="picker1" formControlName="upload_date" placeholder="Selecciona una fecha"/>
+              <input matInput [matDatepicker]="picker1" formControlName="upload_date"
+                placeholder="Selecciona una fecha" />
               <mat-hint>DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
-              <mat-error
-                *ngIf="invoiceForm.controls['upload_date'].hasError('required')"
-              >
-              Campo requerido
+              <mat-error *ngIf="invoiceForm.controls['upload_date'].hasError('required')">
+                Campo requerido
               </mat-error>
             </mat-form-field>
           </div>
           <div class="col-4 pe-2">
             <label>Fecha factura</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input matInput  [matDatepicker]="picker" formControlName="invoice_date" placeholder="Selecciona una fecha"/>
+              <input matInput [matDatepicker]="picker" formControlName="invoice_date"
+                placeholder="Selecciona una fecha" />
               <mat-hint>DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-              <mat-error
-                *ngIf="invoiceForm.controls['invoice_date'].hasError('required')"
-              >
-              Campo requerido
+              <mat-error *ngIf="invoiceForm.controls['invoice_date'].hasError('required')">
+                Campo requerido
               </mat-error>
             </mat-form-field>
           </div>
           <div class="col-4">
             <label>Fecha vencimiento</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input matInput  [matDatepicker]="picker2" formControlName="expiration_date" placeholder="Selecciona una fecha"/>
+              <input matInput [matDatepicker]="picker2" formControlName="expiration_date"
+                placeholder="Selecciona una fecha" />
               <mat-hint>DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
-              <mat-error
-                *ngIf="invoiceForm.controls['expiration_date'].hasError('required')"
-              >
-              Campo requerido
+              <mat-error *ngIf="invoiceForm.controls['expiration_date'].hasError('required')">
+                Campo requerido
               </mat-error>
             </mat-form-field>
           </div>
@@ -130,23 +132,17 @@
           <div class="col-7 pe-2">
             <label>Ceco</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input
-                type="text"
-                class="w-100"
-                matInput
-                formControlName="ceco"
-                [matAutocomplete]="searchCeco"
-                placeholder="Ingresa un ceco"
-              />
-              <mat-autocomplete autoActiveFirstOption #searchCeco="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFnCeco">
-                <mat-option *ngFor="let option of filteredOptionsCeco" [value]="option">{{option.key_ceco_business}} - {{ option.name_short}}</mat-option>
+              <input type="text" class="w-100" matInput formControlName="ceco" [matAutocomplete]="searchCeco"
+                placeholder="Ingresa un ceco" />
+              <mat-autocomplete autoActiveFirstOption #searchCeco="matAutocomplete"
+                (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFnCeco">
+                <mat-option *ngFor="let option of filteredOptionsCeco" [value]="option">{{option.key_ceco_business}} -
+                  {{ option.name_short}}</mat-option>
                 <mat-option value="" *ngIf="filteredOptionsCeco.length <= 0 && this.invoiceForm.controls['ceco'].value">
                   No se encontró nada con el término {{invoiceForm.controls['ceco'].value}}
                 </mat-option>
               </mat-autocomplete>
-              <mat-error
-                *ngIf="invoiceForm.controls['ceco'].hasError('required')"
-              >
+              <mat-error *ngIf="invoiceForm.controls['ceco'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
@@ -156,10 +152,9 @@
           <div class="col-7 pe-2">
             <label>Total de factura</label>
             <mat-form-field class="w-100" appearance="outline">
-              <input matInput type="number" formControlName="invoice_total" placeholder="Indica el total de la factura"/>
-              <mat-error
-                *ngIf="invoiceForm.controls['invoice_total'].hasError('required')"
-              >
+              <input matInput type="number" formControlName="invoice_total"
+                placeholder="Indica el total de la factura" />
+              <mat-error *ngIf="invoiceForm.controls['invoice_total'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
@@ -170,9 +165,7 @@
               <mat-select matInput formControlName="divisa" placeholder="Selecciona una divisa">
                 <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation_divisa}}</mat-option>
               </mat-select>
-              <mat-error
-                *ngIf="invoiceForm.controls['divisa'].hasError('required')"
-              >
+              <mat-error *ngIf="invoiceForm.controls['divisa'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
@@ -183,28 +176,23 @@
             <label>Descripcion</label>
             <mat-form-field class="w-100" appearance="outline">
               <textarea matInput formControlName="description" placeholder="Indica una descripcion"></textarea>
-              <mat-error
-                *ngIf="invoiceForm.controls['description'].hasError('required')"
-              >
+              <mat-error *ngIf="invoiceForm.controls['description'].hasError('required')">
                 Campo requerido
               </mat-error>
             </mat-form-field>
           </div>
         </div>
-          <mat-dialog-actions align="end" class="mat">
-            <div></div>
-            <div>
-              <button mat-stroked-button color="warn" routerLink="/invoice-providers">
-                Cancelar
-              </button>
-              <button
-                mat-raised-button
-                class="mx-2 btn-save"
-              >
+        <mat-dialog-actions align="end" class="mat">
+          <div></div>
+          <div>
+            <button mat-stroked-button color="warn" routerLink="/invoice-providers">
+              Cancelar
+            </button>
+            <button mat-raised-button class="mx-2 btn-save">
               Editar Factura
-              </button>
-            </div>
-          </mat-dialog-actions>
+            </button>
+          </div>
+        </mat-dialog-actions>
       </form>
     </div>
   </div>
@@ -213,53 +201,31 @@
   <div class="col-4 mx-3">
     <div class="d-flex justify-content-between mb-3">
       <div class="d-flex">
-        <div
-          style="
+        <div style="
             border-bottom: 3px solid blue;
             padding: 10px;
             padding-top: 0px;
             cursor: pointer;
-          "
-          (click)="viewNote()"
-        >
+          " (click)="viewNote()">
           Poner una nota
         </div>
-        <div
-          style="padding: 10px; padding-top: 0px; cursor: pointer"
-          (click)="openDialogAddActivity()"
-        >
+        <div style="padding: 10px; padding-top: 0px; cursor: pointer" (click)="openDialogAddActivity()">
           <span>Actividades</span>
         </div>
       </div>
-      <div
-        [matMenuTriggerFor]="menu"
-        style="display: flex; align-items: center; cursor: pointer"
-      >
-        <img
-          class="me-2"
-          src="../../../../../assets/icons/Seguidor.svg"
-          alt=""
-        />
+      <div [matMenuTriggerFor]="menu" style="display: flex; align-items: center; cursor: pointer">
+        <img class="me-2" src="../../../../../assets/icons/Seguidor.svg" alt="" />
         <span class="">{{ followers.length }}</span>
       </div>
       <mat-menu #menu="matMenu" class="m-0 p-0 col-12">
         <div class="col-12">
-          <button
-            class="text-center"
-            (click)="openDialogAddFollower()"
-            mat-menu-item
-          >
+          <button class="text-center" (click)="openDialogAddFollower()" mat-menu-item>
             Añadir seguidores
           </button>
-          <div
-            *ngFor="let item of followers; index as i"
-            class="d-flex col-12 ps-4 mb-2"
-          >
+          <div *ngFor="let item of followers; index as i" class="d-flex col-12 ps-4 mb-2">
             <div class="col me-2">
-              <span
-                >{{ getUser(item.user).name }}
-                {{ getUser(item.user).last_name }}</span
-              >
+              <span>{{ getUser(item.user).name }}
+                {{ getUser(item.user).last_name }}</span>
             </div>
             <div class="col-1 me-2">
               <i class="fa fa-edit"></i>
@@ -284,13 +250,8 @@
           </div>
         </div>
         <div class="ms-3 col">
-          <textarea
-            type="text"
-            [formControl]="formActivity"
-            class="form-control"
-            style="background-color: #e0e0e0; width: 100%"
-            placeholder="Escribe una nota"
-          ></textarea>
+          <textarea type="text" [formControl]="formActivity" class="form-control"
+            style="background-color: #e0e0e0; width: 100%" placeholder="Escribe una nota"></textarea>
         </div>
       </div>
       <div class="mx-3">
@@ -301,11 +262,15 @@
     </div>
     <div class="col-12" *ngIf="activitiesPlan.length > 0">
       <div class="d-flex col-12" style="align-items: center">
-        <div class="col-3"><hr /></div>
+        <div class="col-3">
+          <hr />
+        </div>
         <div class="col text-center">
           <strong>Actividades planificadas</strong>
         </div>
-        <div class="col-3"><hr /></div>
+        <div class="col-3">
+          <hr />
+        </div>
       </div>
       <div class="d-flex mb-3" *ngFor="let item of activitiesPlan">
         <div class="container-2 me-3">
@@ -321,34 +286,18 @@
         <div>
           <div>
             <span class="me-2">Vence {{ item.date_expiration | date }}:</span>
-            <span class="me-2"
-              ><strong>{{ item.type_activity }}</strong></span
-            >
-            <span class=""
-              >para {{ getUser(item.assignment).name }}
-              {{ getUser(item.assignment).last_name }}</span
-            >
+            <span class="me-2"><strong>{{ item.type_activity }}</strong></span>
+            <span class="">para {{ getUser(item.assignment).name }}
+              {{ getUser(item.assignment).last_name }}</span>
           </div>
           <div class="d-flex">
-            <div
-              style="cursor: pointer"
-              class="me-3"
-              (click)="markActivityDone(item)"
-            >
+            <div style="cursor: pointer" class="me-3" (click)="markActivityDone(item)">
               <i class="fa-solid fa-check"></i> Marcar como hecho
             </div>
-            <div
-              style="cursor: pointer"
-              class="me-3"
-              (click)="goToEditActivity(item)"
-            >
+            <div style="cursor: pointer" class="me-3" (click)="goToEditActivity(item)">
               <i class="fa-solid fa-pencil me-1"></i>Editar
             </div>
-            <div
-              style="cursor: pointer"
-              class=""
-              (click)="cancelActivity(item)"
-            >
+            <div style="cursor: pointer" class="" (click)="cancelActivity(item)">
               <i class="fa-solid fa-xmark me-1"></i>Cancelar
             </div>
           </div>
@@ -369,23 +318,18 @@
         </div>
         <div class="ms-3 col" *ngIf="item.type === 'note'">
           <div>
-            <span style="font-weight: bold"
-              >{{ getUser(item.user).name }}
+            <span style="font-weight: bold">{{ getUser(item.user).name }}
               {{ getUser(item.user).last_name }} -
             </span>
             <span>{{ item.date | date : "dd/MM/yyyy h:mm a" }}</span>
           </div>
           <span>{{ item.note }}</span>
         </div>
-        <div
-          class="ms-3 col"
-          *ngIf="item.type === 'activity' && item.status != 'DRAFT'"
-        >
+        <div class="ms-3 col" *ngIf="item.type === 'activity' && item.status != 'DRAFT'">
           <div>
             <span style="font-weight: bold">
               {{ getUser(item.user).name }}
-              {{ getUser(item.user).last_name }} -</span
-            >
+              {{ getUser(item.user).last_name }} -</span>
             <span>{{ item.date | date : "dd/MM/yyyy h:mm a" }}</span>
           </div>
           <div>
