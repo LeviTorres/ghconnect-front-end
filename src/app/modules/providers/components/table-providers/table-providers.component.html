@@ -55,9 +55,7 @@
         <th *ngIf="emailControl.value">
           Email
         </th>
-        <th class="last" *ngIf="actionsControl.value">
-          Acciones
-        </th>
+
         <mat-menu #menu="matMenu">
           <div class="menu-table">
             <mat-checkbox class="example-margin" [formControl]="statusControl" (click)="$event.stopPropagation();">
@@ -82,8 +80,6 @@
               (click)="$event.stopPropagation();">Telefono movil</mat-checkbox>
             <mat-checkbox class="example-margin" [formControl]="emailControl" (click)="$event.stopPropagation();">Email
             </mat-checkbox>
-            <mat-checkbox class="example-margin" [formControl]="actionsControl" (click)="$event.stopPropagation();">
-              Acciones</mat-checkbox>
             <button mat-raised-button class="btn-update" (click)="updateHeader()">Guardar</button>
           </div>
         </mat-menu>
@@ -125,10 +121,7 @@
         <td *ngIf="emailControl.value" (click)="goToEditProvider(provider)">
           <span>{{ provider.email}}</span>
         </td>
-        <td class="last" *ngIf="actionsControl.value">
-          <!-- <i class="fa fa-edit me-4" (click)="goToEditProvider(provider)"></i> -->
-          <i class="fa fa-trash" (click)="delete(provider)"></i>
-        </td>
+
       </tr>
     </tbody>
   </table>
