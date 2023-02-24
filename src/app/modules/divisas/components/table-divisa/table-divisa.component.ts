@@ -17,6 +17,10 @@ import { Country } from '../../../../models/Country.model';
 import { CountriesService } from '../../../../services/countries.service';
 import { Exchange } from '../../../../models/Exchange.model';
 import { ExchangesService } from '../../../../services/exchanges.service';
+import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
+import { InvoiceClient } from '../../../../models/InvoiceClients.model';
+import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
+import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
 
 @Component({
   selector: 'app-table-divisa',
@@ -29,6 +33,8 @@ export class TableDivisaComponent implements OnInit {
   public divisasTemp: Divisa[] = []
   public countries: Country[] = []
   public exchanges: Exchange[]=[]
+  public invoiceClients: InvoiceClient[] = []
+  public invoiceProviders: InvoiceProviders[] = []
 
   public headersDivisa: any[] = []
   public header_name: string = 'divisas'
@@ -50,13 +56,17 @@ export class TableDivisaComponent implements OnInit {
     private _loginService: LoginService,
     private _headerService: HeadersService,
     private _countryService:CountriesService,
-    private _exchangeService:ExchangesService
+    private _exchangeService:ExchangesService,
+    private _invoiceClientService: InvoiceClientsService,
+    private _invoiceProviderService: InvoiceProvidersService
   ) { }
 
   ngOnInit(): void {
     this.getDivisas()
     this.getCountries()
     this.getExchanges()
+    this.getInvoiceClients()
+    this.getInvoiceProviders()
     this.getHeadersDivisa()
   }
 
@@ -94,6 +104,18 @@ export class TableDivisaComponent implements OnInit {
         this._toastr.error('Error al cargar los headers')
       })
     }
+  }
+
+  getInvoiceClients(){
+    this._invoiceClientService.getInvoiceClients().subscribe((resp: InvoiceClient[]) => {
+      this.invoiceClients = resp
+    })
+  }
+
+  getInvoiceProviders(){
+    this._invoiceProviderService.getInvoiceProviders().subscribe((resp:InvoiceProviders[]) => {
+      this.invoiceProviders = resp
+    })
   }
 
   updateHeader() {
@@ -169,6 +191,19 @@ export class TableDivisaComponent implements OnInit {
       this._toastr.warning('No se puede eliminar porque un tipo de cambio contiene esta divisa')
       return
     }
+    const findInvoiceClient = this.invoiceClients.find((element:any) => element.divisa._id === divisaTable._id)
+    if(findInvoiceClient){
+      this._spinner.hide()
+      this._toastr.error('No se puede eliminar ceco porque tiene al menos una factura relacionada')
+      return
+    }
+    const findInvoiceProvider = this.invoiceProviders.find((element:any) => element.divisa._id === divisaTable._id)
+    if(findInvoiceProvider){
+      this._spinner.hide()
+      this._toastr.error('No se puede eliminar ceco porque tiene al menos una factura relacionada')
+      return
+    }
+
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${divisaTable.name}`,

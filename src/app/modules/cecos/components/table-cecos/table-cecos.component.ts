@@ -11,6 +11,10 @@ import { FormControl } from '@angular/forms';
 import { HeadersService } from '../../../../services/headers.service';
 import { LoginService } from '../../../../services/login.service';
 import { EditCecosComponent } from '../edit-cecos/edit-cecos.component';
+import { InvoiceProviders } from '../../../../models/InvoiceProviders.model';
+import { InvoiceClient } from '../../../../models/InvoiceClients.model';
+import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
+import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
 
 @Component({
   selector: 'app-table-cecos',
@@ -21,7 +25,8 @@ export class TableCecosComponent implements OnInit {
 
   public cecos: Ceco[] = []
   public cecosTemp: Ceco[] = []
-
+  public invoiceClients: InvoiceClient[] = []
+  public invoiceProviders: InvoiceProviders[] = []
   public headersCecos: any[] = []
   public header_name: string = 'cecos';
 
@@ -42,9 +47,13 @@ export class TableCecosComponent implements OnInit {
     private _searchService: SearchService,
     private _toastr: ToastrService,
     private _loginService: LoginService,
-    private _headerService: HeadersService
+    private _headerService: HeadersService,
+    private _invoiceClientService: InvoiceClientsService,
+    private _invoiceProviderService: InvoiceProvidersService
   ) {
     this.getCecos()
+    this.getInvoiceClients()
+    this.getInvoiceProviders()
     this.getHeadersCecos()
   }
 
@@ -121,6 +130,18 @@ export class TableCecosComponent implements OnInit {
     })
   }
 
+  getInvoiceClients(){
+    this._invoiceClientService.getInvoiceClients().subscribe((resp: InvoiceClient[]) => {
+      this.invoiceClients = resp
+    })
+  }
+
+  getInvoiceProviders(){
+    this._invoiceProviderService.getInvoiceProviders().subscribe((resp:InvoiceProviders[]) => {
+      this.invoiceProviders = resp
+    })
+  }
+
   getCecos() {
     this._spinner.show()
     this._cecosService.getCecos().subscribe((resp: any) => {
@@ -140,7 +161,7 @@ export class TableCecosComponent implements OnInit {
     return
   }
 
-  delete(ceco: Ceco) {
+  async delete(ceco: Ceco) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar a ${ceco.name_short}`,
@@ -150,6 +171,18 @@ export class TableCecosComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
+        const findInvoiceClient = this.invoiceClients.find((element:any) => element.ceco._id === ceco._id)
+        if(findInvoiceClient){
+          this._spinner.hide()
+          this._toastr.error('No se puede eliminar ceco porque tiene al menos una factura relacionada')
+          return
+        }
+        const findInvoiceProvider = this.invoiceProviders.find((element:any) => element.ceco._id === ceco._id)
+        if(findInvoiceProvider){
+          this._spinner.hide()
+          this._toastr.error('No se puede eliminar ceco porque tiene al menos una factura relacionada')
+          return
+        }
         this._cecosService.deleteCecos(ceco).subscribe(() => {
           this.getCecos()
           this._spinner.hide()

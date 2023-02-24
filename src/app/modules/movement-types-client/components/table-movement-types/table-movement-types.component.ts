@@ -9,6 +9,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { SearchService } from '../../../../services/search.service';
 import Swal from 'sweetalert2';
+import { InvoiceClient } from '../../../../models/InvoiceClients.model';
+import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class TableMovementTypesComponent implements OnInit {
   public movements: MovementTypeClient[] = []
   public movementsTemp: MovementTypeClient[] = []
   public filterMovementsType: MovementTypeClient[] = []
+  public invoiceClients: InvoiceClient[] = []
 
   public selectedValue: number = 100;
   public page!: number;
@@ -42,11 +45,13 @@ export class TableMovementTypesComponent implements OnInit {
     private _movementClientService: MovementsTypeClientService,
     private _spinner: NgxSpinnerService,
     private _router: Router,
-    private _searchService: SearchService
+    private _searchService: SearchService,
+    private _invoiceClientService: InvoiceClientsService
   ) { this._spinner.show() }
 
   ngOnInit(): void {
     this.getMovementTypes()
+    this.getInvoiceClients()
     this.getHeadersMovementType()
   }
 
@@ -118,11 +123,16 @@ export class TableMovementTypesComponent implements OnInit {
       });
   }
 
+  getInvoiceClients(){
+    this._invoiceClientService.getInvoiceClients().subscribe((resp: InvoiceClient[]) => {
+      this.invoiceClients = resp
+    })
+  }
+
   getMovementTypes() {
     this._movementClientService.getMovementsTypeClient().subscribe((movements: MovementTypeClient[]) => {
       this.movements = movements
       this.movementsTemp = movements
-      console.log(this.movements);
     })
   }
 
@@ -155,6 +165,12 @@ export class TableMovementTypesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._spinner.show()
+        const findInvoiceClient = this.invoiceClients.find((element:any) => element.movement_type._id === movement._id)
+        if(findInvoiceClient){
+          this._spinner.hide()
+          this._toastr.error('No se puede eliminar movimiento porque tiene al menos una factura relacionada')
+          return
+        }
         this._movementClientService.deleteMovementTypeClient(movement).subscribe(() => {
           this.getMovementTypes()
           this._spinner.hide()
