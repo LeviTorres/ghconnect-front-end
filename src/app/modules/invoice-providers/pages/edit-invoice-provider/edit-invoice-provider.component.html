@@ -5,6 +5,28 @@
       <h2 class="col-md-10 p-0">
         Editar Factura
       </h2>
+<<<<<<< Updated upstream
+=======
+      <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menu">
+        <mat-icon style="cursor:pointer">settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div class="d-flex flex-column bd-highlight p-2" style="width:10rem">
+          <div class="d-flex bd-highlight">
+            <i class="fa fa-trash" (click)="delete()"></i>
+            <p style="margin-left:1em">Eliminar</p>
+          </div>
+          <div class=" d-flex bd-highlight">
+            <i class="material-icons" (click)="openDialogTracking()" style="color:black; font-size: 15px;">timeline</i>
+            <p style="margin-left:.7em">Detalles</p>
+          </div>
+          <div class=" d-flex bd-highlight">
+            <mat-icon style="cursor:pointer; font-size: 15px;">settings</mat-icon>
+            <p>Ajustes</p>
+          </div>
+        </div>
+      </mat-menu>
+>>>>>>> Stashed changes
     </header>
     <div>
       <form (ngSubmit)="registerInvoice()" autocomplete="off" [formGroup]="invoiceForm">
@@ -104,7 +126,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-12 d-flex">
+        <div class="col-12 d-flex my-4">
           <div class="col-7 pe-2">
             <label>Ceco</label>
             <mat-form-field class="w-100" appearance="outline">
