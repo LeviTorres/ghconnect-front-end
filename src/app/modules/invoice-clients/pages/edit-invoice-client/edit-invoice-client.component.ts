@@ -207,7 +207,7 @@ export class EditInvoiceClientComponent implements OnInit {
     }
     if (!client) {
       this._spinner.hide()
-      this._toastr.error('No se ha seleccionado un proveedor correctamente')
+      this._toastr.error('No se ha seleccionado un cliente correctamente')
       return
     }
 
@@ -459,6 +459,7 @@ export class EditInvoiceClientComponent implements OnInit {
   }
 
   openDialogTracking() {
+    console.log(this.invoiceClients);
     let dialogRef = this._dialog.open(ModalTrackingComponent, {
       width: '1000px',
       maxHeight: '95vh',

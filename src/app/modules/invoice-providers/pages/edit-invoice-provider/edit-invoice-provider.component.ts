@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Divisa } from '../../../../models/Divisa.model';
 import { Provider } from '../../../../models/Provider.model';
 import { Ceco } from '../../../../models/Ceco.model';
@@ -440,6 +440,8 @@ export class EditInvoiceProviderComponent implements OnInit {
   }
 
   async delete() {
+    console.log(this.invoiceProviders);
+
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${this.invoiceProviders.key_invoice}`,
@@ -472,5 +474,6 @@ export class EditInvoiceProviderComponent implements OnInit {
       this._router.navigate(['/invoice-providers'])
     })
   }
+
 
 }
