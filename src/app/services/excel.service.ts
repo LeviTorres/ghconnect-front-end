@@ -160,50 +160,30 @@ export class ExcelService {
       case 'TemplateInvoiceProviders':
         sheet.columns = [
           { width: 20 }, { width: 15 }, { width: 20 }, { width: 20 }, { width: 20 },
-          { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 }
+          { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 }
         ]
-        sheet.getCell('A1').note = 'Nombre o Clave de movimiento. Tipo de dato alfanumerico'
-        sheet.getCell('B1').note = 'Tipo de dato Numerico'
-        sheet.getCell('C1').note = 'Nombre o Clave de Proveedor. Tipo de dato alfanumerico'
-        sheet.getCell('D1').note = 'Tipo de dato Texto'
-        sheet.getCell('E1').note = 'Tipo de dato Texto'
-        sheet.getCell('F1').note = 'Nombre o Clave de Ceco. Tipo de dato alfanumerico'
-        sheet.getCell('G1').note = 'Tipo de dato numerico'
-        sheet.getCell('H1').note = 'Abreviatura de Divisa. Tipo de dato alfanumerico'
-        sheet.getCell('I1').note = 'Tipo de dato Texto'
-        sheet.getCell('A2').value = '15'
-        sheet.getCell('B2').value = 1
-        sheet.getCell('C2').value = 'Juan Diaz'
-        sheet.getCell('D2').value = '01-12-2023'
-        sheet.getCell('E2').value = '20-12-2023'
-        sheet.getCell('F2').value = '9923'
-        sheet.getCell('G2').value = 902999
-        sheet.getCell('H2').value = 'BOB'
-        sheet.getCell('I2').value = 'Descripcion de prueba'
+        sheet.getCell('A1').note = 'Tipo de Movimiento [PROVEEDORES]. Dato deberá ser numérico.'
+        sheet.getCell('B1').note = 'Número de Factura [PROVEEDORES]. Dato puede ser alfanumérico.'
+        sheet.getCell('C1').note = 'Número de Cliente [PROVEEDORES]. Dato deberá ser numérico.'
+        sheet.getCell('D1').note = 'Fecha de Factura [PROVEEDORES]. Dato deberá ser tipo fecha.'
+        sheet.getCell('E1').note = 'Centro de Costos [PROVEEDORES]. Dato alfanumérico. Ejemplo: 92-505.'
+        sheet.getCell('F1').note = 'Monto Factura [PROVEEDORES]. Dato numérico (sin comas)'
+        sheet.getCell('G1').note = 'Divisa/Moneda [PROVEEDORES]. Dato texto. Ejemplo: BOB ó USD'
+        sheet.getCell('H1').note = 'Descripción (Factura) [PROVEEDORES]. Dato alfanumérico. Ejemplo: Certificado#_'
       break
       case 'TemplateInvoiceClients':
         sheet.columns = [
           { width: 20 }, { width: 15 }, { width: 20 }, { width: 20 }, { width: 20 },
-          { width: 20 }, { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 }
+          { width: 20 }, { width: 20 }, { width: 15 }, { width: 20 }
         ]
-        sheet.getCell('A1').note = 'Nombre o Clave de movimiento. Tipo de dato alfanumerico'
-        sheet.getCell('B1').note = 'Tipo de dato Numerico'
-        sheet.getCell('C1').note = 'Nombre o Clave de Cliente. Tipo de dato alfanumerico'
-        sheet.getCell('D1').note = 'Tipo de dato Texto'
-        sheet.getCell('E1').note = 'Tipo de dato Texto'
-        sheet.getCell('F1').note = 'Nombre o Clave de Ceco. Tipo de dato alfanumerico'
-        sheet.getCell('G1').note = 'Tipo de dato numerico'
-        sheet.getCell('H1').note = 'Abreviatura de Divisa. Tipo de dato alfanumerico'
-        sheet.getCell('I1').note = 'Tipo de dato Texto'
-        sheet.getCell('A2').value = '15'
-        sheet.getCell('B2').value = 1
-        sheet.getCell('C2').value = 'Juan Diaz'
-        sheet.getCell('D2').value = '01-12-2023'
-        sheet.getCell('E2').value = '20-12-2023'
-        sheet.getCell('F2').value = '9923'
-        sheet.getCell('G2').value = 902999
-        sheet.getCell('H2').value = 'BOB'
-        sheet.getCell('I2').value = 'Descripcion de prueba'
+        sheet.getCell('A1').note = 'Tipo de Movimiento [CLIENTES]. Dato deberá ser numérico.'
+        sheet.getCell('B1').note = 'Número de Factura [CLIENTES]. Dato puede ser alfanumérico.'
+        sheet.getCell('C1').note = 'Número de Cliente [CLIENTES]. Dato deberá ser numérico.'
+        sheet.getCell('D1').note = 'Fecha de Factura [CLIENTES]. Dato deberá ser tipo fecha.'
+        sheet.getCell('E1').note = 'Centro de Costos [CLIENTES]. Dato alfanumérico. Ejemplo: 92-505.'
+        sheet.getCell('F1').note = 'Monto Factura [CLIENTES]. Dato numérico (sin comas)'
+        sheet.getCell('G1').note = 'Divisa/Moneda [CLIENTES]. Dato texto. Ejemplo: BOB ó USD'
+        sheet.getCell('H1').note = 'Descripción (Factura) [CLIENTES]. Dato alfanumérico. Ejemplo: Certificado#_'
       break
       case 'TemplateClients':
         sheet.columns = [
