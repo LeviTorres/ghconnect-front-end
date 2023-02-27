@@ -22,7 +22,7 @@ import { AddFollowersComponent } from '../../components/add-followers/add-follow
 import { EditActivitiesComponent } from '../../components/edit-activities/edit-activities.component';
 import { MovementTypeProvider } from '../../../../models/MovementTypeProvider.model';
 import { MovementsTypeProviderService } from '../../../../services/movements-type-provider.service';
-import { ModalTrackingComponent } from '../../../invoice-clients/components/modal-tracking/modal-tracking.component';
+import { ModalTrackingComponent } from '../../components/modal-tracking/modal-tracking.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -440,8 +440,6 @@ export class EditInvoiceProviderComponent implements OnInit {
   }
 
   async delete() {
-    console.log(this.invoiceProviders);
-
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${this.invoiceProviders.key_invoice}`,

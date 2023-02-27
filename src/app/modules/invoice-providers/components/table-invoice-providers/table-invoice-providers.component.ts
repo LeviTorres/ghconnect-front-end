@@ -228,6 +228,8 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   openDialogTracking(invoice: InvoiceProviders) {
+    console.log(invoice);
+
     let dialogRef = this._dialog.open(ModalTrackingComponent, {
       width: '1000px',
       maxHeight: '95vh',
@@ -264,33 +266,33 @@ export class TableInvoiceProvidersComponent implements OnInit {
     array.forEach((invoice: InvoiceProviders) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if(invoice.movement_type.type === 'CARGO'){
+        if (invoice.movement_type.type === 'CARGO') {
           total += Number(invoice.invoice_total)
         }
-        if(invoice.movement_type.type === 'ABONO'){
+        if (invoice.movement_type.type === 'ABONO') {
           total -= Number(invoice.invoice_total)
         }
-       /* if (invoice.movement_type.key_movement === '51') {
-          total += 0
-        }
-        if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
-          total += Number(invoice.invoice_total)
-        }
-        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
-          total -= Number(invoice.invoice_total)
-        } */
+        /* if (invoice.movement_type.key_movement === '51') {
+           total += 0
+         }
+         if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+           total += Number(invoice.invoice_total)
+         }
+         if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
+           total -= Number(invoice.invoice_total)
+         } */
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-      /*  if (divisa && exchange) {
-          if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
-            total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          } else if (invoice.movement_type.key_movement === '51') {
-            total += 0
-          }
-          else {
-            total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          }
-        } */
+        /*  if (divisa && exchange) {
+            if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+              total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+            } else if (invoice.movement_type.key_movement === '51') {
+              total += 0
+            }
+            else {
+              total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+            }
+          } */
       }
     })
     return total
@@ -302,27 +304,27 @@ export class TableInvoiceProvidersComponent implements OnInit {
     array.forEach((invoice: InvoiceProviders) => {
       const divisa = this.divisas.find((item: Divisa) => item._id === invoice.divisa._id)
       if (divisa?.abbreviation_divisa === 'BOB') {
-        if(invoice.movement_type.type === 'CARGO'){
+        if (invoice.movement_type.type === 'CARGO') {
           total += Number(invoice.invoice_total)
         }
-        if(invoice.movement_type.type === 'ABONO'){
+        if (invoice.movement_type.type === 'ABONO') {
           total -= Number(invoice.invoice_total)
         }
-       /* if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
-          total += Number(invoice.invoice_total)
-        }
-        if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
-          total -= Number(invoice.invoice_total)
-        }*/
+        /* if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+           total += Number(invoice.invoice_total)
+         }
+         if (invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15') {
+           total -= Number(invoice.invoice_total)
+         }*/
       } else {
         const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
-       /*  if (divisa && exchange) {
-          if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
-            total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          } else {
-            total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          }
-        } */
+        /*  if (divisa && exchange) {
+           if (invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15') {
+             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+           } else {
+             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+           }
+         } */
       }
     })
     return total
@@ -353,6 +355,8 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   async delete(invoice: InvoiceProviders) {
+    console.log(invoice);
+
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
@@ -423,7 +427,7 @@ export class TableInvoiceProvidersComponent implements OnInit {
     this._excelService.downloadExcel(element, 'FacturasProveedores', 'invoiceProviders')
   }
 
-  openDialogUploadExcel(){
+  openDialogUploadExcel() {
     let dialogRef = this._dialog.open(ImportFileComponent, {
       width: '550px',
       maxHeight: '95vh',

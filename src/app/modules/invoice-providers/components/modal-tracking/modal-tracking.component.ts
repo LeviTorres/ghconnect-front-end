@@ -27,75 +27,76 @@ export class ModalTrackingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("Llama a init")
     this._spinner.show()
     this.getInvoiceProviders()
     this.getExchanges()
     this._spinner.hide()
   }
 
-  getInvoiceProviders(){
+  getInvoiceProviders() {
     this._spinner.show()
-    this._invoiceService.getInvoiceProviders().subscribe((resp:InvoiceProviders[]) => {
-      this.invoiceProviders = resp.filter((invoice:InvoiceProviders) => invoice.key_invoice === this.invoiceData.key_invoice && invoice.provider._id === this.invoiceData.provider._id)
+    this._invoiceService.getInvoiceProviders().subscribe((resp: InvoiceProviders[]) => {
+      this.invoiceProviders = resp.filter((invoice: InvoiceProviders) => invoice.key_invoice === this.invoiceData.key_invoice && invoice.provider._id === this.invoiceData.provider._id)
       this._spinner.hide()
     })
   }
 
-  getExchanges(){
+  getExchanges() {
     this._spinner.show()
-    this._exchangeService.getExchanges().subscribe((resp:Exchange[]) => {
+    this._exchangeService.getExchanges().subscribe((resp: Exchange[]) => {
       this.exchanges = resp
       this._spinner.hide()
     })
   }
 
-  getTotal(invoice:InvoiceProviders){
+  getTotal(invoice: InvoiceProviders) {
     const divisa = invoice.divisa
-    if(divisa?.abbreviation_divisa === 'BOB'){
-      if(invoice.movement_type.type === 'CARGO'){
+    if (divisa?.abbreviation_divisa === 'BOB') {
+      if (invoice.movement_type.type === 'CARGO') {
         return invoice.invoice_total
       }
-      if(invoice.movement_type.type === 'ABONO'){
+      if (invoice.movement_type.type === 'ABONO') {
         return Number(invoice.invoice_total) * -1
       }
       return 0
-    /* if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15' ){
-        return invoice.invoice_total
-      }else {
-        return Number(invoice.invoice_total) * -1
-      } */
-    }else{
+      /* if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15' ){
+          return invoice.invoice_total
+        }else {
+          return Number(invoice.invoice_total) * -1
+        } */
+    } else {
 
       return 0
       //const exchange = this.exchanges.find((item:Exchange) => item.date_exchange === invoice.invoice_date);
-     /* if(exchange){
-        if(divisa && exchange){
-          if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15'){
-            return Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-          }else {
-            return (Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)) * -1
-          }
-        }else {
-          return 0
-        }
-      }else{
-        return 0
-      } */
+      /* if(exchange){
+         if(divisa && exchange){
+           if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15'){
+             return Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+           }else {
+             return (Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)) * -1
+           }
+         }else {
+           return 0
+         }
+       }else{
+         return 0
+       } */
 
     }
   }
 
-  getTotalMN(){
-    let total:number = 0
-      this.invoiceProviders.forEach((invoice:InvoiceProviders) =>{
-        const divisa = invoice.divisa
-        if(divisa?.abbreviation_divisa === 'BOB'){
-          if(invoice.movement_type.type === 'CARGO'){
-            total += Number(invoice.invoice_total)
-          }
-          if(invoice.movement_type.type === 'ABONO'){
-            total -= Number(invoice.invoice_total)
-          }
+  getTotalMN() {
+    let total: number = 0
+    this.invoiceProviders.forEach((invoice: InvoiceProviders) => {
+      const divisa = invoice.divisa
+      if (divisa?.abbreviation_divisa === 'BOB') {
+        if (invoice.movement_type.type === 'CARGO') {
+          total += Number(invoice.invoice_total)
+        }
+        if (invoice.movement_type.type === 'ABONO') {
+          total -= Number(invoice.invoice_total)
+        }
 
         /* if((invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15')){
               total += Number(invoice.invoice_total)
@@ -103,21 +104,21 @@ export class ModalTrackingComponent implements OnInit {
           if(invoice.movement_type.key_movement != '14' && invoice.movement_type.key_movement != '15' ){
             total -= Number(invoice.invoice_total)
           } */
-        }else{
-          const exchange = this.exchanges.find((item:Exchange) => item.date_exchange === invoice.invoice_date);
-         /* if(divisa && exchange){
-            if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15' ){
-              total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-            }else {
-              total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
-            }
-          } */
-        }
-      });
-      return total
+      } else {
+        const exchange = this.exchanges.find((item: Exchange) => item.date_exchange === invoice.invoice_date);
+        /* if(divisa && exchange){
+           if(invoice.movement_type.key_movement === '14' || invoice.movement_type.key_movement === '15' ){
+             total += Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+           }else {
+             total -= Number(exchange.exchange_rate_amount) * Number(invoice.invoice_total)
+           }
+         } */
+      }
+    });
+    return total
   }
 
-  async delete(invoice:InvoiceProviders) {
+  async delete(invoice: InvoiceProviders) {
     return Swal.fire({
       title: 'Estas seguro que deseas continuar?',
       text: `Esta a punto de eliminar la factura ${invoice.key_invoice}`,
