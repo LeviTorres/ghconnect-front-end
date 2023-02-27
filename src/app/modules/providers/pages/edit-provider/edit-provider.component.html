@@ -5,10 +5,10 @@
         <h2 class="col-md-10 p-0">
           Editar Proveedor
         </h2>
-        <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menu">
+        <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuSetting">
           <mat-icon style="cursor:pointer">settings</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menuSetting="matMenu">
           <div class="d-flex flex-column bd-highlight p-2" style="width:10rem">
             <div class="d-flex bd-highlight" (click)="delete()" style="cursor:pointer">
               <i class="fa fa-trash"></i>
