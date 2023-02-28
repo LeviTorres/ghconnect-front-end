@@ -70,8 +70,7 @@ export class EditMovementTypesComponent implements OnInit {
     }
 
     const element = {
-      ...this.form.value,
-      key_movement: Number(this.form.controls['key_movement'].value)
+      ...this.form.value
     }
 
     this._movementClientService.updateMovementTypeClient(element, this.movement._id).subscribe(() => {

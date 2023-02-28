@@ -18,6 +18,8 @@ import { ProvidersService } from '../../../../services/providers.service';
 import { InvoiceProvidersService } from '../../../../services/invoice-providers.service';
 import * as XLSX from 'xlsx';
 import { ExcelService } from '../../../../services/excel.service';
+import { BusinessService } from '../../../../services/business.service';
+import { Business } from '../../../../models/Business.model';
 
 @Component({
   selector: 'app-import-file',
@@ -35,6 +37,7 @@ export class ImportFileComponent implements OnInit {
 
   public history: any[] = [];
   public user: any;
+  public business!: Business
 
   public third_types_array: any[] = [
     { name: 'Proveedor' },
@@ -61,10 +64,14 @@ export class ImportFileComponent implements OnInit {
     private _movementTypeService: MovementsTypeProviderService,
     private _divisaService: DivisasService,
     private _loginService: LoginService,
-    private _excelService: ExcelService
+    private _excelService: ExcelService,
+    private _businessService:BusinessService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
+    this._businessService.getBusinessById(this.tenant).subscribe((resp:Business) => {
+      this.business = resp
+    })
   }
 
   ngOnInit(): void {
@@ -120,12 +127,18 @@ export class ImportFileComponent implements OnInit {
       workbook.SheetNames.forEach((sheet) => {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         data.forEach((element: any) => {
+          const findKeyCeco = String(element.CECO).split('-')
+          const findKeyBusinessCeco = findKeyCeco[0] === this.business.key_business
+          if(!findKeyBusinessCeco){
+            this._toastr.error('Clave ceco incorrecta');
+            this._spinner.hide();
+            this.validateExcel = false;
+            return;
+          }
           const findMovementType: any = this.movementTypes.find(
             (e: MovementTypeProvider) =>
-              e.name_movement.toLowerCase().trim() ===
-                element.Tipo_de_movimiento.toLowerCase().trim() ||
-              e.key_movement ===
-                element.Tipo_de_movimiento.toLowerCase().trim()
+              e.key_movement.toLowerCase().trim() ===
+              String(element.Movimiento).toLowerCase().trim()
           );
           if (!findMovementType) {
             this._toastr.error('Tipo de movimiento incorrecto');
@@ -135,10 +148,8 @@ export class ImportFileComponent implements OnInit {
           }
           const findProvider: any = this.providers.find(
             (e: Provider) =>
-              e.name.toLowerCase().trim() ===
-                element.Proveedor.toLowerCase().trim() ||
               e.key_provider.toLowerCase().trim() ===
-                element.Proveedor.toLowerCase().trim()
+              String(element.Proveedor).toLowerCase().trim()
           );
           if (!findProvider) {
             this._toastr.error('Proveedor incorrecto');
@@ -148,12 +159,8 @@ export class ImportFileComponent implements OnInit {
           }
           const findCeco: any = this.cecos.find(
             (e: Ceco) =>
-              e.name_short.toLowerCase().trim() ===
-                element.Ceco_corto.toLowerCase().trim() ||
               e.key_ceco.toLowerCase().trim() ===
-                element.Ceco_corto.toLowerCase().trim() ||
-              e.key_ceco_business.toLowerCase().trim() ===
-                element.Ceco_corto.toLowerCase().trim()
+              findKeyCeco[1].trim()
           );
           if (!findCeco) {
             this._toastr.error('Ceco incorrecto');
@@ -182,45 +189,39 @@ export class ImportFileComponent implements OnInit {
             type: 'note',
           });
           data.forEach((element: any) => {
+            const findKeyCeco = String(element.CECO).split('-')
             const findMovementType: any = this.movementTypes.find(
               (e: MovementTypeProvider) =>
-                e.name_movement.toLowerCase().trim() ===
-                  element.Tipo_de_movimiento.toLowerCase().trim() ||
-                e.key_movement ===
-                  element.Tipo_de_movimiento.toLowerCase().trim()
+                e.key_movement.toLowerCase().trim() ===
+                String(element.Movimiento).toLowerCase().trim()
             );
             const findProvider: any = this.providers.find(
               (e: Provider) =>
-                e.name.toLowerCase().trim() ===
-                  element.Proveedor.toLowerCase().trim() ||
                 e.key_provider.toLowerCase().trim() ===
-                  element.Proveedor.toLowerCase().trim()
+                String(element.Proveedor).toLowerCase().trim()
             );
             const findCeco: any = this.cecos.find(
               (e: Ceco) =>
-                e.name_short.toLowerCase().trim() ===
-                  element.Ceco_corto.toLowerCase().trim() ||
                 e.key_ceco.toLowerCase().trim() ===
-                  element.Ceco_corto.toLowerCase().trim() ||
-                e.key_ceco_business.toLowerCase().trim() ===
-                  element.Ceco_corto.toLowerCase().trim()
+                findKeyCeco[1].trim()
             );
             const findDivisa: any = this.divisas.find(
               (e: Divisa) =>
                 e.abbreviation_divisa.toLowerCase().trim() ===
                 element.Divisa.toLowerCase().trim()
             );
+            const date = String(element.Fecha_Factura).split('-')
+            const dateCustom = `${date[1]}/${date[0]}/${date[2]}`
             const datos = {
               activities: this.history,
               tenant: this.tenant,
               movement_type: findMovementType._id,
               ceco: findCeco._id,
               provider: findProvider._id,
-              key_invoice: element.No_factura,
+              key_invoice: element.No_Factura,
               upload_date: new Date().getTime(),
-              invoice_date: new Date(element.Fecha_factura).getTime(),
-              expiration_date: new Date(element.Fecha_vencimiento).getTime(),
-              invoice_total: element.Total_factura,
+              invoice_date: new Date(dateCustom).getTime(),
+              invoice_total: element.Monto_Factura,
               divisa: findDivisa._id,
               description: element.Descripcion,
             };

@@ -17,6 +17,8 @@ import { Divisa } from '../../../../models/Divisa.model';
 import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
 import { LoginService } from '../../../../services/login.service';
 import { ExcelService } from '../../../../services/excel.service';
+import { BusinessService } from '../../../../services/business.service';
+import { Business } from '../../../../models/Business.model';
 
 @Component({
   selector: 'app-import-file',
@@ -34,6 +36,7 @@ export class ImportFileComponent implements OnInit {
 
   public history: any[] = [];
   public user: any;
+  public business!: Business
 
   public third_types_array: any[] = [
     { name: 'Proveedor' },
@@ -60,10 +63,14 @@ export class ImportFileComponent implements OnInit {
     private _movementTypeService: MovementsTypeClientService,
     private _divisaService: DivisasService,
     private _loginService: LoginService,
-    private _excelService: ExcelService
+    private _excelService: ExcelService,
+    private _businessService:BusinessService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
+    this._businessService.getBusinessById(this.tenant).subscribe((resp:Business) => {
+      this.business = resp
+    })
   }
 
   ngOnInit(): void {
@@ -115,16 +122,22 @@ export class ImportFileComponent implements OnInit {
     fileReader.readAsBinaryString(selectedFile);
     fileReader.onload = (event) => {
       let binaryData = event.target?.result;
-      let workbook = XLSX.read(binaryData, { type: 'binary' });
+      let workbook = XLSX.read(binaryData, { type: 'binary', cellDates: true });
       workbook.SheetNames.forEach((sheet) => {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         data.forEach((element: any) => {
+          const findKeyCeco = String(element.CECO).split('-')
+          const findKeyBusinessCeco = findKeyCeco[0] === this.business.key_business
+          if(!findKeyBusinessCeco){
+            this._toastr.error('Clave ceco incorrecta');
+            this._spinner.hide();
+            this.validateExcel = false;
+            return;
+          }
           const findMovementType: any = this.movementTypes.find(
             (e: MovementTypeClient) =>
-              e.name_movement.toLowerCase().trim() ===
-                element.Tipo_de_movimiento.toLowerCase().trim() ||
-              e.key_movement ===
-                element.Tipo_de_movimiento.toLowerCase().trim()
+              e.key_movement.toLowerCase().trim() ===
+              String(element.Movimiento).toLowerCase().trim()
           );
           if (!findMovementType) {
             this._toastr.error('Tipo de movimiento incorrecto');
@@ -134,10 +147,8 @@ export class ImportFileComponent implements OnInit {
           }
           const findClient: any = this.clients.find(
             (e: Client) =>
-              e.name.toLowerCase().trim() ===
-                element.Cliente.toLowerCase().trim() ||
               e.key_client.toLowerCase().trim() ===
-                element.Cliente.toLowerCase().trim()
+              String(element.Cliente).toLowerCase().trim()
           );
           if (!findClient) {
             this._toastr.error('Cliente incorrecto');
@@ -147,12 +158,8 @@ export class ImportFileComponent implements OnInit {
           }
           const findCeco: any = this.cecos.find(
             (e: Ceco) =>
-              e.name_short.toLowerCase().trim() ===
-                element.Ceco_corto.toLowerCase().trim() ||
               e.key_ceco.toLowerCase().trim() ===
-                element.Ceco_corto.toLowerCase().trim() ||
-              e.key_ceco_business.toLowerCase().trim() ===
-                element.Ceco_corto.toLowerCase().trim()
+              findKeyCeco[1].trim()
           );
           if (!findCeco) {
             this._toastr.error('Ceco incorrecto');
@@ -181,49 +188,42 @@ export class ImportFileComponent implements OnInit {
             type: 'note',
           });
           data.forEach((element: any) => {
+            const findKeyCeco = String(element.CECO).split('-')
             const findMovementType: any = this.movementTypes.find(
               (e: MovementTypeClient) =>
-                e.name_movement.toLowerCase().trim() ===
-                  element.Tipo_de_movimiento.toLowerCase().trim() ||
-                e.key_movement ===
-                  element.Tipo_de_movimiento.toLowerCase().trim()
+                e.key_movement.toLowerCase().trim() ===
+                String(element.Movimiento).toLowerCase().trim()
             );
             const findClient: any = this.clients.find(
               (e: Client) =>
-                e.name.toLowerCase().trim() ===
-                  element.Cliente.toLowerCase().trim() ||
                 e.key_client.toLowerCase().trim() ===
-                  element.Cliente.toLowerCase().trim()
+                String(element.Cliente).toLowerCase().trim()
             );
             const findCeco: any = this.cecos.find(
               (e: Ceco) =>
-                e.name_short.toLowerCase().trim() ===
-                  element.Ceco_corto.toLowerCase().trim() ||
                 e.key_ceco.toLowerCase().trim() ===
-                  element.Ceco_corto.toLowerCase().trim() ||
-                e.key_ceco_business.toLowerCase().trim() ===
-                  element.Ceco_corto.toLowerCase().trim()
+                findKeyCeco[1].trim()
             );
             const findDivisa: any = this.divisas.find(
               (e: Divisa) =>
                 e.abbreviation_divisa.toLowerCase().trim() ===
                 element.Divisa.toLowerCase().trim()
             );
+            const date = String(element.Fecha_Factura).split('-')
+            const dateCustom = `${date[1]}/${date[0]}/${date[2]}`
             const datos = {
               activities: this.history,
               tenant: this.tenant,
               movement_type: findMovementType._id,
               ceco: findCeco._id,
               client: findClient._id,
-              key_invoice: element.No_factura,
-              upload_date: new Date(element.Fecha_carga).getTime(),
-              invoice_date: new Date(element.Fecha_factura).getTime(),
-              expiration_date: new Date(element.Fecha_vencimiento).getTime(),
-              invoice_total: element.Total_factura,
+              key_invoice: element.No_Factura,
+              upload_date: new Date().getTime(),
+              invoice_date: new Date(dateCustom).getTime(),
+              invoice_total: element.Monto_Factura,
               divisa: findDivisa._id,
               description: element.Descripcion,
             };
-            console.log('data', datos);
             this._invoiceClientService
               .createInvoiceClient(datos)
               .subscribe((resp: any) => {});
@@ -234,21 +234,23 @@ export class ImportFileComponent implements OnInit {
     };
   }
 
-  createExcel(){
+  createExcel() {
     const element = {
       headers: [
-        'Tipo_de_movimiento',
-        'No_factura',
+        'Movimiento',
+        'No_Factura',
         'Cliente',
-        'Fecha_factura',
-        'Fecha_vencimiento',
-        'Ceco',
-        'Total_factura',
+        'Fecha_Factura',
+        'CECO',
+        'Monto_Factura',
         'Divisa',
-        'Descripcion'
-      ]
-    }
-    this._excelService.downloadExcel(element, 'Facturas Clientes', 'TemplateInvoiceClients')
+        'Descripcion',
+      ],
+    };
+    this._excelService.downloadExcel(
+      element,
+      'Facturas Clientes',
+      'TemplateInvoiceClients'
+    );
   }
-
 }
