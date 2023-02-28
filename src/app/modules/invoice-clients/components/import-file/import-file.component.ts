@@ -17,6 +17,8 @@ import { Divisa } from '../../../../models/Divisa.model';
 import { MovementTypeClient } from '../../../../models/MovementTypeClient.model';
 import { LoginService } from '../../../../services/login.service';
 import { ExcelService } from '../../../../services/excel.service';
+import { BusinessService } from '../../../../services/business.service';
+import { Business } from '../../../../models/Business.model';
 
 @Component({
   selector: 'app-import-file',
@@ -34,6 +36,7 @@ export class ImportFileComponent implements OnInit {
 
   public history: any[] = [];
   public user: any;
+  public business!: Business
 
   public third_types_array: any[] = [
     { name: 'Proveedor' },
@@ -60,10 +63,14 @@ export class ImportFileComponent implements OnInit {
     private _movementTypeService: MovementsTypeClientService,
     private _divisaService: DivisasService,
     private _loginService: LoginService,
-    private _excelService: ExcelService
+    private _excelService: ExcelService,
+    private _businessService:BusinessService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
+    this._businessService.getBusinessById(this.tenant).subscribe((resp:Business) => {
+      this.business = resp
+    })
   }
 
   ngOnInit(): void {
@@ -119,6 +126,14 @@ export class ImportFileComponent implements OnInit {
       workbook.SheetNames.forEach((sheet) => {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         data.forEach((element: any) => {
+          const findKeyCeco = String(element.CECO).split('-')
+          const findKeyBusinessCeco = findKeyCeco[0] === this.business.key_business
+          if(!findKeyBusinessCeco){
+            this._toastr.error('Clave ceco incorrecta');
+            this._spinner.hide();
+            this.validateExcel = false;
+            return;
+          }
           const findMovementType: any = this.movementTypes.find(
             (e: MovementTypeClient) =>
               e.key_movement.toLowerCase().trim() ===
@@ -144,7 +159,7 @@ export class ImportFileComponent implements OnInit {
           const findCeco: any = this.cecos.find(
             (e: Ceco) =>
               e.key_ceco.toLowerCase().trim() ===
-              String(element.CECO).toLowerCase().trim()
+              findKeyCeco[1].trim()
           );
           if (!findCeco) {
             this._toastr.error('Ceco incorrecto');
@@ -173,6 +188,7 @@ export class ImportFileComponent implements OnInit {
             type: 'note',
           });
           data.forEach((element: any) => {
+            const findKeyCeco = String(element.CECO).split('-')
             const findMovementType: any = this.movementTypes.find(
               (e: MovementTypeClient) =>
                 e.key_movement.toLowerCase().trim() ===
@@ -186,14 +202,15 @@ export class ImportFileComponent implements OnInit {
             const findCeco: any = this.cecos.find(
               (e: Ceco) =>
                 e.key_ceco.toLowerCase().trim() ===
-                String(element.CECO).toLowerCase().trim()
+                findKeyCeco[1].trim()
             );
             const findDivisa: any = this.divisas.find(
               (e: Divisa) =>
                 e.abbreviation_divisa.toLowerCase().trim() ===
                 element.Divisa.toLowerCase().trim()
             );
-            console.log('element',new Date(element.Fecha_Factura));
+            const date = String(element.Fecha_Factura).split('-')
+            const dateCustom = `${date[1]}/${date[0]}/${date[2]}`
             const datos = {
               activities: this.history,
               tenant: this.tenant,
@@ -202,12 +219,11 @@ export class ImportFileComponent implements OnInit {
               client: findClient._id,
               key_invoice: element.No_Factura,
               upload_date: new Date().getTime(),
-              invoice_date: new Date(element.Fecha_Factura).getTime(),
+              invoice_date: new Date(dateCustom).getTime(),
               invoice_total: element.Monto_Factura,
               divisa: findDivisa._id,
               description: element.Descripcion,
             };
-            console.log('data', datos);
             this._invoiceClientService
               .createInvoiceClient(datos)
               .subscribe((resp: any) => {});
