@@ -36,7 +36,7 @@ export class ImportFileComponent implements OnInit {
 
   public history: any[] = [];
   public user: any;
-  public business!: Business
+  public business!: Business;
 
   public third_types_array: any[] = [
     { name: 'Proveedor' },
@@ -64,13 +64,15 @@ export class ImportFileComponent implements OnInit {
     private _divisaService: DivisasService,
     private _loginService: LoginService,
     private _excelService: ExcelService,
-    private _businessService:BusinessService
+    private _businessService: BusinessService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
-    this._businessService.getBusinessById(this.tenant).subscribe((resp:Business) => {
-      this.business = resp
-    })
+    this._businessService
+      .getBusinessById(this.tenant)
+      .subscribe((resp: Business) => {
+        this.business = resp;
+      });
   }
 
   ngOnInit(): void {
@@ -126,9 +128,10 @@ export class ImportFileComponent implements OnInit {
       workbook.SheetNames.forEach((sheet) => {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         data.forEach((element: any) => {
-          const findKeyCeco = String(element.CECO).split('-')
-          const findKeyBusinessCeco = findKeyCeco[0] === this.business.key_business
-          if(!findKeyBusinessCeco){
+          const findKeyCeco = String(element.CECO).split('-');
+          const findKeyBusinessCeco =
+            findKeyCeco[0] === this.business.key_business;
+          if (!findKeyBusinessCeco) {
             this._toastr.error('Clave ceco incorrecta');
             this._spinner.hide();
             this.validateExcel = false;
@@ -158,8 +161,7 @@ export class ImportFileComponent implements OnInit {
           }
           const findCeco: any = this.cecos.find(
             (e: Ceco) =>
-              e.key_ceco.toLowerCase().trim() ===
-              findKeyCeco[1].trim()
+              e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim()
           );
           if (!findCeco) {
             this._toastr.error('Ceco incorrecto');
@@ -188,7 +190,7 @@ export class ImportFileComponent implements OnInit {
             type: 'note',
           });
           data.forEach((element: any) => {
-            const findKeyCeco = String(element.CECO).split('-')
+            const findKeyCeco = String(element.CECO).split('-');
             const findMovementType: any = this.movementTypes.find(
               (e: MovementTypeClient) =>
                 e.key_movement.toLowerCase().trim() ===
@@ -201,16 +203,18 @@ export class ImportFileComponent implements OnInit {
             );
             const findCeco: any = this.cecos.find(
               (e: Ceco) =>
-                e.key_ceco.toLowerCase().trim() ===
-                findKeyCeco[1].trim()
+                e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim()
             );
             const findDivisa: any = this.divisas.find(
               (e: Divisa) =>
                 e.abbreviation_divisa.toLowerCase().trim() ===
                 element.Divisa.toLowerCase().trim()
             );
-            const date = String(element.Fecha_Factura).split('-')
-            const dateCustom = `${date[1]}/${date[0]}/${date[2]}`
+            const dateCustom = `${
+              new Date(String(element.Fecha_Factura)).getMonth() + 1
+            }/${new Date(String(element.Fecha_Factura)).getDate()}/${new Date(
+              String(element.Fecha_Factura)
+            ).getFullYear()}`;
             const datos = {
               activities: this.history,
               tenant: this.tenant,

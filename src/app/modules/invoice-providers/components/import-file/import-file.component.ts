@@ -5,8 +5,6 @@ import { Ceco } from '../../../../models/Ceco.model';
 import { Divisa } from '../../../../models/Divisa.model';
 import { MovementTypeProvider } from '../../../../models/MovementTypeProvider.model';
 import { CecosService } from '../../../../services/cecos.service';
-import { ClientsService } from '../../../../services/clients.service';
-import { InvoiceClientsService } from '../../../../services/invoice-clients.service';
 import { PaymentConditionsService } from '../../../../services/payment-conditions.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -24,7 +22,7 @@ import { Business } from '../../../../models/Business.model';
 @Component({
   selector: 'app-import-file',
   templateUrl: './import-file.component.html',
-  styleUrls: ['./import-file.component.scss']
+  styleUrls: ['./import-file.component.scss'],
 })
 export class ImportFileComponent implements OnInit {
   public tenant: any;
@@ -37,7 +35,7 @@ export class ImportFileComponent implements OnInit {
 
   public history: any[] = [];
   public user: any;
-  public business!: Business
+  public business!: Business;
 
   public third_types_array: any[] = [
     { name: 'Proveedor' },
@@ -65,13 +63,15 @@ export class ImportFileComponent implements OnInit {
     private _divisaService: DivisasService,
     private _loginService: LoginService,
     private _excelService: ExcelService,
-    private _businessService:BusinessService
+    private _businessService: BusinessService
   ) {
     this.tenant = localStorage.getItem('tenant');
     this.user = _loginService.user;
-    this._businessService.getBusinessById(this.tenant).subscribe((resp:Business) => {
-      this.business = resp
-    })
+    this._businessService
+      .getBusinessById(this.tenant)
+      .subscribe((resp: Business) => {
+        this.business = resp;
+      });
   }
 
   ngOnInit(): void {
@@ -127,9 +127,10 @@ export class ImportFileComponent implements OnInit {
       workbook.SheetNames.forEach((sheet) => {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         data.forEach((element: any) => {
-          const findKeyCeco = String(element.CECO).split('-')
-          const findKeyBusinessCeco = findKeyCeco[0] === this.business.key_business
-          if(!findKeyBusinessCeco){
+          const findKeyCeco = String(element.CECO).split('-');
+          const findKeyBusinessCeco =
+            findKeyCeco[0] === this.business.key_business;
+          if (!findKeyBusinessCeco) {
             this._toastr.error('Clave ceco incorrecta');
             this._spinner.hide();
             this.validateExcel = false;
@@ -159,8 +160,7 @@ export class ImportFileComponent implements OnInit {
           }
           const findCeco: any = this.cecos.find(
             (e: Ceco) =>
-              e.key_ceco.toLowerCase().trim() ===
-              findKeyCeco[1].trim()
+              e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim()
           );
           if (!findCeco) {
             this._toastr.error('Ceco incorrecto');
@@ -189,7 +189,7 @@ export class ImportFileComponent implements OnInit {
             type: 'note',
           });
           data.forEach((element: any) => {
-            const findKeyCeco = String(element.CECO).split('-')
+            const findKeyCeco = String(element.CECO).split('-');
             const findMovementType: any = this.movementTypes.find(
               (e: MovementTypeProvider) =>
                 e.key_movement.toLowerCase().trim() ===
@@ -202,16 +202,22 @@ export class ImportFileComponent implements OnInit {
             );
             const findCeco: any = this.cecos.find(
               (e: Ceco) =>
-                e.key_ceco.toLowerCase().trim() ===
-                findKeyCeco[1].trim()
+                e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim()
             );
             const findDivisa: any = this.divisas.find(
               (e: Divisa) =>
                 e.abbreviation_divisa.toLowerCase().trim() ===
                 element.Divisa.toLowerCase().trim()
             );
-            const date = String(element.Fecha_Factura).split('-')
-            const dateCustom = `${date[1]}/${date[0]}/${date[2]}`
+            console.log('Fecha_Factura',String(element.Fecha_Factura));
+
+            const dateCustom = `${
+              new Date(String(element.Fecha_Factura)).getMonth() + 1
+            }/${new Date(String(element.Fecha_Factura)).getDate()}/${new Date(
+              String(element.Fecha_Factura)
+            ).getFullYear()}`;
+            console.log('dateCustom',dateCustom);
+
             const datos = {
               activities: this.history,
               tenant: this.tenant,
@@ -226,13 +232,14 @@ export class ImportFileComponent implements OnInit {
               description: element.Descripcion,
             };
             console.log('data', datos);
-            this._invoiceProviderService
-              .createInvoiceProvider(datos)
-              .subscribe((resp: any) => {},(err: any) => {
+            this._invoiceProviderService.createInvoiceProvider(datos).subscribe(
+              (resp: any) => {},
+              (err: any) => {
                 this._spinner.hide();
                 console.warn(err.error.msg);
                 this._toastr.error(`${err.error.msg}`);
-              });
+              }
+            );
           });
         }
         this._dialogRef.close();
@@ -240,22 +247,23 @@ export class ImportFileComponent implements OnInit {
     };
   }
 
-
-  createExcel(){
+  createExcel() {
     const element = {
       headers: [
-        'Tipo_de_movimiento',
-        'No_factura',
+        'Movimiento',
+        'No_Factura',
         'Proveedor',
-        'Fecha_factura',
-        'Fecha_vencimiento',
-        'Ceco',
-        'Total_factura',
+        'Fecha_Factura',
+        'CECO',
+        'Monto_Factura',
         'Divisa',
-        'Descripcion'
-      ]
-    }
-    this._excelService.downloadExcel(element, 'Facturas Proveedores', 'TemplateInvoiceProviders')
+        'Descripcion',
+      ],
+    };
+    this._excelService.downloadExcel(
+      element,
+      'Facturas Proveedores',
+      'TemplateInvoiceProviders'
+    );
   }
-
 }
