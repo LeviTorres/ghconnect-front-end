@@ -123,7 +123,7 @@ export class ImportFileComponent implements OnInit {
     fileReader.readAsBinaryString(selectedFile);
     fileReader.onload = (event) => {
       let binaryData = event.target?.result;
-      let workbook = XLSX.read(binaryData, { type: 'binary' });
+      let workbook = XLSX.read(binaryData, { type: 'binary', cellDates: true });
       workbook.SheetNames.forEach((sheet) => {
         const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         data.forEach((element: any) => {

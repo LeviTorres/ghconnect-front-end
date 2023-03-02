@@ -170,6 +170,7 @@ export class ExcelService {
         sheet.getCell('F1').note = 'Monto Factura [PROVEEDORES]. Dato numérico (sin comas)'
         sheet.getCell('G1').note = 'Divisa/Moneda [PROVEEDORES]. Dato texto. Ejemplo: BOB ó USD'
         sheet.getCell('H1').note = 'Descripción (Factura) [PROVEEDORES]. Dato alfanumérico. Ejemplo: Certificado#_'
+
       break
       case 'TemplateInvoiceClients':
         sheet.columns = [
