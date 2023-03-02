@@ -7,40 +7,34 @@
       Datos personales
     </h2>
     <mat-divider class="my-3"></mat-divider>
-    <form (ngSubmit)="registerClient()" autocomplete="off" [formGroup]="providerForm" >
+    <form (ngSubmit)="registerClient()" autocomplete="off" [formGroup]="providerForm">
       <div class="d-flex w-full col-12">
         <div class="px-2 col-4">
           <label>No. cliente</label>
           <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="key_client" placeholder="Ingresa el # cliente"/>
-            <mat-error
-              *ngIf="providerForm.controls['key_client'].hasError('required')"
-            >
-            Campo requerido
+            <input matInput formControlName="key_client" placeholder="Ingresa el # cliente" />
+            <mat-error *ngIf="providerForm.controls['key_client'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
         <div class="px-2 col-8">
           <label>Nombre cliente</label>
           <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="name" placeholder="Ingresa el nombre del cliente"/>
-            <mat-error
-              *ngIf="this.providerForm.controls['name'].hasError('required')"
-            >
-            Campo requerido
+            <input matInput formControlName="name" placeholder="Ingresa el nombre del cliente" />
+            <mat-error *ngIf="this.providerForm.controls['name'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex col-12">
+      <div class="d-flex col-12 my-3">
         <div class="px-2 col-4">
           <label>NIT</label>
           <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="nit" placeholder="Ingresa el nit"/>
-            <mat-error
-              *ngIf="this.providerForm.controls['nit'].hasError('required')"
-            >
-            Campo requerido
+            <input matInput formControlName="nit" placeholder="Ingresa el nit" />
+            <mat-error *ngIf="this.providerForm.controls['nit'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
@@ -50,10 +44,8 @@
             <mat-select required formControlName="payment_conditions" placeholder="Selecciona una condicion de pago">
               <mat-option *ngFor="let item of payment_conditions" [value]="item._id">{{item.name_payment}}</mat-option>
             </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['payment_conditions'].hasError('required')"
-            >
-            Campo requerido
+            <mat-error *ngIf="providerForm.controls['payment_conditions'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
@@ -63,10 +55,8 @@
             <mat-select required formControlName="third_type" placeholder="Selecciona un tipo de tercero">
               <mat-option *ngFor="let item of third_types_array" [value]="item.name">{{item.name}}</mat-option>
             </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['third_type'].hasError('required')"
-            >
-            Campo requerido
+            <mat-error *ngIf="providerForm.controls['third_type'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
@@ -78,10 +68,8 @@
             <mat-select required formControlName="society_type" placeholder="Selecciona un tipo de sociedad">
               <mat-option *ngFor="let item of society_types_array" [value]="item.name">{{item.name}}</mat-option>
             </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['society_type'].hasError('required')"
-            >
-            Campo requerido
+            <mat-error *ngIf="providerForm.controls['society_type'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
@@ -91,57 +79,47 @@
             <mat-select required formControlName="provider_type" placeholder="Selecciona un tipo de proveedor">
               <mat-option *ngFor="let item of provider_array" [value]="item.name">{{item.name}}</mat-option>
             </mat-select>
-            <mat-error
-              *ngIf="providerForm.controls['provider_type'].hasError('required')"
-            >
-            Campo requerido
+            <mat-error *ngIf="providerForm.controls['provider_type'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
         <div class="px-2 col-4">
           <label>Telefono local</label>
           <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="phone_number" placeholder="Ingresa un # telefono local"/>
-            <mat-error
-              *ngIf="providerForm.controls['phone_number'].hasError('required')"
-            >
-            Campo requerido
+            <input matInput formControlName="phone_number" placeholder="Ingresa un # telefono local" />
+            <mat-error *ngIf="providerForm.controls['phone_number'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex col-12">
+      <div class="d-flex col-12 my-3">
         <div class="px-2 col-4">
           <label>Telefono movil</label>
           <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="mobile_number" placeholder="Ingresa un # telefono movil"/>
-            <mat-error
-              *ngIf="providerForm.controls['mobile_number'].hasError('required')"
-            >
-            Campo requerido
+            <input matInput formControlName="mobile_number" placeholder="Ingresa un # telefono movil" />
+            <mat-error *ngIf="providerForm.controls['mobile_number'].hasError('required')">
+              Campo requerido
             </mat-error>
           </mat-form-field>
         </div>
         <div class="px-2 col-4">
           <label>Email</label>
           <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="email" placeholder="Ingresa un email"/>
-            <mat-error
-              *ngIf="providerForm.controls['email'].hasError('required')"
-            >
-            Campo requerido
+            <input matInput formControlName="email" placeholder="Ingresa un email" />
+            <mat-error *ngIf="providerForm.controls['email'].hasError('required')">
+              Campo requerido
             </mat-error>
-            <mat-error
-              *ngIf="providerForm.controls['email'].hasError('email')"
-            >
-            Email invalido
+            <mat-error *ngIf="providerForm.controls['email'].hasError('email')">
+              Email invalido
             </mat-error>
           </mat-form-field>
         </div>
       </div>
 
       <div class="d-flex flex-row-reverse">
-        <button class="btn-primary" mat-button mat-button-raised >Crear Cliente</button>
+        <button class="btn-primary" mat-button mat-button-raised>Crear Cliente</button>
         <button class="mx-3" mat-button mat-stroked-button color="warn" routerLink="/clients">Cancelar</button>
       </div>
     </form>

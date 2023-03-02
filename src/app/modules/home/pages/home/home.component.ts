@@ -24,9 +24,9 @@ export class HomeComponent implements OnInit {
     { name: 'Empleados', icon: '../../../../../assets/newIcons/Empleados.svg', type: 'Recursos Humanos', url: '' },
     { name: 'Encuestas', icon: '../../../../../assets/newIcons/Encuestas.svg', type: 'Productividad', url: '' },
     { name: 'Eventos', icon: '../../../../../assets/newIcons/Eventos.svg', type: 'Productividad', url: '' },
-    { name: 'Facturacion', icon: '../../../../../assets/newIcons/Facturación.svg', type: 'Contabilidad', url: '' },
+    { name: 'Facturacion', icon: '../../../../../assets/newIcons/Facturación.svg', type: 'Ventas', url: '' },
     { name: 'Flota', icon: '../../../../../assets/newIcons/Flota.svg', type: 'Operaciones', url: '' },
-    { name: 'Gestion de Activos', icon: '../../../../../assets/newIcons/Gestión de Archivos.svg', type: 'Contabilidad', url: '' },
+    { name: 'Activos y Bienes', icon: '../../../../../assets/newIcons/Activos y bienes.svg', type: 'Contabilidad', url: '' },
     { name: 'Inventario', icon: '../../../../../assets/newIcons/Inventario.svg', type: 'Contabilidad', url: '' },
     { name: 'Mantenimiento', icon: '../../../../../assets/newIcons/Mantenimiento.svg', type: 'Operaciones', url: '' },
     { name: 'Nomina', icon: '../../../../../assets/newIcons/Nómina.svg', type: 'Recursos Humanos', url: '' },
@@ -50,6 +50,8 @@ export class HomeComponent implements OnInit {
     { name: 'Validaciones', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Productividad', url: '' },
     { name: 'Pagos de Clientes', icon: '../../../../../assets/newIcons/Cuentas bancarias.svg', type: 'Tesoreria', url: '/invoice-clients' },
     { name: 'Pagos a Proveedores', icon: '../../../../../assets/newIcons/Validaciones.svg', type: 'Tesoreria', url: '/invoice-providers' },
+    { name: 'TPV', icon: '../../../../../assets/newIcons/TPV Amarillo.svg', type: 'Ventas', url: '' },
+    { name: 'Contabilidad', icon: '../../../../../assets/newIcons/Contabilidad1.svg', type: 'Contabilidad', url: '' },
   ]
 
   public filters: any[] = [
@@ -71,11 +73,11 @@ export class HomeComponent implements OnInit {
     this.servicesTemp = this.services
     this.servicesFilters = this.servicesTemp
     this._activatedRoute.queryParams.subscribe((params: any) => {
-      if(params.menu){
+      if (params.menu) {
         this.selectedFilter = params.menu
         this.services = this.servicesTemp.filter((element: any) => element.type === params.menu)
         this.servicesFilters = this.services
-      }else {
+      } else {
         this.selectedFilter = 'Todos'
         this.services = this.servicesTemp
         this.servicesFilters = this.services

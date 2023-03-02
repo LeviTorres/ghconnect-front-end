@@ -27,7 +27,6 @@ export class ModalTrackingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("Llama a init")
     this._spinner.show()
     this.getInvoiceProviders()
     this.getExchanges()

@@ -5,10 +5,10 @@
         <h2 class="col-md-10 p-0">
           Editar Cliente
         </h2>
-        <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menu">
+        <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuSetting">
           <mat-icon style="cursor:pointer">settings</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menuSetting="matMenu">
           <div class="d-flex flex-column bd-highlight p-2" style="width:10rem">
             <div class="d-flex bd-highlight" (click)="delete()" style="cursor:pointer">
               <i class="fa fa-trash"></i>
@@ -51,7 +51,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="d-flex col-12">
+          <div class="d-flex col-12 my-3">
             <div class="px-2 col-4">
               <label>NIT</label>
               <mat-form-field class="w-100" appearance="outline">
@@ -119,7 +119,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="d-flex col-12">
+          <div class="d-flex col-12 my-3">
             <div class="px-2 col-4">
               <label>Telefono movil</label>
               <mat-form-field class="w-100" appearance="outline">
