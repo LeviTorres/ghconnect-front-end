@@ -1,32 +1,28 @@
 <div cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
-<header class="d-flex align-items-flex-end">
-  <h2 mat-dialog-title class="col-md-10 p-0">
-    Editar empresa
-  </h2>
-  <div class="d-flex justify-content-end w-100">
-    <i mat-dialog-close class="fa-light fa-xmark fa"></i>
-  </div>
-</header>
-<div>
-  <form (ngSubmit)="registerBusiness()" autocomplete="off" [formGroup]="registerForm">
+  <header class="d-flex align-items-flex-end">
+    <h2 mat-dialog-title class="col-md-10 p-0">
+      Editar empresa
+    </h2>
+    <div class="d-flex justify-content-end w-100">
+      <i mat-dialog-close class="fa-light fa-xmark fa"></i>
+    </div>
+  </header>
+  <div>
+    <form (ngSubmit)="registerBusiness()" autocomplete="off" [formGroup]="registerForm">
       <div class="">
         <label>Nombre</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="name" placeholder="Ingresa nombre de la empresa"/>
-          <mat-error
-            *ngIf="registerForm.controls['name'].hasError('required')"
-          >
+          <input type="text" matInput formControlName="name" placeholder="Ingresa nombre de la empresa" />
+          <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="">
+      <div class="my-3">
         <label>Nombre corto</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="name_short" placeholder="Ingresa nombre corto"/>
-          <mat-error
-            *ngIf="registerForm.controls['name_short'].hasError('required')"
-          >
+          <input type="text" matInput formControlName="name_short" placeholder="Ingresa nombre corto" />
+          <mat-error *ngIf="registerForm.controls['name_short'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
@@ -34,23 +30,19 @@
       <div class="">
         <label>Clave de empresa</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input type="text" matInput formControlName="key_business" placeholder="Ingresa clave de empresa"/>
-          <mat-error
-            *ngIf="registerForm.controls['key_business'].hasError('required')"
-          >
+          <input type="text" matInput formControlName="key_business" placeholder="Ingresa clave de empresa" />
+          <mat-error *ngIf="registerForm.controls['key_business'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="">
+      <div class="my-3">
         <label>Pais</label>
         <mat-form-field class="w-100" appearance="outline">
-          <mat-select  matInput formControlName="country" placeholder="Selecciona un pais">
-              <mat-option *ngFor="let item of countries" [value]="item._id">{{item.name}}</mat-option>
+          <mat-select matInput formControlName="country" placeholder="Selecciona un pais">
+            <mat-option *ngFor="let item of countries" [value]="item._id">{{item.name}}</mat-option>
           </mat-select>
-          <mat-error
-            *ngIf="registerForm.controls['country'].hasError('required')"
-          >
+          <mat-error *ngIf="registerForm.controls['country'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
@@ -61,14 +53,11 @@
           <button mat-stroked-button color="warn" mat-dialog-close>
             Cancelar
           </button>
-          <button
-            mat-raised-button
-            class="mx-2 btn-primary"
-          >
-          Editar Empresa
+          <button mat-raised-button class="mx-2 btn-primary">
+            Editar Empresa
           </button>
         </div>
       </mat-dialog-actions>
-  </form>
-</div>
+    </form>
+  </div>
 </div>
