@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Provider } from '../../../../models/Provider.model';
 import { ExcelService } from '../../../../services/excel.service';
+import { LoginService } from '../../../../services/login.service';
 
 @Component({
   selector: 'app-import-file',
@@ -21,6 +22,9 @@ export class ImportFileComponent implements OnInit {
   public providers: Provider[] = []
   public paymentConditions: any[] = []
   public validateExcel: boolean = true
+
+  public history: any[] = [];
+  public user: any;
 
   public third_types_array: any[] = [
     { name: 'Proveedor' },
@@ -46,9 +50,11 @@ export class ImportFileComponent implements OnInit {
     private _spinner:NgxSpinnerService,
     private _toastr: ToastrService,
     private _dialogRef: MatDialogRef<ImportFileComponent>,
-    private _excelService: ExcelService
+    private _excelService: ExcelService,
+    private _loginService: LoginService,
   ) {
     this.tenant = localStorage.getItem('tenant')
+    this.user = _loginService.user;
   }
 
   ngOnInit(): void {
@@ -107,19 +113,20 @@ export class ImportFileComponent implements OnInit {
             this.validateExcel = false
             return
           }
-        /*  const findKeyProvider:any = this.providers.find((e:any) => e.key_provider === element.No_proveedor)
-          if(findKeyProvider){
-            this._toastr.error('Numero de proveedor repetido')
-            this._spinner.hide()
-            this.validateExcel = false
-            return
-          }*/
         })
 
         if(this.validateExcel){
+
            data.forEach((element:any) => {
             const findPayment:any = this.paymentConditions.find((e:PaymentConditions) => e.name_payment.toLowerCase().trim() === element.Condiciones_de_pago.toLowerCase().trim())
+            this.history.push({
+              user: this.user._id,
+              note: `Proveedor creado`,
+              date: new Date().getTime(),
+              type: 'note',
+            });
             const datos = {
+              activities: this.history,
               tenant: this.tenant,
               key_provider: element.No_proveedor,
               name: element.Nombre_proveedor,
