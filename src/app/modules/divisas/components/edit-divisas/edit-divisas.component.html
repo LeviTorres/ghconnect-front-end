@@ -9,53 +9,45 @@
   </header>
   <div>
     <form (ngSubmit)="registerDivisa()" autocomplete="off" [formGroup]="registerForm">
-        <div class="">
-          <label>Nombre</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input type="text" matInput formControlName="name" placeholder="Ingresa nombre de la divisa"/>
-            <mat-error
-              *ngIf="registerForm.controls['name'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Abreviatura</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input type="text" matInput formControlName="abbreviation_divisa" placeholder="Ingresa la abreviacion de la divisa"/>
-            <mat-error
-              *ngIf="registerForm.controls['abbreviation_divisa'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Simbolo</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput formControlName="symbol" placeholder="Ingresa el simbolo de la divisa"/>
-            <mat-error
-              *ngIf="registerForm.controls['symbol'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <mat-dialog-actions align="end" class="mat">
-          <div></div>
-          <div>
-            <button mat-stroked-button color="warn" mat-dialog-close>
-              Cancelar
-            </button>
-            <button
-              mat-raised-button
-              class="mx-2 btn-primary"
-            >
+      <div class="">
+        <label>Nombre</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="name" placeholder="Ingresa nombre de la divisa" />
+          <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="my-3">
+        <label>Abreviatura</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="abbreviation_divisa"
+            placeholder="Ingresa la abreviacion de la divisa" />
+          <mat-error *ngIf="registerForm.controls['abbreviation_divisa'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Simbolo</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput formControlName="symbol" placeholder="Ingresa el simbolo de la divisa" />
+          <mat-error *ngIf="registerForm.controls['symbol'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button mat-raised-button class="mx-2 btn-primary">
             Editar Divisa
-            </button>
-          </div>
-        </mat-dialog-actions>
+          </button>
+        </div>
+      </mat-dialog-actions>
     </form>
   </div>
 </div>

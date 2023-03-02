@@ -9,66 +9,55 @@
   </header>
   <div>
     <form (ngSubmit)="registerBusiness()" autocomplete="off" [formGroup]="registerForm">
-        <div class="">
-          <label>Nombre</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input type="text" matInput formControlName="name" placeholder="Ingresa nombre de la empresa"/>
-            <mat-error
-              *ngIf="registerForm.controls['name'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Nombre corto</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input type="text" matInput formControlName="name_short" placeholder="Ingresa nombre corto"/>
-            <mat-error
-              *ngIf="registerForm.controls['name_short'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Clave de empresa</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input type="text" matInput formControlName="key_business" placeholder="Ingresa clave de empresa"/>
-            <mat-error
-              *ngIf="registerForm.controls['key_business'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Pais</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select  matInput formControlName="country" placeholder="Selecciona un pais">
-                <mat-option *ngFor="let item of countries" [value]="item._id">{{item.name}}</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="registerForm.controls['country'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <mat-dialog-actions align="end" class="mat">
-          <div></div>
-          <div>
-            <button mat-stroked-button color="warn" mat-dialog-close>
-              Cancelar
-            </button>
-            <button
-              mat-raised-button
-              class="mx-2 btn-primary"
-            >
+      <div class="">
+        <label>Nombre</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="name" placeholder="Ingresa nombre de la empresa" />
+          <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="my-3">
+        <label>Nombre corto</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="name_short" placeholder="Ingresa nombre corto" />
+          <mat-error *ngIf="registerForm.controls['name_short'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Clave de empresa</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input type="text" matInput formControlName="key_business" placeholder="Ingresa clave de empresa" />
+          <mat-error *ngIf="registerForm.controls['key_business'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="my-3">
+        <label>Pais</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-select matInput formControlName="country" placeholder="Selecciona un pais">
+            <mat-option *ngFor="let item of countries" [value]="item._id">{{item.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="registerForm.controls['country'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button mat-raised-button class="mx-2 btn-primary">
             Crear Empresa
-            </button>
-          </div>
-        </mat-dialog-actions>
+          </button>
+        </div>
+      </mat-dialog-actions>
     </form>
   </div>
 </div>

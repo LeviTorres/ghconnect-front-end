@@ -9,71 +9,64 @@
   </header>
   <div>
     <form (ngSubmit)="registerExchange()" autocomplete="off" [formGroup]="exchangeForm">
-        <div class="">
-          <label>Moneda Nacional</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select formControlName="national_currency" required placeholder="Selecciona una moneda">
-              <mat-option *ngFor="let option of national" [value]="option">{{ option.name}} - {{option.abbreviation_divisa}}</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="exchangeForm.controls['national_currency'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Moneda Extranjera</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-select formControlName="foreign_currency" required placeholder="Selecciona una moneda">
-              <mat-option *ngFor="let option of foreign" [value]="option">{{ option.name}} - {{option.abbreviation_divisa}}</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="exchangeForm.controls['foreign_currency'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="">
-          <label>Monto tasa de cambio</label>
-          <mat-form-field class="w-100" appearance="outline">
-            <input matInput type="number" formControlName="exchange_rate_amount" placeholder="Ingresa un monto de tasa de cambio"/>
-            <mat-error
-              *ngIf="exchangeForm.controls['exchange_rate_amount'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="d-flex flex-column">
-          <label>Fecha Tasa de Cambio</label>
-          <mat-form-field appearance="outline">
-            <input matInput  [matDatepicker]="picker" formControlName="date_exchange" placeholder="Selecciona una fecha tasa de cambio"/>
-            <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error
-              *ngIf="exchangeForm.controls['date_exchange'].hasError('required')"
-            >
-              Campo requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <mat-dialog-actions align="end" class="mat">
-          <div></div>
-          <div>
-            <button mat-stroked-button color="warn" mat-dialog-close>
-              Cancelar
-            </button>
-            <button
-              mat-raised-button
-              class="mx-2 btn-save"
-            >
+      <div class="">
+        <label>Moneda Nacional</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-select formControlName="national_currency" required placeholder="Selecciona una moneda">
+            <mat-option *ngFor="let option of national" [value]="option">{{ option.name}} -
+              {{option.abbreviation_divisa}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="exchangeForm.controls['national_currency'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="my-3">
+        <label>Moneda Extranjera</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-select formControlName="foreign_currency" required placeholder="Selecciona una moneda">
+            <mat-option *ngFor="let option of foreign" [value]="option">{{ option.name}} -
+              {{option.abbreviation_divisa}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="exchangeForm.controls['foreign_currency'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="">
+        <label>Monto tasa de cambio</label>
+        <mat-form-field class="w-100" appearance="outline">
+          <input matInput type="number" formControlName="exchange_rate_amount"
+            placeholder="Ingresa un monto de tasa de cambio" />
+          <mat-error *ngIf="exchangeForm.controls['exchange_rate_amount'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-column my-3">
+        <label>Fecha Tasa de Cambio</label>
+        <mat-form-field appearance="outline">
+          <input matInput [matDatepicker]="picker" formControlName="date_exchange"
+            placeholder="Selecciona una fecha tasa de cambio" />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="exchangeForm.controls['date_exchange'].hasError('required')">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions align="end" class="mat">
+        <div></div>
+        <div>
+          <button mat-stroked-button color="warn" mat-dialog-close>
+            Cancelar
+          </button>
+          <button mat-raised-button class="mx-2 btn-save">
             Crear tipo de cambio
-            </button>
-          </div>
-        </mat-dialog-actions>
+          </button>
+        </div>
+      </mat-dialog-actions>
     </form>
   </div>
 </div>
