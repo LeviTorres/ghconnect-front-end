@@ -8,7 +8,7 @@
         <label>Tipo de movimiento</label>
         <mat-form-field class="w-100" appearance="outline">
           <mat-select matInput formControlName="movement_type" placeholder="Selecciona el tipo de movimiento">
-            <mat-option *ngFor="let item of movements" [value]="item._id">{{
+            <mat-option *ngFor="let item of movements" [value]="item._id">{{item.key_movement}} - {{
               item.name_movement
               }}</mat-option>
           </mat-select>
