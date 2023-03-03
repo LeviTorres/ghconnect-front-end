@@ -28,7 +28,7 @@ registerLocaleData(localeEs, 'es')
     ToastrModule.forRoot(),
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-GB' }
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })
