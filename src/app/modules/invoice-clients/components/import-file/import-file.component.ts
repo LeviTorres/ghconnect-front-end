@@ -161,7 +161,7 @@ export class ImportFileComponent implements OnInit {
           }
           const findCeco: any = this.cecos.find(
             (e: Ceco) =>
-              e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim()
+              e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim().toLowerCase()
           );
           if (!findCeco) {
             this._toastr.error('Ceco incorrecto');
@@ -203,7 +203,7 @@ export class ImportFileComponent implements OnInit {
             );
             const findCeco: any = this.cecos.find(
               (e: Ceco) =>
-                e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim()
+                e.key_ceco.toLowerCase().trim() === findKeyCeco[1].trim().toLowerCase()
             );
             const findDivisa: any = this.divisas.find(
               (e: Divisa) =>
