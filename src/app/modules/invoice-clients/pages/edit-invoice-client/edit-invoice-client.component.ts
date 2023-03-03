@@ -144,15 +144,17 @@ export class EditInvoiceClientComponent implements OnInit {
   initValueForm() {
     this._spinner.show()
     if(this.invoiceClients.expiration_date){
-      this.invoiceForm.controls['expiration_date'].setValue(formatDate(this.invoiceClients?.expiration_date, 'yyyy-MM-dd', 'en'))
+      const date:any = new Date(this.invoiceClients.expiration_date)
+      this.invoiceForm.controls['expiration_date'].setValue(date)
     }
+    const dateUpload: any = new Date(this.invoiceClients.upload_date)
+    const dateInvoice: any = new Date(this.invoiceClients.invoice_date)
     this.invoiceForm.patchValue({
       ceco: this.invoiceClients.ceco,
       client: this.invoiceClients.client,
       key_invoice: this.invoiceClients.key_invoice,
-      upload_date: formatDate(this.invoiceClients.upload_date, 'yyyy-MM-dd', 'en'),
-      invoice_date: formatDate(this.invoiceClients.invoice_date, 'yyyy-MM-dd', 'en'),
-      //expiration_date: formatDate(this.invoiceClients?.expiration_date, 'yyyy-MM-dd', 'en'),
+      upload_date: dateUpload,
+      invoice_date: dateInvoice,
       invoice_total: this.invoiceClients.invoice_total,
       divisa: this.invoiceClients.divisa._id,
       description: this.invoiceClients.description,

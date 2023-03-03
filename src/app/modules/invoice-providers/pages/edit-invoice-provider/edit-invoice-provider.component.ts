@@ -135,22 +135,23 @@ export class EditInvoiceProviderComponent implements OnInit {
       this.invoiceProviders = invoices.find((invoice: InvoiceProviders) => invoice._id === id)
       this.initValueForm()
       this.viewActivitiesPlan()
-      this._spinner.hide()
     })
   }
 
   initValueForm() {
     this._spinner.show()
     if(this.invoiceProviders.expiration_date){
-      this.invoiceForm.controls['expiration_date'].setValue(formatDate(this.invoiceProviders?.expiration_date, 'yyyy-MM-dd', 'en'))
+      const date:any = new Date(this.invoiceProviders.expiration_date)
+      this.invoiceForm.controls['expiration_date'].setValue(date)
     }
+    const dateUpload: any = new Date(this.invoiceProviders.upload_date)
+    const dateInvoice: any = new Date(this.invoiceProviders.invoice_date)
     this.invoiceForm.patchValue({
       ceco: this.invoiceProviders.ceco,
       provider: this.invoiceProviders.provider,
       key_invoice: this.invoiceProviders.key_invoice,
-      upload_date: formatDate(this.invoiceProviders.upload_date, 'yyyy-MM-dd', 'en'),
-      invoice_date: formatDate(this.invoiceProviders.invoice_date, 'yyyy-MM-dd', 'en'),
-      //expiration_date: formatDate(this.invoiceProviders.expiration_date, 'yyyy-MM-dd', 'en'),
+      upload_date: dateUpload,
+      invoice_date: dateInvoice,
       invoice_total: this.invoiceProviders.invoice_total,
       divisa: this.invoiceProviders.divisa._id,
       description: this.invoiceProviders.description,
@@ -158,13 +159,13 @@ export class EditInvoiceProviderComponent implements OnInit {
     })
     this.history = [...this.invoiceProviders.activities]
     this.followers = [...this.invoiceProviders.followers!]
+    this._spinner.hide()
   }
 
   getMovements() {
     this._spinner.show()
     this._movementsProviderService.getMovementsTypeProviderActive().subscribe((item: any) => {
       this.movements = item
-      this._spinner.hide()
     })
   }
 
@@ -172,7 +173,6 @@ export class EditInvoiceProviderComponent implements OnInit {
     this._spinner.show()
     this._cecosService.getCecos().subscribe((item: any) => {
       this.cecos = item
-      this._spinner.hide()
     })
   }
 
@@ -180,7 +180,6 @@ export class EditInvoiceProviderComponent implements OnInit {
     this._spinner.show()
     this._divisasService.getDivisas().subscribe((item: any) => {
       this.divisas = item
-      this._spinner.hide()
     })
   }
 
@@ -188,7 +187,6 @@ export class EditInvoiceProviderComponent implements OnInit {
     this._spinner.show()
     this._providersService.getProviders().subscribe((item: any) => {
       this.providers = item
-      this._spinner.hide()
     })
   }
 
@@ -361,7 +359,6 @@ export class EditInvoiceProviderComponent implements OnInit {
       }
     });
     dialogRef.beforeClosed().subscribe((resp: any) => {
-      console.log('resp after dialog', resp);
       if (resp) {
         const element = {
           followers: [...this.followers, resp],
@@ -374,7 +371,6 @@ export class EditInvoiceProviderComponent implements OnInit {
   }
 
   goToEditActivity(id: string) {
-    console.log(id);
     let dialogRef = this._dialog.open(EditActivitiesComponent, {
       width: '550px',
       maxHeight: '95vh',
@@ -383,7 +379,6 @@ export class EditInvoiceProviderComponent implements OnInit {
       data: id
     })
     dialogRef.beforeClosed().subscribe((resp: any) => {
-      console.log('resp after dialog', resp);
       if (resp) {
         const element1 = {
           ...resp
@@ -463,7 +458,6 @@ export class EditInvoiceProviderComponent implements OnInit {
   }
 
   openDialogTracking() {
-    console.log(this.invoiceProviders);
     let dialogRef = this._dialog.open(ModalTrackingComponent, {
       width: '1000px',
       maxHeight: '95vh',
