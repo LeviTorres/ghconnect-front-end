@@ -44,8 +44,6 @@ export class MovementsTypeClientService {
       .get(`${base_url}/movements-type-client/active`, this.headers)
       .pipe(
         map((resp: any) => {
-          console.log('resp',resp);
-
           return resp.movementtypeclient;
         })
       );

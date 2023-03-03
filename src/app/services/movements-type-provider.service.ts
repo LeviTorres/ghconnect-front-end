@@ -34,8 +34,6 @@ export class MovementsTypeProviderService {
       .get(`${base_url}/movements-type-provider`, this.headers)
       .pipe(
         map((resp: any) => {
-          console.log('resp',resp);
-
           return resp.movementtypeprovider;
         })
       );
@@ -46,8 +44,6 @@ export class MovementsTypeProviderService {
       .get(`${base_url}/movements-type-provider/active`, this.headers)
       .pipe(
         map((resp: any) => {
-          console.log('resp',resp);
-
           return resp.movementtypeprovider;
         })
       );
