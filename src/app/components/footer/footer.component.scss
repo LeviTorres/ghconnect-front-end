@@ -9,3 +9,9 @@ footer{
 img {
   cursor: pointer;
 }
+
+@media(max-width:1024px){
+  .foter{
+    margin:0 0 0 1rem !important
+  }
+}

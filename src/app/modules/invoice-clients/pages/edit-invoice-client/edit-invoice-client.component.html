@@ -4,10 +4,10 @@
       <h2 class="col-md-10 p-0">
         Editar Factura
       </h2>
-      <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menu">
+      <button mat-icon-button class="mx-3" [matMenuTriggerFor]="menuSetting">
         <mat-icon style="cursor:pointer">settings</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
+      <mat-menu #menuSetting="matMenu">
         <div class="d-flex flex-column bd-highlight p-2" style="width:10rem">
           <div class="d-flex bd-highlight" (click)="delete()" style="cursor:pointer">
             <i class="fa fa-trash"></i>
@@ -48,7 +48,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-12 d-flex">
+        <div class="col-12 d-flex my-3">
           <div class="col-7 pe-2">
             <label>Cliente</label>
             <mat-form-field class="w-100" appearance="outline">
@@ -110,7 +110,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-12 d-flex my-4">
+        <div class="col-12 d-flex my-3">
           <div class="col-7 pe-2">
             <label>Ceco</label>
             <mat-form-field class="w-100" appearance="outline">
@@ -154,7 +154,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-12 d-flex">
+        <div class="col-12 d-flex my-3">
           <div class="col-12">
             <label>Descripcion</label>
             <mat-form-field class="w-100" appearance="outline">

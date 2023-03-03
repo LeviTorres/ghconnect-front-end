@@ -228,8 +228,6 @@ export class TableInvoiceProvidersComponent implements OnInit {
   }
 
   openDialogTracking(invoice: InvoiceProviders) {
-    console.log(invoice);
-
     let dialogRef = this._dialog.open(ModalTrackingComponent, {
       width: '1000px',
       maxHeight: '95vh',

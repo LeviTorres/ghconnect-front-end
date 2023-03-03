@@ -12,9 +12,7 @@
           <mat-select matInput formControlName="movement_type" placeholder="Selecciona el tipo de movimiento">
             <mat-option *ngFor="let item of movements" [value]="item._id">{{item.key_movement}} - {{item.name_movement}}</mat-option>
           </mat-select>
-          <mat-error
-            *ngIf="invoiceForm.controls['movement_type'].hasError('required')"
-          >
+          <mat-error *ngIf="invoiceForm.controls['movement_type'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
@@ -22,36 +20,28 @@
       <div class="col-5">
         <label>No. Factura</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput formControlName="key_invoice" placeholder="Indica # de factura"/>
-          <mat-error
-            *ngIf="invoiceForm.controls['key_invoice'].hasError('required')"
-          >
+          <input matInput formControlName="key_invoice" placeholder="Indica # de factura" />
+          <mat-error *ngIf="invoiceForm.controls['key_invoice'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
     </div>
-    <div class="col-12 d-flex">
+    <div class="col-12 d-flex my-3">
       <div class="col-7 pe-2">
         <label>Proveedor</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input
-            type="text"
-            class="w-100"
-            matInput
-            formControlName="provider"
-            [matAutocomplete]="search"
-            placeholder="Ingresa un proveedor"
-          />
-          <mat-autocomplete autoActiveFirstOption #search="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions" [value]="option">{{option.key_provider}} - {{ option.name}}</mat-option>
+          <input type="text" class="w-100" matInput formControlName="provider" [matAutocomplete]="search"
+            placeholder="Ingresa un proveedor" />
+          <mat-autocomplete autoActiveFirstOption #search="matAutocomplete"
+            (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions" [value]="option">{{option.key_provider}} - {{
+              option.name}}</mat-option>
             <mat-option value="" *ngIf="filteredOptions.length <= 0 && this.invoiceForm.controls['provider'].value">
               No se encontró nada con el término {{invoiceForm.controls['provider'].value}}
             </mat-option>
           </mat-autocomplete>
-          <mat-error
-            *ngIf="invoiceForm.controls['provider'].hasError('required')"
-          >
+          <mat-error *ngIf="invoiceForm.controls['provider'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
@@ -61,67 +51,56 @@
       <div class="col-4 pe-2">
         <label>Fecha carga</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput  [matDatepicker]="picker1" formControlName="upload_date" placeholder="Selecciona una fecha"/>
+          <input matInput [matDatepicker]="picker1" formControlName="upload_date" placeholder="Selecciona una fecha" />
           <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
-          <mat-error
-            *ngIf="invoiceForm.controls['upload_date'].hasError('required')"
-          >
-          Campo requerido
+          <mat-error *ngIf="invoiceForm.controls['upload_date'].hasError('required')">
+            Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
       <div class="col-4 pe-2">
         <label>Fecha factura</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput  [matDatepicker]="picker" formControlName="invoice_date" placeholder="Selecciona una fecha"/>
+          <input matInput [matDatepicker]="picker" formControlName="invoice_date" placeholder="Selecciona una fecha" />
           <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error
-            *ngIf="invoiceForm.controls['invoice_date'].hasError('required')"
-          >
-          Campo requerido
+          <mat-error *ngIf="invoiceForm.controls['invoice_date'].hasError('required')">
+            Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
       <div class="col-4">
         <label>Fecha vencimiento</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput  [matDatepicker]="picker2" formControlName="expiration_date" placeholder="Selecciona una fecha"/>
+          <input matInput [matDatepicker]="picker2" formControlName="expiration_date"
+            placeholder="Selecciona una fecha" />
           <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
-          <mat-error
-            *ngIf="invoiceForm.controls['expiration_date'].hasError('required')"
-          >
-          Campo requerido
+          <mat-error *ngIf="invoiceForm.controls['expiration_date'].hasError('required')">
+            Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
     </div>
-    <div class="col-12 d-flex">
+    <div class="col-12 d-flex my-3">
       <div class="col-7 pe-2">
         <label>Ceco</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input
-            type="text"
-            class="w-100"
-            matInput
-            formControlName="ceco"
-            [matAutocomplete]="searchCeco"
-            placeholder="Ingresa un ceco"
-          />
-          <mat-autocomplete autoActiveFirstOption #searchCeco="matAutocomplete" (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFnCeco">
-            <mat-option *ngFor="let option of filteredOptionsCeco" [value]="option">{{option.key_ceco_business}} - {{ option.name_short}}</mat-option>
+          <input type="text" class="w-100" matInput formControlName="ceco" [matAutocomplete]="searchCeco"
+            placeholder="Ingresa un ceco" />
+          <mat-autocomplete autoActiveFirstOption #searchCeco="matAutocomplete"
+            (optionSelected)="opcionSeleccionada($event)" [displayWith]="displayFnCeco">
+            <mat-option *ngFor="let option of filteredOptionsCeco" [value]="option">{{option.key_ceco_business}} - {{
+              option.name_short}}</mat-option>
             <mat-option value="" *ngIf="filteredOptionsCeco.length <= 0 && this.invoiceForm.controls['ceco'].value">
               No se encontró nada con el término {{invoiceForm.controls['ceco'].value}}
             </mat-option>
           </mat-autocomplete>
-          <mat-error
-            *ngIf="invoiceForm.controls['ceco'].hasError('required')"
-          >
+          <mat-error *ngIf="invoiceForm.controls['ceco'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
@@ -131,10 +110,8 @@
       <div class="col-7 pe-2">
         <label>Total de factura</label>
         <mat-form-field class="w-100" appearance="outline">
-          <input matInput type="number" formControlName="invoice_total" placeholder="Indica el total de la factura"/>
-          <mat-error
-            *ngIf="invoiceForm.controls['invoice_total'].hasError('required')"
-          >
+          <input matInput type="number" formControlName="invoice_total" placeholder="Indica el total de la factura" />
+          <mat-error *ngIf="invoiceForm.controls['invoice_total'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
@@ -145,41 +122,33 @@
           <mat-select matInput formControlName="divisa" placeholder="Selecciona una divisa">
             <mat-option *ngFor="let item of divisas" [value]="item._id">{{item.abbreviation_divisa}}</mat-option>
           </mat-select>
-          <mat-error
-            *ngIf="invoiceForm.controls['divisa'].hasError('required')"
-          >
+          <mat-error *ngIf="invoiceForm.controls['divisa'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
     </div>
-    <div class="col-12 d-flex">
+    <div class="col-12 d-flex my-3">
       <div class="col-12">
         <label>Descripcion</label>
         <mat-form-field class="w-100" appearance="outline">
           <textarea matInput formControlName="description" placeholder="Indica una descripcion"></textarea>
-          <mat-error
-            *ngIf="invoiceForm.controls['description'].hasError('required')"
-          >
+          <mat-error *ngIf="invoiceForm.controls['description'].hasError('required')">
             Campo requerido
           </mat-error>
         </mat-form-field>
       </div>
     </div>
-      <mat-dialog-actions align="end" class="mat">
-        <div></div>
-        <div>
-          <button mat-stroked-button color="warn" routerLink="/invoice-providers">
-            Cancelar
-          </button>
-          <button
-            mat-raised-button
-            class="mx-2 btn-save"
-          >
+    <mat-dialog-actions align="end" class="mat">
+      <div></div>
+      <div>
+        <button mat-stroked-button color="warn" routerLink="/invoice-providers">
+          Cancelar
+        </button>
+        <button mat-raised-button class="mx-2 btn-save">
           Crear Factura
-          </button>
-        </div>
-      </mat-dialog-actions>
+        </button>
+      </div>
+    </mat-dialog-actions>
   </form>
 </div>
-
