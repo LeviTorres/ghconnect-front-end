@@ -58,7 +58,7 @@ export class EditInvoiceClientComponent implements OnInit {
     key_invoice: ['', Validators.required],
     upload_date: ['', Validators.required],
     invoice_date: ['', Validators.required],
-    expiration_date: ['', Validators.required],
+    expiration_date: [''],
     invoice_total: ['', Validators.required],
     divisa: ['', Validators.required],
     description: ['', Validators.required],
@@ -134,6 +134,7 @@ export class EditInvoiceClientComponent implements OnInit {
     this._spinner.show()
     this._invoiceClientsService.getInvoiceClients().subscribe((invoices: InvoiceClient[]) => {
       this.invoiceClients = invoices.find((invoice: InvoiceClient) => invoice._id === id)
+      console.log('this.invoiceClients',this.invoiceClients);
       this.initValueForm()
       this.viewActivitiesPlan()
       this._spinner.hide()
@@ -142,13 +143,16 @@ export class EditInvoiceClientComponent implements OnInit {
 
   initValueForm() {
     this._spinner.show()
+    if(this.invoiceClients.expiration_date){
+      this.invoiceForm.controls['expiration_date'].setValue(formatDate(this.invoiceClients?.expiration_date, 'yyyy-MM-dd', 'en'))
+    }
     this.invoiceForm.patchValue({
       ceco: this.invoiceClients.ceco,
       client: this.invoiceClients.client,
       key_invoice: this.invoiceClients.key_invoice,
       upload_date: formatDate(this.invoiceClients.upload_date, 'yyyy-MM-dd', 'en'),
       invoice_date: formatDate(this.invoiceClients.invoice_date, 'yyyy-MM-dd', 'en'),
-      expiration_date: formatDate(this.invoiceClients.expiration_date, 'yyyy-MM-dd', 'en'),
+      //expiration_date: formatDate(this.invoiceClients?.expiration_date, 'yyyy-MM-dd', 'en'),
       invoice_total: this.invoiceClients.invoice_total,
       divisa: this.invoiceClients.divisa._id,
       description: this.invoiceClients.description,

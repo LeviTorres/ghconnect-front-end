@@ -141,13 +141,16 @@ export class EditInvoiceProviderComponent implements OnInit {
 
   initValueForm() {
     this._spinner.show()
+    if(this.invoiceProviders.expiration_date){
+      this.invoiceForm.controls['expiration_date'].setValue(formatDate(this.invoiceProviders?.expiration_date, 'yyyy-MM-dd', 'en'))
+    }
     this.invoiceForm.patchValue({
       ceco: this.invoiceProviders.ceco,
       provider: this.invoiceProviders.provider,
       key_invoice: this.invoiceProviders.key_invoice,
       upload_date: formatDate(this.invoiceProviders.upload_date, 'yyyy-MM-dd', 'en'),
       invoice_date: formatDate(this.invoiceProviders.invoice_date, 'yyyy-MM-dd', 'en'),
-      expiration_date: formatDate(this.invoiceProviders.expiration_date, 'yyyy-MM-dd', 'en'),
+      //expiration_date: formatDate(this.invoiceProviders.expiration_date, 'yyyy-MM-dd', 'en'),
       invoice_total: this.invoiceProviders.invoice_total,
       divisa: this.invoiceProviders.divisa._id,
       description: this.invoiceProviders.description,
